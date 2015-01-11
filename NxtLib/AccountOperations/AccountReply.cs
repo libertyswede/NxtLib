@@ -48,6 +48,7 @@ namespace NxtLib.AccountOperations
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "nextLessee")]
         public ulong NextLesseeId { get; set; }
+        public string NextLesseeRs { get; set; }
         public int NextLeasingHeightFrom { get; set; }
         public int NextLeasingHeightTo { get; set; }
         public string PublicKey { get; set; }
