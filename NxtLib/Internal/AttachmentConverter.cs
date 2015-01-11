@@ -57,6 +57,9 @@ namespace NxtLib.Internal
                     case AliasBuyAttachment.AttachmentName:
                         attachments.Add(new AliasBuyAttachment(values));
                         break;
+                    case AliasDeleteAttachment.AttachmentName:
+                        attachments.Add(new AliasDeleteAttachment(values));
+                        break;
                     case AliasSellAttachment.AttachmentName:
                         attachments.Add(new AliasSellAttachment(values));
                         break;

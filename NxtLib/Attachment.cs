@@ -64,6 +64,19 @@ namespace NxtLib
         }
     }
 
+    public class AliasDeleteAttachment : Attachment
+    {
+        public string Alias { get; set; }
+
+        internal const string AttachmentName = "version.AliasDelete";
+
+        public AliasDeleteAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Alias = values["alias"].ToString();
+        }
+    }
+
     public class AliasSellAttachment : Attachment
     {
         public string Alias { get; set; }
