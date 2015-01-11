@@ -11,7 +11,8 @@ namespace NxtLib.AssetOperations
         Task<TransactionCreated> CancelAskOrder(ulong orderId, CreateTransactionParameters parameters);
         Task<TransactionCreated> CancelBidOrder(ulong orderId, CreateTransactionParameters parameters);
         Task<AccountAssetCount> GetAccountAssetCount(string accountId, int? height = null);
-        Task<AccountAssets> GetAccountAssets(string accountId, ulong? assetId = null, int? height = null);
+        Task<AccountAsset> GetAccountAsset(string accountId, ulong assetId, int? height = null);
+        Task<AccountAssets> GetAccountAssets(string accountId, int? height = null);
 
         Task<AssetAskOrderIds> GetAccountCurrentAskOrderIds(string accountId, ulong? assetId = null,
             int? firstIndex = null, int? lastIndex = null);
@@ -108,11 +109,18 @@ namespace NxtLib.AssetOperations
             return await Get<AccountAssetCount>("getAccountAssetCount", queryParameters);
         }
 
-        public async Task<AccountAssets> GetAccountAssets(string accountId, ulong? assetId = null, int? height = null)
+        public async Task<AccountAsset> GetAccountAsset(string accountId, ulong assetId, int? height = null)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
             AddToParametersIfHasValue("height", height, queryParameters);
             AddToParametersIfHasValue("asset", assetId, queryParameters);
+            return await Get<AccountAsset>("getAccountAssets", queryParameters);
+        }
+
+        public async Task<AccountAssets> GetAccountAssets(string accountId, int? height = null)
+        {
+            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
+            AddToParametersIfHasValue("height", height, queryParameters);
             return await Get<AccountAssets>("getAccountAssets", queryParameters);
         }
 
