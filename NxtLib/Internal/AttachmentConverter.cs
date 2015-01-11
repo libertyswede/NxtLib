@@ -126,6 +126,9 @@ namespace NxtLib.Internal
                     case PublicKeyAnnouncementAttachment.AttachmentName:
                         attachments.Add(new PublicKeyAnnouncementAttachment(values));
                         break;
+                    case PublishExchangeOfferAttachment.AttachmentName:
+                        attachments.Add(new PublishExchangeOfferAttachment(values));
+                        break;
                     default: 
                         unhandledKeys.Add(key);
                         break;

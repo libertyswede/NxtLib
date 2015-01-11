@@ -477,4 +477,31 @@ namespace NxtLib
             RecipientPublicKey = values["recipientPublicKey"].ToString();
         }
     }
+
+    public class PublishExchangeOfferAttachment : Attachment
+    {
+        public Amount BuyRate { get; set; }
+        public ulong CurrencyId { get; set; }
+        public int ExpirationHeight { get; set; }
+        public long InitialBuySupply { get; set; }
+        public long InitialSellSupply { get; set; }
+        public Amount SellRate { get; set; }
+        public long TotalBuyLimit { get; set; }
+        public long TotalSellLimit { get; set; }
+
+        internal const string AttachmentName = "version.PublishExchangeOffer";
+
+        public PublishExchangeOfferAttachment(IReadOnlyDictionary<string, object> values) 
+            :base(values, AttachmentName)
+        {
+            BuyRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["buyRateNQT"]));
+            CurrencyId = Convert.ToUInt64(values["currency"]);
+            ExpirationHeight = Convert.ToInt32(values["expirationHeight"]);
+            InitialBuySupply = Convert.ToInt64(values["initialBuySupply"]);
+            InitialSellSupply = Convert.ToInt64(values["initialSellSupply"]);
+            SellRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["sellRateNQT"]));
+            TotalBuyLimit = Convert.ToInt64(values["totalBuyLimit"]);
+            TotalSellLimit = Convert.ToInt64(values["totalSellLimit"]);
+        }
+    }
 }
