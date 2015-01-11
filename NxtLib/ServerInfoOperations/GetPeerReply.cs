@@ -6,6 +6,7 @@ namespace NxtLib.ServerInfoOperations
 {
     public class GetPeerReply : BaseReply
     {
+        public string Address { get; set; }
         public string AnnouncedAddress { get; set; }
         public string Application { get; set; }
         public bool Blacklisted { get; set; }
