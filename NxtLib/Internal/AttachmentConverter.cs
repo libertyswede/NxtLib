@@ -129,6 +129,9 @@ namespace NxtLib.Internal
                     case MessageAttachment.AttachmentName:
                         attachments.Add(new MessageAttachment(values));
                         break;
+                    case MonetarySystemReserveIncrease.AttachmentName:
+                        attachments.Add(new MonetarySystemReserveIncrease(values));
+                        break;
                     case PublicKeyAnnouncementAttachment.AttachmentName:
                         attachments.Add(new PublicKeyAnnouncementAttachment(values));
                         break;

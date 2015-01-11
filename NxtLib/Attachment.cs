@@ -500,6 +500,21 @@ namespace NxtLib
         }
     }
 
+    public class MonetarySystemReserveIncrease : Attachment
+    {
+        public Amount AmountPerUnit { get; set; }
+        public ulong CurrencyId { get; set; }
+
+        internal const string AttachmentName = "version.ReserveIncrease";
+
+        public MonetarySystemReserveIncrease(IReadOnlyDictionary<string, object> values) 
+            : base(values, AttachmentName)
+        {
+            AmountPerUnit = Amount.CreateAmountFromNqt(Convert.ToInt64(values["amountPerUnitNQT"]));
+            CurrencyId = Convert.ToUInt64(values["currency"]);
+        }
+    }
+
     public class PublicKeyAnnouncementAttachment : Attachment
     {
         public string RecipientPublicKey { get; set; }
