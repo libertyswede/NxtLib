@@ -12,6 +12,7 @@ namespace NxtLib.ServerInfoOperations
         public ulong FreeMemory { get; set; }
         public bool IsScanning { get; set; }
         public bool IsOffline { get; set; }
+        public bool IsTestnet { get; set; }
         public ulong LastBlock { get; set; }
         public string LastBlockchainFeeder { get; set; }
         public int LastBlockchainFeederHeight { get; set; }
@@ -22,7 +23,11 @@ namespace NxtLib.ServerInfoOperations
         public int NumberOfAssets { get; set; }
         public int NumberOfBidOrders { get; set; }
         public int NumberOfBlocks { get; set; }
+        public int NumberOfCurrencies { get; set; }
+        public int NumberOfCurrencyTransfers { get; set; }
+        public int NumberOfExchanges { get; set; }
         public int NumberOfGoods { get; set; }
+        public int NumberOfOffers { get; set; }
         public int NumberOfOrders { get; set; }
         public int NumberOfPeers { get; set; }
         public int NumberOfPurchases { get; set; }
