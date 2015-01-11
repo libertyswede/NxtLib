@@ -81,12 +81,6 @@ namespace NxtLib.Internal
                     case BidOrderPlacementAttachment.AttachmentName:
                         attachments.Add(new BidOrderPlacementAttachment(values));
                         break;
-                    case CurrencyIssuanceAttachment.AttachmentName:
-                        attachments.Add(new CurrencyIssuanceAttachment(values));
-                        break;
-                    case CurrencyMintingAttachment.AttachmentName:
-                        attachments.Add(new CurrencyMintingAttachment(values));
-                        break;
                     case DigitalGoodsDelistingAttachment.AttachmentName:
                         attachments.Add(new DigitalGoodsDelistingAttachment(values));
                         break;
@@ -120,23 +114,29 @@ namespace NxtLib.Internal
                     case EncryptToSelfMessageAttachment.AttachmentName:
                         attachments.Add(new EncryptToSelfMessageAttachment(values));
                         break;
-                    case ExchangeBuyAttachment.AttachmentName:
-                        attachments.Add(new ExchangeBuyAttachment(values));
-                        break;
-                    case ExchangeSellAttachment.AttachmentName:
-                        attachments.Add(new ExchangeSellAttachment(values));
-                        break;
                     case MessageAttachment.AttachmentName:
                         attachments.Add(new MessageAttachment(values));
+                        break;
+                    case MonetarySystemExchangeBuyAttachment.AttachmentName:
+                        attachments.Add(new MonetarySystemExchangeBuyAttachment(values));
+                        break;
+                    case MonetarySystemExchangeSellAttachment.AttachmentName:
+                        attachments.Add(new MonetarySystemExchangeSellAttachment(values));
+                        break;
+                    case MonetarySystemCurrencyIssuanceAttachment.AttachmentName:
+                        attachments.Add(new MonetarySystemCurrencyIssuanceAttachment(values));
+                        break;
+                    case MonetarySystemCurrencyMintingAttachment.AttachmentName:
+                        attachments.Add(new MonetarySystemCurrencyMintingAttachment(values));
+                        break;
+                    case MonetarySystemPublishExchangeOfferAttachment.AttachmentName:
+                        attachments.Add(new MonetarySystemPublishExchangeOfferAttachment(values));
                         break;
                     case MonetarySystemReserveIncrease.AttachmentName:
                         attachments.Add(new MonetarySystemReserveIncrease(values));
                         break;
                     case PublicKeyAnnouncementAttachment.AttachmentName:
                         attachments.Add(new PublicKeyAnnouncementAttachment(values));
-                        break;
-                    case PublishExchangeOfferAttachment.AttachmentName:
-                        attachments.Add(new PublishExchangeOfferAttachment(values));
                         break;
                     default: 
                         unhandledKeys.Add(key);

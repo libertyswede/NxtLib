@@ -197,76 +197,6 @@ namespace NxtLib
         }
     }
 
-    public class CurrencyIssuanceAttachment : Attachment
-    {
-        public byte Algorithm { get; set; }
-        public string Code { get; set; }
-        public byte Decimals { get; set; }
-        public string Description { get; set; }
-        public long InitialSupply { get; set; }
-        public int IssuanceHeight { get; set; }
-        public int MaxDifficulty { get; set; }
-        public long MaxSupply { get; set; }
-        public int MinDifficulty { get; set; }
-        public Amount MinReservePerUnit { get; set; }
-        public string Name { get; set; }
-        public long ReserveSupply { get; set; }
-        public byte Ruleset { get; set; }
-        public HashSet<CurrencyType> Types { get; set; }
-
-        internal const string AttachmentName = "version.CurrencyIssuance";
-        public CurrencyIssuanceAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            Algorithm = Convert.ToByte(values["algorithm"]);
-            Code = values["code"].ToString();
-            Decimals = Convert.ToByte(values["decimals"]);
-            Description = values["description"].ToString();
-            InitialSupply = Convert.ToInt64(values["initialSupply"]);
-            IssuanceHeight = Convert.ToInt32(values["issuanceHeight"]);
-            MaxDifficulty = Convert.ToInt32(values["maxDifficulty"]);
-            MaxSupply = Convert.ToInt64(values["maxSupply"]);
-            MinDifficulty = Convert.ToInt32(values["minDifficulty"]);
-            MinReservePerUnit = Amount.CreateAmountFromNqt(Convert.ToInt64(values["minReservePerUnitNQT"]));
-            Name = values["name"].ToString();
-            ReserveSupply = Convert.ToInt64(values["reserveSupply"]);
-            Ruleset = Convert.ToByte(values["ruleset"]);
-            SetTypes(Convert.ToInt32(values["type"]));
-        }
-
-        private void SetTypes(int type)
-        {
-            Types = new HashSet<CurrencyType>();
-
-            foreach (var currencyType in Enum.GetValues(typeof(CurrencyType)).Cast<CurrencyType>())
-            {
-                if ((type & (int) currencyType) != 0)
-                {
-                    Types.Add(currencyType);
-                }
-            }
-        }
-    }
-
-    public class CurrencyMintingAttachment : Attachment
-    {
-        public long Counter { get; set; }
-        public ulong CurrencyId { get; set; }
-        public long Nonce { get; set; }
-        public long Units { get; set; }
-
-        internal const string AttachmentName = "version.CurrencyMinting";
-
-        public CurrencyMintingAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            Counter = Convert.ToInt64(values["counter"]);
-            CurrencyId = Convert.ToUInt64(values["currency"]);
-            Nonce = Convert.ToInt64(values["nonce"]);
-            Units = Convert.ToInt64(values["units"]);
-        }
-    }
-
     public class DigitalGoodsDelistingAttachment : Attachment
     {
         public ulong GoodsId { get; set; }
@@ -450,6 +380,21 @@ namespace NxtLib
         }
     }
 
+    public class MessageAttachment : Attachment
+    {
+        public bool MessageIsText { get; set; }
+        public string Message { get; set; }
+
+        internal const string AttachmentName = "version.Message";
+
+        public MessageAttachment(IReadOnlyDictionary<string, object> values)
+            :base(values, AttachmentName)
+        {
+            MessageIsText = Convert.ToBoolean(values["messageIsText"]);
+            Message = values["message"].ToString();
+        }
+    }
+
     public abstract class MonetarySystemExchange : Attachment
     {
         public ulong CurrencyId { get; set; }
@@ -465,38 +410,120 @@ namespace NxtLib
         }
     }
 
-    public class ExchangeBuyAttachment : MonetarySystemExchange
+    public class MonetarySystemExchangeBuyAttachment : MonetarySystemExchange
     {
         internal const string AttachmentName = "version.ExchangeBuy";
 
-        public ExchangeBuyAttachment(IReadOnlyDictionary<string, object> values) 
+        public MonetarySystemExchangeBuyAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
         {
         }
     }
 
-    public class ExchangeSellAttachment : MonetarySystemExchange
+    public class MonetarySystemExchangeSellAttachment : MonetarySystemExchange
     {
         internal const string AttachmentName = "version.ExchangeSell";
 
-        public ExchangeSellAttachment(IReadOnlyDictionary<string, object> values)
+        public MonetarySystemExchangeSellAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
         {
         }
     }
 
-    public class MessageAttachment : Attachment
+    public class MonetarySystemCurrencyIssuanceAttachment : Attachment
     {
-        public bool MessageIsText { get; set; }
-        public string Message { get; set; }
+        public byte Algorithm { get; set; }
+        public string Code { get; set; }
+        public byte Decimals { get; set; }
+        public string Description { get; set; }
+        public long InitialSupply { get; set; }
+        public int IssuanceHeight { get; set; }
+        public int MaxDifficulty { get; set; }
+        public long MaxSupply { get; set; }
+        public int MinDifficulty { get; set; }
+        public Amount MinReservePerUnit { get; set; }
+        public string Name { get; set; }
+        public long ReserveSupply { get; set; }
+        public byte Ruleset { get; set; }
+        public HashSet<CurrencyType> Types { get; set; }
 
-        internal const string AttachmentName = "version.Message";
+        internal const string AttachmentName = "version.CurrencyIssuance";
+        public MonetarySystemCurrencyIssuanceAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Algorithm = Convert.ToByte(values["algorithm"]);
+            Code = values["code"].ToString();
+            Decimals = Convert.ToByte(values["decimals"]);
+            Description = values["description"].ToString();
+            InitialSupply = Convert.ToInt64(values["initialSupply"]);
+            IssuanceHeight = Convert.ToInt32(values["issuanceHeight"]);
+            MaxDifficulty = Convert.ToInt32(values["maxDifficulty"]);
+            MaxSupply = Convert.ToInt64(values["maxSupply"]);
+            MinDifficulty = Convert.ToInt32(values["minDifficulty"]);
+            MinReservePerUnit = Amount.CreateAmountFromNqt(Convert.ToInt64(values["minReservePerUnitNQT"]));
+            Name = values["name"].ToString();
+            ReserveSupply = Convert.ToInt64(values["reserveSupply"]);
+            Ruleset = Convert.ToByte(values["ruleset"]);
+            SetTypes(Convert.ToInt32(values["type"]));
+        }
 
-        public MessageAttachment(IReadOnlyDictionary<string, object> values)
+        private void SetTypes(int type)
+        {
+            Types = new HashSet<CurrencyType>();
+
+            foreach (var currencyType in Enum.GetValues(typeof(CurrencyType)).Cast<CurrencyType>())
+            {
+                if ((type & (int)currencyType) != 0)
+                {
+                    Types.Add(currencyType);
+                }
+            }
+        }
+    }
+
+    public class MonetarySystemCurrencyMintingAttachment : Attachment
+    {
+        public long Counter { get; set; }
+        public ulong CurrencyId { get; set; }
+        public long Nonce { get; set; }
+        public long Units { get; set; }
+
+        internal const string AttachmentName = "version.CurrencyMinting";
+
+        public MonetarySystemCurrencyMintingAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Counter = Convert.ToInt64(values["counter"]);
+            CurrencyId = Convert.ToUInt64(values["currency"]);
+            Nonce = Convert.ToInt64(values["nonce"]);
+            Units = Convert.ToInt64(values["units"]);
+        }
+    }
+
+    public class MonetarySystemPublishExchangeOfferAttachment : Attachment
+    {
+        public Amount BuyRate { get; set; }
+        public ulong CurrencyId { get; set; }
+        public int ExpirationHeight { get; set; }
+        public long InitialBuySupply { get; set; }
+        public long InitialSellSupply { get; set; }
+        public Amount SellRate { get; set; }
+        public long TotalBuyLimit { get; set; }
+        public long TotalSellLimit { get; set; }
+
+        internal const string AttachmentName = "version.PublishExchangeOffer";
+
+        public MonetarySystemPublishExchangeOfferAttachment(IReadOnlyDictionary<string, object> values) 
             :base(values, AttachmentName)
         {
-            MessageIsText = Convert.ToBoolean(values["messageIsText"]);
-            Message = values["message"].ToString();
+            BuyRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["buyRateNQT"]));
+            CurrencyId = Convert.ToUInt64(values["currency"]);
+            ExpirationHeight = Convert.ToInt32(values["expirationHeight"]);
+            InitialBuySupply = Convert.ToInt64(values["initialBuySupply"]);
+            InitialSellSupply = Convert.ToInt64(values["initialSellSupply"]);
+            SellRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["sellRateNQT"]));
+            TotalBuyLimit = Convert.ToInt64(values["totalBuyLimit"]);
+            TotalSellLimit = Convert.ToInt64(values["totalSellLimit"]);
         }
     }
 
@@ -525,33 +552,6 @@ namespace NxtLib
             :base(values, AttachmentName)
         {
             RecipientPublicKey = values["recipientPublicKey"].ToString();
-        }
-    }
-
-    public class PublishExchangeOfferAttachment : Attachment
-    {
-        public Amount BuyRate { get; set; }
-        public ulong CurrencyId { get; set; }
-        public int ExpirationHeight { get; set; }
-        public long InitialBuySupply { get; set; }
-        public long InitialSellSupply { get; set; }
-        public Amount SellRate { get; set; }
-        public long TotalBuyLimit { get; set; }
-        public long TotalSellLimit { get; set; }
-
-        internal const string AttachmentName = "version.PublishExchangeOffer";
-
-        public PublishExchangeOfferAttachment(IReadOnlyDictionary<string, object> values) 
-            :base(values, AttachmentName)
-        {
-            BuyRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["buyRateNQT"]));
-            CurrencyId = Convert.ToUInt64(values["currency"]);
-            ExpirationHeight = Convert.ToInt32(values["expirationHeight"]);
-            InitialBuySupply = Convert.ToInt64(values["initialBuySupply"]);
-            InitialSellSupply = Convert.ToInt64(values["initialSellSupply"]);
-            SellRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["sellRateNQT"]));
-            TotalBuyLimit = Convert.ToInt64(values["totalBuyLimit"]);
-            TotalSellLimit = Convert.ToInt64(values["totalSellLimit"]);
         }
     }
 }
