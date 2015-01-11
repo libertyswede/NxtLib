@@ -129,6 +129,9 @@ namespace NxtLib.Internal
                     case MonetarySystemCurrencyMintingAttachment.AttachmentName:
                         attachments.Add(new MonetarySystemCurrencyMintingAttachment(values));
                         break;
+                    case MonetarySystemCurrencyTransferAttachment.AttachmentName:
+                        attachments.Add(new MonetarySystemCurrencyTransferAttachment(values));
+                        break;
                     case MonetarySystemPublishExchangeOfferAttachment.AttachmentName:
                         attachments.Add(new MonetarySystemPublishExchangeOfferAttachment(values));
                         break;

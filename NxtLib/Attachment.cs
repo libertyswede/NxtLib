@@ -500,6 +500,21 @@ namespace NxtLib
         }
     }
 
+    public class MonetarySystemCurrencyTransferAttachment : Attachment
+    {
+        public ulong CurrencyId { get; set; }
+        public long Units { get; set; }
+
+        internal const string AttachmentName = "version.CurrencyTransfer";
+
+        public MonetarySystemCurrencyTransferAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            CurrencyId = Convert.ToUInt64(values["currency"]);
+            Units = Convert.ToInt64(values["units"]);
+        }
+    }
+
     public class MonetarySystemPublishExchangeOfferAttachment : Attachment
     {
         public Amount BuyRate { get; set; }
