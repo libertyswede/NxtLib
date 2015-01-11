@@ -475,6 +475,16 @@ namespace NxtLib
         }
     }
 
+    public class ExchangeSellAttachment : MonetarySystemExchange
+    {
+        internal const string AttachmentName = "version.ExchangeSell";
+
+        public ExchangeSellAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+        }
+    }
+
     public class MessageAttachment : Attachment
     {
         public bool MessageIsText { get; set; }

@@ -123,6 +123,9 @@ namespace NxtLib.Internal
                     case ExchangeBuyAttachment.AttachmentName:
                         attachments.Add(new ExchangeBuyAttachment(values));
                         break;
+                    case ExchangeSellAttachment.AttachmentName:
+                        attachments.Add(new ExchangeSellAttachment(values));
+                        break;
                     case MessageAttachment.AttachmentName:
                         attachments.Add(new MessageAttachment(values));
                         break;
