@@ -6,6 +6,7 @@ namespace NxtLib.ServerInfoOperations
 {
     public class GetConstantsReply : BaseReply
     {
+        public List<object> CurrencyTypes { get; set; }
         public int MaxArbitraryMessageLength { get; set; }
         public int MaxBlockPayloadLength { get; set; }
 
