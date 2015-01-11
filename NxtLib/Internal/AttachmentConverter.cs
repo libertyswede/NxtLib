@@ -80,6 +80,9 @@ namespace NxtLib.Internal
                     case DigitalGoodsDeliveryAttachment.AttachmentName:
                         attachments.Add(new DigitalGoodsDeliveryAttachment(values));
                         break;
+                    case ColoredCoinsDividendPaymentAttachment.AttachmentName:
+                        attachments.Add(new ColoredCoinsDividendPaymentAttachment(values));
+                        break;
                     case DigitalGoodsFeedbackAttachment.AttachmentName:
                         attachments.Add(new DigitalGoodsFeedbackAttachment(values));
                         break;

@@ -173,6 +173,23 @@ namespace NxtLib
         }
     }
 
+    public class ColoredCoinsDividendPaymentAttachment : Attachment
+    {
+        public Amount AmountPerQnt { get; set; }
+        public ulong AssetId { get; set; }
+        public int Height { get; set; }
+
+        internal const string AttachmentName = "version.DividendPayment";
+
+        public ColoredCoinsDividendPaymentAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            AmountPerQnt = Amount.CreateAmountFromNqt(Convert.ToInt64(values["amountNQTPerQNT"]));
+            AssetId = Convert.ToUInt64(values["asset"]);
+            Height = Convert.ToInt32(values["height"]);
+        }
+    }
+
     public class DigitalGoodsFeedbackAttachment : Attachment
     {
         public ulong PurchaseId { get; set; }
