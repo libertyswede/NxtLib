@@ -10,6 +10,7 @@ namespace NxtLib.AssetOperations
     {
         Task<TransactionCreated> CancelAskOrder(ulong orderId, CreateTransactionParameters parameters);
         Task<TransactionCreated> CancelBidOrder(ulong orderId, CreateTransactionParameters parameters);
+        Task<TransactionCreated> DividendPayment(ulong assetId, int height, Amount amountPerQnt);
         Task<AccountAssetCount> GetAccountAssetCount(string accountId, int? height = null);
         Task<AccountAsset> GetAccountAsset(string accountId, ulong assetId, int? height = null);
         Task<AccountAssets> GetAccountAssets(string accountId, int? height = null);
@@ -97,9 +98,20 @@ namespace NxtLib.AssetOperations
 
         public async Task<TransactionCreated> CancelBidOrder(ulong orderId, CreateTransactionParameters parameters)
         {
-            var queryParameters = new Dictionary<string, string> { { "order", orderId.ToString() } };
+            var queryParameters = new Dictionary<string, string> {{"order", orderId.ToString()}};
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreated>("cancelBidOrder", queryParameters);
+        }
+
+        public async Task<TransactionCreated> DividendPayment(ulong assetId, int height, Amount amountPerQnt)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"asset", assetId.ToString()},
+                {"height", height.ToString()},
+                {"amountNQTPerQNT", amountPerQnt.Nqt.ToString()}
+            };
+            return await Post<TransactionCreated>("dividendPayment", queryParameters);
         }
 
         public async Task<AccountAssetCount> GetAccountAssetCount(string accountId, int? height = null)
