@@ -84,6 +84,9 @@ namespace NxtLib.Internal
                     case CurrencyIssuanceAttachment.AttachmentName:
                         attachments.Add(new CurrencyIssuanceAttachment(values));
                         break;
+                    case CurrencyMintingAttachment.AttachmentName:
+                        attachments.Add(new CurrencyMintingAttachment(values));
+                        break;
                     case DigitalGoodsDelistingAttachment.AttachmentName:
                         attachments.Add(new DigitalGoodsDelistingAttachment(values));
                         break;

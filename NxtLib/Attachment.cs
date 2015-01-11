@@ -92,136 +92,39 @@ namespace NxtLib
         }
     }
 
-    public class DigitalGoodsPurchaseAttachment : Attachment
+    public abstract class OrderPlacementAttachment : Attachment
     {
-        public int DeliveryDeadlineTimestamp { get; set; }
-        public ulong GoodsId { get; set; }
-        public Amount Price { get; set; }
-        public int Quantity { get; set; }
-
-        internal const string AttachmentName = "version.DigitalGoodsPurchase";
-
-        public DigitalGoodsPurchaseAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            DeliveryDeadlineTimestamp = Convert.ToInt32(values["deliveryDeadlineTimestamp"]);
-            GoodsId = Convert.ToUInt64(values["goods"]);
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
-            Quantity = Convert.ToInt32(values["quantity"]);
-        }
-    }
-
-    public class DigitalGoodsQuantityChangeAttachment : Attachment
-    {
-        public int DeltaQuantity { get; set; }
-        public ulong GoodsId { get; set; }
-
-        internal const string AttachmentName = "version.DigitalGoodsQuantityChange";
-
-        public DigitalGoodsQuantityChangeAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        
-        {
-            DeltaQuantity = Convert.ToInt32(values["deltaQuantity"]);
-            GoodsId = Convert.ToUInt64(values["goods"]);
-        }
-    }
-
-    public class DigitalGoodsRefundAttachment : Attachment
-    {
-        public ulong PurchaseId { get; set; }
-        public Amount Refund { get; set; }
-
-        internal const string AttachmentName = "version.DigitalGoodsRefund";
-
-        public DigitalGoodsRefundAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            PurchaseId = Convert.ToUInt64(values["purchase"]);
-            Refund = Amount.CreateAmountFromNqt(Convert.ToInt64(values["refundNQT"]));
-        }
-    }
-
-    public class DigitalGoodsFeedbackAttachment : Attachment
-    {
-        public ulong PurchaseId { get; set; }
-
-        internal const string AttachmentName = "version.DigitalGoodsFeedback";
-
-        public DigitalGoodsFeedbackAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            PurchaseId = Convert.ToUInt64(values["purchase"]);
-        }
-    }
-
-    public class DigitalGoodsDeliveryAttachment : Attachment
-    {
-        public Amount Discount { get; set; }
-        public string GoodsData { get; set; }
-        public bool GoodsIsText { get; set; }
-        public string GoodsNonce { get; set; }
-        public ulong Purchase { get; set; }
-
-        internal const string AttachmentName = "version.DigitalGoodsDelivery";
-
-        public DigitalGoodsDeliveryAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            Discount = Amount.CreateAmountFromNqt(Convert.ToInt64(values["discountNQT"]));
-            GoodsData = values["goodsData"].ToString();
-            GoodsIsText = Convert.ToBoolean(values["goodsIsText"]);
-            GoodsNonce = values["goodsNonce"].ToString();
-            Purchase = Convert.ToUInt64(values["purchase"]);
-        }
-    }
-
-    public class DigitalGoodsPriceChangeAttachment : Attachment
-    {
-        public ulong GoodsId { get; set; }
+        public ulong AssetId { get; set; }
+        public long QuantityQnt { get; set; }
         public Amount Price { get; set; }
 
-        internal const string AttachmentName = "version.DigitalGoodsPriceChange";
-
-        public DigitalGoodsPriceChangeAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
+        protected OrderPlacementAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
+            : base(values, attachmentName)
         {
-            GoodsId = Convert.ToUInt64(values["goods"]);
+            AssetId = Convert.ToUInt64(values["asset"]);
+            QuantityQnt = Convert.ToInt64(values["quantityQNT"]);
             Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
         }
     }
 
-    public class DigitalGoodsDelistingAttachment : Attachment
+    public class AskOrderPlacementAttachment : OrderPlacementAttachment
     {
-        public ulong GoodsId { get; set; }
+        internal const string AttachmentName = "version.AskOrderPlacement";
 
-        internal const string AttachmentName = "version.DigitalGoodsDelisting";
-
-        public DigitalGoodsDelistingAttachment(IReadOnlyDictionary<string, object> values)
+        public AskOrderPlacementAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
         {
-            GoodsId = Convert.ToUInt64(values["goods"]);
         }
     }
 
-    public class DigitalGoodsListingAttachment : Attachment
+    public abstract class OrderCancellationAttachment : Attachment
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Tags { get; set; }
-        public int Quantity { get; set; }
-        public Amount Price { get; set; }
+        public ulong OrderId { get; private set; }
 
-        internal const string AttachmentName = "version.DigitalGoodsListing";
-
-        public DigitalGoodsListingAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
+        protected OrderCancellationAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
+            : base(values, attachmentName)
         {
-            Name = values["name"].ToString();
-            Description = values["description"].ToString();
-            Tags = values["tags"].ToString();
-            Quantity = Convert.ToInt32(values["quantity"]);
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
+            OrderId = Convert.ToUInt64(values["order"]);
         }
     }
 
@@ -274,96 +177,13 @@ namespace NxtLib
         }
     }
 
-    public class EffectiveBalanceLeasingAttachment : Attachment
+    public class BidOrderCancellationAttachment : OrderCancellationAttachment
     {
-        public short Period { get; set; }
+        internal const string AttachmentName = "version.BidOrderCancellation";
 
-        internal const string AttachmentName = "version.EffectiveBalanceLeasing";
-
-        public EffectiveBalanceLeasingAttachment(IReadOnlyDictionary<string, object> values)
+        public BidOrderCancellationAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
         {
-            Period = Convert.ToInt16(values["period"]);
-        }
-    }
-
-    public abstract class EncryptedMessageBase : Attachment
-    {
-        public bool IsText { get; set; }
-        public string Nonce { get; set; }
-        public string Data { get; set; }
-
-        protected EncryptedMessageBase(IReadOnlyDictionary<string, object> values, string encryptedMessageKey, string name)
-            : base(values, name)
-        {
-            var encryptedMessageValues = (IReadOnlyDictionary<string, object>) values[encryptedMessageKey];
-
-            IsText = (bool)encryptedMessageValues["isText"];
-            Nonce = encryptedMessageValues["nonce"].ToString();
-            Data = encryptedMessageValues["data"].ToString();
-        }
-    }
-
-    public class EncryptToSelfMessageAttachment : EncryptedMessageBase
-    {
-        internal const string AttachmentName = "version.EncryptToSelfMessage";
-
-        public EncryptToSelfMessageAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, "encryptToSelfMessage", AttachmentName)
-        {
-        }
-    }
-
-    public class EncryptedMessageAttachment : EncryptedMessageBase
-    {
-        internal const string AttachmentName = "version.EncryptedMessage";
-
-        public EncryptedMessageAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, "encryptedMessage", AttachmentName)
-        {
-        }
-    }
-
-    public class MessageAttachment : Attachment
-    {
-        public bool MessageIsText { get; set; }
-        public string Message { get; set; }
-
-        internal const string AttachmentName = "version.Message";
-
-        public MessageAttachment(IReadOnlyDictionary<string, object> values)
-            :base(values, AttachmentName)
-        {
-            MessageIsText = Convert.ToBoolean(values["messageIsText"]);
-            Message = values["message"].ToString();
-        }
-    }
-
-    public class PublicKeyAnnouncementAttachment : Attachment
-    {
-        public string RecipientPublicKey { get; set; }
-
-        internal const string AttachmentName = "version.PublicKeyAnnouncement";
-
-        public PublicKeyAnnouncementAttachment(IReadOnlyDictionary<string, object> values)
-            :base(values, AttachmentName)
-        {
-            RecipientPublicKey = values["recipientPublicKey"].ToString();
-        }
-    }
-
-    public abstract class OrderPlacementAttachment : Attachment
-    {
-        public ulong AssetId { get; set; }
-        public long QuantityQnt { get; set; }
-        public Amount Price { get; set; }
-
-        protected OrderPlacementAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
-            :base(values, attachmentName)
-        {
-            AssetId = Convert.ToUInt64(values["asset"]);
-            QuantityQnt = Convert.ToInt64(values["quantityQNT"]);
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
         }
     }
 
@@ -428,34 +248,233 @@ namespace NxtLib
         }
     }
 
-    public class AskOrderPlacementAttachment : OrderPlacementAttachment
+    public class CurrencyMintingAttachment : Attachment
     {
-        internal const string AttachmentName = "version.AskOrderPlacement";
+        public long Counter { get; set; }
+        public ulong CurrencyId { get; set; }
+        public long Nonce { get; set; }
+        public long Units { get; set; }
 
-        public AskOrderPlacementAttachment(IReadOnlyDictionary<string, object> values)
+        internal const string AttachmentName = "version.CurrencyMinting";
+
+        public CurrencyMintingAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
+        {
+            Counter = Convert.ToInt64(values["counter"]);
+            CurrencyId = Convert.ToUInt64(values["currency"]);
+            Nonce = Convert.ToInt64(values["nonce"]);
+            Units = Convert.ToInt64(values["units"]);
+        }
+    }
+
+    public class DigitalGoodsDelistingAttachment : Attachment
+    {
+        public ulong GoodsId { get; set; }
+
+        internal const string AttachmentName = "version.DigitalGoodsDelisting";
+
+        public DigitalGoodsDelistingAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            GoodsId = Convert.ToUInt64(values["goods"]);
+        }
+    }
+
+    public class DigitalGoodsDeliveryAttachment : Attachment
+    {
+        public Amount Discount { get; set; }
+        public string GoodsData { get; set; }
+        public bool GoodsIsText { get; set; }
+        public string GoodsNonce { get; set; }
+        public ulong Purchase { get; set; }
+
+        internal const string AttachmentName = "version.DigitalGoodsDelivery";
+
+        public DigitalGoodsDeliveryAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Discount = Amount.CreateAmountFromNqt(Convert.ToInt64(values["discountNQT"]));
+            GoodsData = values["goodsData"].ToString();
+            GoodsIsText = Convert.ToBoolean(values["goodsIsText"]);
+            GoodsNonce = values["goodsNonce"].ToString();
+            Purchase = Convert.ToUInt64(values["purchase"]);
+        }
+    }
+
+    public class DigitalGoodsFeedbackAttachment : Attachment
+    {
+        public ulong PurchaseId { get; set; }
+
+        internal const string AttachmentName = "version.DigitalGoodsFeedback";
+
+        public DigitalGoodsFeedbackAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            PurchaseId = Convert.ToUInt64(values["purchase"]);
+        }
+    }
+
+    public class DigitalGoodsListingAttachment : Attachment
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Tags { get; set; }
+        public int Quantity { get; set; }
+        public Amount Price { get; set; }
+
+        internal const string AttachmentName = "version.DigitalGoodsListing";
+
+        public DigitalGoodsListingAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Name = values["name"].ToString();
+            Description = values["description"].ToString();
+            Tags = values["tags"].ToString();
+            Quantity = Convert.ToInt32(values["quantity"]);
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
+        }
+    }
+
+    public class DigitalGoodsPriceChangeAttachment : Attachment
+    {
+        public ulong GoodsId { get; set; }
+        public Amount Price { get; set; }
+
+        internal const string AttachmentName = "version.DigitalGoodsPriceChange";
+
+        public DigitalGoodsPriceChangeAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            GoodsId = Convert.ToUInt64(values["goods"]);
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
+        }
+    }
+
+    public class DigitalGoodsPurchaseAttachment : Attachment
+    {
+        public int DeliveryDeadlineTimestamp { get; set; }
+        public ulong GoodsId { get; set; }
+        public Amount Price { get; set; }
+        public int Quantity { get; set; }
+
+        internal const string AttachmentName = "version.DigitalGoodsPurchase";
+
+        public DigitalGoodsPurchaseAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            DeliveryDeadlineTimestamp = Convert.ToInt32(values["deliveryDeadlineTimestamp"]);
+            GoodsId = Convert.ToUInt64(values["goods"]);
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
+            Quantity = Convert.ToInt32(values["quantity"]);
+        }
+    }
+
+    public class DigitalGoodsQuantityChangeAttachment : Attachment
+    {
+        public int DeltaQuantity { get; set; }
+        public ulong GoodsId { get; set; }
+
+        internal const string AttachmentName = "version.DigitalGoodsQuantityChange";
+
+        public DigitalGoodsQuantityChangeAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        
+        {
+            DeltaQuantity = Convert.ToInt32(values["deltaQuantity"]);
+            GoodsId = Convert.ToUInt64(values["goods"]);
+        }
+    }
+
+    public class DigitalGoodsRefundAttachment : Attachment
+    {
+        public ulong PurchaseId { get; set; }
+        public Amount Refund { get; set; }
+
+        internal const string AttachmentName = "version.DigitalGoodsRefund";
+
+        public DigitalGoodsRefundAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            PurchaseId = Convert.ToUInt64(values["purchase"]);
+            Refund = Amount.CreateAmountFromNqt(Convert.ToInt64(values["refundNQT"]));
+        }
+    }
+
+    public class EffectiveBalanceLeasingAttachment : Attachment
+    {
+        public short Period { get; set; }
+
+        internal const string AttachmentName = "version.EffectiveBalanceLeasing";
+
+        public EffectiveBalanceLeasingAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Period = Convert.ToInt16(values["period"]);
+        }
+    }
+
+    public abstract class EncryptedMessageBase : Attachment
+    {
+        public bool IsText { get; set; }
+        public string Nonce { get; set; }
+        public string Data { get; set; }
+
+        protected EncryptedMessageBase(IReadOnlyDictionary<string, object> values, string encryptedMessageKey, string name)
+            : base(values, name)
+        {
+            var encryptedMessageValues = (IReadOnlyDictionary<string, object>) values[encryptedMessageKey];
+
+            IsText = (bool)encryptedMessageValues["isText"];
+            Nonce = encryptedMessageValues["nonce"].ToString();
+            Data = encryptedMessageValues["data"].ToString();
+        }
+    }
+
+    public class EncryptedMessageAttachment : EncryptedMessageBase
+    {
+        internal const string AttachmentName = "version.EncryptedMessage";
+
+        public EncryptedMessageAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, "encryptedMessage", AttachmentName)
         {
         }
     }
 
-    public abstract class OrderCancellationAttachment : Attachment
+    public class EncryptToSelfMessageAttachment : EncryptedMessageBase
     {
-        public ulong OrderId { get; private set; }
+        internal const string AttachmentName = "version.EncryptToSelfMessage";
 
-        protected OrderCancellationAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
-            : base(values, attachmentName)
+        public EncryptToSelfMessageAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, "encryptToSelfMessage", AttachmentName)
         {
-            OrderId = Convert.ToUInt64(values["order"]);
         }
     }
 
-    public class BidOrderCancellationAttachment : OrderCancellationAttachment
+    public class MessageAttachment : Attachment
     {
-        internal const string AttachmentName = "version.BidOrderCancellation";
+        public bool MessageIsText { get; set; }
+        public string Message { get; set; }
 
-        public BidOrderCancellationAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
+        internal const string AttachmentName = "version.Message";
+
+        public MessageAttachment(IReadOnlyDictionary<string, object> values)
+            :base(values, AttachmentName)
         {
+            MessageIsText = Convert.ToBoolean(values["messageIsText"]);
+            Message = values["message"].ToString();
+        }
+    }
+
+    public class PublicKeyAnnouncementAttachment : Attachment
+    {
+        public string RecipientPublicKey { get; set; }
+
+        internal const string AttachmentName = "version.PublicKeyAnnouncement";
+
+        public PublicKeyAnnouncementAttachment(IReadOnlyDictionary<string, object> values)
+            :base(values, AttachmentName)
+        {
+            RecipientPublicKey = values["recipientPublicKey"].ToString();
         }
     }
 }
