@@ -450,6 +450,31 @@ namespace NxtLib
         }
     }
 
+    public abstract class MonetarySystemExchange : Attachment
+    {
+        public ulong CurrencyId { get; set; }
+        public Amount Rate { get; set; }
+        public long Units { get; set; }
+
+        protected MonetarySystemExchange(IReadOnlyDictionary<string, object> values, string name)
+            : base(values, name)
+        {
+            CurrencyId = Convert.ToUInt64(values["currency"]);
+            Rate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["rateNQT"]));
+            Units = Convert.ToInt64(values["units"]);
+        }
+    }
+
+    public class ExchangeBuyAttachment : MonetarySystemExchange
+    {
+        internal const string AttachmentName = "version.ExchangeBuy";
+
+        public ExchangeBuyAttachment(IReadOnlyDictionary<string, object> values) 
+            : base(values, AttachmentName)
+        {
+        }
+    }
+
     public class MessageAttachment : Attachment
     {
         public bool MessageIsText { get; set; }

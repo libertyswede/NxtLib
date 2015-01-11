@@ -120,6 +120,9 @@ namespace NxtLib.Internal
                     case EncryptToSelfMessageAttachment.AttachmentName:
                         attachments.Add(new EncryptToSelfMessageAttachment(values));
                         break;
+                    case ExchangeBuyAttachment.AttachmentName:
+                        attachments.Add(new ExchangeBuyAttachment(values));
+                        break;
                     case MessageAttachment.AttachmentName:
                         attachments.Add(new MessageAttachment(values));
                         break;
