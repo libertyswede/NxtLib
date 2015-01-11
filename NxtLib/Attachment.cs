@@ -21,6 +21,19 @@ namespace NxtLib
         }
     }
 
+    public class AccountControlEffectiveBalanceLeasingAttachment : Attachment
+    {
+        public short Period { get; set; }
+
+        internal const string AttachmentName = "version.EffectiveBalanceLeasing";
+
+        public AccountControlEffectiveBalanceLeasingAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Period = Convert.ToInt16(values["period"]);
+        }
+    }
+
     public abstract class ColoredCoinsOrderCancellationAttachment : Attachment
     {
         public ulong OrderId { get; private set; }
@@ -256,19 +269,6 @@ namespace NxtLib
         {
             PurchaseId = Convert.ToUInt64(values["purchase"]);
             Refund = Amount.CreateAmountFromNqt(Convert.ToInt64(values["refundNQT"]));
-        }
-    }
-
-    public class EffectiveBalanceLeasingAttachment : Attachment
-    {
-        public short Period { get; set; }
-
-        internal const string AttachmentName = "version.EffectiveBalanceLeasing";
-
-        public EffectiveBalanceLeasingAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            Period = Convert.ToInt16(values["period"]);
         }
     }
 
@@ -539,6 +539,21 @@ namespace NxtLib
             SellRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["sellRateNQT"]));
             TotalBuyLimit = Convert.ToInt64(values["totalBuyLimit"]);
             TotalSellLimit = Convert.ToInt64(values["totalSellLimit"]);
+        }
+    }
+
+    public class MonetarySystemReserveClaimAttachment : Attachment
+    {
+        public ulong CurrencyId { get; set; }
+        public long Units { get; set; }
+
+        internal const string AttachmentName = "version.ReserveClaim";
+
+        public MonetarySystemReserveClaimAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            CurrencyId = Convert.ToUInt64(values["currency"]);
+            Units = Convert.ToInt64(values["units"]);
         }
     }
 

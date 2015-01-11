@@ -53,6 +53,9 @@ namespace NxtLib.Internal
             {
                 switch (key)
                 {
+                    case AccountControlEffectiveBalanceLeasingAttachment.AttachmentName:
+                        attachments.Add(new AccountControlEffectiveBalanceLeasingAttachment(values));
+                        break;
                     case ColoredCoinsAskOrderCancellationAttachment.AttachmentName:
                         attachments.Add(new ColoredCoinsAskOrderCancellationAttachment(values));
                         break;
@@ -95,9 +98,6 @@ namespace NxtLib.Internal
                     case DigitalGoodsRefundAttachment.AttachmentName:
                         attachments.Add(new DigitalGoodsRefundAttachment(values));
                         break;
-                    case EffectiveBalanceLeasingAttachment.AttachmentName:
-                        attachments.Add(new EffectiveBalanceLeasingAttachment(values));
-                        break;
                     case EncryptedMessageAttachment.AttachmentName:
                         attachments.Add(new EncryptedMessageAttachment(values));
                         break;
@@ -139,6 +139,9 @@ namespace NxtLib.Internal
                         break;
                     case MonetarySystemPublishExchangeOfferAttachment.AttachmentName:
                         attachments.Add(new MonetarySystemPublishExchangeOfferAttachment(values));
+                        break;
+                    case MonetarySystemReserveClaimAttachment.AttachmentName:
+                        attachments.Add(new MonetarySystemReserveClaimAttachment(values));
                         break;
                     case MonetarySystemReserveIncrease.AttachmentName:
                         attachments.Add(new MonetarySystemReserveIncrease(values));
