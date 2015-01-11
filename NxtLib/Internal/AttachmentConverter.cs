@@ -1,177 +1,133 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using Newtonsoft.Json.Linq;
 
 namespace NxtLib.Internal
 {
-    internal class AttachmentConverter : JsonConverter
+    internal class AttachmentConverter
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.StartObject)
-            {
-                var values = new Dictionary<string, object>();
-                while (reader.Read() && reader.Value != null)
-                {
-                    var key = reader.Value.ToString();
-                    if (reader.Read() && reader.TokenType != JsonToken.StartObject)
-                    {
-                        values.Add(key, reader.Value);
-                    }
-                    else if (reader.TokenType == JsonToken.StartObject)
-                    {
-                        values.Add(key, ReadJson(reader, typeof(object), existingValue, serializer));
-                    }
-                }
-                if (objectType == typeof (List<Attachment>))
-                {
-                    var attachment = ParseAttachments(values);
-                    return attachment;
-                }
-                return values;
-            }
-            throw new NotSupportedException("Cannot convert non attachment objects");
-        }
+        private readonly JObject _attachments;
+        private static readonly IReadOnlyDictionary<string, Func<IReadOnlyDictionary<string, object>, Attachment>> AttachmentFuncs;
+        private readonly IReadOnlyDictionary<string, object> _attachmentsDictionary;
 
         // TODO: Add following:
         // MessagingPollCreation
         // MessagingVoteCasting
         // MessagingHubAnnouncement
         // ColoredCoinsDividendPayment
-        private static List<Attachment> ParseAttachments(Dictionary<string, object> values)
+        static AttachmentConverter()
         {
-            var attachments = new List<Attachment>();
-            var unhandledKeys = new List<string>();
+            var attachmentFuncs = new Dictionary<string, Func<IReadOnlyDictionary<string, object>, Attachment>>();
 
-            foreach (var key in values.Keys)
+            attachmentFuncs.Add(AccountControlEffectiveBalanceLeasingAttachment.AttachmentName, value => new AccountControlEffectiveBalanceLeasingAttachment(value));
+            attachmentFuncs.Add(ColoredCoinsAskOrderCancellationAttachment.AttachmentName, value => new ColoredCoinsAskOrderCancellationAttachment(value));
+            attachmentFuncs.Add(ColoredCoinsAskOrderPlacementAttachment.AttachmentName, value => new ColoredCoinsAskOrderPlacementAttachment(value));
+            attachmentFuncs.Add(ColoredCoinsAssetIssuanceAttachment.AttachmentName, value => new ColoredCoinsAssetIssuanceAttachment(value));
+            attachmentFuncs.Add(ColoredCoinsAssetTransferAttachment.AttachmentName, value => new ColoredCoinsAssetTransferAttachment(value));
+            attachmentFuncs.Add(ColoredCoinsBidOrderCancellationAttachment.AttachmentName, value => new ColoredCoinsBidOrderCancellationAttachment(value));
+            attachmentFuncs.Add(ColoredCoinsBidOrderPlacementAttachment.AttachmentName, value => new ColoredCoinsBidOrderPlacementAttachment(value));
+            attachmentFuncs.Add(DigitalGoodsDelistingAttachment.AttachmentName, value => new DigitalGoodsDelistingAttachment(value));
+            attachmentFuncs.Add(DigitalGoodsDeliveryAttachment.AttachmentName, value => new DigitalGoodsDeliveryAttachment(value));
+            attachmentFuncs.Add(ColoredCoinsDividendPaymentAttachment.AttachmentName, value => new ColoredCoinsDividendPaymentAttachment(value));
+            attachmentFuncs.Add(DigitalGoodsFeedbackAttachment.AttachmentName, value => new DigitalGoodsFeedbackAttachment(value));
+            attachmentFuncs.Add(DigitalGoodsListingAttachment.AttachmentName, value => new DigitalGoodsListingAttachment(value));
+            attachmentFuncs.Add(DigitalGoodsPriceChangeAttachment.AttachmentName, value => new DigitalGoodsPriceChangeAttachment(value));
+            attachmentFuncs.Add(DigitalGoodsPurchaseAttachment.AttachmentName, value => new DigitalGoodsPurchaseAttachment(value));
+            attachmentFuncs.Add(DigitalGoodsQuantityChangeAttachment.AttachmentName, value => new DigitalGoodsQuantityChangeAttachment(value));
+            attachmentFuncs.Add(DigitalGoodsRefundAttachment.AttachmentName, value => new DigitalGoodsRefundAttachment(value));
+            attachmentFuncs.Add(MessagingAccountInfoAttachment.AttachmentName, value => new MessagingAccountInfoAttachment(value));
+            attachmentFuncs.Add(MessagingAliasAssignmentAttachment.AttachmentName, value => new MessagingAliasAssignmentAttachment(value));
+            attachmentFuncs.Add(MessagingAliasBuyAttachment.AttachmentName, value => new MessagingAliasBuyAttachment(value));
+            attachmentFuncs.Add(MessagingAliasDeleteAttachment.AttachmentName, value => new MessagingAliasDeleteAttachment(value));
+            attachmentFuncs.Add(MessagingAliasSellAttachment.AttachmentName, value => new MessagingAliasSellAttachment(value));
+            attachmentFuncs.Add(MonetarySystemExchangeBuyAttachment.AttachmentName, value => new MonetarySystemExchangeBuyAttachment(value));
+            attachmentFuncs.Add(MonetarySystemExchangeSellAttachment.AttachmentName, value => new MonetarySystemExchangeSellAttachment(value));
+            attachmentFuncs.Add(MonetarySystemCurrencyIssuanceAttachment.AttachmentName, value => new MonetarySystemCurrencyIssuanceAttachment(value));
+            attachmentFuncs.Add(MonetarySystemCurrencyMintingAttachment.AttachmentName, value => new MonetarySystemCurrencyMintingAttachment(value));
+            attachmentFuncs.Add(MonetarySystemCurrencyTransferAttachment.AttachmentName, value => new MonetarySystemCurrencyTransferAttachment(value));
+            attachmentFuncs.Add(MonetarySystemPublishExchangeOfferAttachment.AttachmentName, value => new MonetarySystemPublishExchangeOfferAttachment(value));
+            attachmentFuncs.Add(MonetarySystemReserveClaimAttachment.AttachmentName, value => new MonetarySystemReserveClaimAttachment(value));
+            attachmentFuncs.Add(MonetarySystemReserveIncrease.AttachmentName, value => new MonetarySystemReserveIncrease(value));
+
+            AttachmentFuncs = new ReadOnlyDictionary<string, Func<IReadOnlyDictionary<string, object>, Attachment>>(attachmentFuncs);
+        }
+
+        internal AttachmentConverter(JObject attachments)
+        {
+            _attachments = attachments;
+            _attachmentsDictionary = GetDictionaryFromAttachments(_attachments);
+        }
+
+        internal PublicKeyAnnouncement GetPublicKeyAnnouncement()
+        {
+            if (_attachments == null || !_attachmentsDictionary.ContainsKey(PublicKeyAnnouncement.AttachmentName))
             {
-                switch (key)
+                return null;
+            }
+            return new PublicKeyAnnouncement(_attachmentsDictionary);
+        }
+
+        internal EncryptToSelfMessage GetEncryptToSelfMessage()
+        {
+            if (_attachments == null || !_attachmentsDictionary.ContainsKey(EncryptToSelfMessage.AttachmentName))
+            {
+                return null;
+            }
+            return new EncryptToSelfMessage(_attachmentsDictionary);
+        }
+
+        internal EncryptedMessage GetEncryptedMessage()
+        {
+            if (_attachments == null || !_attachmentsDictionary.ContainsKey(EncryptedMessage.AttachmentName))
+            {
+                return null;
+            }
+            return new EncryptedMessage(_attachmentsDictionary);
+        }
+
+        internal UnencryptedMessage GetMessage()
+        {
+            if (_attachments == null || !_attachmentsDictionary.ContainsKey(UnencryptedMessage.AttachmentName))
+            {
+                return null;
+            }
+            return new UnencryptedMessage(_attachmentsDictionary);
+        }
+
+        internal Attachment GetAttachment()
+        {
+            if (_attachments == null)
+            {
+                return null;
+            }
+
+            foreach (var key in _attachmentsDictionary.Keys)
+            {
+                Func<IReadOnlyDictionary<string, object>, Attachment> func;
+                if (AttachmentFuncs.TryGetValue(key, out func))
                 {
-                    case AccountControlEffectiveBalanceLeasingAttachment.AttachmentName:
-                        attachments.Add(new AccountControlEffectiveBalanceLeasingAttachment(values));
-                        break;
-                    case ColoredCoinsAskOrderCancellationAttachment.AttachmentName:
-                        attachments.Add(new ColoredCoinsAskOrderCancellationAttachment(values));
-                        break;
-                    case ColoredCoinsAskOrderPlacementAttachment.AttachmentName:
-                        attachments.Add(new ColoredCoinsAskOrderPlacementAttachment(values));
-                        break;
-                    case ColoredCoinsAssetIssuanceAttachment.AttachmentName:
-                        attachments.Add(new ColoredCoinsAssetIssuanceAttachment(values));
-                        break;
-                    case ColoredCoinsAssetTransferAttachment.AttachmentName:
-                        attachments.Add(new ColoredCoinsAssetTransferAttachment(values));
-                        break;
-                    case ColoredCoinsBidOrderCancellationAttachment.AttachmentName:
-                        attachments.Add(new ColoredCoinsBidOrderCancellationAttachment(values));
-                        break;
-                    case ColoredCoinsBidOrderPlacementAttachment.AttachmentName:
-                        attachments.Add(new ColoredCoinsBidOrderPlacementAttachment(values));
-                        break;
-                    case DigitalGoodsDelistingAttachment.AttachmentName:
-                        attachments.Add(new DigitalGoodsDelistingAttachment(values));
-                        break;
-                    case DigitalGoodsDeliveryAttachment.AttachmentName:
-                        attachments.Add(new DigitalGoodsDeliveryAttachment(values));
-                        break;
-                    case ColoredCoinsDividendPaymentAttachment.AttachmentName:
-                        attachments.Add(new ColoredCoinsDividendPaymentAttachment(values));
-                        break;
-                    case DigitalGoodsFeedbackAttachment.AttachmentName:
-                        attachments.Add(new DigitalGoodsFeedbackAttachment(values));
-                        break;
-                    case DigitalGoodsListingAttachment.AttachmentName:
-                        attachments.Add(new DigitalGoodsListingAttachment(values));
-                        break;
-                    case DigitalGoodsPriceChangeAttachment.AttachmentName:
-                        attachments.Add(new DigitalGoodsPriceChangeAttachment(values));
-                        break;
-                    case DigitalGoodsPurchaseAttachment.AttachmentName:
-                        attachments.Add(new DigitalGoodsPurchaseAttachment(values));
-                        break;
-                    case DigitalGoodsQuantityChangeAttachment.AttachmentName:
-                        attachments.Add(new DigitalGoodsQuantityChangeAttachment(values));
-                        break;
-                    case DigitalGoodsRefundAttachment.AttachmentName:
-                        attachments.Add(new DigitalGoodsRefundAttachment(values));
-                        break;
-                    case EncryptedMessageAttachment.AttachmentName:
-                        attachments.Add(new EncryptedMessageAttachment(values));
-                        break;
-                    case EncryptToSelfMessageAttachment.AttachmentName:
-                        attachments.Add(new EncryptToSelfMessageAttachment(values));
-                        break;
-                    case MessageAttachment.AttachmentName:
-                        attachments.Add(new MessageAttachment(values));
-                        break;
-                    case MessagingAccountInfoAttachment.AttachmentName:
-                        attachments.Add(new MessagingAccountInfoAttachment(values));
-                        break;
-                    case MessagingAliasAssignmentAttachment.AttachmentName:
-                        attachments.Add(new MessagingAliasAssignmentAttachment(values));
-                        break;
-                    case MessagingAliasBuyAttachment.AttachmentName:
-                        attachments.Add(new MessagingAliasBuyAttachment(values));
-                        break;
-                    case MessagingAliasDeleteAttachment.AttachmentName:
-                        attachments.Add(new MessagingAliasDeleteAttachment(values));
-                        break;
-                    case MessagingAliasSellAttachment.AttachmentName:
-                        attachments.Add(new MessagingAliasSellAttachment(values));
-                        break;
-                    case MonetarySystemExchangeBuyAttachment.AttachmentName:
-                        attachments.Add(new MonetarySystemExchangeBuyAttachment(values));
-                        break;
-                    case MonetarySystemExchangeSellAttachment.AttachmentName:
-                        attachments.Add(new MonetarySystemExchangeSellAttachment(values));
-                        break;
-                    case MonetarySystemCurrencyIssuanceAttachment.AttachmentName:
-                        attachments.Add(new MonetarySystemCurrencyIssuanceAttachment(values));
-                        break;
-                    case MonetarySystemCurrencyMintingAttachment.AttachmentName:
-                        attachments.Add(new MonetarySystemCurrencyMintingAttachment(values));
-                        break;
-                    case MonetarySystemCurrencyTransferAttachment.AttachmentName:
-                        attachments.Add(new MonetarySystemCurrencyTransferAttachment(values));
-                        break;
-                    case MonetarySystemPublishExchangeOfferAttachment.AttachmentName:
-                        attachments.Add(new MonetarySystemPublishExchangeOfferAttachment(values));
-                        break;
-                    case MonetarySystemReserveClaimAttachment.AttachmentName:
-                        attachments.Add(new MonetarySystemReserveClaimAttachment(values));
-                        break;
-                    case MonetarySystemReserveIncrease.AttachmentName:
-                        attachments.Add(new MonetarySystemReserveIncrease(values));
-                        break;
-                    case PublicKeyAnnouncementAttachment.AttachmentName:
-                        attachments.Add(new PublicKeyAnnouncementAttachment(values));
-                        break;
-                    default: 
-                        unhandledKeys.Add(key);
-                        break;
+                    return func.Invoke(_attachmentsDictionary);
                 }
             }
 
-            if (unhandledKeys.Any(k => k.StartsWith("version.")))
-            {
+            return null;
+        }
 
-                throw new NotSupportedException("Could not find correct attachment to convert to: " + unhandledKeys.First(k => k.StartsWith("version.")));
+        private static Dictionary<string, object> GetDictionaryFromAttachments(JToken attachments)
+        {
+            if (attachments == null)
+            {
+                return null;
+            }
+            var dictionary = new Dictionary<string, object>();
+            foreach (var child in attachments.Children<JProperty>())
+            {
+                var jValue = child.Value as JValue;
+                dictionary.Add(child.Name, jValue != null ? jValue.Value : GetDictionaryFromAttachments(child.Value));
             }
 
-            return attachments;
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            throw new NotImplementedException();
+            return dictionary;
         }
     }
-
-    
 }

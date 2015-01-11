@@ -69,6 +69,7 @@
     <Compile Include="AliasOperations\AliasLocator.cs" />
     <Compile Include="AliasOperations\AliasService.cs" />
     <Compile Include="Amount.cs" />
+    <Compile Include="Appendix.cs" />
     <Compile Include="ArbitraryMessageOperations\ArbitraryMessageService.cs" />
     <Compile Include="ArbitraryMessageOperations\DecryptedMessage.cs" />
     <Compile Include="ArbitraryMessageOperations\EncryptedMessage.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Internal\NxtAmountConverter.cs" />
     <Compile Include="Internal\PeerStateConverter.cs" />
     <Compile Include="Internal\StringToIntegralTypeConverter.cs" />
+    <Compile Include="Internal\TransactionConverter.cs" />
     <Compile Include="LocatorBase.cs" />
     <Compile Include="MessagesToSend.cs" />
     <Compile Include="MonetarySystemOperations\CanDeleteCurrencyReply.cs" />

@@ -289,58 +289,6 @@ namespace NxtLib
         }
     }
 
-    public abstract class EncryptedMessageBase : Attachment
-    {
-        public bool IsText { get; set; }
-        public string Nonce { get; set; }
-        public string Data { get; set; }
-
-        protected EncryptedMessageBase(IReadOnlyDictionary<string, object> values, string encryptedMessageKey, string name)
-            : base(values, name)
-        {
-            var encryptedMessageValues = (IReadOnlyDictionary<string, object>) values[encryptedMessageKey];
-
-            IsText = (bool)encryptedMessageValues["isText"];
-            Nonce = encryptedMessageValues["nonce"].ToString();
-            Data = encryptedMessageValues["data"].ToString();
-        }
-    }
-
-    public class EncryptedMessageAttachment : EncryptedMessageBase
-    {
-        internal const string AttachmentName = "version.EncryptedMessage";
-
-        public EncryptedMessageAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, "encryptedMessage", AttachmentName)
-        {
-        }
-    }
-
-    public class EncryptToSelfMessageAttachment : EncryptedMessageBase
-    {
-        internal const string AttachmentName = "version.EncryptToSelfMessage";
-
-        public EncryptToSelfMessageAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, "encryptToSelfMessage", AttachmentName)
-        {
-        }
-    }
-
-    public class MessageAttachment : Attachment
-    {
-        public bool MessageIsText { get; set; }
-        public string Message { get; set; }
-
-        internal const string AttachmentName = "version.Message";
-
-        public MessageAttachment(IReadOnlyDictionary<string, object> values)
-            :base(values, AttachmentName)
-        {
-            MessageIsText = Convert.ToBoolean(values["messageIsText"]);
-            Message = values["message"].ToString();
-        }
-    }
-
     public class MessagingAccountInfoAttachment : Attachment
     {
         public string Name { get; set; }
@@ -586,19 +534,6 @@ namespace NxtLib
         {
             AmountPerUnit = Amount.CreateAmountFromNqt(Convert.ToInt64(values["amountPerUnitNQT"]));
             CurrencyId = Convert.ToUInt64(values["currency"]);
-        }
-    }
-
-    public class PublicKeyAnnouncementAttachment : Attachment
-    {
-        public string RecipientPublicKey { get; set; }
-
-        internal const string AttachmentName = "version.PublicKeyAnnouncement";
-
-        public PublicKeyAnnouncementAttachment(IReadOnlyDictionary<string, object> values)
-            :base(values, AttachmentName)
-        {
-            RecipientPublicKey = values["recipientPublicKey"].ToString();
         }
     }
 }
