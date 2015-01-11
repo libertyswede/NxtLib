@@ -21,124 +21,38 @@ namespace NxtLib
         }
     }
 
-    public class AccountInfoAttachment : Attachment
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-
-        internal const string AttachmentName = "version.AccountInfo";
-
-        public AccountInfoAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            Name = values["name"].ToString();
-            Description = values["description"].ToString();
-        }
-    }
-
-    public class AliasAssignmentAttachment : Attachment
-    {
-        public string Alias { get; set; }
-        public string Uri { get; set; }
-
-        internal const string AttachmentName = "version.AliasAssignment";
-
-        public AliasAssignmentAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            Alias = values["alias"].ToString();
-            Uri = values["uri"].ToString();
-        }
-    }
-
-    public class AliasBuyAttachment : Attachment
-    {
-        public string Alias { get; set; }
-
-        internal const string AttachmentName = "version.AliasBuy";
-
-        public AliasBuyAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            Alias = values["alias"].ToString();
-        }
-    }
-
-    public class AliasDeleteAttachment : Attachment
-    {
-        public string Alias { get; set; }
-
-        internal const string AttachmentName = "version.AliasDelete";
-
-        public AliasDeleteAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            Alias = values["alias"].ToString();
-        }
-    }
-
-    public class AliasSellAttachment : Attachment
-    {
-        public string Alias { get; set; }
-        public Amount Price { get; set; }
-
-        internal const string AttachmentName = "version.AliasSell";
-
-        public AliasSellAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-            Alias = values["alias"].ToString();
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
-        }
-    }
-
-    public abstract class OrderPlacementAttachment : Attachment
-    {
-        public ulong AssetId { get; set; }
-        public long QuantityQnt { get; set; }
-        public Amount Price { get; set; }
-
-        protected OrderPlacementAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
-            : base(values, attachmentName)
-        {
-            AssetId = Convert.ToUInt64(values["asset"]);
-            QuantityQnt = Convert.ToInt64(values["quantityQNT"]);
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
-        }
-    }
-
-    public class AskOrderPlacementAttachment : OrderPlacementAttachment
-    {
-        internal const string AttachmentName = "version.AskOrderPlacement";
-
-        public AskOrderPlacementAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        {
-        }
-    }
-
-    public abstract class OrderCancellationAttachment : Attachment
+    public abstract class ColoredCoinsOrderCancellationAttachment : Attachment
     {
         public ulong OrderId { get; private set; }
 
-        protected OrderCancellationAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
+        protected ColoredCoinsOrderCancellationAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
             : base(values, attachmentName)
         {
             OrderId = Convert.ToUInt64(values["order"]);
         }
     }
 
-    public class AskOrderCancellationAttachment : OrderCancellationAttachment
+    public class ColoredCoinsAskOrderCancellationAttachment : ColoredCoinsOrderCancellationAttachment
     {
         internal const string AttachmentName = "version.AskOrderCancellation";
 
-        public AskOrderCancellationAttachment(IReadOnlyDictionary<string, object> values)
+        public ColoredCoinsAskOrderCancellationAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
         {
         }
     }
 
-    public class AssetIssuanceAttachment : Attachment
+    public class ColoredCoinsAskOrderPlacementAttachment : ColoredCoinsOrderPlacementAttachment
+    {
+        internal const string AttachmentName = "version.AskOrderPlacement";
+
+        public ColoredCoinsAskOrderPlacementAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+        }
+    }
+
+    public class ColoredCoinsAssetIssuanceAttachment : Attachment
     {
         public byte Decimals { get; set; }
         public string Description { get; set; }
@@ -147,7 +61,7 @@ namespace NxtLib
 
         internal const string AttachmentName = "version.AssetIssuance";
 
-        public AssetIssuanceAttachment(IReadOnlyDictionary<string, object> values)
+        public ColoredCoinsAssetIssuanceAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
         {
             Decimals = Convert.ToByte(values["decimals"]);
@@ -157,7 +71,7 @@ namespace NxtLib
         }
     }
 
-    public class AssetTransferAttachment : Attachment
+    public class ColoredCoinsAssetTransferAttachment : Attachment
     {
         public ulong AssetId { get; set; }
         public long QuantityQnt { get; set; }
@@ -165,7 +79,7 @@ namespace NxtLib
 
         internal const string AttachmentName = "version.AssetTransfer";
 
-        public AssetTransferAttachment(IReadOnlyDictionary<string, object> values)
+        public ColoredCoinsAssetTransferAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
         {
             AssetId = Convert.ToUInt64(values["asset"]);
@@ -177,21 +91,36 @@ namespace NxtLib
         }
     }
 
-    public class BidOrderCancellationAttachment : OrderCancellationAttachment
+    public class ColoredCoinsBidOrderCancellationAttachment : ColoredCoinsOrderCancellationAttachment
     {
         internal const string AttachmentName = "version.BidOrderCancellation";
 
-        public BidOrderCancellationAttachment(IReadOnlyDictionary<string, object> values)
+        public ColoredCoinsBidOrderCancellationAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
         {
         }
     }
 
-    public class BidOrderPlacementAttachment : OrderPlacementAttachment
+    public abstract class ColoredCoinsOrderPlacementAttachment : Attachment
+    {
+        public ulong AssetId { get; set; }
+        public long QuantityQnt { get; set; }
+        public Amount Price { get; set; }
+
+        protected ColoredCoinsOrderPlacementAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
+            : base(values, attachmentName)
+        {
+            AssetId = Convert.ToUInt64(values["asset"]);
+            QuantityQnt = Convert.ToInt64(values["quantityQNT"]);
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
+        }
+    }
+
+    public class ColoredCoinsBidOrderPlacementAttachment : ColoredCoinsOrderPlacementAttachment
     {
         internal const string AttachmentName = "version.BidOrderPlacement";
 
-        public BidOrderPlacementAttachment(IReadOnlyDictionary<string, object> values)
+        public ColoredCoinsBidOrderPlacementAttachment(IReadOnlyDictionary<string, object> values)
             : base(values, AttachmentName)
         {
         }
@@ -392,6 +321,77 @@ namespace NxtLib
         {
             MessageIsText = Convert.ToBoolean(values["messageIsText"]);
             Message = values["message"].ToString();
+        }
+    }
+
+    public class MessagingAccountInfoAttachment : Attachment
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        internal const string AttachmentName = "version.AccountInfo";
+
+        public MessagingAccountInfoAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Name = values["name"].ToString();
+            Description = values["description"].ToString();
+        }
+    }
+
+    public class MessagingAliasAssignmentAttachment : Attachment
+    {
+        public string Alias { get; set; }
+        public string Uri { get; set; }
+
+        internal const string AttachmentName = "version.AliasAssignment";
+
+        public MessagingAliasAssignmentAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Alias = values["alias"].ToString();
+            Uri = values["uri"].ToString();
+        }
+    }
+
+    public class MessagingAliasBuyAttachment : Attachment
+    {
+        public string Alias { get; set; }
+
+        internal const string AttachmentName = "version.AliasBuy";
+
+        public MessagingAliasBuyAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Alias = values["alias"].ToString();
+        }
+    }
+
+    public class MessagingAliasDeleteAttachment : Attachment
+    {
+        public string Alias { get; set; }
+
+        internal const string AttachmentName = "version.AliasDelete";
+
+        public MessagingAliasDeleteAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Alias = values["alias"].ToString();
+        }
+    }
+
+    public class MessagingAliasSellAttachment : Attachment
+    {
+        public string Alias { get; set; }
+        public Amount Price { get; set; }
+
+        internal const string AttachmentName = "version.AliasSell";
+
+        public MessagingAliasSellAttachment(IReadOnlyDictionary<string, object> values)
+            : base(values, AttachmentName)
+        {
+            Alias = values["alias"].ToString();
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
         }
     }
 

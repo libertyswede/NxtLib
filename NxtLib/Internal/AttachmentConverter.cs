@@ -39,6 +39,11 @@ namespace NxtLib.Internal
             throw new NotSupportedException("Cannot convert non attachment objects");
         }
 
+        // TODO: Add following:
+        // MessagingPollCreation
+        // MessagingVoteCasting
+        // MessagingHubAnnouncement
+        // ColoredCoinsDividendPayment
         private static List<Attachment> ParseAttachments(Dictionary<string, object> values)
         {
             var attachments = new List<Attachment>();
@@ -48,38 +53,23 @@ namespace NxtLib.Internal
             {
                 switch (key)
                 {
-                    case AccountInfoAttachment.AttachmentName:
-                        attachments.Add(new AccountInfoAttachment(values));
+                    case ColoredCoinsAskOrderCancellationAttachment.AttachmentName:
+                        attachments.Add(new ColoredCoinsAskOrderCancellationAttachment(values));
                         break;
-                    case AliasAssignmentAttachment.AttachmentName:
-                        attachments.Add(new AliasAssignmentAttachment(values));
+                    case ColoredCoinsAskOrderPlacementAttachment.AttachmentName:
+                        attachments.Add(new ColoredCoinsAskOrderPlacementAttachment(values));
                         break;
-                    case AliasBuyAttachment.AttachmentName:
-                        attachments.Add(new AliasBuyAttachment(values));
+                    case ColoredCoinsAssetIssuanceAttachment.AttachmentName:
+                        attachments.Add(new ColoredCoinsAssetIssuanceAttachment(values));
                         break;
-                    case AliasDeleteAttachment.AttachmentName:
-                        attachments.Add(new AliasDeleteAttachment(values));
+                    case ColoredCoinsAssetTransferAttachment.AttachmentName:
+                        attachments.Add(new ColoredCoinsAssetTransferAttachment(values));
                         break;
-                    case AliasSellAttachment.AttachmentName:
-                        attachments.Add(new AliasSellAttachment(values));
+                    case ColoredCoinsBidOrderCancellationAttachment.AttachmentName:
+                        attachments.Add(new ColoredCoinsBidOrderCancellationAttachment(values));
                         break;
-                    case AskOrderPlacementAttachment.AttachmentName:
-                        attachments.Add(new AskOrderPlacementAttachment(values));
-                        break;
-                    case AskOrderCancellationAttachment.AttachmentName:
-                        attachments.Add(new AskOrderCancellationAttachment(values));
-                        break;
-                    case AssetIssuanceAttachment.AttachmentName:
-                        attachments.Add(new AssetIssuanceAttachment(values));
-                        break;
-                    case AssetTransferAttachment.AttachmentName:
-                        attachments.Add(new AssetTransferAttachment(values));
-                        break;
-                    case BidOrderCancellationAttachment.AttachmentName:
-                        attachments.Add(new BidOrderCancellationAttachment(values));
-                        break;
-                    case BidOrderPlacementAttachment.AttachmentName:
-                        attachments.Add(new BidOrderPlacementAttachment(values));
+                    case ColoredCoinsBidOrderPlacementAttachment.AttachmentName:
+                        attachments.Add(new ColoredCoinsBidOrderPlacementAttachment(values));
                         break;
                     case DigitalGoodsDelistingAttachment.AttachmentName:
                         attachments.Add(new DigitalGoodsDelistingAttachment(values));
@@ -116,6 +106,21 @@ namespace NxtLib.Internal
                         break;
                     case MessageAttachment.AttachmentName:
                         attachments.Add(new MessageAttachment(values));
+                        break;
+                    case MessagingAccountInfoAttachment.AttachmentName:
+                        attachments.Add(new MessagingAccountInfoAttachment(values));
+                        break;
+                    case MessagingAliasAssignmentAttachment.AttachmentName:
+                        attachments.Add(new MessagingAliasAssignmentAttachment(values));
+                        break;
+                    case MessagingAliasBuyAttachment.AttachmentName:
+                        attachments.Add(new MessagingAliasBuyAttachment(values));
+                        break;
+                    case MessagingAliasDeleteAttachment.AttachmentName:
+                        attachments.Add(new MessagingAliasDeleteAttachment(values));
+                        break;
+                    case MessagingAliasSellAttachment.AttachmentName:
+                        attachments.Add(new MessagingAliasSellAttachment(values));
                         break;
                     case MonetarySystemExchangeBuyAttachment.AttachmentName:
                         attachments.Add(new MonetarySystemExchangeBuyAttachment(values));
