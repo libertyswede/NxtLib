@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("NET Framework API for the NXT platform")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("libertyswede")]
-[assembly: AssemblyProduct("NxtApi")]
+[assembly: AssemblyProduct("NxtLib")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
