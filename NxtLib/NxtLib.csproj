@@ -188,6 +188,7 @@
     <Compile Include="TransactionOperations\TransactionParameters.cs" />
     <Compile Include="TransactionOperations\TransactionReply.cs" />
     <Compile Include="TransactionOperations\TransactionService.cs" />
+    <Compile Include="TransactionTypeMapper.cs" />
     <Compile Include="UtilOperations\LongConvertReply.cs" />
     <Compile Include="UtilOperations\RsConvertReply.cs" />
     <Compile Include="UtilOperations\UtilitiesServices.cs" />

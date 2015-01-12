@@ -30,11 +30,71 @@ namespace NxtLib
         public string SenderPublicKey { get; set; }
         public string Signature { get; set; }
         public string SignatureHash { get; set; }
-        public byte SubType { get; set; }
+        public TransactionSubType SubType { get; set; }
         public DateTime Timestamp { get; set; }
         public ulong? TransactionId { get; set; }
         public int TransactionIndex { get; set; }
-        public byte Type { get; set; }
+        public TransactionMainType Type { get; set; }
         public int Version { get; set; }
+    }
+
+    public enum TransactionMainType
+    {
+        Payment,
+        Messaging,
+        ColoredCoins,
+        DigitalGoods,
+        AccountControl,
+        MonetarySystem
+    }
+
+    public enum TransactionSubType
+    {
+        // Payment
+        PaymentOrdinaryPayment,
+
+        // Messaging
+        MessagingArbitraryMessage,
+        MessagingAliasAssignment,
+        MessagingAliasSell,
+        MessagingAliasBuy,
+        MessagingAliasDelete,
+        MessagingPollCreation,
+        MessagingVoteCasting,
+        MessagingHubTerminalAnnouncement,
+        MessagingAccountInfo,
+
+        // ColoredCoins
+        ColoredCoinsAssetIssuance,
+        ColoredCoinsAssetTransfer,
+        ColoredCoinsAskOrderPlacement,
+        ColoredCoinsBidOrderPlacement,
+        ColoredCoinsAskOrderCancellation,
+        ColoredCoinsBidOrderCancellation,
+        ColoredCoinsDividendPayment,
+
+        // DigitalGoods
+        DigitalGoodsListing,
+        DigitalGoodsDelisting,
+        DigitalGoodsPriceChange,
+        DigitalGoodsQuantityChange,
+        DigitalGoodsPurchase,
+        DigitalGoodsDelivery,
+        DigitalGoodsFeedback,
+        DigitalGoodsRefund,
+
+        // AccountControl
+        AccountControlEffectiveBalanceLeasing,
+
+        // MonetarySystem
+        MonetarySystemCurrencyIssuance,
+        MonetarySystemReserveIncrease,
+        MonetarySystemReserveClaim,
+        MonetarySystemCurrencyTransfer,
+        MonetarySystemPublishExchangeOffer,
+        MonetarySystemExchangeBuy,
+        MonetarySystemExchangeSell,
+        MonetarySystemCurrencyMinting,
+        MonetarySystemCurrencyDeletion
     }
 }

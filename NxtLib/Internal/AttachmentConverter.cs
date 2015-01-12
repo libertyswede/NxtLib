@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace NxtLib.Internal
@@ -8,49 +9,50 @@ namespace NxtLib.Internal
     internal class AttachmentConverter
     {
         private readonly JObject _attachments;
-        private static readonly IReadOnlyDictionary<string, Func<IReadOnlyDictionary<string, object>, Attachment>> AttachmentFuncs;
-        private readonly IReadOnlyDictionary<string, object> _attachmentsDictionary;
+        private static readonly IReadOnlyDictionary<TransactionSubType, Func<IReadOnlyDictionary<string, object>, Attachment>> AttachmentFuncs;
+        private readonly Dictionary<string, object> _attachmentsDictionary;
 
-        // TODO: Add following:
-        // MessagingPollCreation
-        // MessagingVoteCasting
-        // MessagingHubAnnouncement
-        // ColoredCoinsDividendPayment
         static AttachmentConverter()
         {
-            var attachmentFuncs = new Dictionary<string, Func<IReadOnlyDictionary<string, object>, Attachment>>();
+            var attachmentFuncs = new Dictionary<TransactionSubType, Func<IReadOnlyDictionary<string, object>, Attachment>>();
 
-            attachmentFuncs.Add(AccountControlEffectiveBalanceLeasingAttachment.AttachmentName, value => new AccountControlEffectiveBalanceLeasingAttachment(value));
-            attachmentFuncs.Add(ColoredCoinsAskOrderCancellationAttachment.AttachmentName, value => new ColoredCoinsAskOrderCancellationAttachment(value));
-            attachmentFuncs.Add(ColoredCoinsAskOrderPlacementAttachment.AttachmentName, value => new ColoredCoinsAskOrderPlacementAttachment(value));
-            attachmentFuncs.Add(ColoredCoinsAssetIssuanceAttachment.AttachmentName, value => new ColoredCoinsAssetIssuanceAttachment(value));
-            attachmentFuncs.Add(ColoredCoinsAssetTransferAttachment.AttachmentName, value => new ColoredCoinsAssetTransferAttachment(value));
-            attachmentFuncs.Add(ColoredCoinsBidOrderCancellationAttachment.AttachmentName, value => new ColoredCoinsBidOrderCancellationAttachment(value));
-            attachmentFuncs.Add(ColoredCoinsBidOrderPlacementAttachment.AttachmentName, value => new ColoredCoinsBidOrderPlacementAttachment(value));
-            attachmentFuncs.Add(DigitalGoodsDelistingAttachment.AttachmentName, value => new DigitalGoodsDelistingAttachment(value));
-            attachmentFuncs.Add(DigitalGoodsDeliveryAttachment.AttachmentName, value => new DigitalGoodsDeliveryAttachment(value));
-            attachmentFuncs.Add(ColoredCoinsDividendPaymentAttachment.AttachmentName, value => new ColoredCoinsDividendPaymentAttachment(value));
-            attachmentFuncs.Add(DigitalGoodsFeedbackAttachment.AttachmentName, value => new DigitalGoodsFeedbackAttachment(value));
-            attachmentFuncs.Add(DigitalGoodsListingAttachment.AttachmentName, value => new DigitalGoodsListingAttachment(value));
-            attachmentFuncs.Add(DigitalGoodsPriceChangeAttachment.AttachmentName, value => new DigitalGoodsPriceChangeAttachment(value));
-            attachmentFuncs.Add(DigitalGoodsPurchaseAttachment.AttachmentName, value => new DigitalGoodsPurchaseAttachment(value));
-            attachmentFuncs.Add(DigitalGoodsQuantityChangeAttachment.AttachmentName, value => new DigitalGoodsQuantityChangeAttachment(value));
-            attachmentFuncs.Add(DigitalGoodsRefundAttachment.AttachmentName, value => new DigitalGoodsRefundAttachment(value));
-            attachmentFuncs.Add(MessagingAccountInfoAttachment.AttachmentName, value => new MessagingAccountInfoAttachment(value));
-            attachmentFuncs.Add(MessagingAliasAssignmentAttachment.AttachmentName, value => new MessagingAliasAssignmentAttachment(value));
-            attachmentFuncs.Add(MessagingAliasBuyAttachment.AttachmentName, value => new MessagingAliasBuyAttachment(value));
-            attachmentFuncs.Add(MessagingAliasDeleteAttachment.AttachmentName, value => new MessagingAliasDeleteAttachment(value));
-            attachmentFuncs.Add(MessagingAliasSellAttachment.AttachmentName, value => new MessagingAliasSellAttachment(value));
-            attachmentFuncs.Add(MonetarySystemExchangeBuyAttachment.AttachmentName, value => new MonetarySystemExchangeBuyAttachment(value));
-            attachmentFuncs.Add(MonetarySystemExchangeSellAttachment.AttachmentName, value => new MonetarySystemExchangeSellAttachment(value));
-            attachmentFuncs.Add(MonetarySystemCurrencyIssuanceAttachment.AttachmentName, value => new MonetarySystemCurrencyIssuanceAttachment(value));
-            attachmentFuncs.Add(MonetarySystemCurrencyMintingAttachment.AttachmentName, value => new MonetarySystemCurrencyMintingAttachment(value));
-            attachmentFuncs.Add(MonetarySystemCurrencyTransferAttachment.AttachmentName, value => new MonetarySystemCurrencyTransferAttachment(value));
-            attachmentFuncs.Add(MonetarySystemPublishExchangeOfferAttachment.AttachmentName, value => new MonetarySystemPublishExchangeOfferAttachment(value));
-            attachmentFuncs.Add(MonetarySystemReserveClaimAttachment.AttachmentName, value => new MonetarySystemReserveClaimAttachment(value));
-            attachmentFuncs.Add(MonetarySystemReserveIncrease.AttachmentName, value => new MonetarySystemReserveIncrease(value));
+            attachmentFuncs.Add(TransactionSubType.AccountControlEffectiveBalanceLeasing, value => new AccountControlEffectiveBalanceLeasingAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.ColoredCoinsAskOrderCancellation, value => new ColoredCoinsAskOrderCancellationAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.ColoredCoinsAskOrderPlacement, value => new ColoredCoinsAskOrderPlacementAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.ColoredCoinsAssetIssuance, value => new ColoredCoinsAssetIssuanceAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.ColoredCoinsAssetTransfer, value => new ColoredCoinsAssetTransferAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.ColoredCoinsBidOrderCancellation, value => new ColoredCoinsBidOrderCancellationAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.ColoredCoinsBidOrderPlacement, value => new ColoredCoinsBidOrderPlacementAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.ColoredCoinsDividendPayment, value => new ColoredCoinsDividendPaymentAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.DigitalGoodsDelisting, value => new DigitalGoodsDelistingAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.DigitalGoodsDelivery, value => new DigitalGoodsDeliveryAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.DigitalGoodsFeedback, value => new DigitalGoodsFeedbackAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.DigitalGoodsListing, value => new DigitalGoodsListingAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.DigitalGoodsPriceChange, value => new DigitalGoodsPriceChangeAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.DigitalGoodsPurchase, value => new DigitalGoodsPurchaseAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.DigitalGoodsQuantityChange, value => new DigitalGoodsQuantityChangeAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.DigitalGoodsRefund, value => new DigitalGoodsRefundAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MessagingAccountInfo, value => new MessagingAccountInfoAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MessagingAliasAssignment, value => new MessagingAliasAssignmentAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MessagingAliasBuy, value => new MessagingAliasBuyAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MessagingAliasDelete, value => new MessagingAliasDeleteAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MessagingAliasSell, value => new MessagingAliasSellAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, value => null);
+            //attachmentFuncs.Add(TransactionSubType.MessagingHubTerminalAnnouncement, TODO: .... );
+            //attachmentFuncs.Add(TransactionSubType.MessagingPollCreation, TODO: .... );
+            //attachmentFuncs.Add(TransactionSubType.MessagingVoteCasting, TODO: .... );
+            attachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyDeletion, value => new MonetarySystemCurrencyDeletion(value));
+            attachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyIssuance, value => new MonetarySystemCurrencyIssuanceAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyMinting, value => new MonetarySystemCurrencyMintingAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyTransfer, value => new MonetarySystemCurrencyTransferAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MonetarySystemExchangeBuy, value => new MonetarySystemExchangeBuyAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MonetarySystemExchangeSell, value => new MonetarySystemExchangeSellAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MonetarySystemPublishExchangeOffer, value => new MonetarySystemPublishExchangeOfferAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveClaim, value => new MonetarySystemReserveClaimAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveIncrease, value => new MonetarySystemReserveIncrease(value));
+            attachmentFuncs.Add(TransactionSubType.PaymentOrdinaryPayment, value => null);
 
-            AttachmentFuncs = new ReadOnlyDictionary<string, Func<IReadOnlyDictionary<string, object>, Attachment>>(attachmentFuncs);
+            AttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<IReadOnlyDictionary<string, object>, Attachment>>(attachmentFuncs);
         }
 
         internal AttachmentConverter(JObject attachments)
@@ -61,66 +63,57 @@ namespace NxtLib.Internal
 
         internal PublicKeyAnnouncement GetPublicKeyAnnouncement()
         {
-            if (_attachments == null || !_attachmentsDictionary.ContainsKey(PublicKeyAnnouncement.AttachmentName))
+            if (_attachments == null || !_attachmentsDictionary.ContainsKey(PublicKeyAnnouncement.AppendixName))
             {
                 return null;
             }
-            return new PublicKeyAnnouncement(_attachmentsDictionary);
+            var message = new PublicKeyAnnouncement(_attachmentsDictionary);
+            return message;
         }
 
         internal EncryptToSelfMessage GetEncryptToSelfMessage()
         {
-            if (_attachments == null || !_attachmentsDictionary.ContainsKey(EncryptToSelfMessage.AttachmentName))
+            if (_attachments == null || !_attachmentsDictionary.ContainsKey(EncryptToSelfMessage.AppendixName))
             {
                 return null;
             }
-            return new EncryptToSelfMessage(_attachmentsDictionary);
+            var message = new EncryptToSelfMessage(_attachmentsDictionary);
+            return message;
         }
 
         internal EncryptedMessage GetEncryptedMessage()
         {
-            if (_attachments == null || !_attachmentsDictionary.ContainsKey(EncryptedMessage.AttachmentName))
+            if (_attachments == null || !_attachmentsDictionary.ContainsKey(EncryptedMessage.AppendixName))
             {
                 return null;
-            }
-            return new EncryptedMessage(_attachmentsDictionary);
+            } 
+            var message = new EncryptedMessage(_attachmentsDictionary);
+            return message;
         }
 
         internal UnencryptedMessage GetMessage()
         {
-            if (_attachments == null || !_attachmentsDictionary.ContainsKey(UnencryptedMessage.AttachmentName))
+            if (_attachments == null || !_attachmentsDictionary.ContainsKey(UnencryptedMessage.AppendixName))
             {
                 return null;
             }
-            return new UnencryptedMessage(_attachmentsDictionary);
+            var message = new UnencryptedMessage(_attachmentsDictionary);
+            return message;
         }
 
-        internal Attachment GetAttachment()
+        internal Attachment GetAttachment(TransactionSubType transactionSubType)
         {
-            if (_attachments == null)
-            {
-                return null;
-            }
-
-            foreach (var key in _attachmentsDictionary.Keys)
-            {
-                Func<IReadOnlyDictionary<string, object>, Attachment> func;
-                if (AttachmentFuncs.TryGetValue(key, out func))
-                {
-                    return func.Invoke(_attachmentsDictionary);
-                }
-            }
-
-            return null;
+            var attachment = AttachmentFuncs[transactionSubType].Invoke(_attachmentsDictionary);
+            return attachment;
         }
 
         private static Dictionary<string, object> GetDictionaryFromAttachments(JToken attachments)
         {
+            var dictionary = new Dictionary<string, object>();
             if (attachments == null)
             {
-                return null;
+                return dictionary;
             }
-            var dictionary = new Dictionary<string, object>();
             foreach (var child in attachments.Children<JProperty>())
             {
                 var jValue = child.Value as JValue;
@@ -128,6 +121,11 @@ namespace NxtLib.Internal
             }
 
             return dictionary;
+        }
+
+        internal bool AreAttachmentsLeft()
+        {
+            return _attachmentsDictionary.Any(a => !a.Key.StartsWith("version."));
         }
     }
 }

@@ -25,9 +25,14 @@ namespace NxtLib.Internal
             var jObject = JObject.Load(reader);
             var attachmentConverter = new AttachmentConverter(jObject.SelectToken("attachment") as JObject);
 
+            var typeByte = GetValueOrDefault(jObject, "type", Convert.ToByte);
+            var subTypeByte = GetValueOrDefault(jObject, "subtype", Convert.ToByte);
+            var type = TransactionTypeMapper.GetMainType(typeByte);
+            var subType = TransactionTypeMapper.GetSubType(typeByte, subTypeByte);
+
             var transaction = new Transaction();
             transaction.Amount = GetValueOrDefault(jObject, "amountNQT", obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
-            transaction.Attachment = attachmentConverter.GetAttachment();
+            transaction.Attachment = attachmentConverter.GetAttachment(subType);
             transaction.BlockId = GetValueOrNull(jObject, "block", Convert.ToUInt64);
             transaction.BlockTimestamp = GetDateTimeOrNull(jObject, "blockTimestamp");
             transaction.Confirmations = GetValueOrNull(jObject, "confirmations", Convert.ToInt32);
@@ -49,11 +54,11 @@ namespace NxtLib.Internal
             transaction.SenderPublicKey = GetValueOrDefault(jObject, "senderPublicKey", obj => obj.ToString());
             transaction.Signature = GetValueOrDefault(jObject, "signature", obj => obj.ToString());
             transaction.SignatureHash = GetValueOrDefault(jObject, "signatureHash", obj => obj.ToString());
-            transaction.SubType = GetValueOrDefault(jObject, "subType", Convert.ToByte);
+            transaction.SubType = subType;
             transaction.Timestamp = GetDateTimeOrDefault(jObject, "timestamp");
             transaction.TransactionId = GetValueOrNull(jObject, "transaction", Convert.ToUInt64);
             transaction.TransactionIndex = GetValueOrDefault(jObject, "transactionIndex", Convert.ToInt32);
-            transaction.Type = GetValueOrDefault(jObject, "type", Convert.ToByte);
+            transaction.Type = type;
             transaction.Version = GetValueOrDefault(jObject, "version", Convert.ToInt32);
             return transaction;
         }

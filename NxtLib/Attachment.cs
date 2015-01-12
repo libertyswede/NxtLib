@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using NxtLib.MonetarySystemOperations;
 
@@ -8,29 +7,70 @@ namespace NxtLib
 {
     public abstract class Attachment
     {
-        protected virtual long Version { get { return 1; } }
-
-        protected Attachment(IReadOnlyDictionary<string, object> values, string name)
-        {
-            VerifyAttachmentVersion(values, name);
-        }
-
-        protected void VerifyAttachmentVersion(IReadOnlyDictionary<string, object> values, string name)
-        {
-            Debug.Assert((long)values[name] == Version);
-        }
+        protected const string AlgorithmKey = "algorithm";
+        protected const string AliasKey = "alias";
+        protected const string AmountNqtPerQntKey = "amountNQTPerQNT";
+        protected const string AmountPerUnitNqtKey = "amountPerUnitNQT";
+        protected const string AssetIdKey = "asset";
+        protected const string BuyRateNqtKey = "buyRateNQT";
+        protected const string CodeKey = "code";
+        protected const string CommentKey = "comment";
+        protected const string CounterKey = "counter";
+        protected const string CurrencyKey = "currency";
+        protected const string DataKey = "data";
+        protected const string DecimalsKey = "decimals";
+        protected const string DeliveryDeadlineTimestampKey = "deliveryDeadlineTimestamp";
+        protected const string DeltaQuantityKey = "deltaQuantity";
+        protected const string DescriptionKey = "description";
+        protected const string DiscountKey = "discountNQT";
+        protected const string EncryptedMessageKey = "encryptedMessage";
+        protected const string EncryptToSelfMessageKey = "encryptToSelfMessage";
+        protected const string ExpirationHeightKey = "expirationHeight";
+        protected const string GoodsIdKey = "goods";
+        protected const string GoodsDataKey = "goodsData";
+        protected const string GoodsIsTextKey = "goodsIsText";
+        protected const string GoodsNonceKey = "goodsNonce";
+        protected const string HeightKey = "height";
+        protected const string InitialBuySupplyKey = "initialBuySupply";
+        protected const string InitialSellSupplyKey = "initialSellSupply";
+        protected const string InitialSupplyKey = "initialSupply";
+        protected const string IssuanceHeightKey = "issuanceHeight";
+        protected const string IsTextKey = "isText";
+        protected const string MaxDifficultyKey = "maxDifficulty";
+        protected const string MaxSupplyKey = "maxSupply";
+        protected const string MessageKey = "message";
+        protected const string MessageIsTextKey = "messageIsText";
+        protected const string MinDifficultyKey = "minDifficulty";
+        protected const string MinReservePerUnitNqtKey = "minReservePerUnitNQT";
+        protected const string NameKey = "name";
+        protected const string NonceKey = "nonce";
+        protected const string OrderIdKey = "order";
+        protected const string PeriodKey = "period";
+        protected const string PriceNqtKey = "priceNQT";
+        protected const string PurchaseKey = "purchase";
+        protected const string QuantityKey = "quantity";
+        protected const string QuantityQntKey = "quantityQNT";
+        protected const string RateNqtKey = "rateNQT";
+        protected const string RecipientPublicKeyKey = "recipientPublicKey";
+        protected const string RefundNqtKey = "refundNQT";
+        protected const string ReserveSupplyKey = "reserveSupply";
+        protected const string RulesetKey = "ruleset";
+        protected const string SellRateNqtKey = "sellRateNQT";
+        protected const string TagsKey = "tags";
+        protected const string TotalBuyLimitKey = "totalBuyLimit";
+        protected const string TotalSellLimitKey = "totalSellLimit";
+        protected const string TypeKey = "type";
+        protected const string UnitsKey = "units";
+        protected const string UriKey = "uri";
     }
 
     public class AccountControlEffectiveBalanceLeasingAttachment : Attachment
     {
         public short Period { get; set; }
 
-        internal const string AttachmentName = "version.EffectiveBalanceLeasing";
-
         public AccountControlEffectiveBalanceLeasingAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Period = Convert.ToInt16(values["period"]);
+            Period = Convert.ToInt16(values[PeriodKey]);
         }
     }
 
@@ -38,29 +78,24 @@ namespace NxtLib
     {
         public ulong OrderId { get; private set; }
 
-        protected ColoredCoinsOrderCancellationAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
-            : base(values, attachmentName)
+        protected ColoredCoinsOrderCancellationAttachment(IReadOnlyDictionary<string, object> values)
         {
-            OrderId = Convert.ToUInt64(values["order"]);
+            OrderId = Convert.ToUInt64(values[OrderIdKey]);
         }
     }
 
     public class ColoredCoinsAskOrderCancellationAttachment : ColoredCoinsOrderCancellationAttachment
     {
-        internal const string AttachmentName = "version.AskOrderCancellation";
-
         public ColoredCoinsAskOrderCancellationAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
+            : base(values)
         {
         }
     }
 
     public class ColoredCoinsAskOrderPlacementAttachment : ColoredCoinsOrderPlacementAttachment
     {
-        internal const string AttachmentName = "version.AskOrderPlacement";
-
         public ColoredCoinsAskOrderPlacementAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
+            : base(values)
         {
         }
     }
@@ -72,15 +107,12 @@ namespace NxtLib
         public string Name { get; set; }
         public long QuantityQnt { get; set; }
 
-        internal const string AttachmentName = "version.AssetIssuance";
-
         public ColoredCoinsAssetIssuanceAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Decimals = Convert.ToByte(values["decimals"]);
-            Description = values["description"].ToString();
-            Name = values["name"].ToString();
-            QuantityQnt = Convert.ToInt64(values["quantityQNT"]);
+            Decimals = Convert.ToByte(values[DecimalsKey]);
+            Description = values[DescriptionKey].ToString();
+            Name = values[NameKey].ToString();
+            QuantityQnt = Convert.ToInt64(values[QuantityQntKey]);
         }
     }
 
@@ -90,26 +122,21 @@ namespace NxtLib
         public long QuantityQnt { get; set; }
         public string Comment { get; set; }
 
-        internal const string AttachmentName = "version.AssetTransfer";
-
         public ColoredCoinsAssetTransferAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            AssetId = Convert.ToUInt64(values["asset"]);
-            QuantityQnt = Convert.ToInt64(values["quantityQNT"]);
-            if (values.ContainsKey("comment"))
+            AssetId = Convert.ToUInt64(values[AssetIdKey]);
+            QuantityQnt = Convert.ToInt64(values[QuantityQntKey]);
+            if (values.ContainsKey(CommentKey))
             {
-                Comment = values["comment"].ToString();
+                Comment = values[CommentKey].ToString();
             }
         }
     }
 
     public class ColoredCoinsBidOrderCancellationAttachment : ColoredCoinsOrderCancellationAttachment
     {
-        internal const string AttachmentName = "version.BidOrderCancellation";
-
         public ColoredCoinsBidOrderCancellationAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
+            : base(values)
         {
         }
     }
@@ -120,21 +147,19 @@ namespace NxtLib
         public long QuantityQnt { get; set; }
         public Amount Price { get; set; }
 
-        protected ColoredCoinsOrderPlacementAttachment(IReadOnlyDictionary<string, object> values, string attachmentName)
-            : base(values, attachmentName)
+
+        protected ColoredCoinsOrderPlacementAttachment(IReadOnlyDictionary<string, object> values)
         {
-            AssetId = Convert.ToUInt64(values["asset"]);
-            QuantityQnt = Convert.ToInt64(values["quantityQNT"]);
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
+            AssetId = Convert.ToUInt64(values[AssetIdKey]);
+            QuantityQnt = Convert.ToInt64(values[QuantityQntKey]);
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values[PriceNqtKey]));
         }
     }
 
     public class ColoredCoinsBidOrderPlacementAttachment : ColoredCoinsOrderPlacementAttachment
     {
-        internal const string AttachmentName = "version.BidOrderPlacement";
-
         public ColoredCoinsBidOrderPlacementAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
+            : base(values)
         {
         }
     }
@@ -143,12 +168,9 @@ namespace NxtLib
     {
         public ulong GoodsId { get; set; }
 
-        internal const string AttachmentName = "version.DigitalGoodsDelisting";
-
         public DigitalGoodsDelistingAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            GoodsId = Convert.ToUInt64(values["goods"]);
+            GoodsId = Convert.ToUInt64(values[GoodsIdKey]);
         }
     }
 
@@ -160,16 +182,13 @@ namespace NxtLib
         public string GoodsNonce { get; set; }
         public ulong Purchase { get; set; }
 
-        internal const string AttachmentName = "version.DigitalGoodsDelivery";
-
         public DigitalGoodsDeliveryAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Discount = Amount.CreateAmountFromNqt(Convert.ToInt64(values["discountNQT"]));
-            GoodsData = values["goodsData"].ToString();
-            GoodsIsText = Convert.ToBoolean(values["goodsIsText"]);
-            GoodsNonce = values["goodsNonce"].ToString();
-            Purchase = Convert.ToUInt64(values["purchase"]);
+            Discount = Amount.CreateAmountFromNqt(Convert.ToInt64(values[DiscountKey]));
+            GoodsData = values[GoodsDataKey].ToString();
+            GoodsIsText = Convert.ToBoolean(values[GoodsIsTextKey]);
+            GoodsNonce = values[GoodsNonceKey].ToString();
+            Purchase = Convert.ToUInt64(values[PurchaseKey]);
         }
     }
 
@@ -179,14 +198,11 @@ namespace NxtLib
         public ulong AssetId { get; set; }
         public int Height { get; set; }
 
-        internal const string AttachmentName = "version.DividendPayment";
-
         public ColoredCoinsDividendPaymentAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            AmountPerQnt = Amount.CreateAmountFromNqt(Convert.ToInt64(values["amountNQTPerQNT"]));
-            AssetId = Convert.ToUInt64(values["asset"]);
-            Height = Convert.ToInt32(values["height"]);
+            AmountPerQnt = Amount.CreateAmountFromNqt(Convert.ToInt64(values[AmountNqtPerQntKey]));
+            AssetId = Convert.ToUInt64(values[AssetIdKey]);
+            Height = Convert.ToInt32(values[HeightKey]);
         }
     }
 
@@ -194,12 +210,9 @@ namespace NxtLib
     {
         public ulong PurchaseId { get; set; }
 
-        internal const string AttachmentName = "version.DigitalGoodsFeedback";
-
         public DigitalGoodsFeedbackAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            PurchaseId = Convert.ToUInt64(values["purchase"]);
+            PurchaseId = Convert.ToUInt64(values[PurchaseKey]);
         }
     }
 
@@ -210,17 +223,14 @@ namespace NxtLib
         public string Tags { get; set; }
         public int Quantity { get; set; }
         public Amount Price { get; set; }
-
-        internal const string AttachmentName = "version.DigitalGoodsListing";
-
+        
         public DigitalGoodsListingAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Name = values["name"].ToString();
-            Description = values["description"].ToString();
-            Tags = values["tags"].ToString();
-            Quantity = Convert.ToInt32(values["quantity"]);
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
+            Name = values[NameKey].ToString();
+            Description = values[DescriptionKey].ToString();
+            Tags = values[TagsKey].ToString();
+            Quantity = Convert.ToInt32(values[QuantityKey]);
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values[PriceNqtKey]));
         }
     }
 
@@ -229,13 +239,10 @@ namespace NxtLib
         public ulong GoodsId { get; set; }
         public Amount Price { get; set; }
 
-        internal const string AttachmentName = "version.DigitalGoodsPriceChange";
-
         public DigitalGoodsPriceChangeAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            GoodsId = Convert.ToUInt64(values["goods"]);
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
+            GoodsId = Convert.ToUInt64(values[GoodsIdKey]);
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values[PriceNqtKey]));
         }
     }
 
@@ -246,15 +253,12 @@ namespace NxtLib
         public Amount Price { get; set; }
         public int Quantity { get; set; }
 
-        internal const string AttachmentName = "version.DigitalGoodsPurchase";
-
         public DigitalGoodsPurchaseAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            DeliveryDeadlineTimestamp = Convert.ToInt32(values["deliveryDeadlineTimestamp"]);
-            GoodsId = Convert.ToUInt64(values["goods"]);
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
-            Quantity = Convert.ToInt32(values["quantity"]);
+            DeliveryDeadlineTimestamp = Convert.ToInt32(values[DeliveryDeadlineTimestampKey]);
+            GoodsId = Convert.ToUInt64(values[GoodsIdKey]);
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values[PriceNqtKey]));
+            Quantity = Convert.ToInt32(values[QuantityKey]);
         }
     }
 
@@ -263,14 +267,10 @@ namespace NxtLib
         public int DeltaQuantity { get; set; }
         public ulong GoodsId { get; set; }
 
-        internal const string AttachmentName = "version.DigitalGoodsQuantityChange";
-
         public DigitalGoodsQuantityChangeAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
-        
         {
-            DeltaQuantity = Convert.ToInt32(values["deltaQuantity"]);
-            GoodsId = Convert.ToUInt64(values["goods"]);
+            DeltaQuantity = Convert.ToInt32(values[DeltaQuantityKey]);
+            GoodsId = Convert.ToUInt64(values[GoodsIdKey]);
         }
     }
 
@@ -279,13 +279,10 @@ namespace NxtLib
         public ulong PurchaseId { get; set; }
         public Amount Refund { get; set; }
 
-        internal const string AttachmentName = "version.DigitalGoodsRefund";
-
         public DigitalGoodsRefundAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            PurchaseId = Convert.ToUInt64(values["purchase"]);
-            Refund = Amount.CreateAmountFromNqt(Convert.ToInt64(values["refundNQT"]));
+            PurchaseId = Convert.ToUInt64(values[PurchaseKey]);
+            Refund = Amount.CreateAmountFromNqt(Convert.ToInt64(values[RefundNqtKey]));
         }
     }
 
@@ -294,13 +291,10 @@ namespace NxtLib
         public string Name { get; set; }
         public string Description { get; set; }
 
-        internal const string AttachmentName = "version.AccountInfo";
-
         public MessagingAccountInfoAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Name = values["name"].ToString();
-            Description = values["description"].ToString();
+            Name = values[NameKey].ToString();
+            Description = values[DescriptionKey].ToString();
         }
     }
 
@@ -309,13 +303,10 @@ namespace NxtLib
         public string Alias { get; set; }
         public string Uri { get; set; }
 
-        internal const string AttachmentName = "version.AliasAssignment";
-
         public MessagingAliasAssignmentAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Alias = values["alias"].ToString();
-            Uri = values["uri"].ToString();
+            Alias = values[AliasKey].ToString();
+            Uri = values[UriKey].ToString();
         }
     }
 
@@ -323,12 +314,9 @@ namespace NxtLib
     {
         public string Alias { get; set; }
 
-        internal const string AttachmentName = "version.AliasBuy";
-
         public MessagingAliasBuyAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Alias = values["alias"].ToString();
+            Alias = values[AliasKey].ToString();
         }
     }
 
@@ -336,12 +324,9 @@ namespace NxtLib
     {
         public string Alias { get; set; }
 
-        internal const string AttachmentName = "version.AliasDelete";
-
         public MessagingAliasDeleteAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Alias = values["alias"].ToString();
+            Alias = values[AliasKey].ToString();
         }
     }
 
@@ -350,13 +335,10 @@ namespace NxtLib
         public string Alias { get; set; }
         public Amount Price { get; set; }
 
-        internal const string AttachmentName = "version.AliasSell";
-
         public MessagingAliasSellAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Alias = values["alias"].ToString();
-            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values["priceNQT"]));
+            Alias = values[AliasKey].ToString();
+            Price = Amount.CreateAmountFromNqt(Convert.ToInt64(values[PriceNqtKey]));
         }
     }
 
@@ -366,32 +348,37 @@ namespace NxtLib
         public Amount Rate { get; set; }
         public long Units { get; set; }
 
-        protected MonetarySystemExchange(IReadOnlyDictionary<string, object> values, string name)
-            : base(values, name)
+        protected MonetarySystemExchange(IReadOnlyDictionary<string, object> values)
         {
-            CurrencyId = Convert.ToUInt64(values["currency"]);
-            Rate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["rateNQT"]));
-            Units = Convert.ToInt64(values["units"]);
+            CurrencyId = Convert.ToUInt64(values[CurrencyKey]);
+            Rate = Amount.CreateAmountFromNqt(Convert.ToInt64(values[RateNqtKey]));
+            Units = Convert.ToInt64(values[UnitsKey]);
         }
     }
 
     public class MonetarySystemExchangeBuyAttachment : MonetarySystemExchange
     {
-        internal const string AttachmentName = "version.ExchangeBuy";
-
         public MonetarySystemExchangeBuyAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
+            : base(values)
         {
         }
     }
 
     public class MonetarySystemExchangeSellAttachment : MonetarySystemExchange
     {
-        internal const string AttachmentName = "version.ExchangeSell";
-
         public MonetarySystemExchangeSellAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
+            : base(values)
         {
+        }
+    }
+
+    public class MonetarySystemCurrencyDeletion : Attachment
+    {
+        public ulong CurrencyId { get; set; }
+
+        public MonetarySystemCurrencyDeletion(IReadOnlyDictionary<string, object> values)
+        {
+            CurrencyId = Convert.ToUInt64(values[CurrencyKey]);
         }
     }
 
@@ -412,24 +399,22 @@ namespace NxtLib
         public byte Ruleset { get; set; }
         public HashSet<CurrencyType> Types { get; set; }
 
-        internal const string AttachmentName = "version.CurrencyIssuance";
         public MonetarySystemCurrencyIssuanceAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Algorithm = Convert.ToByte(values["algorithm"]);
-            Code = values["code"].ToString();
-            Decimals = Convert.ToByte(values["decimals"]);
-            Description = values["description"].ToString();
-            InitialSupply = Convert.ToInt64(values["initialSupply"]);
-            IssuanceHeight = Convert.ToInt32(values["issuanceHeight"]);
-            MaxDifficulty = Convert.ToInt32(values["maxDifficulty"]);
-            MaxSupply = Convert.ToInt64(values["maxSupply"]);
-            MinDifficulty = Convert.ToInt32(values["minDifficulty"]);
-            MinReservePerUnit = Amount.CreateAmountFromNqt(Convert.ToInt64(values["minReservePerUnitNQT"]));
-            Name = values["name"].ToString();
-            ReserveSupply = Convert.ToInt64(values["reserveSupply"]);
-            Ruleset = Convert.ToByte(values["ruleset"]);
-            SetTypes(Convert.ToInt32(values["type"]));
+            Algorithm = Convert.ToByte(values[AlgorithmKey]);
+            Code = values[CodeKey].ToString();
+            Decimals = Convert.ToByte(values[DecimalsKey]);
+            Description = values[DescriptionKey].ToString();
+            InitialSupply = Convert.ToInt64(values[InitialSupplyKey]);
+            IssuanceHeight = Convert.ToInt32(values[IssuanceHeightKey]);
+            MaxDifficulty = Convert.ToInt32(values[MaxDifficultyKey]);
+            MaxSupply = Convert.ToInt64(values[MaxSupplyKey]);
+            MinDifficulty = Convert.ToInt32(values[MinDifficultyKey]);
+            MinReservePerUnit = Amount.CreateAmountFromNqt(Convert.ToInt64(values[MinReservePerUnitNqtKey]));
+            Name = values[NameKey].ToString();
+            ReserveSupply = Convert.ToInt64(values[ReserveSupplyKey]);
+            Ruleset = Convert.ToByte(values[RulesetKey]);
+            SetTypes(Convert.ToInt32(values[TypeKey]));
         }
 
         private void SetTypes(int type)
@@ -453,15 +438,12 @@ namespace NxtLib
         public long Nonce { get; set; }
         public long Units { get; set; }
 
-        internal const string AttachmentName = "version.CurrencyMinting";
-
         public MonetarySystemCurrencyMintingAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            Counter = Convert.ToInt64(values["counter"]);
-            CurrencyId = Convert.ToUInt64(values["currency"]);
-            Nonce = Convert.ToInt64(values["nonce"]);
-            Units = Convert.ToInt64(values["units"]);
+            Counter = Convert.ToInt64(values[CounterKey]);
+            CurrencyId = Convert.ToUInt64(values[CurrencyKey]);
+            Nonce = Convert.ToInt64(values[NonceKey]);
+            Units = Convert.ToInt64(values[UnitsKey]);
         }
     }
 
@@ -470,13 +452,10 @@ namespace NxtLib
         public ulong CurrencyId { get; set; }
         public long Units { get; set; }
 
-        internal const string AttachmentName = "version.CurrencyTransfer";
-
         public MonetarySystemCurrencyTransferAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            CurrencyId = Convert.ToUInt64(values["currency"]);
-            Units = Convert.ToInt64(values["units"]);
+            CurrencyId = Convert.ToUInt64(values[CurrencyKey]);
+            Units = Convert.ToInt64(values[UnitsKey]);
         }
     }
 
@@ -491,19 +470,16 @@ namespace NxtLib
         public long TotalBuyLimit { get; set; }
         public long TotalSellLimit { get; set; }
 
-        internal const string AttachmentName = "version.PublishExchangeOffer";
-
-        public MonetarySystemPublishExchangeOfferAttachment(IReadOnlyDictionary<string, object> values) 
-            :base(values, AttachmentName)
+        public MonetarySystemPublishExchangeOfferAttachment(IReadOnlyDictionary<string, object> values)
         {
-            BuyRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["buyRateNQT"]));
-            CurrencyId = Convert.ToUInt64(values["currency"]);
-            ExpirationHeight = Convert.ToInt32(values["expirationHeight"]);
-            InitialBuySupply = Convert.ToInt64(values["initialBuySupply"]);
-            InitialSellSupply = Convert.ToInt64(values["initialSellSupply"]);
-            SellRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values["sellRateNQT"]));
-            TotalBuyLimit = Convert.ToInt64(values["totalBuyLimit"]);
-            TotalSellLimit = Convert.ToInt64(values["totalSellLimit"]);
+            BuyRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values[BuyRateNqtKey]));
+            CurrencyId = Convert.ToUInt64(values[CurrencyKey]);
+            ExpirationHeight = Convert.ToInt32(values[ExpirationHeightKey]);
+            InitialBuySupply = Convert.ToInt64(values[InitialBuySupplyKey]);
+            InitialSellSupply = Convert.ToInt64(values[InitialSellSupplyKey]);
+            SellRate = Amount.CreateAmountFromNqt(Convert.ToInt64(values[SellRateNqtKey]));
+            TotalBuyLimit = Convert.ToInt64(values[TotalBuyLimitKey]);
+            TotalSellLimit = Convert.ToInt64(values[TotalSellLimitKey]);
         }
     }
 
@@ -512,13 +488,10 @@ namespace NxtLib
         public ulong CurrencyId { get; set; }
         public long Units { get; set; }
 
-        internal const string AttachmentName = "version.ReserveClaim";
-
         public MonetarySystemReserveClaimAttachment(IReadOnlyDictionary<string, object> values)
-            : base(values, AttachmentName)
         {
-            CurrencyId = Convert.ToUInt64(values["currency"]);
-            Units = Convert.ToInt64(values["units"]);
+            CurrencyId = Convert.ToUInt64(values[CurrencyKey]);
+            Units = Convert.ToInt64(values[UnitsKey]);
         }
     }
 
@@ -527,13 +500,10 @@ namespace NxtLib
         public Amount AmountPerUnit { get; set; }
         public ulong CurrencyId { get; set; }
 
-        internal const string AttachmentName = "version.ReserveIncrease";
-
         public MonetarySystemReserveIncrease(IReadOnlyDictionary<string, object> values) 
-            : base(values, AttachmentName)
         {
-            AmountPerUnit = Amount.CreateAmountFromNqt(Convert.ToInt64(values["amountPerUnitNQT"]));
-            CurrencyId = Convert.ToUInt64(values["currency"]);
+            AmountPerUnit = Amount.CreateAmountFromNqt(Convert.ToInt64(values[AmountPerUnitNqtKey]));
+            CurrencyId = Convert.ToUInt64(values[CurrencyKey]);
         }
     }
 }
