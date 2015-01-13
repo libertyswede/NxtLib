@@ -61,46 +61,6 @@ namespace NxtLib.Internal
             _attachmentsDictionary = GetDictionaryFromAttachments(_attachments);
         }
 
-        internal PublicKeyAnnouncement GetPublicKeyAnnouncement()
-        {
-            if (_attachments == null || !_attachmentsDictionary.ContainsKey(PublicKeyAnnouncement.AppendixName))
-            {
-                return null;
-            }
-            var message = new PublicKeyAnnouncement(_attachmentsDictionary);
-            return message;
-        }
-
-        internal EncryptToSelfMessage GetEncryptToSelfMessage()
-        {
-            if (_attachments == null || !_attachmentsDictionary.ContainsKey(EncryptToSelfMessage.AppendixName))
-            {
-                return null;
-            }
-            var message = new EncryptToSelfMessage(_attachmentsDictionary);
-            return message;
-        }
-
-        internal EncryptedMessage GetEncryptedMessage()
-        {
-            if (_attachments == null || !_attachmentsDictionary.ContainsKey(EncryptedMessage.AppendixName))
-            {
-                return null;
-            } 
-            var message = new EncryptedMessage(_attachmentsDictionary);
-            return message;
-        }
-
-        internal UnencryptedMessage GetMessage()
-        {
-            if (_attachments == null || !_attachmentsDictionary.ContainsKey(UnencryptedMessage.AppendixName))
-            {
-                return null;
-            }
-            var message = new UnencryptedMessage(_attachmentsDictionary);
-            return message;
-        }
-
         internal Attachment GetAttachment(TransactionSubType transactionSubType)
         {
             var attachment = AttachmentFuncs[transactionSubType].Invoke(_attachmentsDictionary);

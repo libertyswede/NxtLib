@@ -23,7 +23,8 @@ namespace NxtLib.Internal
             }
 
             var jObject = JObject.Load(reader);
-            var attachmentConverter = new AttachmentConverter(jObject.SelectToken("attachment") as JObject);
+            var attachmentJobject = jObject.SelectToken("attachment") as JObject;
+            var attachmentConverter = new AttachmentConverter(attachmentJobject);
 
             var typeByte = GetValueOrDefault(jObject, "type", Convert.ToByte);
             var subTypeByte = GetValueOrDefault(jObject, "subtype", Convert.ToByte);
@@ -39,16 +40,16 @@ namespace NxtLib.Internal
             transaction.Deadline = GetValueOrDefault(jObject, "deadline", Convert.ToInt16);
             transaction.EcBlockId = GetValueOrDefault(jObject, "ecBlockId", Convert.ToUInt64);
             transaction.EcBlockHeight = GetValueOrDefault(jObject, "ecBlockHeight", Convert.ToInt32);
-            transaction.EncryptedMessage = attachmentConverter.GetEncryptedMessage();
-            transaction.EncryptToSelfMessage = attachmentConverter.GetEncryptToSelfMessage();
+            transaction.EncryptedMessage = EncryptedMessage.ParseJson(attachmentJobject);
+            transaction.EncryptToSelfMessage = EncryptToSelfMessage.ParseJson(attachmentJobject);
             transaction.FeeNqt = GetValueOrDefault(jObject, "feeNQT", obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
             transaction.FullHash = GetValueOrDefault(jObject, "fullHash", obj => obj.ToString());
             transaction.Height = GetValueOrDefault(jObject, "height", Convert.ToInt32);
-            transaction.Message = attachmentConverter.GetMessage();
+            transaction.Message = UnencryptedMessage.ParseJson(attachmentJobject);
             transaction.Recipient = GetValueOrNull(jObject, "recipient", Convert.ToUInt64);
             transaction.RecipientRs = GetValueOrDefault(jObject, "recipientRS", obj => obj.ToString());
             transaction.ReferencedTransactionFullHash = GetValueOrDefault(jObject, "referencedTransactionFullHash", obj => obj.ToString());
-            transaction.PublicKeyAnnouncement = attachmentConverter.GetPublicKeyAnnouncement();
+            transaction.PublicKeyAnnouncement = PublicKeyAnnouncement.ParseJson(attachmentJobject);
             transaction.Sender = GetValueOrDefault(jObject, "sender", Convert.ToUInt64);
             transaction.SenderRs = GetValueOrDefault(jObject, "senderRS", obj => obj.ToString());
             transaction.SenderPublicKey = GetValueOrDefault(jObject, "senderPublicKey", obj => obj.ToString());

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace NxtLib
 {
@@ -12,12 +12,22 @@ namespace NxtLib
         public bool MessageIsText { get; set; }
         public string Message { get; set; }
 
-        internal static string AppendixName { get { return MessageKey; } }
-
-        public UnencryptedMessage(IReadOnlyDictionary<string, object> values)
+        private UnencryptedMessage(string message, bool messageIsText)
         {
-            MessageIsText = Convert.ToBoolean(values[MessageIsTextKey]);
-            Message = values[MessageKey].ToString();
+            Message = message;
+            MessageIsText = messageIsText;
+        }
+
+        internal static UnencryptedMessage ParseJson(JObject jObject)
+        {
+            JValue messageToken;
+            if (jObject == null || (messageToken = jObject.SelectToken(MessageKey) as JValue) == null)
+            {
+                return null;
+            }
+
+            var messageIsText = Convert.ToBoolean(jObject.SelectToken(MessageIsTextKey));
+            return new UnencryptedMessage(messageToken.Value.ToString(), messageIsText);
         }
     }
 
@@ -27,33 +37,47 @@ namespace NxtLib
         public string Nonce { get; set; }
         public string Data { get; set; }
 
-        protected EncryptedMessageBase(IReadOnlyDictionary<string, object> values, string encryptedMessageKey)
+        protected EncryptedMessageBase(JToken messageToken)
         {
-            var encryptedMessageValues = (IReadOnlyDictionary<string, object>)values[encryptedMessageKey];
-
-            IsText = (bool)encryptedMessageValues[IsTextKey];
-            Nonce = encryptedMessageValues[NonceKey].ToString();
-            Data = encryptedMessageValues[DataKey].ToString();
+            IsText = Convert.ToBoolean(messageToken.SelectToken(IsTextKey));
+            Nonce = ((JValue) messageToken.SelectToken(NonceKey)).Value.ToString();
+            Data = ((JValue) messageToken.SelectToken(DataKey)).Value.ToString();
         }
     }
 
     public class EncryptedMessage : EncryptedMessageBase
     {
-        internal static string AppendixName { get { return EncryptedMessageKey; } }
-
-        public EncryptedMessage(IReadOnlyDictionary<string, object> values)
-            : base(values, EncryptedMessageKey)
+        private EncryptedMessage(JToken messageToken)
+            : base(messageToken)
         {
+        }
+
+        internal static EncryptedMessage ParseJson(JObject jObject)
+        {
+            JToken messageToken;
+            if (jObject == null || (messageToken = jObject.SelectToken(EncryptedMessageKey)) == null)
+            {
+                return null;
+            }
+            return new EncryptedMessage(messageToken);
         }
     }
 
     public class EncryptToSelfMessage : EncryptedMessageBase
     {
-        internal static string AppendixName { get { return EncryptToSelfMessageKey; } }
-
-        public EncryptToSelfMessage(IReadOnlyDictionary<string, object> values)
-            : base(values, EncryptToSelfMessageKey)
+        private EncryptToSelfMessage(JToken messageToken) 
+            : base(messageToken)
         {
+        }
+
+        internal static EncryptToSelfMessage ParseJson(JObject jObject)
+        {
+            JToken messageToken;
+            if (jObject == null || (messageToken = jObject.SelectToken(EncryptToSelfMessageKey)) == null)
+            {
+                return null;
+            }
+            return new EncryptToSelfMessage(messageToken);
         }
     }
 
@@ -61,11 +85,19 @@ namespace NxtLib
     {
         public string RecipientPublicKey { get; set; }
 
-        internal static string AppendixName { get { return RecipientPublicKeyKey; } }
-
-        public PublicKeyAnnouncement(IReadOnlyDictionary<string, object> values)
+        private PublicKeyAnnouncement(string recipientPublicKey)
         {
-            RecipientPublicKey = values[RecipientPublicKeyKey].ToString();
+            RecipientPublicKey = recipientPublicKey;
+        }
+
+        internal static PublicKeyAnnouncement ParseJson(JObject jObject)
+        {
+            JValue announcement;
+            if (jObject == null || (announcement = jObject.SelectToken(RecipientPublicKeyKey) as JValue) == null)
+            {
+                return null;
+            }
+            return new PublicKeyAnnouncement(announcement.Value.ToString());
         }
     }
 }
