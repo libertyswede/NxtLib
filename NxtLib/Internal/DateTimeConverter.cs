@@ -9,6 +9,16 @@ namespace NxtLib.Internal
         private static readonly DateTime Nov24Th2013 = new DateTime(2013, 11, 24, 12, 0, 0, DateTimeKind.Utc);
         public const long EpochBeginning = 1385294400000; // milliseconds between 1970-01-01 00:00:00 and 2013-11-24 12:00:00
 
+        internal static int GetNxtTime(DateTime dateTime)
+        {
+            return (int)(((dateTime - Jan1St1970).TotalMilliseconds - EpochBeginning + 500) / 1000);
+        }
+
+        internal static DateTime GetDateTime(int dateTime)
+        {
+            return Nov24Th2013.AddSeconds(dateTime);
+        }
+
         public int GetEpochTime(DateTime dateTime)
         {
             return (int)(((dateTime - Jan1St1970).TotalMilliseconds - EpochBeginning + 500) / 1000);

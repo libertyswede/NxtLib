@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace NxtLib.Internal
@@ -9,12 +8,11 @@ namespace NxtLib.Internal
     internal class AttachmentConverter
     {
         private readonly JObject _attachments;
-        private static readonly IReadOnlyDictionary<TransactionSubType, Func<IReadOnlyDictionary<string, object>, Attachment>> AttachmentFuncs;
-        private readonly Dictionary<string, object> _attachmentsDictionary;
+        private static readonly IReadOnlyDictionary<TransactionSubType, Func<JObject, Attachment>> AttachmentFuncs;
 
         static AttachmentConverter()
         {
-            var attachmentFuncs = new Dictionary<TransactionSubType, Func<IReadOnlyDictionary<string, object>, Attachment>>();
+            var attachmentFuncs = new Dictionary<TransactionSubType, Func<JObject, Attachment>>();
 
             attachmentFuncs.Add(TransactionSubType.AccountControlEffectiveBalanceLeasing, value => new AccountControlEffectiveBalanceLeasingAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsAskOrderCancellation, value => new ColoredCoinsAskOrderCancellationAttachment(value));
@@ -52,40 +50,18 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveIncrease, value => new MonetarySystemReserveIncrease(value));
             attachmentFuncs.Add(TransactionSubType.PaymentOrdinaryPayment, value => null);
 
-            AttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<IReadOnlyDictionary<string, object>, Attachment>>(attachmentFuncs);
+            AttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<JObject, Attachment>>(attachmentFuncs);
         }
 
         internal AttachmentConverter(JObject attachments)
         {
             _attachments = attachments;
-            _attachmentsDictionary = GetDictionaryFromAttachments(_attachments);
         }
 
         internal Attachment GetAttachment(TransactionSubType transactionSubType)
         {
-            var attachment = AttachmentFuncs[transactionSubType].Invoke(_attachmentsDictionary);
+            var attachment = AttachmentFuncs[transactionSubType].Invoke(_attachments);
             return attachment;
-        }
-
-        private static Dictionary<string, object> GetDictionaryFromAttachments(JToken attachments)
-        {
-            var dictionary = new Dictionary<string, object>();
-            if (attachments == null)
-            {
-                return dictionary;
-            }
-            foreach (var child in attachments.Children<JProperty>())
-            {
-                var jValue = child.Value as JValue;
-                dictionary.Add(child.Name, jValue != null ? jValue.Value : GetDictionaryFromAttachments(child.Value));
-            }
-
-            return dictionary;
-        }
-
-        internal bool AreAttachmentsLeft()
-        {
-            return _attachmentsDictionary.Any(a => !a.Key.StartsWith("version."));
         }
     }
 }
