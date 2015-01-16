@@ -11,8 +11,8 @@ namespace NxtLib.AssetOperations
         Task<TransactionCreated> CancelAskOrder(ulong orderId, CreateTransactionParameters parameters);
         Task<TransactionCreated> CancelBidOrder(ulong orderId, CreateTransactionParameters parameters);
         Task<TransactionCreated> DividendPayment(ulong assetId, int height, Amount amountPerQnt);
-        Task<AccountAssetCount> GetAccountAssetCount(string accountId, int? height = null);
         Task<AccountAsset> GetAccountAsset(string accountId, ulong assetId, int? height = null);
+        Task<AccountAssetCount> GetAccountAssetCount(string accountId, int? height = null);
         Task<AccountAssets> GetAccountAssets(string accountId, int? height = null);
 
         Task<AssetAskOrderIds> GetAccountCurrentAskOrderIds(string accountId, ulong? assetId = null,
