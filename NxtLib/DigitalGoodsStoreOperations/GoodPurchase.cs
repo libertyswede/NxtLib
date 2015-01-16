@@ -26,6 +26,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
         public ulong GoodsId { get; set; }
         public bool GoodsIsText { get; set; }
         public string Name { get; set; }
+        public EncryptedData Note { get; set; }
         public bool Pending { get; set; }
         public List<string> PublicFeedbacks { get; set; }
 
@@ -33,6 +34,10 @@ namespace NxtLib.DigitalGoodsStoreOperations
         [JsonProperty(PropertyName = "purchase")]
         public ulong PurchaseId { get; set; }
         public int Quantity { get; set; }
+
+        [JsonConverter(typeof(NqtAmountConverter))]
+        [JsonProperty(PropertyName = "refundNQT")]
+        public Amount Refund { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
         [JsonProperty(PropertyName = "priceNQT")]

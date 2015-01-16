@@ -7,7 +7,7 @@ namespace NxtLib.ArbitraryMessageOperations
     public interface IArbitraryMessageService
     {
         Task<DecryptedMessage> DecryptFrom(string accountId, string data, string nonce, string secretPhrase, bool? decryptedMessageIsText = null);
-        Task<EncryptedMessage> EncryptTo(string recipient, string messageToEncrypt, string secretPhrase, bool? messageToEncryptIsText);
+        Task<EncryptedData> EncryptTo(string recipient, string messageToEncrypt, string secretPhrase, bool? messageToEncryptIsText);
         Task<ReadMessage> ReadMessage(ulong transactionId, string secretPhrase);
         Task<TransactionCreated> SendMessage(CreateTransactionParameters parameters, MessagesToSend messagesToSend, string recipient = null);
     }
@@ -40,7 +40,7 @@ namespace NxtLib.ArbitraryMessageOperations
             return await Get<DecryptedMessage>("decryptFrom", queryParameters);
         }
 
-        public async Task<EncryptedMessage> EncryptTo(string recipient, string messageToEncrypt, string secretPhrase, bool? messageToEncryptIsText)
+        public async Task<EncryptedData> EncryptTo(string recipient, string messageToEncrypt, string secretPhrase, bool? messageToEncryptIsText)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -52,7 +52,7 @@ namespace NxtLib.ArbitraryMessageOperations
             {
                 queryParameters.Add("messageToEncryptIsText", messageToEncryptIsText.ToString());
             }
-            return await Get<EncryptedMessage>("encryptTo", queryParameters);
+            return await Get<EncryptedData>("encryptTo", queryParameters);
         }
 
         public async Task<ReadMessage> ReadMessage(ulong transactionId, string secretPhrase)
