@@ -9,7 +9,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "buyer")]
-        public string Buyer { get; set; }
+        public ulong BuyerId { get; set; }
         public string BuyerRs { get; set; }
 
         [JsonConverter(typeof(DateTimeConverter))]
@@ -17,7 +17,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
 
         [JsonConverter(typeof(NqtAmountConverter))]
         [JsonProperty(PropertyName = "discountNQT")]
-        public string Discount { get; set; }
+        public Amount Discount { get; set; }
         public List<GoodsFeedbackNote> FeedbackNotes { get; set; }
         public GoodsData GoodsData { get; set; }
 
@@ -31,7 +31,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "purchase")]
-        public string PurchaseId { get; set; }
+        public ulong PurchaseId { get; set; }
         public int Quantity { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
