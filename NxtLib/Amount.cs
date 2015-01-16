@@ -11,6 +11,9 @@ namespace NxtLib
         public decimal Nxt { get; private set; }
         public long Nqt { get; private set; }
 
+        public static readonly Amount OneNxt = CreateAmountFromNxt(1);
+        public static readonly Amount OneNqt = CreateAmountFromNqt(1);
+
         private Amount()
         {
         }
