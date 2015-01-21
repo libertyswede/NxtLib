@@ -11,7 +11,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
 
         Task<TransactionCreated> Delivery(ulong purchaseId, CreateTransactionParameters parameters,
             Amount discount = null, string goodsToEncrypt = null, bool? goodsIsText = null, string goodsData = null,
-            string goodsNonce = null);
+            IEnumerable<byte> goodsNonce = null);
 
         Task<TransactionCreated> Feedback(ulong purchaseId, string message,
             CreateTransactionParameters parameters);
@@ -84,7 +84,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
 
         public async Task<TransactionCreated> Delivery(ulong purchaseId, CreateTransactionParameters parameters,
             Amount discount = null, string goodsToEncrypt = null, bool? goodsIsText = null, string goodsData = null,
-            string goodsNonce = null)
+            IEnumerable<byte> goodsNonce = null)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -98,7 +98,10 @@ namespace NxtLib.DigitalGoodsStoreOperations
             AddToParametersIfHasValue("goodsToEncrypt", goodsToEncrypt, queryParameters);
             AddToParametersIfHasValue("goodsIsText", goodsIsText, queryParameters);
             AddToParametersIfHasValue("goodsData", goodsData, queryParameters);
-            AddToParametersIfHasValue("goodsNonce", goodsNonce, queryParameters);
+            if (goodsNonce != null)
+            {
+                AddToParametersIfHasValue("goodsNonce", ByteToHexStringConverter.ToHexString(goodsNonce), queryParameters);
+            }
             return await Post<TransactionCreated>("dgsDelivery", queryParameters);
         }
 

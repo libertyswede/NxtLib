@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace NxtLib.Internal
 {
-    internal static class ByteToHexStringConverter
+    internal class ByteToHexStringConverter : JsonConverter
     {
         internal static string ToHexString(IEnumerable<byte> bytes)
         {
@@ -20,6 +21,25 @@ namespace NxtLib.Internal
                 bytes[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
             }
             return bytes;
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.String && objectType == typeof(IEnumerable<byte>))
+            {
+                return ToByteArray(reader.Value.ToString());
+            }
+            throw new NotSupportedException(string.Format("objectType {0} and TokenType {1} is not supported", objectType, reader.TokenType));
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            throw new NotImplementedException();
         }
     }
 }

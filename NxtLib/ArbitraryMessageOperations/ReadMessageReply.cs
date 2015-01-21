@@ -1,6 +1,6 @@
 namespace NxtLib.ArbitraryMessageOperations
 {
-    public class ReadMessage : BaseReply
+    public class ReadMessageReply : BaseReply
     {
         public string Message { get; set; }
     }

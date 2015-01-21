@@ -44,25 +44,45 @@ namespace NxtLib
             QueryParameters.Add("messageToEncryptIsText", messageToEncryptIsText.ToString());
         }
 
-        public void AddEncryptedMessageData(string encryptedMessageData, string encryptedMessageNonce)
+        public void AddEncryptedMessageData(string encryptedMessageData, IEnumerable<byte> encryptedMessageNonce, bool encryptedMessageIsText)
         {
             QueryParameters.Add("encryptedMessageData", encryptedMessageData);
-            QueryParameters.Add("encryptedMessageNonce", encryptedMessageNonce);
+            QueryParameters.Add("encryptedMessageNonce", ByteToHexStringConverter.ToHexString(encryptedMessageNonce));
+            QueryParameters.Add("messageToEncryptIsText", encryptedMessageIsText.ToString());
         }
 
-        public void AddMessageToEncryptToSelf(string messageToEncryptToSelf, bool? messageToEncryptToSelfIsText = null)
+        public void AddEncryptedMessageData(IEnumerable<byte> encryptedMessageData, IEnumerable<byte> encryptedMessageNonce, bool encryptedMessageIsText)
+        {
+            AddEncryptedMessageData(ByteToHexStringConverter.ToHexString(encryptedMessageData), encryptedMessageNonce, encryptedMessageIsText);
+        }
+
+        public void AddMessageToEncryptToSelf(string messageToEncryptToSelf)
+        {
+            AddMessageToEncryptToSelf(messageToEncryptToSelf, true);
+        }
+
+        public void AddMessageToEncryptToSelf(IEnumerable<byte> messageToEncryptToSelf)
+        {
+            AddMessageToEncryptToSelf(ByteToHexStringConverter.ToHexString(messageToEncryptToSelf), false);
+        }
+
+        private void AddMessageToEncryptToSelf(string messageToEncryptToSelf, bool messageToEncryptToSelfIsText)
         {
             QueryParameters.Add("messageToEncryptToSelf", messageToEncryptToSelf);
-            if (messageToEncryptToSelfIsText.HasValue)
-            {
-                QueryParameters.Add("messageIsText", messageToEncryptToSelfIsText.ToString());
-            }
+            QueryParameters.Add("messageToEncryptToSelfIsText", messageToEncryptToSelfIsText.ToString());
         }
 
-        public void AddEncryptToSelfMessageData(string encryptToSelfMessageData, string encryptToSelfMessageNonce)
+        public void AddEncryptToSelfMessageData(IEnumerable<byte> encryptToSelfMessageData, IEnumerable<byte> encryptToSelfMessageNonce, bool encryptToSelfMessageIsText)
+        {
+            AddEncryptToSelfMessageData(ByteToHexStringConverter.ToHexString(encryptToSelfMessageData),
+                encryptToSelfMessageNonce, encryptToSelfMessageIsText);
+        }
+
+        public void AddEncryptToSelfMessageData(string encryptToSelfMessageData, IEnumerable<byte> encryptToSelfMessageNonce, bool encryptToSelfMessageIsText)
         {
             QueryParameters.Add("encryptToSelfMessageData", encryptToSelfMessageData);
-            QueryParameters.Add("encryptToSelfMessageNonce", encryptToSelfMessageNonce);
+            QueryParameters.Add("encryptToSelfMessageNonce", ByteToHexStringConverter.ToHexString(encryptToSelfMessageNonce));
+            QueryParameters.Add("messageToEncryptToSelfIsText", encryptToSelfMessageIsText.ToString());
         }
     }
 }

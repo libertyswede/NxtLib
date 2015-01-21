@@ -187,7 +187,7 @@ namespace NxtLib
         public Amount Discount { get; set; }
         public string GoodsData { get; set; }
         public bool GoodsIsText { get; set; }
-        public string GoodsNonce { get; set; }
+        public IEnumerable<byte> GoodsNonce { get; set; }
         public ulong Purchase { get; set; }
 
         internal DigitalGoodsDeliveryAttachment(JToken attachments)
@@ -195,7 +195,8 @@ namespace NxtLib
             Discount = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, DiscountKey));
             GoodsData = GetAttachmentValue<string>(attachments, GoodsDataKey);
             GoodsIsText = GetAttachmentValue<bool>(attachments, GoodsIsTextKey);
-            GoodsNonce = GetAttachmentValue<string>(attachments, GoodsNonceKey);
+            var goodsNonceString = GetAttachmentValue<string>(attachments, GoodsNonceKey);
+            GoodsNonce = ByteToHexStringConverter.ToByteArray(goodsNonceString);
             Purchase = GetAttachmentValue<ulong>(attachments, PurchaseKey);
         }
     }

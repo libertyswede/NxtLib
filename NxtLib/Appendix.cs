@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 
@@ -41,13 +42,14 @@ namespace NxtLib
     public abstract class EncryptedMessageBase : Appendix
     {
         public bool IsText { get; set; }
-        public string Nonce { get; set; }
+        public IEnumerable<byte> Nonce { get; set; }
         public string Data { get; set; }
 
         protected EncryptedMessageBase(JToken messageToken)
         {
             IsText = Convert.ToBoolean(messageToken.SelectToken(IsTextKey));
-            Nonce = ((JValue)messageToken.SelectToken(NonceKey)).Value.ToString();
+            var nonceString = ((JValue)messageToken.SelectToken(NonceKey)).Value.ToString();
+            Nonce = ByteToHexStringConverter.ToByteArray(nonceString);
             Data = ((JValue)messageToken.SelectToken(DataKey)).Value.ToString();
         }
     }

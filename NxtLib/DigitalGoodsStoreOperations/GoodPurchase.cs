@@ -26,7 +26,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
         public ulong GoodsId { get; set; }
         public bool GoodsIsText { get; set; }
         public string Name { get; set; }
-        public EncryptedData Note { get; set; }
+        public EncryptedDataReply Note { get; set; }
         public bool Pending { get; set; }
         public List<string> PublicFeedbacks { get; set; }
 

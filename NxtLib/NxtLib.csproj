@@ -71,9 +71,10 @@
     <Compile Include="Amount.cs" />
     <Compile Include="Appendix.cs" />
     <Compile Include="ArbitraryMessageOperations\ArbitraryMessageService.cs" />
-    <Compile Include="ArbitraryMessageOperations\DecryptedMessage.cs" />
-    <Compile Include="EncryptedData.cs" />
-    <Compile Include="ArbitraryMessageOperations\ReadMessage.cs" />
+    <Compile Include="ArbitraryMessageOperations\DecryptedDataReply.cs" />
+    <Compile Include="ArbitraryMessageOperations\DecryptedMessageReply.cs" />
+    <Compile Include="EncryptedDataReply.cs" />
+    <Compile Include="ArbitraryMessageOperations\ReadMessageReply.cs" />
     <Compile Include="AssetOperations\AccountAsset.cs" />
     <Compile Include="AssetOperations\AccountAssetCount.cs" />
     <Compile Include="AssetOperations\AccountAssets.cs" />

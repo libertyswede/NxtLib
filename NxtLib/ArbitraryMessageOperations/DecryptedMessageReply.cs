@@ -2,7 +2,7 @@
 
 namespace NxtLib.ArbitraryMessageOperations
 {
-    public class DecryptedMessage : BaseReply
+    public class DecryptedMessageReply : BaseReply
     {
         [JsonProperty(PropertyName = "decryptedMessage")]
         public string Message { get; set; }
