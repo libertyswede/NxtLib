@@ -135,6 +135,7 @@
     <Compile Include="HallmarkOperations\HallmarkOperationService.cs" />
     <Compile Include="IDateTimeConverter.cs" />
     <Compile Include="Internal\AttachmentConverter.cs" />
+    <Compile Include="Internal\ByteToHexStringConverter.cs" />
     <Compile Include="Internal\CurrencyTypeConverter.cs" />
     <Compile Include="Internal\DateTimeConverter.cs" />
     <Compile Include="Internal\DictionaryExtensions.cs" />

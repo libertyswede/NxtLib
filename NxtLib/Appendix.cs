@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using NxtLib.Internal;
 
 namespace NxtLib
 {
@@ -16,6 +18,11 @@ namespace NxtLib
         {
             Message = message;
             MessageIsText = messageIsText;
+        }
+
+        public IEnumerable<byte> GetMessageBytes()
+        {
+            return MessageIsText ? null : ByteToHexStringConverter.ToByteArray(Message);
         }
 
         internal static UnencryptedMessage ParseJson(JObject jObject)
@@ -40,8 +47,8 @@ namespace NxtLib
         protected EncryptedMessageBase(JToken messageToken)
         {
             IsText = Convert.ToBoolean(messageToken.SelectToken(IsTextKey));
-            Nonce = ((JValue) messageToken.SelectToken(NonceKey)).Value.ToString();
-            Data = ((JValue) messageToken.SelectToken(DataKey)).Value.ToString();
+            Nonce = ((JValue)messageToken.SelectToken(NonceKey)).Value.ToString();
+            Data = ((JValue)messageToken.SelectToken(DataKey)).Value.ToString();
         }
     }
 
@@ -65,7 +72,7 @@ namespace NxtLib
 
     public class EncryptToSelfMessage : EncryptedMessageBase
     {
-        private EncryptToSelfMessage(JToken messageToken) 
+        private EncryptToSelfMessage(JToken messageToken)
             : base(messageToken)
         {
         }

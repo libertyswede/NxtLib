@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NxtLib.Internal;
 
 namespace NxtLib
 {
@@ -11,22 +12,36 @@ namespace NxtLib
             QueryParameters = new Dictionary<string, string>();
         }
 
-        public void AddMessage(string message, bool? messageIsText = null)
+        public void AddMessage(string message)
         {
-            QueryParameters.Add("message", message);
-            if (messageIsText.HasValue)
-            {
-                QueryParameters.Add("messageIsText", messageIsText.ToString());
-            }
+            AddMessage(message, true);
         }
 
-        public void AddMessageToEncrypt(string messageToEncrypt, bool? messageToEncryptIsText = null)
+        public void AddMessage(IEnumerable<byte> message)
+        {
+            AddMessage(ByteToHexStringConverter.ToHexString(message), false);
+        }
+
+        private void AddMessage(string message, bool messageIsText)
+        {
+            QueryParameters.Add("message", message);
+            QueryParameters.Add("messageIsText", messageIsText.ToString());
+        }
+
+        public void AddMessageToEncrypt(string messageToEncrypt)
+        {
+            AddMessageToEncrypt(messageToEncrypt, true);
+        }
+
+        public void AddMessageToEncrypt(IEnumerable<byte> messageToEncrypt)
+        {
+            AddMessageToEncrypt(ByteToHexStringConverter.ToHexString(messageToEncrypt), false);
+        }
+
+        private void AddMessageToEncrypt(string messageToEncrypt, bool messageToEncryptIsText)
         {
             QueryParameters.Add("messageToEncrypt", messageToEncrypt);
-            if (messageToEncryptIsText.HasValue)
-            {
-                QueryParameters.Add("messageToEncryptIsText", messageToEncryptIsText.ToString());
-            }
+            QueryParameters.Add("messageToEncryptIsText", messageToEncryptIsText.ToString());
         }
 
         public void AddEncryptedMessageData(string encryptedMessageData, string encryptedMessageNonce)
