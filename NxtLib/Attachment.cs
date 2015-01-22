@@ -196,7 +196,7 @@ namespace NxtLib
             GoodsData = GetAttachmentValue<string>(attachments, GoodsDataKey);
             GoodsIsText = GetAttachmentValue<bool>(attachments, GoodsIsTextKey);
             var goodsNonceString = GetAttachmentValue<string>(attachments, GoodsNonceKey);
-            GoodsNonce = ByteToHexStringConverter.ToByteArray(goodsNonceString);
+            GoodsNonce = ByteToHexStringConverter.ToBytes(goodsNonceString);
             Purchase = GetAttachmentValue<ulong>(attachments, PurchaseKey);
         }
     }

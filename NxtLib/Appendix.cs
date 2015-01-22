@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 
@@ -23,7 +22,7 @@ namespace NxtLib
 
         public IEnumerable<byte> GetMessageBytes()
         {
-            return MessageIsText ? null : ByteToHexStringConverter.ToByteArray(Message);
+            return MessageIsText ? null : ByteToHexStringConverter.ToBytes(Message);
         }
 
         internal static UnencryptedMessage ParseJson(JObject jObject)
@@ -49,7 +48,7 @@ namespace NxtLib
         {
             IsText = Convert.ToBoolean(messageToken.SelectToken(IsTextKey));
             var nonceString = ((JValue)messageToken.SelectToken(NonceKey)).Value.ToString();
-            Nonce = ByteToHexStringConverter.ToByteArray(nonceString);
+            Nonce = ByteToHexStringConverter.ToBytes(nonceString);
             Data = ((JValue)messageToken.SelectToken(DataKey)).Value.ToString();
         }
     }

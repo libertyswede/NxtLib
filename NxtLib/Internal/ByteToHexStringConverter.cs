@@ -12,7 +12,7 @@ namespace NxtLib.Internal
             return BitConverter.ToString(bytes.ToArray()).Replace("-", "").ToLowerInvariant();
         }
 
-        internal static IEnumerable<byte> ToByteArray(string hexString)
+        internal static IEnumerable<byte> ToBytes(string hexString)
         {
             var numberChars = hexString.Length;
             var bytes = new byte[numberChars / 2];
@@ -27,7 +27,7 @@ namespace NxtLib.Internal
         {
             if (reader.TokenType == JsonToken.String && objectType == typeof(IEnumerable<byte>))
             {
-                return ToByteArray(reader.Value.ToString());
+                return ToBytes(reader.Value.ToString());
             }
             throw new NotSupportedException(string.Format("objectType {0} and TokenType {1} is not supported", objectType, reader.TokenType));
         }

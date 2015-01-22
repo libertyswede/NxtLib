@@ -13,7 +13,7 @@ namespace NxtLib
 
         public IEnumerable<byte> GetDataBytes()
         {
-            return ByteToHexStringConverter.ToByteArray(Data);
+            return ByteToHexStringConverter.ToBytes(Data);
         }
     }
 }
