@@ -9,23 +9,23 @@ namespace NxtLib
     {
     }
 
-    public class UnencryptedMessage : Appendix
+    public class Message : Appendix
     {
         public bool MessageIsText { get; set; }
-        public string Message { get; set; }
+        public string MessageText { get; set; }
 
-        private UnencryptedMessage(string message, bool messageIsText)
+        private Message(string messageText, bool messageIsText)
         {
-            Message = message;
+            MessageText = messageText;
             MessageIsText = messageIsText;
         }
 
         public IEnumerable<byte> GetMessageBytes()
         {
-            return MessageIsText ? null : ByteToHexStringConverter.ToBytes(Message);
+            return MessageIsText ? null : ByteToHexStringConverter.ToBytes(MessageText);
         }
 
-        internal static UnencryptedMessage ParseJson(JObject jObject)
+        internal static Message ParseJson(JObject jObject)
         {
             JValue messageToken;
             if (jObject == null || (messageToken = jObject.SelectToken(MessageKey) as JValue) == null)
@@ -34,7 +34,7 @@ namespace NxtLib
             }
 
             var messageIsText = Convert.ToBoolean(jObject.SelectToken(MessageIsTextKey));
-            return new UnencryptedMessage(messageToken.Value.ToString(), messageIsText);
+            return new Message(messageToken.Value.ToString(), messageIsText);
         }
     }
 

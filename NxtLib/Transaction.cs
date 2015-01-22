@@ -20,7 +20,7 @@ namespace NxtLib
         public Amount FeeNqt { get; set; }
         public string FullHash { get; set; }
         public int Height { get; set; }
-        public UnencryptedMessage Message { get; set; }
+        public Message Message { get; set; }
         public ulong? Recipient { get; set; }
         public string RecipientRs { get; set; }
         public string ReferencedTransactionFullHash { get; set; }

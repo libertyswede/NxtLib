@@ -45,7 +45,7 @@ namespace NxtLib.Internal
             transaction.FeeNqt = GetValueOrDefault(jObject, "feeNQT", obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
             transaction.FullHash = GetValueOrDefault(jObject, "fullHash", obj => obj.ToString());
             transaction.Height = GetValueOrDefault(jObject, "height", Convert.ToInt32);
-            transaction.Message = UnencryptedMessage.ParseJson(attachmentJobject);
+            transaction.Message = Message.ParseJson(attachmentJobject);
             transaction.Recipient = GetValueOrNull(jObject, "recipient", Convert.ToUInt64);
             transaction.RecipientRs = GetValueOrDefault(jObject, "recipientRS", obj => obj.ToString());
             transaction.ReferencedTransactionFullHash = GetValueOrDefault(jObject, "referencedTransactionFullHash", obj => obj.ToString());
