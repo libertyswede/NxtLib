@@ -10,7 +10,7 @@ namespace NxtLib
         public Amount Fee { get; private set; }
         public string RecipientPublicKey { get; set; }
         public string ReferencedTransactionFullHash { get; set; }
-        public Message UnencryptedMessage { get; set; }
+        public UnencryptedMessage Message { get; set; }
         public AbstractEncryptedMessage EncryptedMessage { get; set; }
         public AbstractEncryptedMessage EncryptedMessageToSelf { get; set; }
 
@@ -35,10 +35,10 @@ namespace NxtLib
 
         private void AddUnencryptedMessage(IDictionary<string, string> queryParameters)
         {
-            if (UnencryptedMessage != null)
+            if (Message != null)
             {
-                queryParameters.Add("message", UnencryptedMessage.MessageText);
-                queryParameters.Add("messageIsText", UnencryptedMessage.MessageIsText.ToString());
+                queryParameters.Add("message", Message.Message);
+                queryParameters.Add("messageIsText", Message.MessageIsText.ToString());
             }
         }
 
@@ -49,13 +49,13 @@ namespace NxtLib
 
             if ((messageToBeEncrypted = EncryptedMessage as MessageToBeEncrypted) != null)
             {
-                queryParameters.Add("messageToEncrypt", messageToBeEncrypted.MessageText);
+                queryParameters.Add("messageToEncrypt", messageToBeEncrypted.Message);
                 queryParameters.Add("messageToEncryptIsText", messageToBeEncrypted.MessageIsText.ToString());
             }
             else if ((alreadyEncryptedMessage = EncryptedMessage as AlreadyEncryptedMessage) != null)
             {
-                queryParameters.Add("encryptedMessageData", alreadyEncryptedMessage.MessageText);
-                queryParameters.Add("encryptedMessageNonce", alreadyEncryptedMessage.NonceText);
+                queryParameters.Add("encryptedMessageData", alreadyEncryptedMessage.Message);
+                queryParameters.Add("encryptedMessageNonce", ByteToHexStringConverter.ToHexString(alreadyEncryptedMessage.Nonce));
                 queryParameters.Add("messageToEncryptIsText", alreadyEncryptedMessage.MessageIsText.ToString());
             }
         }
@@ -67,50 +67,50 @@ namespace NxtLib
 
             if ((messageToBeEncrypted = EncryptedMessageToSelf as MessageToBeEncrypted) != null)
             {
-                queryParameters.Add("messageToEncryptToSelf", messageToBeEncrypted.MessageText);
+                queryParameters.Add("messageToEncryptToSelf", messageToBeEncrypted.Message);
                 queryParameters.Add("messageToEncryptToSelfIsText", messageToBeEncrypted.MessageIsText.ToString());
             }
             else if ((alreadyEncryptedMessage = EncryptedMessageToSelf as AlreadyEncryptedMessage) != null)
             {
-                queryParameters.Add("encryptToSelfMessageData", alreadyEncryptedMessage.MessageText);
-                queryParameters.Add("encryptToSelfMessageNonce", alreadyEncryptedMessage.NonceText);
+                queryParameters.Add("encryptToSelfMessageData", alreadyEncryptedMessage.Message);
+                queryParameters.Add("encryptToSelfMessageNonce", ByteToHexStringConverter.ToHexString(alreadyEncryptedMessage.Nonce));
                 queryParameters.Add("messageToEncryptToSelfIsText", alreadyEncryptedMessage.MessageIsText.ToString());
             }
         }
 
-        public class Message
+        public class UnencryptedMessage
         {
             public bool MessageIsText { get; private set; }
-            public string MessageText { get; private set; }
+            public string Message { get; private set; }
 
-            public Message(string message)
+            public UnencryptedMessage(string message)
             {
                 MessageIsText = true;
-                MessageText = message;
+                Message = message;
             }
 
-            public Message(IEnumerable<byte> messageBytes)
+            public UnencryptedMessage(IEnumerable<byte> messageBytes)
             {
                 MessageIsText = false;
-                MessageText = ByteToHexStringConverter.ToHexString(messageBytes);
+                Message = ByteToHexStringConverter.ToHexString(messageBytes);
             }
         }
 
         public abstract class AbstractEncryptedMessage
         {
             public bool MessageIsText { get; private set; }
-            public string MessageText { get; private set; }
+            public string Message { get; private set; }
 
             internal AbstractEncryptedMessage(string message, bool messageIsText)
             {
                 MessageIsText = messageIsText;
-                MessageText = message;
+                Message = message;
             }
         }
 
         public sealed class AlreadyEncryptedMessage : AbstractEncryptedMessage
         {
-            public string NonceText { get; private set; }
+            public IEnumerable<byte> Nonce { get; private set; }
 
             public AlreadyEncryptedMessage(IEnumerable<byte> messageBytes, IEnumerable<byte> encryptedMessageNonce, bool messageIsText)
                 : this(ByteToHexStringConverter.ToHexString(messageBytes), encryptedMessageNonce, messageIsText)
@@ -120,7 +120,7 @@ namespace NxtLib
             public AlreadyEncryptedMessage(string message, IEnumerable<byte> encryptedMessageNonce, bool messageIsText)
                 : base(message, messageIsText)
             {
-                NonceText = ByteToHexStringConverter.ToHexString(encryptedMessageNonce);
+                Nonce = encryptedMessageNonce;
             }
         }
 
