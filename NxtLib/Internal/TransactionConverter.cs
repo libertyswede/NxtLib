@@ -6,7 +6,7 @@ namespace NxtLib.Internal
 {
     /// <summary>
     /// A converter is needed for whole Transaction class in order to split the attachment into different .NET properties 
-    /// (atm. Attachment, Message, EncryptedMessage, EncryptToSelfMessage & PublicKeyAnnouncement atm.)
+    /// (atm. Attachment, MessageText, EncryptedMessage, EncryptToSelfMessage & PublicKeyAnnouncement atm.)
     /// </summary>
     internal class TransactionConverter : JsonConverter
     {

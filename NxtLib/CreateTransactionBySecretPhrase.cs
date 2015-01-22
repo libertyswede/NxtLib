@@ -6,10 +6,8 @@ namespace NxtLib
     {
         public string SecretPhrase { get; set; }
 
-        public CreateTransactionBySecretPhrase(bool broadcast, short deadline, Amount fee, string secretPhrase,
-            string recipientPublicKey = null, string referencedTransactionFullHash = null,
-            MessagesToSend messagesesToSend = null)
-            : base(broadcast, deadline, fee, recipientPublicKey, referencedTransactionFullHash, messagesesToSend)
+        public CreateTransactionBySecretPhrase(bool broadcast, short deadline, Amount fee, string secretPhrase)
+            : base(broadcast, deadline, fee)
         {
             SecretPhrase = secretPhrase;
         }

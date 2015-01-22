@@ -7,10 +7,8 @@ namespace NxtLib
     {
         public string PublicKey { get; set; }
 
-        public CreateTransactionByPublicKey(bool broadcast, short deadline, Amount fee, string publicKey,
-            string recipientPublicKey = null, string referencedTransactionFullHash = null,
-            MessagesToSend messagesesToSend = null)
-            : base(broadcast, deadline, fee, recipientPublicKey, referencedTransactionFullHash, messagesesToSend)
+        public CreateTransactionByPublicKey(bool broadcast, short deadline, Amount fee, string publicKey)
+            : base(broadcast, deadline, fee)
         {
             PublicKey = publicKey;
         }
