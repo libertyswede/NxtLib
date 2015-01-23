@@ -51,6 +51,11 @@ namespace NxtLib
             Nonce = ByteToHexStringConverter.ToBytes(nonceString);
             Data = ((JValue)messageToken.SelectToken(DataKey)).Value.ToString();
         }
+
+        public IEnumerable<byte> DataAsBytes()
+        {
+            return IsText ? null : ByteToHexStringConverter.ToBytes(Data);
+        }
     }
 
     public class EncryptedMessage : EncryptedMessageBase

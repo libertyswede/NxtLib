@@ -199,6 +199,11 @@ namespace NxtLib
             GoodsNonce = ByteToHexStringConverter.ToBytes(goodsNonceString);
             Purchase = GetAttachmentValue<ulong>(attachments, PurchaseKey);
         }
+
+        public IEnumerable<byte> GoodsDataAsBytes()
+        {
+            return GoodsIsText ? null : ByteToHexStringConverter.ToBytes(GoodsData);
+        }
     }
 
     public class ColoredCoinsDividendPaymentAttachment : Attachment
