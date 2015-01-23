@@ -21,7 +21,7 @@ namespace NxtLib
             Fee = fee;
         }
 
-        public virtual void AppendToQueryParameters(Dictionary<string, string> queryParameters)
+        internal virtual void AppendToQueryParameters(Dictionary<string, string> queryParameters)
         {
             queryParameters.Add("broadcast", Broadcast.ToString());
             queryParameters.Add("deadline", Deadline.ToString());

@@ -13,7 +13,7 @@ namespace NxtLib
             PublicKey = publicKey;
         }
 
-        public override void AppendToQueryParameters(Dictionary<string, string> queryParameters)
+        internal override void AppendToQueryParameters(Dictionary<string, string> queryParameters)
         {
             base.AppendToQueryParameters(queryParameters);
             queryParameters.AddIfHasValue("publicKey", PublicKey);

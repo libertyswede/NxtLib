@@ -12,7 +12,7 @@ namespace NxtLib
             SecretPhrase = secretPhrase;
         }
 
-        public override void AppendToQueryParameters(Dictionary<string, string> queryParameters)
+        internal override void AppendToQueryParameters(Dictionary<string, string> queryParameters)
         {
             base.AppendToQueryParameters(queryParameters);
             queryParameters.Add("secretPhrase", SecretPhrase);
