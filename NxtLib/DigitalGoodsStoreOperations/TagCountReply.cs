@@ -1,6 +1,6 @@
 ﻿namespace NxtLib.DigitalGoodsStoreOperations
 {
-    public class GoodsTagCount : BaseReply
+    public class TagCountReply : BaseReply
     {
         public int NumberOfTags { get; set; }
     }

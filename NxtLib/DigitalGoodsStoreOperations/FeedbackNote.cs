@@ -4,7 +4,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.DigitalGoodsStoreOperations
 {
-    public class GoodsData
+    public class FeedbackNote
     {
         public string Data { get; set; }
 

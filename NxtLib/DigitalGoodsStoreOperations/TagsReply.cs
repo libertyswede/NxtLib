@@ -2,8 +2,8 @@
 
 namespace NxtLib.DigitalGoodsStoreOperations
 {
-    public class GoodsTags : BaseReply
+    public class TagsReply : BaseReply
     {
-        public List<GoodsTag> Tags { get; set; }
+        public List<Tag> Tags { get; set; }
     }
 }

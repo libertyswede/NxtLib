@@ -18,27 +18,27 @@ namespace NxtLib.DigitalGoodsStoreOperations
 
         Task<Good> GetGood(ulong goodsId, bool? includeCounts = null);
 
-        Task<Goods> GetGoods(ulong? sellerId = null, int? firstIndex = null, int? lastIndex = null,
+        Task<GoodsReply> GetGoods(ulong? sellerId = null, int? firstIndex = null, int? lastIndex = null,
             bool? inStockOnly = null, bool? hideDelisted = null, bool? includeCounts = null);
 
-        Task<GoodsCount> GetGoodsCount(ulong? sellerId = null, bool? inStockOnly = null);
+        Task<GoodsCountReply> GetGoodsCount(ulong? sellerId = null, bool? inStockOnly = null);
 
-        Task<GoodsPurchases> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
+        Task<Purchases> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
             bool? withPublickKeedbacksOnly = null, bool? completed = null);
 
-        Task<GoodsPurchases> GetPendingPurchases(string sellerId, int? firstIndex = null,
+        Task<Purchases> GetPendingPurchases(string sellerId, int? firstIndex = null,
             int? lastIndex = null);
 
-        Task<GoodPurchase> GetPurchase(ulong purchaseId);
+        Task<Purchase> GetPurchase(ulong purchaseId);
 
-        Task<GoodsPuchaseCount> GetPurchaseCount(ulong? sellerId = null, ulong? buyerId = null,
+        Task<PuchaseCountReply> GetPurchaseCount(ulong? sellerId = null, ulong? buyerId = null,
             bool? withPublicFeedbacksOnly = null, bool? completed = null);
 
-        Task<GoodsPurchases> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
+        Task<Purchases> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
             int? firstIndex = null, int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null);
 
-        Task<GoodsTagCount> GetTagCount(bool? inStockOnly = null);
-        Task<GoodsTags> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null);
+        Task<TagCountReply> GetTagCount(bool? inStockOnly = null);
+        Task<TagsReply> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null);
 
         Task<TransactionCreated> Listing(string name, string description, int quantity, Amount price,
             CreateTransactionParameters parameters, string tags = null);
@@ -55,7 +55,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
         Task<TransactionCreated> Refund(ulong purchaseId, Amount refund,
             CreateTransactionParameters parameters);
 
-        Task<Goods> SearchGoods(string query = null, string tag = null, ulong? sellerId = null,
+        Task<GoodsReply> SearchGoods(string query = null, string tag = null, ulong? sellerId = null,
             int? firstIndex = null, int? lastIndex = null, bool? inStockOnly = null, bool? hideDelisted = null,
             bool? includeCounts = null);
     }
@@ -127,7 +127,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
             return await Get<Good>("getDGSGood", queryParameters);
         }
 
-        public async Task<Goods> GetGoods(ulong? sellerId = null, int? firstIndex = null, int? lastIndex = null,
+        public async Task<GoodsReply> GetGoods(ulong? sellerId = null, int? firstIndex = null, int? lastIndex = null,
             bool? inStockOnly = null, bool? hideDelisted = null, bool? includeCounts = null)
         {
             var queryParameters = new Dictionary<string, string>();
@@ -137,18 +137,18 @@ namespace NxtLib.DigitalGoodsStoreOperations
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
             AddToParametersIfHasValue("hideDelisted", hideDelisted, queryParameters);
             AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
-            return await Get<Goods>("getDGSGoods", queryParameters);
+            return await Get<GoodsReply>("getDGSGoods", queryParameters);
         }
 
-        public async Task<GoodsCount> GetGoodsCount(ulong? sellerId = null, bool? inStockOnly = null)
+        public async Task<GoodsCountReply> GetGoodsCount(ulong? sellerId = null, bool? inStockOnly = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("seller", sellerId, queryParameters);
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
-            return await Get<GoodsCount>("getDGSGoodsCount", queryParameters);
+            return await Get<GoodsCountReply>("getDGSGoodsCount", queryParameters);
         }
 
-        public async Task<GoodsPurchases> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
+        public async Task<Purchases> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
             bool? withPublickKeedbacksOnly = null, bool? completed = null)
         {
             var queryParameters = new Dictionary<string, string> { { "goods", goodsId.ToString() } };
@@ -156,25 +156,25 @@ namespace NxtLib.DigitalGoodsStoreOperations
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("withPublickKeedbacksOnly", withPublickKeedbacksOnly, queryParameters);
             AddToParametersIfHasValue("completed", completed, queryParameters);
-            return await Get<GoodsPurchases>("getDGSGoodsPurchases", queryParameters);
+            return await Get<Purchases>("getDGSGoodsPurchases", queryParameters);
         }
 
-        public async Task<GoodsPurchases> GetPendingPurchases(string sellerId, int? firstIndex = null,
+        public async Task<Purchases> GetPendingPurchases(string sellerId, int? firstIndex = null,
             int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string> {{"seller", sellerId}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            return await Get<GoodsPurchases>("getDGSPendingPurchases", queryParameters);
+            return await Get<Purchases>("getDGSPendingPurchases", queryParameters);
         }
 
-        public async Task<GoodPurchase> GetPurchase(ulong purchaseId)
+        public async Task<Purchase> GetPurchase(ulong purchaseId)
         {
             var queryParameters = new Dictionary<string, string> { { "purchase", purchaseId.ToString() } };
-            return await Get<GoodPurchase>("getDGSPurchase", queryParameters);
+            return await Get<Purchase>("getDGSPurchase", queryParameters);
         }
 
-        public async Task<GoodsPuchaseCount> GetPurchaseCount(ulong? sellerId = null, ulong? buyerId = null,
+        public async Task<PuchaseCountReply> GetPurchaseCount(ulong? sellerId = null, ulong? buyerId = null,
             bool? withPublicFeedbacksOnly = null, bool? completed = null)
         {
             var queryParameters = new Dictionary<string, string>();
@@ -182,10 +182,10 @@ namespace NxtLib.DigitalGoodsStoreOperations
             AddToParametersIfHasValue("buyer", buyerId, queryParameters);
             AddToParametersIfHasValue("withPublicFeedbacksOnly", withPublicFeedbacksOnly, queryParameters);
             AddToParametersIfHasValue("completed", completed, queryParameters);
-            return await Get<GoodsPuchaseCount>("getDGSPurchaseCount", queryParameters);
+            return await Get<PuchaseCountReply>("getDGSPurchaseCount", queryParameters);
         }
 
-        public async Task<GoodsPurchases> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
+        public async Task<Purchases> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
             int? firstIndex = null, int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null)
         {
             var queryParameters = new Dictionary<string, string>();
@@ -195,23 +195,23 @@ namespace NxtLib.DigitalGoodsStoreOperations
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("withPublicFeedbacksOnly", withPublicFeedbacksOnly, queryParameters);
             AddToParametersIfHasValue("completed", completed, queryParameters);
-            return await Get<GoodsPurchases>("getDGSPurchases", queryParameters);
+            return await Get<Purchases>("getDGSPurchases", queryParameters);
         }
 
-        public async Task<GoodsTagCount> GetTagCount(bool? inStockOnly = null)
+        public async Task<TagCountReply> GetTagCount(bool? inStockOnly = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
-            return await Get<GoodsTagCount>("getDGSTagCount", queryParameters);
+            return await Get<TagCountReply>("getDGSTagCount", queryParameters);
         }
 
-        public async Task<GoodsTags> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null)
+        public async Task<TagsReply> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            return await Get<GoodsTags>("getDGSTags", queryParameters);
+            return await Get<TagsReply>("getDGSTags", queryParameters);
         }
 
         public async Task<TransactionCreated> Listing(string name, string description, int quantity, Amount price,
@@ -279,7 +279,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
             return await Post<TransactionCreated>("dgsRefund", queryParameters);
         }
 
-        public async Task<Goods> SearchGoods(string query = null, string tag = null, ulong? sellerId = null,
+        public async Task<GoodsReply> SearchGoods(string query = null, string tag = null, ulong? sellerId = null,
             int? firstIndex = null, int? lastIndex = null, bool? inStockOnly = null, bool? hideDelisted = null,
             bool? includeCounts = null)
         {
@@ -292,7 +292,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
             AddToParametersIfHasValue("hideDelisted", hideDelisted, queryParameters);
             AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
-            return await Get<Goods>("searchDGSGoods", queryParameters);
+            return await Get<GoodsReply>("searchDGSGoods", queryParameters);
         }
     }
 }

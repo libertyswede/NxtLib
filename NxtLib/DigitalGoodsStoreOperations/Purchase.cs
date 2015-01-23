@@ -5,7 +5,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.DigitalGoodsStoreOperations
 {
-    public class GoodPurchase : BaseReply
+    public class Purchase : BaseReply
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "buyer")]
@@ -18,7 +18,7 @@ namespace NxtLib.DigitalGoodsStoreOperations
         [JsonConverter(typeof(NqtAmountConverter))]
         [JsonProperty(PropertyName = "discountNQT")]
         public Amount Discount { get; set; }
-        public List<GoodsFeedbackNote> FeedbackNotes { get; set; }
+        public List<FeedbackNote> FeedbackNotes { get; set; }
         public GoodsData GoodsData { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
