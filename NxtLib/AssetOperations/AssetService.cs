@@ -6,7 +6,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.AssetOperations
 {
-    public interface IAssetExchangeService
+    public interface IAssetService
     {
         Task<TransactionCreated> CancelAskOrder(ulong orderId, CreateTransactionParameters parameters);
         Task<TransactionCreated> CancelBidOrder(ulong orderId, CreateTransactionParameters parameters);
@@ -36,7 +36,7 @@ namespace NxtLib.AssetOperations
         Task<AssetTrades> GetAllTrades(DateTime? timestamp = null, int? firstIndex = null, int? lastIndex = null,
             bool? includeAssetInfo = null);
 
-        Task<AssetExchangeOrder> GetAskOrder(ulong orderId);
+        Task<AssetOrder> GetAskOrder(ulong orderId);
         Task<AssetAskOrders> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
         Task<AssetAskOrderIds> GetAskOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);
         Task<Asset> GetAsset(ulong assetId, bool? includeCounts = null);
@@ -54,7 +54,7 @@ namespace NxtLib.AssetOperations
         Task<AssetTransfers> GetAssetTransfers(AssetIdOrAccountId assetIdOrAccountId,
             int? firstIndex = null, int? lastIndex = null, bool? includeAssetInfo = null);
 
-        Task<AssetExchangeOrder> GetBidOrder(ulong orderId);
+        Task<AssetOrder> GetBidOrder(ulong orderId);
         Task<AssetBidOrderIds> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);
         Task<AssetBidOrders> GetBidOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
 
@@ -77,14 +77,14 @@ namespace NxtLib.AssetOperations
             CreateTransactionParameters parameters);
     }
 
-    public class AssetExchangeService : BaseService, IAssetExchangeService
+    public class AssetService : BaseService, IAssetService
     {
-        public AssetExchangeService(string baseAddress = DefaultBaseUrl)
+        public AssetService(string baseAddress = DefaultBaseUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }
 
-        public AssetExchangeService(IDateTimeConverter dateTimeConverter)
+        public AssetService(IDateTimeConverter dateTimeConverter)
             : base(dateTimeConverter)
         {
         }
@@ -201,13 +201,13 @@ namespace NxtLib.AssetOperations
             return await Get<AssetTrades>("getAllTrades", queryParameters);
         }
 
-        public async Task<AssetExchangeOrder> GetAskOrder(ulong orderId)
+        public async Task<AssetOrder> GetAskOrder(ulong orderId)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {"order", orderId.ToString()}
             };
-            return await Get<AssetExchangeOrder>("getAskOrder", queryParameters);
+            return await Get<AssetOrder>("getAskOrder", queryParameters);
         }
 
         public async Task<AssetAskOrders> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null)
@@ -320,13 +320,13 @@ namespace NxtLib.AssetOperations
             return await Get<AssetTransfers>("getAssetTransfers", queryParameters);
         }
 
-        public async Task<AssetExchangeOrder> GetBidOrder(ulong orderId)
+        public async Task<AssetOrder> GetBidOrder(ulong orderId)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {"order", orderId.ToString()}
             };
-            return await Get<AssetExchangeOrder>("getBidOrder", queryParameters);
+            return await Get<AssetOrder>("getBidOrder", queryParameters);
         }
 
         public async Task<AssetBidOrderIds> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null)

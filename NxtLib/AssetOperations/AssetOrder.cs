@@ -3,7 +3,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.AssetOperations
 {
-    public class AssetExchangeOrder : BaseReply
+    public class AssetOrder : BaseReply
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "account")]

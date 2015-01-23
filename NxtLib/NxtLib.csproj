@@ -86,8 +86,8 @@
     <Compile Include="AssetOperations\AssetAskOrders.cs" />
     <Compile Include="AssetOperations\AssetBidOrderIds.cs" />
     <Compile Include="AssetOperations\AssetBidOrders.cs" />
-    <Compile Include="AssetOperations\AssetExchangeOrder.cs" />
-    <Compile Include="AssetOperations\AssetExchangeService.cs" />
+    <Compile Include="AssetOperations\AssetOrder.cs" />
+    <Compile Include="AssetOperations\AssetService.cs" />
     <Compile Include="AssetOperations\AssetIdOrAccountId.cs" />
     <Compile Include="AssetOperations\AssetIds.cs" />
     <Compile Include="AssetOperations\AssetOrders.cs" />

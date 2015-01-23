@@ -4,6 +4,6 @@ namespace NxtLib.AssetOperations
 {
     public class AssetAskOrders : BaseReply
     {
-        public List<AssetExchangeOrder> AskOrders { get; set; }
+        public List<AssetOrder> AskOrders { get; set; }
     }
 }
