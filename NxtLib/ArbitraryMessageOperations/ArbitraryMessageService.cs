@@ -10,7 +10,7 @@ namespace NxtLib.ArbitraryMessageOperations
         Task<DecryptedMessageReply> DecryptMessageFrom(string senderAccountId, string data, IEnumerable<byte> nonce, string secretPhrase);
         Task<EncryptedDataReply> EncryptTo(string recipient, string messageToEncrypt, string secretPhrase);
         Task<EncryptedDataReply> EncryptTo(string recipient, IEnumerable<byte> messageToEncrypt, string secretPhrase);
-        Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase);
+        Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null);
         Task<TransactionCreated> SendMessage(CreateTransactionParameters parameters, string recipient = null);
     }
 
@@ -76,13 +76,10 @@ namespace NxtLib.ArbitraryMessageOperations
             return await Get<EncryptedDataReply>("encryptTo", queryParameters);
         }
 
-        public async Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase)
+        public async Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"transaction", transactionId.ToString()},
-                {"secretPhrase", secretPhrase}
-            };
+            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            AddToParametersIfHasValue("secretPhrase", secretPhrase, queryParameters);
             return await Get<ReadMessageReply>("readMessage", queryParameters);
         }
 
