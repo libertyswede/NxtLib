@@ -18,8 +18,8 @@ namespace NxtLib.DigitalGoodsStoreOperations
         [JsonConverter(typeof(NqtAmountConverter))]
         [JsonProperty(PropertyName = "discountNQT")]
         public Amount Discount { get; set; }
-        public List<FeedbackNote> FeedbackNotes { get; set; }
-        public GoodsData GoodsData { get; set; }
+        public List<EncryptedDataReply> FeedbackNotes { get; set; }
+        public EncryptedDataReply GoodsData { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "goods")]

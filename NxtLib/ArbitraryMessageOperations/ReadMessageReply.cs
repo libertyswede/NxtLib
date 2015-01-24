@@ -1,27 +1,17 @@
-using System.Collections.Generic;
+using Newtonsoft.Json;
 using NxtLib.Internal;
 
 namespace NxtLib.ArbitraryMessageOperations
 {
     public class ReadMessageReply : BaseReply
     {
-        public string DecryptedMessage { get; set; }
-        public string DecryptedMessageToSelf { get; set; }
-        public string Message { get; set; }
+        [JsonConverter(typeof(ByteToHexStringConverter))]
+        public UnencryptedMessage DecryptedMessage { get; set; }
 
-        public IEnumerable<byte> DecryptedMessageAsBytes()
-        {
-            return ByteToHexStringConverter.ToBytes(DecryptedMessage);
-        }
+        [JsonConverter(typeof(ByteToHexStringConverter))]
+        public UnencryptedMessage DecryptedMessageToSelf { get; set; }
 
-        public IEnumerable<byte> DecryptedMessageToSelfAsBytes()
-        {
-            return ByteToHexStringConverter.ToBytes(DecryptedMessageToSelf);
-        }
-
-        public IEnumerable<byte> MessageAsBytes()
-        {
-            return ByteToHexStringConverter.ToBytes(Message);
-        }
+        [JsonConverter(typeof(ByteToHexStringConverter))]
+        public UnencryptedMessage Message { get; set; }
     }
 }

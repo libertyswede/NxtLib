@@ -185,24 +185,18 @@ namespace NxtLib
     public class DigitalGoodsDeliveryAttachment : Attachment
     {
         public Amount Discount { get; set; }
-        public string GoodsData { get; set; }
+        public BinaryHexString GoodsData { get; set; }
         public bool GoodsIsText { get; set; }
-        public IEnumerable<byte> GoodsNonce { get; set; }
+        public BinaryHexString GoodsNonce { get; set; }
         public ulong Purchase { get; set; }
 
         internal DigitalGoodsDeliveryAttachment(JToken attachments)
         {
             Discount = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, DiscountKey));
-            GoodsData = GetAttachmentValue<string>(attachments, GoodsDataKey);
+            GoodsData = new BinaryHexString(GetAttachmentValue<string>(attachments, GoodsDataKey));
             GoodsIsText = GetAttachmentValue<bool>(attachments, GoodsIsTextKey);
-            var goodsNonceString = GetAttachmentValue<string>(attachments, GoodsNonceKey);
-            GoodsNonce = ByteToHexStringConverter.ToBytes(goodsNonceString);
+            GoodsNonce = new BinaryHexString(GetAttachmentValue<string>(attachments, GoodsNonceKey));
             Purchase = GetAttachmentValue<ulong>(attachments, PurchaseKey);
-        }
-
-        public IEnumerable<byte> GoodsDataAsBytes()
-        {
-            return GoodsIsText ? null : ByteToHexStringConverter.ToBytes(GoodsData);
         }
     }
 

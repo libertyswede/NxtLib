@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using NxtLib.Internal;
 
 namespace NxtLib
 {
@@ -12,17 +10,12 @@ namespace NxtLib
     public class Message : Appendix
     {
         public bool MessageIsText { get; set; }
-        public string MessageText { get; set; }
+        public UnencryptedMessage MessageText { get; set; }
 
         private Message(string messageText, bool messageIsText)
         {
-            MessageText = messageText;
+            MessageText = new UnencryptedMessage(messageText);
             MessageIsText = messageIsText;
-        }
-
-        public IEnumerable<byte> GetMessageBytes()
-        {
-            return MessageIsText ? null : ByteToHexStringConverter.ToBytes(MessageText);
         }
 
         internal static Message ParseJson(JObject jObject)
@@ -41,20 +34,14 @@ namespace NxtLib
     public abstract class EncryptedMessageBase : Appendix
     {
         public bool IsText { get; set; }
-        public IEnumerable<byte> Nonce { get; set; }
-        public string Data { get; set; }
+        public BinaryHexString Nonce { get; set; }
+        public BinaryHexString Data { get; set; }
 
         protected EncryptedMessageBase(JToken messageToken)
         {
             IsText = Convert.ToBoolean(messageToken.SelectToken(IsTextKey));
-            var nonceString = ((JValue)messageToken.SelectToken(NonceKey)).Value.ToString();
-            Nonce = ByteToHexStringConverter.ToBytes(nonceString);
-            Data = ((JValue)messageToken.SelectToken(DataKey)).Value.ToString();
-        }
-
-        public IEnumerable<byte> DataAsBytes()
-        {
-            return IsText ? null : ByteToHexStringConverter.ToBytes(Data);
+            Nonce = new BinaryHexString(((JValue)messageToken.SelectToken(NonceKey)).Value.ToString());
+            Data = new BinaryHexString(((JValue)messageToken.SelectToken(DataKey)).Value.ToString());
         }
     }
 

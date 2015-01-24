@@ -25,9 +25,20 @@ namespace NxtLib.Internal
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (reader.TokenType == JsonToken.String && objectType == typeof(IEnumerable<byte>))
+            if (reader.TokenType == JsonToken.String)
             {
-                return ToBytes(reader.Value.ToString());
+                if (objectType == typeof(IEnumerable<byte>))
+                {
+                    return ToBytes(reader.Value.ToString());
+                }
+                if (objectType == typeof (BinaryHexString))
+                {
+                    return new BinaryHexString(reader.Value.ToString());
+                }
+                if (objectType == typeof(UnencryptedMessage))
+                {
+                    return new UnencryptedMessage(reader.Value.ToString());
+                }
             }
             throw new NotSupportedException(string.Format("objectType {0} and TokenType {1} is not supported", objectType, reader.TokenType));
         }

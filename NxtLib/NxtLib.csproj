@@ -73,6 +73,8 @@
     <Compile Include="ArbitraryMessageOperations\ArbitraryMessageService.cs" />
     <Compile Include="ArbitraryMessageOperations\DecryptedDataReply.cs" />
     <Compile Include="ArbitraryMessageOperations\DecryptedMessageReply.cs" />
+    <Compile Include="BinaryHexString.cs" />
+    <Compile Include="UnencryptedMessage.cs" />
     <Compile Include="EncryptedDataReply.cs" />
     <Compile Include="ArbitraryMessageOperations\ReadMessageReply.cs" />
     <Compile Include="AssetOperations\AccountAsset.cs" />
@@ -120,8 +122,6 @@
     <Compile Include="DigitalGoodsStoreOperations\Purchase.cs" />
     <Compile Include="DigitalGoodsStoreOperations\GoodsReply.cs" />
     <Compile Include="DigitalGoodsStoreOperations\GoodsCountReply.cs" />
-    <Compile Include="DigitalGoodsStoreOperations\GoodsData.cs" />
-    <Compile Include="DigitalGoodsStoreOperations\FeedbackNote.cs" />
     <Compile Include="DigitalGoodsStoreOperations\PuchaseCountReply.cs" />
     <Compile Include="DigitalGoodsStoreOperations\Purchases.cs" />
     <Compile Include="DigitalGoodsStoreOperations\Tag.cs" />
