@@ -60,6 +60,7 @@
     <Compile Include="AccountOperations\AccountService.cs" />
     <Compile Include="AccountOperations\AccountTransactionIds.cs" />
     <Compile Include="AccountOperations\AccountTransactions.cs" />
+    <Compile Include="AccountOperations\LessorInfo.cs" />
     <Compile Include="AccountOperations\UnconfirmedAccountAssetBalance.cs" />
     <Compile Include="AccountOperations\UnconfirmedAccountTransactionIds.cs" />
     <Compile Include="AccountOperations\UnconfirmedAccountTransactions.cs" />

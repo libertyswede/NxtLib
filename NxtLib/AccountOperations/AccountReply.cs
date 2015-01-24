@@ -37,10 +37,12 @@ namespace NxtLib.AccountOperations
         [JsonConverter(typeof(NqtAmountConverter))]
         [JsonProperty(PropertyName = "guaranteedBalanceNqt")]
         public Amount GuaranteedBalance { get; set; }
-        public List<string> LessorsRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public List<ulong> Lessors { get; set; }
+
+        public List<LessorInfo> LessorsInfo { get; set; }
+        public List<string> LessorsRs { get; set; }
         public int MessagePatternFlags { get; set; }
         public string MessagePatternRegex { get; set; }
         public string Name { get; set; }
