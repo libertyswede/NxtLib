@@ -55,7 +55,7 @@ namespace NxtLib.MonetarySystemOperations
                 {"account", accountId},
                 {"currency", currencyId.ToString()}
             };
-            return await Get<CanDeleteCurrencyReply>("candDeleteCurrency", queryParameters);
+            return await Get<CanDeleteCurrencyReply>("canDeleteCurrency", queryParameters);
         }
 
         public async Task<TransactionCreated> CurrencyBuy(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters)
