@@ -1,6 +1,6 @@
 ﻿namespace NxtLib.ForgingOperations
 {
-    public class GetForging : StartForging
+    public class GetForgingReply : StartForgingReply
     {
         public int Remaining { get; set; }
     }

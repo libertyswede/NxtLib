@@ -4,7 +4,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.HallmarkOperations
 {
-    public class Hallmark : BaseReply
+    public class DecodeHallmarkReply : BaseReply
     {
         [JsonProperty(PropertyName = "account")]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

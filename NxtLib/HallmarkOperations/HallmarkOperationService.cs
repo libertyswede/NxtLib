@@ -7,8 +7,8 @@ namespace NxtLib.HallmarkOperations
 {
     public interface IHallmarkOperationService
     {
-        Task<Hallmark> DecodeHallmark(string hallmark);
-        Task<HallmarkHexString> MarkHost(string secretPhrase, string host, int weight, DateTime date);
+        Task<DecodeHallmarkReply> DecodeHallmark(string hallmark);
+        Task<MarkHostReply> MarkHost(string secretPhrase, string host, int weight, DateTime date);
     }
 
     public class HallmarkOperationService : BaseService, IHallmarkOperationService
@@ -22,13 +22,13 @@ namespace NxtLib.HallmarkOperations
         {
         }
 
-        public async Task<Hallmark> DecodeHallmark(string hallmark)
+        public async Task<DecodeHallmarkReply> DecodeHallmark(string hallmark)
         {
             var queryParameters = new Dictionary<string, string> {{"hallmark", hallmark}};
-            return await Get<Hallmark>("decodeHallmark", queryParameters);
+            return await Get<DecodeHallmarkReply>("decodeHallmark", queryParameters);
         }
 
-        public async Task<HallmarkHexString> MarkHost(string secretPhrase, string host, int weight, DateTime date)
+        public async Task<MarkHostReply> MarkHost(string secretPhrase, string host, int weight, DateTime date)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -37,7 +37,7 @@ namespace NxtLib.HallmarkOperations
                 {"weight", weight.ToString()},
                 {"date", date.ToString("yyyy-MM-dd")}
             };
-            return await Post<HallmarkHexString>("markHost", queryParameters);
+            return await Post<MarkHostReply>("markHost", queryParameters);
         }
     }
 }

@@ -129,11 +129,11 @@
     <Compile Include="DigitalGoodsStoreOperations\TagCountReply.cs" />
     <Compile Include="DigitalGoodsStoreOperations\TagsReply.cs" />
     <Compile Include="ForgingOperations\ForgingService.cs" />
-    <Compile Include="ForgingOperations\GetForging.cs" />
-    <Compile Include="ForgingOperations\StartForging.cs" />
-    <Compile Include="ForgingOperations\StopForging.cs" />
-    <Compile Include="HallmarkOperations\Hallmark.cs" />
-    <Compile Include="HallmarkOperations\HallmarkHexString.cs" />
+    <Compile Include="ForgingOperations\GetForgingReply.cs" />
+    <Compile Include="ForgingOperations\StartForgingReply.cs" />
+    <Compile Include="ForgingOperations\StopForgingReply.cs" />
+    <Compile Include="HallmarkOperations\DecodeHallmarkReply.cs" />
+    <Compile Include="HallmarkOperations\MarkHostReply.cs" />
     <Compile Include="HallmarkOperations\HallmarkOperationService.cs" />
     <Compile Include="IDateTimeConverter.cs" />
     <Compile Include="Internal\AttachmentConverter.cs" />

@@ -6,10 +6,10 @@ namespace NxtLib.ForgingOperations
 {
     public interface IForgingService
     {
-        Task<GetForging> GetForging(string secretPhrase);
+        Task<GetForgingReply> GetForging(string secretPhrase);
         Task<TransactionCreated> LeaseBalance(int period, string recipient, CreateTransactionParameters parameters);
-        Task<StartForging> StartForging(string secretPhrase);
-        Task<StopForging> StopForging(string secretPhrase);
+        Task<StartForgingReply> StartForging(string secretPhrase);
+        Task<StopForgingReply> StopForging(string secretPhrase);
     }
 
     public class ForgingService : BaseService, IForgingService
@@ -23,10 +23,10 @@ namespace NxtLib.ForgingOperations
         {
         }
 
-        public async Task<GetForging> GetForging(string secretPhrase)
+        public async Task<GetForgingReply> GetForging(string secretPhrase)
         {
             var queryParameters = new Dictionary<string, string> {{"secretPhrase", secretPhrase}};
-            return await Post<GetForging>("getForging", queryParameters);
+            return await Post<GetForgingReply>("getForging", queryParameters);
         }
 
         public async Task<TransactionCreated> LeaseBalance(int period, string recipient, CreateTransactionParameters parameters)
@@ -40,16 +40,16 @@ namespace NxtLib.ForgingOperations
             return await Post<TransactionCreated>("leaseBalance", queryParameters);
         }
 
-        public async Task<StartForging> StartForging(string secretPhrase)
+        public async Task<StartForgingReply> StartForging(string secretPhrase)
         {
             var queryParameters = new Dictionary<string, string> {{"secretPhrase", secretPhrase}};
-            return await Post<StartForging>("startForging", queryParameters);
+            return await Post<StartForgingReply>("startForging", queryParameters);
         }
 
-        public async Task<StopForging> StopForging(string secretPhrase)
+        public async Task<StopForgingReply> StopForging(string secretPhrase)
         {
             var queryParameters = new Dictionary<string, string> {{"secretPhrase", secretPhrase}};
-            return await Post<StopForging>("stopForging", queryParameters);
+            return await Post<StopForgingReply>("stopForging", queryParameters);
         }
     }
 }

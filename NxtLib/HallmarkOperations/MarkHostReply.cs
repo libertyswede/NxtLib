@@ -1,6 +1,6 @@
 ﻿namespace NxtLib.HallmarkOperations
 {
-    public class HallmarkHexString : BaseReply
+    public class MarkHostReply : BaseReply
     {
         public string Hallmark { get; set; }
     }
