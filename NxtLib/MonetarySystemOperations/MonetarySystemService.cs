@@ -8,14 +8,14 @@ namespace NxtLib.MonetarySystemOperations
     public interface IMonetarySystemService
     {
         Task<CanDeleteCurrencyReply> CanDeleteCurrency(string accountId, ulong currencyId);
-        Task<TransactionCreated> CurrencyBuy(ulong currencyId, long rateNqt, long units, CreateTransactionParameters parameters);
+        Task<TransactionCreated> CurrencyBuy(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters);
         Task<TransactionCreated> CurrencyMint(ulong currencyId, long nonce, long units, long counter,
             CreateTransactionParameters parameters);
         Task<TransactionCreated> CurrencyReserveClaim(ulong currencyId, long units,
             CreateTransactionParameters parameters);
         Task<TransactionCreated> CurrencyReserveIncrease(ulong currencyId, Amount amountPerUnitNqt,
             CreateTransactionParameters parameters);
-        Task<TransactionCreated> CurrencySell(ulong currencyId, long rateNqt, long units, CreateTransactionParameters parameters);
+        Task<TransactionCreated> CurrencySell(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters);
         Task<TransactionCreated> DeleteCurrency(ulong currencyId, CreateTransactionParameters parameters);
         Task<GetAccountCurrenciesReply> GetAccountCurrencies(string accountId, ulong? currencyId = null,
             int? height = null);
@@ -58,9 +58,9 @@ namespace NxtLib.MonetarySystemOperations
             return await Get<CanDeleteCurrencyReply>("candDeleteCurrency", queryParameters);
         }
 
-        public async Task<TransactionCreated> CurrencyBuy(ulong currencyId, long rateNqt, long units, CreateTransactionParameters parameters)
+        public async Task<TransactionCreated> CurrencyBuy(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters)
         {
-            return await CurrencyTrade(currencyId, rateNqt, units, parameters, "currencyBuy");
+            return await CurrencyTrade(currencyId, rate, units, parameters, "currencyBuy");
         }
 
         public async Task<TransactionCreated> CurrencyMint(ulong currencyId, long nonce, long units, long counter,
@@ -101,9 +101,9 @@ namespace NxtLib.MonetarySystemOperations
             return await Post<TransactionCreated>("currencyReserveIncrease", queryParameters);
         }
 
-        public async Task<TransactionCreated> CurrencySell(ulong currencyId, long rateNqt, long units, CreateTransactionParameters parameters)
+        public async Task<TransactionCreated> CurrencySell(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters)
         {
-            return await CurrencyTrade(currencyId, rateNqt, units, parameters, "currencySell");
+            return await CurrencyTrade(currencyId, rate, units, parameters, "currencySell");
         }
 
         public async Task<TransactionCreated> DeleteCurrency(ulong currencyId, CreateTransactionParameters parameters)
@@ -232,12 +232,12 @@ namespace NxtLib.MonetarySystemOperations
             return await Post<TransactionCreated>("transferCurrency", queryParameters);
         }
 
-        private async Task<TransactionCreated> CurrencyTrade(ulong currencyId, long rateNqt, long units, CreateTransactionParameters parameters, string tradeType)
+        private async Task<TransactionCreated> CurrencyTrade(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters, string tradeType)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {"currency", currencyId.ToString()},
-                {"rateNQT", rateNqt.ToString()},
+                {"rateNQT", rate.Nqt.ToString()},
                 {"units", units.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
