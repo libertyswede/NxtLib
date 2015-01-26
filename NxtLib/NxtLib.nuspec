@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>NxtLib</id>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <title>NxtLib</title>
     <authors>libertyswede</authors>
     <owners>libertyswede</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NET Framework API for the NXT platform</description>
     <releaseNotes>NxtLib is a typed wrapper for the Json API in the NXT platform ( http://nxt.org/ )
-    It currently supports NXT version 1.4.9 </releaseNotes>
+    It currently supports NXT version 1.4.10 </releaseNotes>
     <tags>NXT cryptocurrency</tags>
   </metadata>
 </package>
