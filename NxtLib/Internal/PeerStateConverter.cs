@@ -13,17 +13,17 @@ namespace NxtLib.Internal
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if ((reader.TokenType == JsonToken.String || reader.TokenType == JsonToken.Integer) && objectType == typeof(GetPeerReply.PeerState))
+            if ((reader.TokenType == JsonToken.String || reader.TokenType == JsonToken.Integer) && objectType == typeof(PeerReply.PeerState))
             {
                 var stateInt = Convert.ToInt32(reader.Value.ToString());
                 switch (stateInt)
                 {
                     case 0:
-                        return GetPeerReply.PeerState.NonConnected;
+                        return PeerReply.PeerState.NonConnected;
                     case 1:
-                        return GetPeerReply.PeerState.Connected;
+                        return PeerReply.PeerState.Connected;
                     case 2:
-                        return GetPeerReply.PeerState.Disconnected;
+                        return PeerReply.PeerState.Disconnected;
                 }
             }
             throw new NotSupportedException(string.Format("objectType {0} and TokenType {1} is not supported", objectType, reader.TokenType));

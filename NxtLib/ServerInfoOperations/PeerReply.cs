@@ -4,7 +4,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.ServerInfoOperations
 {
-    public class GetPeerReply : BaseReply
+    public class PeerReply : BaseReply
     {
         public string Address { get; set; }
         public string AnnouncedAddress { get; set; }

@@ -5,9 +5,9 @@ namespace NxtLib.DebugOperations
 {
     public interface IDebugService
     {
-        Task<DebugReply> ClearUnconfirmedTransactions();
-        Task<DebugReply> FullReset();
-        Task<DebugReply> LuceneReindex();
+        Task<DoneReply> ClearUnconfirmedTransactions();
+        Task<DoneReply> FullReset();
+        Task<DoneReply> LuceneReindex();
         Task<BlocksReply<Transaction>> PopOff(HeightOrNumberOfBlocksLocator locator);
         Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null);
     }
@@ -24,19 +24,19 @@ namespace NxtLib.DebugOperations
         {
         }
 
-        public async Task<DebugReply> ClearUnconfirmedTransactions()
+        public async Task<DoneReply> ClearUnconfirmedTransactions()
         {
-            return await Post<DebugReply>("clearUnconfirmedTransactions");
+            return await Post<DoneReply>("clearUnconfirmedTransactions");
         }
 
-        public async Task<DebugReply> FullReset()
+        public async Task<DoneReply> FullReset()
         {
-            return await Post<DebugReply>("fullReset");
+            return await Post<DoneReply>("fullReset");
         }
 
-        public async Task<DebugReply> LuceneReindex()
+        public async Task<DoneReply> LuceneReindex()
         {
-            return await Post<DebugReply>("luceneReindex");
+            return await Post<DoneReply>("luceneReindex");
         }
 
         public async Task<BlocksReply<Transaction>> PopOff(HeightOrNumberOfBlocksLocator locator)

@@ -13,15 +13,15 @@ namespace NxtLib.ServerInfoOperations
             return new PeersLocator("active", true.ToString());
         }
 
-        public static PeersLocator ByState(GetPeerReply.PeerState state)
+        public static PeersLocator ByState(PeerReply.PeerState state)
         {
             switch (state)
             {
-                case GetPeerReply.PeerState.Connected:
+                case PeerReply.PeerState.Connected:
                     return new PeersLocator("state", "CONNECTED");
-                case GetPeerReply.PeerState.Disconnected:
+                case PeerReply.PeerState.Disconnected:
                     return new PeersLocator("state", "DISCONNECTED");
-                case GetPeerReply.PeerState.NonConnected:
+                case PeerReply.PeerState.NonConnected:
                     return new PeersLocator("state", "NON_CONNECTED");
             }
             throw new NotSupportedException(string.Format("State {0} is not supported type", state));

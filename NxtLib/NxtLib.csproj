@@ -75,6 +75,7 @@
     <Compile Include="ArbitraryMessageOperations\DecryptedDataReply.cs" />
     <Compile Include="ArbitraryMessageOperations\DecryptedMessageReply.cs" />
     <Compile Include="BinaryHexString.cs" />
+    <Compile Include="DoneReply.cs" />
     <Compile Include="UnencryptedMessage.cs" />
     <Compile Include="EncryptedDataReply.cs" />
     <Compile Include="ArbitraryMessageOperations\ReadMessageReply.cs" />
@@ -114,7 +115,6 @@
     <Compile Include="CreateTransactionBySecretPhrase.cs" />
     <Compile Include="CreateTransactionParameters.cs" />
     <Compile Include="CurrencyInfo.cs" />
-    <Compile Include="DebugOperations\DebugReply.cs" />
     <Compile Include="DebugOperations\DebugService.cs" />
     <Compile Include="DebugOperations\HeightOrNumberOfBlocksLocator.cs" />
     <Compile Include="DebugOperations\ScanReply.cs" />
@@ -168,7 +168,7 @@
     <Compile Include="ServerInfoOperations\GetBlockchainStatusReply.cs" />
     <Compile Include="ServerInfoOperations\GetConstantsReply.cs" />
     <Compile Include="ServerInfoOperations\GetMyInfoReply.cs" />
-    <Compile Include="ServerInfoOperations\GetPeerReply.cs" />
+    <Compile Include="ServerInfoOperations\PeerReply.cs" />
     <Compile Include="ServerInfoOperations\GetPeersReply.cs" />
     <Compile Include="ServerInfoOperations\GetStateReply.cs" />
     <Compile Include="ServerInfoOperations\GetTimeReply.cs" />

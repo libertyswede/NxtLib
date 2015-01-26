@@ -6,10 +6,12 @@ namespace NxtLib.ServerInfoOperations
 {
     public interface IServerInfoService
     {
+        Task<PeerReply> AddPeer(string peer);
+        Task<DoneReply> BlacklistPeer(string peer);
         Task<GetBlockchainStatusReply> GetBlockchainStatus();
         Task<GetConstantsReply> GetConstants();
         Task<GetMyInfoReply> GetMyInfo();
-        Task<GetPeerReply> GetPeer(string peer);
+        Task<PeerReply> GetPeer(string peer);
         Task<GetPeersReply> GetPeers(PeersLocator locator = null);
         Task<GetStateReply> GetState(bool? includeCounts = null);
         Task<GetTimeReply> GetTime();
@@ -27,6 +29,18 @@ namespace NxtLib.ServerInfoOperations
         {
         }
 
+        public async Task<PeerReply> AddPeer(string peer)
+        {
+            var queryParameters = new Dictionary<string, string> {{"peer", peer}};
+            return await Get<PeerReply>("addPeer", queryParameters);
+        }
+
+        public async Task<DoneReply> BlacklistPeer(string peer)
+        {
+            var queryParameters = new Dictionary<string, string> {{"peer", peer}};
+            return await Get<DoneReply>("blacklistPeer", queryParameters);
+        }
+
         public async Task<GetBlockchainStatusReply> GetBlockchainStatus()
         {
             return await Get<GetBlockchainStatusReply>("getBlockchainStatus");
@@ -42,10 +56,10 @@ namespace NxtLib.ServerInfoOperations
             return await Get<GetMyInfoReply>("getMyInfo");
         }
 
-        public async Task<GetPeerReply> GetPeer(string peer)
+        public async Task<PeerReply> GetPeer(string peer)
         {
             var queryParameters = new Dictionary<string, string> {{"peer", peer}};
-            return await Get<GetPeerReply>("getPeer", queryParameters);
+            return await Get<PeerReply>("getPeer", queryParameters);
         }
 
         public async Task<GetPeersReply> GetPeers(PeersLocator locator = null)
