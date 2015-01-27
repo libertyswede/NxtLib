@@ -76,6 +76,8 @@
     <Compile Include="ArbitraryMessageOperations\DecryptedMessageReply.cs" />
     <Compile Include="BinaryHexString.cs" />
     <Compile Include="DoneReply.cs" />
+    <Compile Include="MonetarySystemOperations\CurrencyOrAccountLocator.cs" />
+    <Compile Include="MonetarySystemOperations\GetOffersReply.cs" />
     <Compile Include="UnencryptedMessage.cs" />
     <Compile Include="EncryptedDataReply.cs" />
     <Compile Include="ArbitraryMessageOperations\ReadMessageReply.cs" />

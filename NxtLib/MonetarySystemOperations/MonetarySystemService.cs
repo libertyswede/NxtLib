@@ -25,14 +25,28 @@ namespace NxtLib.MonetarySystemOperations
         Task<CurrenciesReply> GetAllCurrencies(int? firstindex = null, int? lastindex = null, bool? includeCounts = null);
         Task<ExchangesReply> GetAllExchanges(DateTime? timestamp = null, int? firstindex = null,
             int? lastindex = null, bool? includeCurrencyInfo = null);
+
+        Task<GetOffersReply> GetBuyOffers(CurrencyOrAccountLocator locator,
+            bool? availableOnly = null, int? firstindex = null, int? lastindex = null);
+
         Task<ExchangesReply> GetExchangesByExchangeRequest(ulong transactionId, bool? includeCurrencyInfo = null);
+
         Task<ExchangesReply> GetExchangesByOffer(ulong offerId, int? firstindex = null,
             int? lastindex = null, bool? includeCurrencyInfo = null);
+
         Task<GetMintingTargetReply> GetMintingTarget(ulong currencyId, string accountId, long units);
+
         Task<GetOfferReply> GetOffer(ulong offerId);
+
+        Task<GetOffersReply> GetSellOffers(CurrencyOrAccountLocator locator,
+            bool? availableOnly = null, int? firstindex = null, int? lastindex = null);
+
         Task<TransactionCreated> IssueCurrency(IssueCurrencyParameters issueCurrencyParameters, CreateTransactionParameters parameters);
+
         Task<TransactionCreated> PublishExchangeOffer(PublishExchangeOfferParameters exchangeOfferParameters, CreateTransactionParameters parameters);
+
         Task<CurrenciesReply> SearchCurrencies(string query, int? firstIndex = null, int? lastIndex = null, bool? includeCounts = null);
+
         Task<TransactionCreated> TransferCurrency(string recipientId, ulong currencyId, long units, CreateTransactionParameters parameters);
     }
 
@@ -162,6 +176,16 @@ namespace NxtLib.MonetarySystemOperations
             return await Get<ExchangesReply>("getAllExchanges", queryParameters);
         }
 
+        public async Task<GetOffersReply> GetBuyOffers(CurrencyOrAccountLocator locator,
+            bool? availableOnly = null, int? firstindex = null, int? lastindex = null)
+        {
+            var queryParameters = locator.QueryParameters;
+            AddToParametersIfHasValue("availableOnly", availableOnly, queryParameters);
+            AddToParametersIfHasValue("firstIndex", firstindex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastindex, queryParameters);
+            return await Get<GetOffersReply>("getBuyOffers", queryParameters);
+        }
+
         public async Task<ExchangesReply> GetExchangesByExchangeRequest(ulong transactionId, bool? includeCurrencyInfo = null)
         {
             var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
@@ -194,6 +218,16 @@ namespace NxtLib.MonetarySystemOperations
         {
             var queryParameters = new Dictionary<string, string> {{"offer", offerId.ToString()}};
             return await Get<GetOfferReply>("getOffer", queryParameters);
+        }
+
+        public async Task<GetOffersReply> GetSellOffers(CurrencyOrAccountLocator locator,
+            bool? availableOnly = null, int? firstindex = null, int? lastindex = null)
+        {
+            var queryParameters = locator.QueryParameters;
+            AddToParametersIfHasValue("availableOnly", availableOnly, queryParameters);
+            AddToParametersIfHasValue("firstIndex", firstindex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastindex, queryParameters);
+            return await Get<GetOffersReply>("getSellOffers", queryParameters);
         }
 
         public async Task<TransactionCreated> IssueCurrency(IssueCurrencyParameters issueCurrencyParameters, CreateTransactionParameters parameters)
