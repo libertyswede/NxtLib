@@ -19,7 +19,7 @@ namespace NxtLib.MonetarySystemOperations
             queryParameters.Add("currency", CurrencyId.ToString());
             queryParameters.Add("expirationHeight", ExpirationHeight.ToString());
             queryParameters.Add("initialBuySupply", InitialBuySupply.ToString());
-            queryParameters.Add("initialSellSUpply", InitialSellSupply.ToString());
+            queryParameters.Add("initialSellSupply", InitialSellSupply.ToString());
             queryParameters.Add("sellRateNQT", SellRate.Nqt.ToString());
             queryParameters.Add("totalBuyLimit", TotalBuyLimit.ToString());
             queryParameters.Add("totalSellLimit", TotalSellLimit.ToString());
