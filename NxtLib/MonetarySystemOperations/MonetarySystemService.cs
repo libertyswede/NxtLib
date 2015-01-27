@@ -263,6 +263,7 @@ namespace NxtLib.MonetarySystemOperations
                 {"currency", currencyId.ToString()},
                 {"units", units.ToString()}
             };
+            parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreated>("transferCurrency", queryParameters);
         }
 
