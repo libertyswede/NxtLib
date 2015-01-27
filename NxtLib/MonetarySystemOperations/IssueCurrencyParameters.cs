@@ -6,7 +6,7 @@ namespace NxtLib.MonetarySystemOperations
 {
     public class IssueCurrencyParameters
     {
-        public byte? Algorithm { get; set; }
+        public MintAlgorithm? Algorithm { get; set; }
         public string Code { get; set; }
         public byte? Decimals { get; set; }
         public string Description { get; set; }
@@ -28,7 +28,10 @@ namespace NxtLib.MonetarySystemOperations
 
         internal void AppendToQueryParameters(Dictionary<string, string> queryParameters)
         {
-            queryParameters.AddIfHasValue("algorithm", Algorithm);
+            if (Algorithm.HasValue)
+            {
+                queryParameters.Add("algorithm", ((int)Algorithm.Value).ToString());
+            }
             queryParameters.AddIfHasValue("code", Code);
             queryParameters.AddIfHasValue("decimals", Decimals);
             queryParameters.AddIfHasValue("description", Description);
@@ -53,5 +56,13 @@ namespace NxtLib.MonetarySystemOperations
             var currencyType = Types.Any() ? 0 : (int?)null;
             return Types.Aggregate(currencyType, (current, type) => current | (int) type);
         }
+    }
+
+    public enum MintAlgorithm
+    {
+        Sha256 = 2,
+        Sha3 = 3,
+        Scrypt = 5,
+        Keccak25 = 25
     }
 }
