@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NxtLib.DigitalGoodsStoreOperations
+namespace NxtLib.DigitalGoodsStore
 {
     public class TagsReply : BaseReply
     {

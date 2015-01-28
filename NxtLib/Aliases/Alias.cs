@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.AliasOperations
+namespace NxtLib.Aliases
 {
     public class Alias : BaseReply
     {

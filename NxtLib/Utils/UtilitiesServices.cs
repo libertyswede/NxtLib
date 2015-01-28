@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.UtilOperations
+namespace NxtLib.Utils
 {
     public interface IUtilitiesServices
     {

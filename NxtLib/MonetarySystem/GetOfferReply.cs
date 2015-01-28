@@ -1,4 +1,4 @@
-﻿namespace NxtLib.MonetarySystemOperations
+﻿namespace NxtLib.MonetarySystem
 {
     public class GetOfferReply : BaseReply
     {

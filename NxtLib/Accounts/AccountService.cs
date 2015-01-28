@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.AccountOperations
+namespace NxtLib.Accounts
 {
     public interface IAccountService
     {

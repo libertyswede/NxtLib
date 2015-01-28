@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.TransactionOperations
+namespace NxtLib.Transactions
 {
     public interface ITransactionService
     {

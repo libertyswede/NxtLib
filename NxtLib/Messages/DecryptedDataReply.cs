@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.ArbitraryMessageOperations
+namespace NxtLib.Messages
 {
     public class DecryptedDataReply : BaseReply
     {

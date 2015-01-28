@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.DigitalGoodsStoreOperations
+namespace NxtLib.DigitalGoodsStore
 {
     public class Good : BaseReply
     {

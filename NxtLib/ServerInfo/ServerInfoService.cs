@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.ServerInfoOperations
+namespace NxtLib.ServerInfo
 {
     public interface IServerInfoService
     {

@@ -1,4 +1,4 @@
-namespace NxtLib.TransactionOperations
+namespace NxtLib.Transactions
 {
     public class CalculateFullHashReply : BaseReply
     {

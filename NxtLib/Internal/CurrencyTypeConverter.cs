@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
-using NxtLib.MonetarySystemOperations;
+using NxtLib.MonetarySystem;
 
 namespace NxtLib.Internal
 {

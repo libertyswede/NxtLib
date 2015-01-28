@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.DigitalGoodsStoreOperations
+namespace NxtLib.DigitalGoodsStore
 {
     public interface IDigitalGoodsService
     {

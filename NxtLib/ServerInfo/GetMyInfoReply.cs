@@ -1,4 +1,4 @@
-﻿namespace NxtLib.ServerInfoOperations
+﻿namespace NxtLib.ServerInfo
 {
     public class GetMyInfoReply : BaseReply
     {

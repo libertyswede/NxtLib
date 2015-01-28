@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.ServerInfoOperations
+namespace NxtLib.ServerInfo
 {
     public class GetStateReply : BaseReply
     {

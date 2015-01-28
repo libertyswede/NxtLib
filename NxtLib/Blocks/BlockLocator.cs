@@ -1,7 +1,7 @@
 ﻿using System;
 using NxtLib.Internal;
 
-namespace NxtLib.BlockOperations
+namespace NxtLib.Blocks
 {
     public class BlockLocator : LocatorBase
     {

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.BlockOperations
+namespace NxtLib.Blocks
 {
     public class GetEcBlockReply : BaseReply
     {

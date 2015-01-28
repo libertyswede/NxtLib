@@ -1,4 +1,4 @@
-﻿namespace NxtLib.DebugOperations
+﻿namespace NxtLib.Debug
 {
     public class HeightOrNumberOfBlocksLocator : LocatorBase
     {

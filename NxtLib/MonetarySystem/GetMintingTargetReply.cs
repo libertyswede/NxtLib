@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.MonetarySystemOperations
+namespace NxtLib.MonetarySystem
 {
     public class GetMintingTargetReply : BaseReply
     {

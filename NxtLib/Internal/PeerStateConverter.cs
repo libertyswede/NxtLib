@@ -1,6 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
-using NxtLib.ServerInfoOperations;
+using NxtLib.ServerInfo;
 
 namespace NxtLib.Internal
 {

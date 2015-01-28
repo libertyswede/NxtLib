@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace NxtLib.DigitalGoodsStoreOperations
+namespace NxtLib.DigitalGoodsStore
 {
     public class Purchases : BaseReply
     {

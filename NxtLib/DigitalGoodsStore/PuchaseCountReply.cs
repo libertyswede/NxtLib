@@ -1,4 +1,4 @@
-﻿namespace NxtLib.DigitalGoodsStoreOperations
+﻿namespace NxtLib.DigitalGoodsStore
 {
     public class PuchaseCountReply : BaseReply
     {

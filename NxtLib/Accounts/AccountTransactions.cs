@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NxtLib.AccountOperations
+namespace NxtLib.Accounts
 {
     public class AccountTransactions : BaseReply
     {

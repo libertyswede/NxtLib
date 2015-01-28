@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace NxtLib.ArbitraryMessageOperations
+namespace NxtLib.Messages
 {
     public class DecryptedMessageReply : BaseReply
     {

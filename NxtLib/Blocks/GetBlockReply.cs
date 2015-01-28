@@ -1,4 +1,4 @@
-namespace NxtLib.BlockOperations
+namespace NxtLib.Blocks
 {
     public class GetBlockReply<T> : Block<T>, IBaseReply
     {

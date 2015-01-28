@@ -1,4 +1,4 @@
-﻿namespace NxtLib.TokenOperations
+﻿namespace NxtLib.Tokens
 {
     public class TokenString : BaseReply
     {

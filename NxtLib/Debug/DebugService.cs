@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.DebugOperations
+namespace NxtLib.Debug
 {
     public interface IDebugService
     {

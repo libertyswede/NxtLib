@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.UtilOperations
+namespace NxtLib.Utils
 {
     public class RsConvertReply : BaseReply
     {

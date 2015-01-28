@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.ForgingOperations
+namespace NxtLib.Forging
 {
     public interface IForgingService
     {

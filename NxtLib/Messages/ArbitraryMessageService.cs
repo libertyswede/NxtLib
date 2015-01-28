@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.ArbitraryMessageOperations
+namespace NxtLib.Messages
 {
     public interface IArbitraryMessageService
     {

@@ -1,4 +1,4 @@
-namespace NxtLib.AssetOperations
+namespace NxtLib.AssetExchange
 {
     public class AssetIdOrAccountId
     {

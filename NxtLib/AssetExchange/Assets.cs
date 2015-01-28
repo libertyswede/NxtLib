@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace NxtLib.AssetOperations
+namespace NxtLib.AssetExchange
 {
     public class Assets : BaseReply
     {

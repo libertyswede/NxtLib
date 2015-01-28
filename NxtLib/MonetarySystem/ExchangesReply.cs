@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NxtLib.MonetarySystemOperations
+namespace NxtLib.MonetarySystem
 {
     public class ExchangesReply : BaseReply
     {

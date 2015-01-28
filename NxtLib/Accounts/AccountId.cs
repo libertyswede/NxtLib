@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.AccountOperations
+namespace NxtLib.Accounts
 {
     public class AccountId : BaseReply
     {

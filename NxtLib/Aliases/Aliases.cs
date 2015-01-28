@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace NxtLib.AliasOperations
+namespace NxtLib.Aliases
 {
     public class Aliases : BaseReply
     {

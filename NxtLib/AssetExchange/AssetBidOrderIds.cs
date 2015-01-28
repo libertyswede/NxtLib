@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NxtLib.AssetOperations
+namespace NxtLib.AssetExchange
 {
     public class AssetBidOrderIds : BaseReply
     {

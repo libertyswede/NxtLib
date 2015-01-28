@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace NxtLib.DigitalGoodsStoreOperations
+namespace NxtLib.DigitalGoodsStore
 {
     public class Tag
     {

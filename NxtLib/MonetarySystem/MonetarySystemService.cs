@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.MonetarySystemOperations
+namespace NxtLib.MonetarySystem
 {
     public interface IMonetarySystemService
     {

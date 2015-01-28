@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NxtLib.ServerInfoOperations
+namespace NxtLib.ServerInfo
 {
     public class TransactionTypeBase
     {

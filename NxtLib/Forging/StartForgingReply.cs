@@ -1,4 +1,4 @@
-﻿namespace NxtLib.ForgingOperations
+﻿namespace NxtLib.Forging
 {
     public class StartForgingReply : BaseReply
     {

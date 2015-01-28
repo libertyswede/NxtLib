@@ -1,4 +1,4 @@
-namespace NxtLib.AccountOperations
+namespace NxtLib.Accounts
 {
     public class AccountIdLocator : LocatorBase
     {

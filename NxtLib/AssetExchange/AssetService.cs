@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
-namespace NxtLib.AssetOperations
+namespace NxtLib.AssetExchange
 {
     public interface IAssetService
     {

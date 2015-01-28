@@ -1,4 +1,4 @@
-﻿namespace NxtLib.AliasOperations
+﻿namespace NxtLib.Aliases
 {
     public class AliasLocator : LocatorBase
     {

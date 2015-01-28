@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NxtLib.Internal;
 
-namespace NxtLib.MonetarySystemOperations
+namespace NxtLib.MonetarySystem
 {
     public class IssueCurrencyParameters
     {
