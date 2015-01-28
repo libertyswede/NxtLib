@@ -29,8 +29,9 @@ namespace NxtLib.AssetExchange
         public int Height { get; set; }
         public string Name { get; set; }
 
-        [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong PriceNqt { get; set; }
+        [JsonConverter(typeof(NqtAmountConverter))]
+        [JsonProperty(PropertyName = "priceNQT")]
+        public Amount Price { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong QuantityQnt { get; set; }
