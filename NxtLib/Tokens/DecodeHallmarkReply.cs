@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.HallmarkOperations
+namespace NxtLib.Tokens
 {
     public class DecodeHallmarkReply : BaseReply
     {

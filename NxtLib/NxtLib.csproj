@@ -134,9 +134,8 @@
     <Compile Include="Forging\GetForgingReply.cs" />
     <Compile Include="Forging\StartForgingReply.cs" />
     <Compile Include="Forging\StopForgingReply.cs" />
-    <Compile Include="HallmarkOperations\DecodeHallmarkReply.cs" />
-    <Compile Include="HallmarkOperations\MarkHostReply.cs" />
-    <Compile Include="HallmarkOperations\HallmarkOperationService.cs" />
+    <Compile Include="Tokens\DecodeHallmarkReply.cs" />
+    <Compile Include="Tokens\MarkHostReply.cs" />
     <Compile Include="IDateTimeConverter.cs" />
     <Compile Include="Internal\AttachmentConverter.cs" />
     <Compile Include="Internal\ByteToHexStringConverter.cs" />

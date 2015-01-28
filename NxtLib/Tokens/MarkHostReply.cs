@@ -1,4 +1,4 @@
-﻿namespace NxtLib.HallmarkOperations
+﻿namespace NxtLib.Tokens
 {
     public class MarkHostReply : BaseReply
     {
