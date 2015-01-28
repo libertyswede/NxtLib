@@ -21,6 +21,6 @@ namespace NxtLib.AssetExchange
         public int NumberOfTransfers { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public long QuantityQnt { get; set; }
+        public ulong QuantityQnt { get; set; }
     }
 }

@@ -118,7 +118,6 @@ namespace NxtLib
             var response = JsonConvert.DeserializeObject<T>(json);
             response.RawJsonReply = json;
             response.RequestUri = url;
-            response.PostProcess();
             return response;
         }
 
