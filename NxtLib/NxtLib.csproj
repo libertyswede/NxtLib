@@ -71,6 +71,7 @@
     <Compile Include="Aliases\AliasService.cs" />
     <Compile Include="Amount.cs" />
     <Compile Include="Appendix.cs" />
+    <Compile Include="AssetExchange\AssetAmount.cs" />
     <Compile Include="CurrencyType.cs" />
     <Compile Include="Messages\ArbitraryMessageService.cs" />
     <Compile Include="Messages\DecryptedDataReply.cs" />

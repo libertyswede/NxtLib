@@ -28,10 +28,10 @@ namespace NxtLib.AssetExchange
         public int Decimals { get; set; }
         public int Height { get; set; }
         public string Name { get; set; }
+        public AssetAmount Price { get; set; }
 
-        [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "priceNQT")]
-        public Amount Price { get; set; }
+        [JsonConverter(typeof(StringToIntegralTypeConverter))]
+        public ulong PriceNqt { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public long QuantityQnt { get; set; }
