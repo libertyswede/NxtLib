@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NxtLib.ServerInfo
+namespace NxtLib.Networking
 {
     public class PeersLocator : LocatorBase
     {

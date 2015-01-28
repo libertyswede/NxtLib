@@ -1,4 +1,4 @@
-namespace NxtLib.ServerInfo
+namespace NxtLib.Networking
 {
     public class PeerState
     {

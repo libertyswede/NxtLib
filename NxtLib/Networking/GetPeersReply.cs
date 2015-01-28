@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace NxtLib.ServerInfo
+namespace NxtLib.Networking
 {
     public class GetPeersReply : BaseReply
     {

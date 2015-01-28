@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.ServerInfo
+namespace NxtLib.Networking
 {
     public class PeerReply : BaseReply
     {

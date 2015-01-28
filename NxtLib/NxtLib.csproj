@@ -79,6 +79,7 @@
     <Compile Include="DoneReply.cs" />
     <Compile Include="MonetarySystem\CurrencyOrAccountLocator.cs" />
     <Compile Include="MonetarySystem\GetOffersReply.cs" />
+    <Compile Include="Networking\ServerInfoService.cs" />
     <Compile Include="UnencryptedMessage.cs" />
     <Compile Include="EncryptedDataReply.cs" />
     <Compile Include="Messages\ReadMessageReply.cs" />
@@ -169,13 +170,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerInfo\GetBlockchainStatusReply.cs" />
     <Compile Include="ServerInfo\GetConstantsReply.cs" />
-    <Compile Include="ServerInfo\GetMyInfoReply.cs" />
-    <Compile Include="ServerInfo\PeerReply.cs" />
-    <Compile Include="ServerInfo\GetPeersReply.cs" />
+    <Compile Include="Networking\GetMyInfoReply.cs" />
+    <Compile Include="Networking\PeerReply.cs" />
+    <Compile Include="Networking\GetPeersReply.cs" />
     <Compile Include="ServerInfo\GetStateReply.cs" />
     <Compile Include="ServerInfo\GetTimeReply.cs" />
-    <Compile Include="ServerInfo\PeersLocator.cs" />
-    <Compile Include="ServerInfo\PeerState.cs" />
+    <Compile Include="Networking\PeersLocator.cs" />
+    <Compile Include="Networking\PeerState.cs" />
     <Compile Include="ServerInfo\ServerInfoService.cs" />
     <Compile Include="ServerInfo\TransactionTypeBase.cs" />
     <Compile Include="Tokens\Token.cs" />
@@ -202,6 +203,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
