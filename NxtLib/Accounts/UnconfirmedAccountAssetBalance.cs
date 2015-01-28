@@ -8,8 +8,7 @@ namespace NxtLib.Accounts
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong Asset { get; set; }
 
-        [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "unconfirmedBalanceQnt")]
-        public Amount UnconfirmedBalance { get; set; }
+        [JsonConverter(typeof(StringToIntegralTypeConverter))]
+        public ulong UnconfirmedBalanceQnt { get; set; }
     }
 }
