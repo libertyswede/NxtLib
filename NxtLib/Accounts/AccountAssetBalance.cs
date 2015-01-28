@@ -9,7 +9,6 @@ namespace NxtLib.Accounts
         public ulong Asset { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "balanceQnt")]
-        public Amount Balance { get; set; }
+        public ulong BalanceQnt { get; set; }
     }
 }
