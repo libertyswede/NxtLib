@@ -72,14 +72,14 @@
     <Compile Include="Amount.cs" />
     <Compile Include="Appendix.cs" />
     <Compile Include="CurrencyType.cs" />
-    <Compile Include="Messages\ArbitraryMessageService.cs" />
+    <Compile Include="Messages\MessageService.cs" />
     <Compile Include="Messages\DecryptedDataReply.cs" />
     <Compile Include="Messages\DecryptedMessageReply.cs" />
     <Compile Include="BinaryHexString.cs" />
     <Compile Include="DoneReply.cs" />
     <Compile Include="MonetarySystem\CurrencyOrAccountLocator.cs" />
     <Compile Include="MonetarySystem\GetOffersReply.cs" />
-    <Compile Include="Networking\ServerInfoService.cs" />
+    <Compile Include="Networking\NetworkingService.cs" />
     <Compile Include="UnencryptedMessage.cs" />
     <Compile Include="EncryptedDataReply.cs" />
     <Compile Include="Messages\ReadMessageReply.cs" />

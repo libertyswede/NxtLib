@@ -6,7 +6,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.AssetExchange
 {
-    public interface IAssetService
+    public interface IAssetExchangeService
     {
         Task<TransactionCreated> CancelAskOrder(ulong orderId, CreateTransactionParameters parameters);
         Task<TransactionCreated> CancelBidOrder(ulong orderId, CreateTransactionParameters parameters);
@@ -77,14 +77,14 @@ namespace NxtLib.AssetExchange
             CreateTransactionParameters parameters);
     }
 
-    public class AssetService : BaseService, IAssetService
+    public class AssetExchangeService : BaseService, IAssetExchangeService
     {
-        public AssetService(string baseAddress = DefaultBaseUrl)
+        public AssetExchangeService(string baseAddress = DefaultBaseUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }
 
-        public AssetService(IDateTimeConverter dateTimeConverter)
+        public AssetExchangeService(IDateTimeConverter dateTimeConverter)
             : base(dateTimeConverter)
         {
         }

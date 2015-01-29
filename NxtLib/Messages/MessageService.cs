@@ -4,7 +4,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.Messages
 {
-    public interface IArbitraryMessageService
+    public interface IMessageService
     {
         Task<DecryptedDataReply> DecryptDataFrom(string senderAccountId, string data, IEnumerable<byte> nonce, string secretPhrase);
         Task<DecryptedMessageReply> DecryptMessageFrom(string senderAccountId, string data, IEnumerable<byte> nonce, string secretPhrase);
@@ -14,14 +14,14 @@ namespace NxtLib.Messages
         Task<TransactionCreated> SendMessage(CreateTransactionParameters parameters, string recipient = null);
     }
 
-    public class ArbitraryMessageService : BaseService, IArbitraryMessageService
+    public class MessageService : BaseService, IMessageService
     {
-        public ArbitraryMessageService(string baseAddress = DefaultBaseUrl)
+        public MessageService(string baseAddress = DefaultBaseUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }
 
-        public ArbitraryMessageService(IDateTimeConverter dateTimeConverter) 
+        public MessageService(IDateTimeConverter dateTimeConverter) 
             : base(dateTimeConverter)
         {
         }

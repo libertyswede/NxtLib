@@ -5,7 +5,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.DigitalGoodsStore
 {
-    public interface IDigitalGoodsService
+    public interface IDigitalGoodsStoreService
     {
         Task<TransactionCreated> Delisting(ulong goodsId, CreateTransactionParameters parameters);
 
@@ -60,14 +60,14 @@ namespace NxtLib.DigitalGoodsStore
             bool? includeCounts = null);
     }
 
-    public class DigitalGoodsService : BaseService, IDigitalGoodsService
+    public class DigitalGoodsStoreService : BaseService, IDigitalGoodsStoreService
     {
-        public DigitalGoodsService(string baseAddress = DefaultBaseUrl)
+        public DigitalGoodsStoreService(string baseAddress = DefaultBaseUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }
 
-        public DigitalGoodsService(IDateTimeConverter dateTimeConverter)
+        public DigitalGoodsStoreService(IDateTimeConverter dateTimeConverter)
             : base(dateTimeConverter)
         {
         }

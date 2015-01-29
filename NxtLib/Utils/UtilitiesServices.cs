@@ -4,20 +4,20 @@ using NxtLib.Internal;
 
 namespace NxtLib.Utils
 {
-    public interface IUtilitiesServices
+    public interface IUtilServices
     {
         Task<LongConvertReply> LongConvert(ulong id);
         Task<RsConvertReply> RsConvert(string accountId);
     }
 
-    public class UtilitiesServices : BaseService, IUtilitiesServices
+    public class UtilServices : BaseService, IUtilServices
     {
-        public UtilitiesServices(string baseAddress = DefaultBaseUrl)
+        public UtilServices(string baseAddress = DefaultBaseUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }
 
-        public UtilitiesServices(IDateTimeConverter dateTimeConverter) 
+        public UtilServices(IDateTimeConverter dateTimeConverter) 
             : base(dateTimeConverter)
         {
         }
