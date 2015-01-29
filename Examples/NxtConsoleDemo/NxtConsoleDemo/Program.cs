@@ -1,6 +1,6 @@
 ﻿using System;
 using NxtLib;
-using NxtLib.AccountOperations;
+using NxtLib.Accounts;
 
 namespace NxtConsoleDemo
 {
