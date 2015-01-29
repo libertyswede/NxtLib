@@ -95,7 +95,7 @@
     <Compile Include="AssetExchange\AssetBidOrderIds.cs" />
     <Compile Include="AssetExchange\AssetBidOrders.cs" />
     <Compile Include="AssetExchange\AssetOrder.cs" />
-    <Compile Include="AssetExchange\AssetService.cs" />
+    <Compile Include="AssetExchange\AssetExchangeService.cs" />
     <Compile Include="AssetExchange\AssetIdOrAccountId.cs" />
     <Compile Include="AssetExchange\AssetIds.cs" />
     <Compile Include="AssetExchange\AssetOrders.cs" />
@@ -122,7 +122,7 @@
     <Compile Include="Debug\DebugService.cs" />
     <Compile Include="Debug\HeightOrNumberOfBlocksLocator.cs" />
     <Compile Include="Debug\ScanReply.cs" />
-    <Compile Include="DigitalGoodsStore\DigitalGoodsService.cs" />
+    <Compile Include="DigitalGoodsStore\DigitalGoodsStoreService.cs" />
     <Compile Include="DigitalGoodsStore\Good.cs" />
     <Compile Include="DigitalGoodsStore\Purchase.cs" />
     <Compile Include="DigitalGoodsStore\GoodsReply.cs" />
@@ -196,7 +196,7 @@
     <Compile Include="TransactionTypeMapper.cs" />
     <Compile Include="Utils\LongConvertReply.cs" />
     <Compile Include="Utils\RsConvertReply.cs" />
-    <Compile Include="Utils\UtilitiesServices.cs" />
+    <Compile Include="Utils\UtilServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
