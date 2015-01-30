@@ -6,7 +6,7 @@ namespace NxtLib.Transactions
 {
     public interface ITransactionService
     {
-        Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameters parameters);
+        Task<BroadcastTransactionReply> BroadcastTransaction(BroadcastTransactionParameter parameter);
 
         Task<CalculateFullHashReply> CalculateFullHash(string unsignedTransactionBytes,
             string signatureHash);
@@ -31,9 +31,17 @@ namespace NxtLib.Transactions
         {
         }
 
-        public async Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameters parameters)
+        public async Task<BroadcastTransactionReply> BroadcastTransaction(BroadcastTransactionParameter parameter)
         {
-            var queryParameters = CreateQueryParameters(parameters);
+            var queryParameters = new Dictionary<string, string>();
+            if (parameter.TransactionBytes != null)
+            {
+                queryParameters.Add("transactionBytes", parameter.TransactionBytes.ToHexString());
+            }
+            if (parameter.TransactionJson != null)
+            {
+                queryParameters.Add("transactionJSON", parameter.TransactionJson);
+            }
             return await Post<BroadcastTransactionReply>("broadcastTransaction", queryParameters);
         }
 
