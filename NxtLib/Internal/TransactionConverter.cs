@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NxtLib.Transactions;
 
 namespace NxtLib.Internal
 {
@@ -12,7 +13,16 @@ namespace NxtLib.Internal
     {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (objectType != typeof(Transaction))
+            Transaction transaction = null;
+            if (objectType == typeof (Transaction))
+            {
+                transaction = new Transaction();
+            }
+            else if (objectType == typeof (TransactionReply))
+            {
+                transaction = new TransactionReply();
+            }
+            else
             {
                 throw new ArgumentException("Can only convert to transaction object");
             }
@@ -31,7 +41,6 @@ namespace NxtLib.Internal
             var type = TransactionTypeMapper.GetMainType(typeByte);
             var subType = TransactionTypeMapper.GetSubType(typeByte, subTypeByte);
 
-            var transaction = new Transaction();
             transaction.Amount = GetValueOrDefault(jObject, "amountNQT", obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
             transaction.Attachment = attachmentConverter.GetAttachment(subType);
             transaction.BlockId = GetValueOrNull(jObject, "block", Convert.ToUInt64);
