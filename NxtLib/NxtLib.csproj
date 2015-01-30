@@ -80,6 +80,7 @@
     <Compile Include="MonetarySystem\CurrencyOrAccountLocator.cs" />
     <Compile Include="MonetarySystem\GetOffersReply.cs" />
     <Compile Include="Networking\NetworkingService.cs" />
+    <Compile Include="Transactions\BroadcastTransactionParameter.cs" />
     <Compile Include="UnencryptedMessage.cs" />
     <Compile Include="EncryptedDataReply.cs" />
     <Compile Include="Messages\ReadMessageReply.cs" />
