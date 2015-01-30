@@ -13,19 +13,7 @@ namespace NxtLib.Internal
     {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            Transaction transaction = null;
-            if (objectType == typeof (Transaction))
-            {
-                transaction = new Transaction();
-            }
-            else if (objectType == typeof (TransactionReply))
-            {
-                transaction = new TransactionReply();
-            }
-            else
-            {
-                throw new ArgumentException("Can only convert to transaction object");
-            }
+            var transaction = GetTransactionType(objectType);
 
             if (reader.TokenType != JsonToken.StartObject)
             {
@@ -70,6 +58,28 @@ namespace NxtLib.Internal
             transaction.TransactionIndex = GetValueOrDefault(jObject, "transactionIndex", Convert.ToInt32);
             transaction.Type = type;
             transaction.Version = GetValueOrDefault(jObject, "version", Convert.ToInt32);
+            return transaction;
+        }
+
+        private static Transaction GetTransactionType(Type objectType)
+        {
+            Transaction transaction;
+            if (objectType == typeof (Transaction))
+            {
+                transaction = new Transaction();
+            }
+            else if (objectType == typeof (TransactionReply))
+            {
+                transaction = new TransactionReply();
+            }
+            else if (objectType == typeof (ParseTransactionReply))
+            {
+                transaction = new ParseTransactionReply();
+            }
+            else
+            {
+                throw new ArgumentException("Can only convert to transaction object");
+            }
             return transaction;
         }
 
