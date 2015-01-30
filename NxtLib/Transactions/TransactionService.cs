@@ -6,16 +6,16 @@ namespace NxtLib.Transactions
 {
     public interface ITransactionService
     {
-        Task<BroadcastTransactionReply> BroadcastTransaction(TransactionData parameter);
+        Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameter parameter);
 
         Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
             BinaryHexString signatureHash);
 
         Task<TransactionReply> GetTransaction(GetTransactionLocator locator);
         Task<TransactionBytesReply> GetTransactionBytes(ulong transactionId);
-        Task<ParseTransactionReply> ParseTransaction(TransactionData parameter);
+        Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter);
 
-        Task<SignTransactionReply> SignTransaction(TransactionParameters parameters, string secretPhrase,
+        Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase,
             bool? validate = null);
     }
 
@@ -31,23 +31,10 @@ namespace NxtLib.Transactions
         {
         }
 
-        public async Task<BroadcastTransactionReply> BroadcastTransaction(TransactionData parameter)
+        public async Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameter parameter)
         {
-            var queryParameters = new Dictionary<string, string>();
-            CreateQueryFromTransactionData(parameter, queryParameters);
+            var queryParameters = CreateQueryParameters(parameter);
             return await Post<BroadcastTransactionReply>("broadcastTransaction", queryParameters);
-        }
-
-        private static void CreateQueryFromTransactionData(TransactionData parameter, Dictionary<string, string> queryParameters)
-        {
-            if (parameter.TransactionBytes != null)
-            {
-                queryParameters.Add("transactionBytes", parameter.TransactionBytes.ToHexString());
-            }
-            if (parameter.TransactionJson != null)
-            {
-                queryParameters.Add("transactionJSON", parameter.TransactionJson);
-            }
         }
 
         public async Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
@@ -72,32 +59,33 @@ namespace NxtLib.Transactions
             return await Get<TransactionBytesReply>("getTransactionBytes", queryParameters);
         }
 
-        public async Task<ParseTransactionReply> ParseTransaction(TransactionData parameter)
+        public async Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter)
         {
-            var queryParameters = new Dictionary<string, string>();
-            CreateQueryFromTransactionData(parameter, queryParameters);
+            var queryParameters = CreateQueryParameters(parameter);
             return await Get<ParseTransactionReply>("parseTransaction", queryParameters);
         }
 
-        public async Task<SignTransactionReply> SignTransaction(TransactionParameters parameters, string secretPhrase,
+        public async Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase,
             bool? validate = null)
         {
-            var queryParameters = CreateQueryParameters(parameters);
+            var queryParameters = CreateQueryParameters(parameter, true);
             queryParameters.Add("secretPhrase", secretPhrase);
             AddToParametersIfHasValue("validate", validate, queryParameters);
             return await Get<SignTransactionReply>("signTransaction", queryParameters);
         }
 
-        private static Dictionary<string, string> CreateQueryParameters(TransactionParameters parameters)
+        private static Dictionary<string, string> CreateQueryParameters(TransactionParameter parameter, bool unsigned = false)
         {
             var queryParameters = new Dictionary<string, string>();
-            if (!string.IsNullOrEmpty(parameters.TransactionBytes))
+            if (parameter.TransactionBytes != null)
             {
-                queryParameters.Add("transactionBytes", parameters.TransactionBytes);
+                queryParameters.Add(!unsigned ? "transactionBytes" : "unsignedTransactionBytes",
+                    parameter.TransactionBytes.ToHexString());
             }
-            if (!string.IsNullOrEmpty(parameters.TransactionJson))
+            if (parameter.TransactionJson != null)
             {
-                queryParameters.Add("transactionJSON", parameters.TransactionJson);
+                queryParameters.Add(!unsigned ? "transactionJSON" : "unsignedTransactionJSON",
+                    parameter.TransactionJson);
             }
             return queryParameters;
         }

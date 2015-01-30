@@ -80,7 +80,7 @@
     <Compile Include="MonetarySystem\CurrencyOrAccountLocator.cs" />
     <Compile Include="MonetarySystem\GetOffersReply.cs" />
     <Compile Include="Networking\NetworkingService.cs" />
-    <Compile Include="Transactions\TransactionData.cs" />
+    <Compile Include="Transactions\TransactionParameter.cs" />
     <Compile Include="UnencryptedMessage.cs" />
     <Compile Include="EncryptedDataReply.cs" />
     <Compile Include="Messages\ReadMessageReply.cs" />
@@ -191,7 +191,6 @@
     <Compile Include="Transactions\ParseTransactionReply.cs" />
     <Compile Include="Transactions\SignTransactionReply.cs" />
     <Compile Include="Transactions\TransactionBytesReply.cs" />
-    <Compile Include="Transactions\TransactionParameters.cs" />
     <Compile Include="Transactions\TransactionReply.cs" />
     <Compile Include="Transactions\TransactionService.cs" />
     <Compile Include="TransactionTypeMapper.cs" />
