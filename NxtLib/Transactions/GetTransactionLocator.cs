@@ -7,8 +7,8 @@ namespace NxtLib.Transactions
         {
         }
 
-        public GetTransactionLocator(string fullHash) 
-            : base("fullHash", fullHash)
+        public GetTransactionLocator(BinaryHexString fullHash)
+            : base("fullHash", fullHash.ToHexString())
         {
         }
     }
