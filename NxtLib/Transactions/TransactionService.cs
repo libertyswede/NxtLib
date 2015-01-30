@@ -8,8 +8,8 @@ namespace NxtLib.Transactions
     {
         Task<BroadcastTransactionReply> BroadcastTransaction(BroadcastTransactionParameter parameter);
 
-        Task<CalculateFullHashReply> CalculateFullHash(string unsignedTransactionBytes,
-            string signatureHash);
+        Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
+            BinaryHexString signatureHash);
 
         Task<TransactionReply> GetTransaction(GetTransactionLocator locator);
         Task<TransactionBytesReply> GetTransactionBytes(ulong transactionId);
@@ -45,13 +45,13 @@ namespace NxtLib.Transactions
             return await Post<BroadcastTransactionReply>("broadcastTransaction", queryParameters);
         }
 
-        public async Task<CalculateFullHashReply> CalculateFullHash(string unsignedTransactionBytes,
-            string signatureHash)
+        public async Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
+            BinaryHexString signatureHash)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"unsignedTransactionBytes", unsignedTransactionBytes},
-                {"signatureHash", signatureHash}
+                {"unsignedTransactionBytes", unsignedTransactionBytes.ToHexString()},
+                {"signatureHash", signatureHash.ToHexString()}
             };
             return await Get<CalculateFullHashReply>("calculateFullHash", queryParameters);
         }
