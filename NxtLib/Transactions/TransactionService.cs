@@ -6,14 +6,14 @@ namespace NxtLib.Transactions
 {
     public interface ITransactionService
     {
-        Task<BroadcastTransactionReply> BroadcastTransaction(BroadcastTransactionParameter parameter);
+        Task<BroadcastTransactionReply> BroadcastTransaction(TransactionData parameter);
 
         Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
             BinaryHexString signatureHash);
 
         Task<TransactionReply> GetTransaction(GetTransactionLocator locator);
         Task<TransactionBytesReply> GetTransactionBytes(ulong transactionId);
-        Task<ParseTransactionReply> ParseTransaction(TransactionParameters parameters);
+        Task<ParseTransactionReply> ParseTransaction(TransactionData parameter);
 
         Task<SignTransactionReply> SignTransaction(TransactionParameters parameters, string secretPhrase,
             bool? validate = null);
@@ -31,9 +31,15 @@ namespace NxtLib.Transactions
         {
         }
 
-        public async Task<BroadcastTransactionReply> BroadcastTransaction(BroadcastTransactionParameter parameter)
+        public async Task<BroadcastTransactionReply> BroadcastTransaction(TransactionData parameter)
         {
             var queryParameters = new Dictionary<string, string>();
+            CreateQueryFromTransactionData(parameter, queryParameters);
+            return await Post<BroadcastTransactionReply>("broadcastTransaction", queryParameters);
+        }
+
+        private static void CreateQueryFromTransactionData(TransactionData parameter, Dictionary<string, string> queryParameters)
+        {
             if (parameter.TransactionBytes != null)
             {
                 queryParameters.Add("transactionBytes", parameter.TransactionBytes.ToHexString());
@@ -42,7 +48,6 @@ namespace NxtLib.Transactions
             {
                 queryParameters.Add("transactionJSON", parameter.TransactionJson);
             }
-            return await Post<BroadcastTransactionReply>("broadcastTransaction", queryParameters);
         }
 
         public async Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
@@ -67,9 +72,10 @@ namespace NxtLib.Transactions
             return await Get<TransactionBytesReply>("getTransactionBytes", queryParameters);
         }
 
-        public async Task<ParseTransactionReply> ParseTransaction(TransactionParameters parameters)
+        public async Task<ParseTransactionReply> ParseTransaction(TransactionData parameter)
         {
-            var queryParameters = CreateQueryParameters(parameters);
+            var queryParameters = new Dictionary<string, string>();
+            CreateQueryFromTransactionData(parameter, queryParameters);
             return await Get<ParseTransactionReply>("parseTransaction", queryParameters);
         }
 

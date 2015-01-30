@@ -1,16 +1,16 @@
 ﻿namespace NxtLib.Transactions
 {
-    public class BroadcastTransactionParameter
+    public class TransactionData
     {
         public string TransactionJson { get; private set; }
         public BinaryHexString TransactionBytes { get; private set; }
 
-        public BroadcastTransactionParameter(BinaryHexString transactionBytes)
+        public TransactionData(BinaryHexString transactionBytes)
         {
             TransactionBytes = transactionBytes;
         }
 
-        public BroadcastTransactionParameter(string transactionJson)
+        public TransactionData(string transactionJson)
         {
             TransactionJson = transactionJson;
         }
