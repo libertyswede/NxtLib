@@ -86,6 +86,7 @@
     <Compile Include="MonetarySystem\CurrencyLocator.cs" />
     <Compile Include="MonetarySystem\CurrencyOrAccountLocator.cs" />
     <Compile Include="MonetarySystem\CurrencyReply.cs" />
+    <Compile Include="MonetarySystem\CurrencyTransfer.cs" />
     <Compile Include="MonetarySystem\CurrencyTransfersReply.cs" />
     <Compile Include="MonetarySystem\GetOffersReply.cs" />
     <Compile Include="Networking\NetworkingService.cs" />
