@@ -14,6 +14,8 @@ namespace NxtLib
         public ulong IssuerAccountId { get; set; }
         public string IssuerAccountRs { get; set; }
         public string Name { get; set; }
-        public int Type { get; set; }
+
+        [JsonConverter(typeof(CurrencyTypeConverter))]
+        public CurrencyType Type { get; set; }
     }
 }

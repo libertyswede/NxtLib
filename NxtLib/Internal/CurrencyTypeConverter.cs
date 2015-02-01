@@ -27,6 +27,11 @@ namespace NxtLib.Internal
                     }
                     return list;
                 }
+                if (objectType == typeof (CurrencyType))
+                {
+                    reader.Read();
+                    return GetTypeBasedOnDescription(reader.Value.ToString());
+                }
             }
             return reader.Value;
         }

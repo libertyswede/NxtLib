@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
@@ -28,6 +29,28 @@ namespace NxtLib.MonetarySystem
 
         Task<GetOffersReply> GetBuyOffers(CurrencyOrAccountLocator locator,
             bool? availableOnly = null, int? firstindex = null, int? lastindex = null);
+
+        Task<CurrenciesReply> GetCurrencies(List<ulong> currencyIds, bool? includeCounts = null);
+
+        Task<CurrenciesReply> GetCurrenciesByIssuer(List<string> accountIds, int? firstIndex = null,
+            int? lastIndex = null, bool? includeCounts = null);
+
+        Task<CurrencyReply> GetCurrency(CurrencyLocator locator, bool? includeCounts = null);
+
+        Task<CountReply> GetCurrencyAccountCount(ulong currencyId, int? height = null);
+
+        Task<CurrencyAccountsReply> GetCurrencyAccounts(ulong currencyId, int? height = null, int? firstIndex = null,
+            int? lastIndex = null);
+
+        Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId);
+
+        Task<CurrencyIdsReply> GetCurrencyIds(int? firstIndex = null, int? lastIndex = null);
+
+        Task<CurrencyTransfersReply> GetCurrencyTransfers(CurrencyOrAccountLocator locator, int? firstIndex = null,
+            int? lastIndex = null, bool? includeCurrencyInfo = null);
+
+        Task<ExchangesReply> GetExchanges(CurrencyOrAccountLocator locator, int? firstIndex = null,
+            int? lastIndex = null, bool? includeCurrencyInfo = null);
 
         Task<ExchangesReply> GetExchangesByExchangeRequest(ulong transactionId, bool? includeCurrencyInfo = null);
 
@@ -184,6 +207,99 @@ namespace NxtLib.MonetarySystem
             AddToParametersIfHasValue("firstIndex", firstindex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastindex, queryParameters);
             return await Get<GetOffersReply>("getBuyOffers", queryParameters);
+        }
+
+        public async Task<CurrenciesReply> GetCurrencies(List<ulong> currencyIds, bool? includeCounts = null)
+        {
+            var queryParameters = new Dictionary<string, List<string>>
+            {
+                {"assets", currencyIds.Select(id => id.ToString()).ToList()}
+            };
+            if (includeCounts.HasValue)
+            {
+                queryParameters.Add("includeCounts", new List<string> { includeCounts.Value.ToString() });
+            }
+            return await Get<CurrenciesReply>("getCurrencies", queryParameters);
+        }
+
+        public async Task<CurrenciesReply> GetCurrenciesByIssuer(List<string> accountIds, int? firstIndex = null,
+            int? lastIndex = null, bool? includeCounts = null)
+        {
+            var queryParameters = new Dictionary<string, List<string>>
+            {
+                {"account", accountIds}
+            };
+            if (firstIndex.HasValue)
+            {
+                queryParameters.Add("firstIndex", new List<string>(firstIndex.Value));
+            }
+            if (lastIndex.HasValue)
+            {
+                queryParameters.Add("lastIndex", new List<string>(lastIndex.Value));
+            }
+            if (includeCounts.HasValue)
+            {
+                queryParameters.Add("includeCounts", new List<string> {includeCounts.Value.ToString()});
+            }
+            return await Get<CurrenciesReply>("getCurrencies", queryParameters);
+        }
+
+        public async Task<CurrencyReply> GetCurrency(CurrencyLocator locator, bool? includeCounts = null)
+        {
+            var queryParameters = locator.QueryParameters;
+            AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            return await Get<CurrencyReply>("getCurrency", queryParameters);
+        }
+
+        public async Task<CountReply> GetCurrencyAccountCount(ulong currencyId, int? height = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{"currency", currencyId.ToString()}};
+            AddToParametersIfHasValue("height", height, queryParameters);
+            return await Get<CountReply>("getCurrencyAccountCount", queryParameters);
+        }
+
+        public async Task<CurrencyAccountsReply> GetCurrencyAccounts(ulong currencyId, int? height = null, int? firstIndex = null,
+            int? lastIndex = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{"currency", currencyId.ToString()}};
+            AddToParametersIfHasValue("height", height, queryParameters);
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Get<CurrencyAccountsReply>("getCurrencyAccounts", queryParameters);
+        }
+
+        public async Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId)
+        {
+            var queryParameters = new Dictionary<string, string> {{"currency", currencyId.ToString()}};
+            return await Get<CurrencyFoundersReply>("getCurrencyFounders", queryParameters);
+        }
+
+        public async Task<CurrencyIdsReply> GetCurrencyIds(int? firstIndex = null, int? lastIndex = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Get<CurrencyIdsReply>("getCurrencyIds", queryParameters);
+        }
+
+        public async Task<CurrencyTransfersReply> GetCurrencyTransfers(CurrencyOrAccountLocator locator, int? firstIndex = null,
+            int? lastIndex = null, bool? includeCurrencyInfo = null)
+        {
+            var queryParameters = locator.QueryParameters;
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("includeCurrencyInfo", includeCurrencyInfo, queryParameters);
+            return await Get<CurrencyTransfersReply>("getCurrencyTransfers", queryParameters);
+        }
+
+        public async Task<ExchangesReply> GetExchanges(CurrencyOrAccountLocator locator, int? firstIndex = null,
+            int? lastIndex = null, bool? includeCurrencyInfo = null)
+        {
+            var queryParameters = locator.QueryParameters;
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("includeCurrencyInfo", includeCurrencyInfo, queryParameters);
+            return await Get<ExchangesReply>("getExchanges", queryParameters);
         }
 
         public async Task<ExchangesReply> GetExchangesByExchangeRequest(ulong transactionId, bool? includeCurrencyInfo = null)

@@ -37,10 +37,10 @@ namespace NxtLib.AssetExchange
             bool? includeAssetInfo = null);
 
         Task<AssetOrder> GetAskOrder(ulong orderId);
-        Task<AssetAskOrders> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
         Task<AssetAskOrderIds> GetAskOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);
+        Task<AssetAskOrders> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
         Task<Asset> GetAsset(ulong assetId, bool? includeCounts = null);
-        Task<AssetAccountCount> GetAssetAccountCount(ulong assetId, int? height = null);
+        Task<CountReply> GetAssetAccountCount(ulong assetId, int? height = null);
 
         Task<AssetAccounts> GetAssetAccounts(ulong assetId, int? height = null,
             int? firstIndex = null, int? lastIndex = null);
@@ -210,17 +210,6 @@ namespace NxtLib.AssetExchange
             return await Get<AssetOrder>("getAskOrder", queryParameters);
         }
 
-        public async Task<AssetAskOrders> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null)
-        {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"asset", assetId.ToString()}
-            };
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            return await Get<AssetAskOrders>("getAskOrders", queryParameters);
-        }
-
         public async Task<AssetAskOrderIds> GetAskOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string>
@@ -230,6 +219,17 @@ namespace NxtLib.AssetExchange
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             return await Get<AssetAskOrderIds>("getAskOrderIds", queryParameters);
+        }
+
+        public async Task<AssetAskOrders> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"asset", assetId.ToString()}
+            };
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Get<AssetAskOrders>("getAskOrders", queryParameters);
         }
 
         public async Task<Asset> GetAsset(ulong assetId, bool? includeCounts = null)
@@ -242,14 +242,14 @@ namespace NxtLib.AssetExchange
             return await Get<Asset>("getAsset", queryParameters);
         }
 
-        public async Task<AssetAccountCount> GetAssetAccountCount(ulong assetId, int? height = null)
+        public async Task<CountReply> GetAssetAccountCount(ulong assetId, int? height = null)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {"asset", assetId.ToString()}
             };
             AddToParametersIfHasValue("height", height, queryParameters);
-            return await Get<AssetAccountCount>("getAssetAccountCount", queryParameters);
+            return await Get<CountReply>("getAssetAccountCount", queryParameters);
         }
 
         public async Task<AssetAccounts> GetAssetAccounts(ulong assetId, int? height = null,
