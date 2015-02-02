@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace NxtLib.Internal
@@ -16,9 +17,9 @@ namespace NxtLib.Internal
         {
             if (reader.TokenType == JsonToken.StartArray)
             {
-                if (objectType == typeof (List<CurrencyType>))
+                if (objectType == typeof(HashSet<CurrencyType>))
                 {
-                    var list = new List<CurrencyType>();
+                    var list = new HashSet<CurrencyType>();
                     reader.Read();
                     while (reader.TokenType != JsonToken.EndArray)
                     {
@@ -27,13 +28,30 @@ namespace NxtLib.Internal
                     }
                     return list;
                 }
-                if (objectType == typeof (CurrencyType))
+            }
+            else if (reader.TokenType == JsonToken.Integer)
+            {
+                if (objectType == typeof(HashSet<CurrencyType>))
                 {
-                    reader.Read();
-                    return GetTypeBasedOnDescription(reader.Value.ToString());
+                    return GetTypesBasedOnValue(Convert.ToInt32(reader.Value));
                 }
             }
             return reader.Value;
+        }
+
+        private static HashSet<CurrencyType> GetTypesBasedOnValue(int type)
+        {
+            var types = new HashSet<CurrencyType>();
+
+            foreach (var currencyType in Enum.GetValues(typeof(CurrencyType)).Cast<CurrencyType>())
+            {
+                if ((type & (int)currencyType) != 0)
+                {
+                    types.Add(currencyType);
+                }
+            }
+
+            return types;
         }
 
         private static CurrencyType GetTypeBasedOnDescription(string description)

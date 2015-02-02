@@ -46,6 +46,6 @@ namespace NxtLib.MonetarySystem
         public int Type { get; set; }
 
         [JsonConverter(typeof(CurrencyTypeConverter))]
-        public List<CurrencyType> Types { get; set; }
+        public HashSet<CurrencyType> Types { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using NxtLib.Internal;
 
 namespace NxtLib
@@ -16,6 +17,7 @@ namespace NxtLib
         public string Name { get; set; }
 
         [JsonConverter(typeof(CurrencyTypeConverter))]
-        public CurrencyType Type { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public HashSet<CurrencyType> Types { get; set; }
     }
 }
