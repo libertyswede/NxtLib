@@ -38,6 +38,7 @@ namespace NxtLib.DigitalGoodsStore
         [JsonConverter(typeof(NqtAmountConverter))]
         [JsonProperty(PropertyName = "refundNQT")]
         public Amount Refund { get; set; }
+        public EncryptedDataReply RefundNote { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
         [JsonProperty(PropertyName = "priceNQT")]
