@@ -23,6 +23,9 @@ namespace NxtLib.DigitalGoodsStore
 
         Task<GoodsCountReply> GetGoodsCount(ulong? sellerId = null, bool? inStockOnly = null);
 
+        Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null,
+            bool? completed = null);
+
         Task<Purchases> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
             bool? withPublickKeedbacksOnly = null, bool? completed = null);
 
@@ -33,9 +36,6 @@ namespace NxtLib.DigitalGoodsStore
 
         Task<PuchaseCountReply> GetPurchaseCount(ulong? sellerId = null, ulong? buyerId = null,
             bool? withPublicFeedbacksOnly = null, bool? completed = null);
-
-        Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null,
-            bool? completed = null);
 
         Task<Purchases> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
             int? firstIndex = null, int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null);
@@ -151,6 +151,14 @@ namespace NxtLib.DigitalGoodsStore
             return await Get<GoodsCountReply>("getDGSGoodsCount", queryParameters);
         }
 
+        public async Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null, bool? completed = null)
+        {
+            var queryParameters = new Dictionary<string, string>{{"goods", goodsId.ToString()}};
+            AddToParametersIfHasValue("withPublicFeedbacksOnly", withPublicFeedbacksOnly, queryParameters);
+            AddToParametersIfHasValue("completed", completed, queryParameters);
+            return await Get<PuchaseCountReply>("getDGSGoodsPurchaseCount", queryParameters);
+        }
+
         public async Task<Purchases> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
             bool? withPublickKeedbacksOnly = null, bool? completed = null)
         {
@@ -186,14 +194,6 @@ namespace NxtLib.DigitalGoodsStore
             AddToParametersIfHasValue("withPublicFeedbacksOnly", withPublicFeedbacksOnly, queryParameters);
             AddToParametersIfHasValue("completed", completed, queryParameters);
             return await Get<PuchaseCountReply>("getDGSPurchaseCount", queryParameters);
-        }
-
-        public async Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null, bool? completed = null)
-        {
-            var queryParameters = new Dictionary<string, string>{{"goods", goodsId.ToString()}};
-            AddToParametersIfHasValue("withPublicFeedbacksOnly", withPublicFeedbacksOnly, queryParameters);
-            AddToParametersIfHasValue("completed", completed, queryParameters);
-            return await Get<PuchaseCountReply>("getDGSGoodsPurchaseCount", queryParameters);
         }
 
         public async Task<Purchases> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
