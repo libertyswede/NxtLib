@@ -4,6 +4,6 @@ namespace NxtLib.MonetarySystem
 {
     public class CurrencyFoundersReply : BaseReply
     {
-        public List<CurrencyFounder> CurrencyFounders { get; set; }
+        public List<CurrencyFounder> Founders { get; set; }
     }
 }
