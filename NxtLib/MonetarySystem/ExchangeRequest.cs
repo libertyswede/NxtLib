@@ -7,6 +7,7 @@ namespace NxtLib.MonetarySystem
     public class ExchangeRequest : CurrencyInfo
     {
         [JsonConverter(typeof(NqtAmountConverter))]
+        [JsonProperty(PropertyName = "rateNQT")]
         public Amount Rate { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
