@@ -15,7 +15,7 @@ namespace NxtLib.DigitalGoodsStore
         Task<TransactionCreatedReply> Feedback(ulong purchaseId, string message,
             CreateTransactionParameters parameters);
 
-        Task<Good> GetGood(ulong goodsId, bool? includeCounts = null);
+        Task<GoodReply> GetGood(ulong goodsId, bool? includeCounts = null);
 
         Task<GoodsReply> GetGoods(ulong? sellerId = null, int? firstIndex = null, int? lastIndex = null,
             bool? inStockOnly = null, bool? hideDelisted = null, bool? includeCounts = null);
@@ -25,18 +25,18 @@ namespace NxtLib.DigitalGoodsStore
         Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null,
             bool? completed = null);
 
-        Task<Purchases> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
+        Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
             bool? withPublickKeedbacksOnly = null, bool? completed = null);
 
-        Task<Purchases> GetPendingPurchases(string sellerId, int? firstIndex = null,
+        Task<PurchasesReply> GetPendingPurchases(string sellerId, int? firstIndex = null,
             int? lastIndex = null);
 
-        Task<Purchase> GetPurchase(ulong purchaseId);
+        Task<PurchaseReply> GetPurchase(ulong purchaseId);
 
         Task<PuchaseCountReply> GetPurchaseCount(ulong? sellerId = null, ulong? buyerId = null,
             bool? withPublicFeedbacksOnly = null, bool? completed = null);
 
-        Task<Purchases> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
+        Task<PurchasesReply> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
             int? firstIndex = null, int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null);
 
         Task<TagCountReply> GetTagCount(bool? inStockOnly = null);

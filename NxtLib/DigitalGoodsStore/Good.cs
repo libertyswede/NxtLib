@@ -5,7 +5,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.DigitalGoodsStore
 {
-    public class Good : BaseReply
+    public class Good
     {
         public bool Delisted { get; set; }
         public string Description { get; set; }

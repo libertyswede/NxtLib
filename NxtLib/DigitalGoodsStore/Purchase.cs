@@ -5,7 +5,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.DigitalGoodsStore
 {
-    public class Purchase : BaseReply
+    public class Purchase
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "buyer")]

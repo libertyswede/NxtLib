@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace NxtLib.DigitalGoodsStore
 {
-    public class Purchases : BaseReply
+    public class PurchasesReply : BaseReply
     {
         [JsonProperty(PropertyName = "purchases")]
         public List<Purchase> GoodsPurchases { get; set; }

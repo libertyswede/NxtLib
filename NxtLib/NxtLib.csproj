@@ -82,7 +82,9 @@
     <Compile Include="CountReply.cs" />
     <Compile Include="CurrencyType.cs" />
     <Compile Include="Debug\IDebugService.cs" />
+    <Compile Include="DigitalGoodsStore\GoodReply.cs" />
     <Compile Include="DigitalGoodsStore\IDigitalGoodsStoreService.cs" />
+    <Compile Include="DigitalGoodsStore\PurchaseReply.cs" />
     <Compile Include="Forging\IForgingService.cs" />
     <Compile Include="Messages\IMessageService.cs" />
     <Compile Include="Messages\MessageService.cs" />
@@ -155,7 +157,7 @@
     <Compile Include="DigitalGoodsStore\GoodsReply.cs" />
     <Compile Include="DigitalGoodsStore\GoodsCountReply.cs" />
     <Compile Include="DigitalGoodsStore\PuchaseCountReply.cs" />
-    <Compile Include="DigitalGoodsStore\Purchases.cs" />
+    <Compile Include="DigitalGoodsStore\PurchasesReply.cs" />
     <Compile Include="DigitalGoodsStore\Tag.cs" />
     <Compile Include="DigitalGoodsStore\TagCountReply.cs" />
     <Compile Include="DigitalGoodsStore\TagsReply.cs" />
