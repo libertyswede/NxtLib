@@ -7,9 +7,9 @@
     <authors>libertyswede</authors>
     <owners>libertyswede</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>NET Framework API for the NXT platform</description>
-    <releaseNotes>NxtLib is a typed wrapper for the Json API in the NXT platform ( http://nxt.org/ )
-    It currently supports NXT version 1.4.11 </releaseNotes>
-    <tags>NXT cryptocurrency</tags>
+    <description>NET Framework API for the Nxt platform</description>
+    <releaseNotes>NxtLib is a typed wrapper for the Json API in the Nxt platform ( http://nxt.org/ )
+    It currently supports Nxt version 1.4.11 </releaseNotes>
+    <tags>Nxt cryptocurrency</tags>
   </metadata>
 </package>
