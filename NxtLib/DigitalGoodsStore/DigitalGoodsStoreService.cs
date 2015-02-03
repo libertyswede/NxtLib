@@ -17,17 +17,17 @@ namespace NxtLib.DigitalGoodsStore
         {
         }
 
-        public async Task<TransactionCreated> Delisting(ulong goodsId, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> Delisting(ulong goodsId, CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {"goods", goodsId.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("dgsDelisting", queryParameters);
+            return await Post<TransactionCreatedReply>("dgsDelisting", queryParameters);
         }
 
-        public async Task<TransactionCreated> Delivery(ulong purchaseId, CreateTransactionParameters parameters,
+        public async Task<TransactionCreatedReply> Delivery(ulong purchaseId, CreateTransactionParameters parameters,
             Amount discount = null, string goodsToEncrypt = null, bool? goodsIsText = null, string goodsData = null,
             IEnumerable<byte> goodsNonce = null)
         {
@@ -47,10 +47,10 @@ namespace NxtLib.DigitalGoodsStore
             {
                 AddToParametersIfHasValue("goodsNonce", ByteToHexStringConverter.ToHexString(goodsNonce), queryParameters);
             }
-            return await Post<TransactionCreated>("dgsDelivery", queryParameters);
+            return await Post<TransactionCreatedReply>("dgsDelivery", queryParameters);
         }
 
-        public async Task<TransactionCreated> Feedback(ulong purchaseId, string message,
+        public async Task<TransactionCreatedReply> Feedback(ulong purchaseId, string message,
             CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
@@ -59,7 +59,7 @@ namespace NxtLib.DigitalGoodsStore
                 {"message", message}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("dgsFeedback", queryParameters);
+            return await Post<TransactionCreatedReply>("dgsFeedback", queryParameters);
         }
 
         public async Task<Good> GetGood(ulong goodsId, bool? includeCounts = null)
@@ -167,7 +167,7 @@ namespace NxtLib.DigitalGoodsStore
             return await Get<TagsReply>("getDGSTags", queryParameters);
         }
 
-        public async Task<TransactionCreated> Listing(string name, string description, int quantity, Amount price,
+        public async Task<TransactionCreatedReply> Listing(string name, string description, int quantity, Amount price,
             CreateTransactionParameters parameters, string tags = null)
         {
             var queryParameters = new Dictionary<string, string>
@@ -179,10 +179,10 @@ namespace NxtLib.DigitalGoodsStore
             };
             AddToParametersIfHasValue("tags", tags, queryParameters);
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("dgsListing", queryParameters);
+            return await Post<TransactionCreatedReply>("dgsListing", queryParameters);
         }
 
-        public async Task<TransactionCreated> PriceChange(ulong goodsId, Amount price,
+        public async Task<TransactionCreatedReply> PriceChange(ulong goodsId, Amount price,
             CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
@@ -191,10 +191,10 @@ namespace NxtLib.DigitalGoodsStore
                 {"priceNQT", price.Nqt.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("dgsPriceChange", queryParameters);
+            return await Post<TransactionCreatedReply>("dgsPriceChange", queryParameters);
         }
 
-        public async Task<TransactionCreated> Purchase(ulong goodsId, Amount price, int quantity,
+        public async Task<TransactionCreatedReply> Purchase(ulong goodsId, Amount price, int quantity,
             DateTime deliveryDeadlineTimestamp, CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
@@ -205,10 +205,10 @@ namespace NxtLib.DigitalGoodsStore
             };
             AddToParametersIfHasValue("deliveryDeadlineTimestamp", deliveryDeadlineTimestamp, queryParameters);
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("dgsPurchase", queryParameters);
+            return await Post<TransactionCreatedReply>("dgsPurchase", queryParameters);
         }
 
-        public async Task<TransactionCreated> QuantityChange(ulong goodsId, int deltaQuantity,
+        public async Task<TransactionCreatedReply> QuantityChange(ulong goodsId, int deltaQuantity,
             CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
@@ -217,10 +217,10 @@ namespace NxtLib.DigitalGoodsStore
                 {"deltaQuantity", deltaQuantity.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("dgsQuantityChange", queryParameters);
+            return await Post<TransactionCreatedReply>("dgsQuantityChange", queryParameters);
         }
 
-        public async Task<TransactionCreated> Refund(ulong purchaseId, Amount refund,
+        public async Task<TransactionCreatedReply> Refund(ulong purchaseId, Amount refund,
             CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
@@ -229,7 +229,7 @@ namespace NxtLib.DigitalGoodsStore
                 {"refundNQT", refund.Nqt.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("dgsRefund", queryParameters);
+            return await Post<TransactionCreatedReply>("dgsRefund", queryParameters);
         }
 
         public async Task<GoodsReply> SearchGoods(string query = null, string tag = null, ulong? sellerId = null,

@@ -1,6 +1,6 @@
 namespace NxtLib.Accounts
 {
-    public class AccountPublicKey : BaseReply
+    public class AccountPublicKeyReply : BaseReply
     {
         public string PublicKey { get; set; }
     }

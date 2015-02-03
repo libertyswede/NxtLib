@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NxtLib.Internal;
 
 namespace NxtLib.Accounts
 {
-    public class AccountLessors : BaseReply
+    public class AccountIdReply : BaseReply
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong Account { get; set; }
         public string AccountRs { get; set; }
-        public int Height { get; set; }
-        public List<AccountLessor> Lessors { get; set; }
+        public string PublicKey { get; set; }
     }
 }

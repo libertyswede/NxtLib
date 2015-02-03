@@ -1,6 +1,6 @@
 namespace NxtLib.Aliases
 {
-    public class AliasCount : BaseReply
+    public class AliasCountReply : BaseReply
     {
         public int NumberOfAliases { get; set; }
     }

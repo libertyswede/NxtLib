@@ -28,12 +28,12 @@ namespace NxtLib.MonetarySystem
             return await Get<CanDeleteCurrencyReply>("canDeleteCurrency", queryParameters);
         }
 
-        public async Task<TransactionCreated> CurrencyBuy(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> CurrencyBuy(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters)
         {
             return await CurrencyTrade(currencyId, rate, units, parameters, "currencyBuy");
         }
 
-        public async Task<TransactionCreated> CurrencyMint(ulong currencyId, long nonce, long units, long counter,
+        public async Task<TransactionCreatedReply> CurrencyMint(ulong currencyId, long nonce, long units, long counter,
             CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
@@ -44,10 +44,10 @@ namespace NxtLib.MonetarySystem
                 {"counter", counter.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("currencyMint", queryParameters);
+            return await Post<TransactionCreatedReply>("currencyMint", queryParameters);
         }
 
-        public async Task<TransactionCreated> CurrencyReserveClaim(ulong currencyId, long units,
+        public async Task<TransactionCreatedReply> CurrencyReserveClaim(ulong currencyId, long units,
             CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
@@ -56,10 +56,10 @@ namespace NxtLib.MonetarySystem
                 {"units", units.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("currencyReserveClaim", queryParameters);
+            return await Post<TransactionCreatedReply>("currencyReserveClaim", queryParameters);
         }
 
-        public async Task<TransactionCreated> CurrencyReserveIncrease(ulong currencyId, Amount amountPerUnitNqt,
+        public async Task<TransactionCreatedReply> CurrencyReserveIncrease(ulong currencyId, Amount amountPerUnitNqt,
             CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
@@ -68,19 +68,19 @@ namespace NxtLib.MonetarySystem
                 {"amountPerUnitNQT", amountPerUnitNqt.Nqt.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("currencyReserveIncrease", queryParameters);
+            return await Post<TransactionCreatedReply>("currencyReserveIncrease", queryParameters);
         }
 
-        public async Task<TransactionCreated> CurrencySell(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> CurrencySell(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters)
         {
             return await CurrencyTrade(currencyId, rate, units, parameters, "currencySell");
         }
 
-        public async Task<TransactionCreated> DeleteCurrency(ulong currencyId, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> DeleteCurrency(ulong currencyId, CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string> {{"currency", currencyId.ToString()}};
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("deleteCurrency", queryParameters);
+            return await Post<TransactionCreatedReply>("deleteCurrency", queryParameters);
         }
 
         public async Task<GetAccountCurrenciesReply> GetAccountCurrencies(string accountId, ulong? currencyId = null,
@@ -279,20 +279,20 @@ namespace NxtLib.MonetarySystem
             return await Get<GetOffersReply>("getSellOffers", queryParameters);
         }
 
-        public async Task<TransactionCreated> IssueCurrency(IssueCurrencyParameters issueCurrencyParameters, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> IssueCurrency(IssueCurrencyParameters issueCurrencyParameters, CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
             issueCurrencyParameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("issueCurrency", queryParameters);
+            return await Post<TransactionCreatedReply>("issueCurrency", queryParameters);
         }
 
-        public async Task<TransactionCreated> PublishExchangeOffer(PublishExchangeOfferParameters exchangeOfferParameters, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> PublishExchangeOffer(PublishExchangeOfferParameters exchangeOfferParameters, CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
             exchangeOfferParameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("publishExchangeOffer", queryParameters);
+            return await Post<TransactionCreatedReply>("publishExchangeOffer", queryParameters);
         }
 
         public async Task<CurrenciesReply> SearchCurrencies(string query, int? firstIndex = null, int? lastIndex = null, bool? includeCounts = null)
@@ -304,7 +304,7 @@ namespace NxtLib.MonetarySystem
             return await Get<CurrenciesReply>("searchCurrencies", queryParameters);
         }
 
-        public async Task<TransactionCreated> TransferCurrency(string recipientId, ulong currencyId, long units, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> TransferCurrency(string recipientId, ulong currencyId, long units, CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -313,10 +313,10 @@ namespace NxtLib.MonetarySystem
                 {"units", units.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("transferCurrency", queryParameters);
+            return await Post<TransactionCreatedReply>("transferCurrency", queryParameters);
         }
 
-        private async Task<TransactionCreated> CurrencyTrade(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters, string tradeType)
+        private async Task<TransactionCreatedReply> CurrencyTrade(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters, string tradeType)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -325,7 +325,7 @@ namespace NxtLib.MonetarySystem
                 {"units", units.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>(tradeType, queryParameters);
+            return await Post<TransactionCreatedReply>(tradeType, queryParameters);
         }
     }
 }

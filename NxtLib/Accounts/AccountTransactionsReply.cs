@@ -2,7 +2,7 @@
 
 namespace NxtLib.Accounts
 {
-    public class AccountTransactions : BaseReply
+    public class AccountTransactionsReply : BaseReply
     {
         public List<Transaction> Transactions { get; set; }
     }

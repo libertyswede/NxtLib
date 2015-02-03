@@ -6,13 +6,13 @@ namespace NxtLib.DigitalGoodsStore
 {
     public interface IDigitalGoodsStoreService
     {
-        Task<TransactionCreated> Delisting(ulong goodsId, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> Delisting(ulong goodsId, CreateTransactionParameters parameters);
 
-        Task<TransactionCreated> Delivery(ulong purchaseId, CreateTransactionParameters parameters,
+        Task<TransactionCreatedReply> Delivery(ulong purchaseId, CreateTransactionParameters parameters,
             Amount discount = null, string goodsToEncrypt = null, bool? goodsIsText = null, string goodsData = null,
             IEnumerable<byte> goodsNonce = null);
 
-        Task<TransactionCreated> Feedback(ulong purchaseId, string message,
+        Task<TransactionCreatedReply> Feedback(ulong purchaseId, string message,
             CreateTransactionParameters parameters);
 
         Task<Good> GetGood(ulong goodsId, bool? includeCounts = null);
@@ -42,19 +42,19 @@ namespace NxtLib.DigitalGoodsStore
         Task<TagCountReply> GetTagCount(bool? inStockOnly = null);
         Task<TagsReply> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null);
 
-        Task<TransactionCreated> Listing(string name, string description, int quantity, Amount price,
+        Task<TransactionCreatedReply> Listing(string name, string description, int quantity, Amount price,
             CreateTransactionParameters parameters, string tags = null);
 
-        Task<TransactionCreated> PriceChange(ulong goodsId, Amount price,
+        Task<TransactionCreatedReply> PriceChange(ulong goodsId, Amount price,
             CreateTransactionParameters parameters);
 
-        Task<TransactionCreated> Purchase(ulong goodsId, Amount price, int quantity,
+        Task<TransactionCreatedReply> Purchase(ulong goodsId, Amount price, int quantity,
             DateTime deliveryDeadlineTimestamp, CreateTransactionParameters parameters);
 
-        Task<TransactionCreated> QuantityChange(ulong goodsId, int deltaQuantity,
+        Task<TransactionCreatedReply> QuantityChange(ulong goodsId, int deltaQuantity,
             CreateTransactionParameters parameters);
 
-        Task<TransactionCreated> Refund(ulong purchaseId, Amount refund,
+        Task<TransactionCreatedReply> Refund(ulong purchaseId, Amount refund,
             CreateTransactionParameters parameters);
 
         Task<GoodsReply> SearchGoods(string query = null, string tag = null, ulong? sellerId = null,

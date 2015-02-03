@@ -17,57 +17,57 @@ namespace NxtLib.Aliases
         {
         }
 
-        public async Task<TransactionCreated> BuyAlias(AliasLocator query, Amount amount, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> BuyAlias(AliasLocator query, Amount amount, CreateTransactionParameters parameters)
         {
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);
             queryParameters.Add("amountNQT", amount.Nqt.ToString());
-            return await Post<TransactionCreated>("buyAlias", queryParameters);
+            return await Post<TransactionCreatedReply>("buyAlias", queryParameters);
         }
 
-        public async Task<TransactionCreated> DeleteAlias(AliasLocator query, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> DeleteAlias(AliasLocator query, CreateTransactionParameters parameters)
         {
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("deleteAlias", queryParameters);
+            return await Post<TransactionCreatedReply>("deleteAlias", queryParameters);
         }
 
-        public async Task<Alias> GetAlias(AliasLocator query)
+        public async Task<AliasReply> GetAlias(AliasLocator query)
         {
             var queryParameters = query.QueryParameters;
-            return await Get<Alias>("getAlias", queryParameters);
+            return await Get<AliasReply>("getAlias", queryParameters);
         }
 
-        public async Task<AliasCount> GetAliasCount(string account)
+        public async Task<AliasCountReply> GetAliasCount(string account)
         {
             var queryParameters = new Dictionary<string, string> { { "account", account } };
-            return await Get<AliasCount>("getAliasCount", queryParameters);
+            return await Get<AliasCountReply>("getAliasCount", queryParameters);
         }
 
-        public async Task<Aliases> GetAliases(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null)
+        public async Task<AliasesReply> GetAliases(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
             AddToParametersIfHasValue(timeStamp, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            return await Get<Aliases>("getAliases", queryParameters);
+            return await Get<AliasesReply>("getAliases", queryParameters);
         }
 
-        public async Task<TransactionCreated> SellAlias(AliasLocator query, Amount price, CreateTransactionParameters parameters, string recipient = null)
+        public async Task<TransactionCreatedReply> SellAlias(AliasLocator query, Amount price, CreateTransactionParameters parameters, string recipient = null)
         {
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);
             queryParameters.Add("priceNQT", price.Nqt.ToString());
             queryParameters.AddIfHasValue("recipient", recipient);
-            return await Post<TransactionCreated>("sellAlias", queryParameters);
+            return await Post<TransactionCreatedReply>("sellAlias", queryParameters);
         }
 
-        public async Task<TransactionCreated> SetAlias(string aliasName, string aliasUri,
+        public async Task<TransactionCreatedReply> SetAlias(string aliasName, string aliasUri,
             CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string> { { "aliasName", aliasName }, { "aliasURI", aliasUri } };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("setAlias", queryParameters);
+            return await Post<TransactionCreatedReply>("setAlias", queryParameters);
         }
     }
 }

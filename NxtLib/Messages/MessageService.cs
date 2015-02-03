@@ -73,12 +73,12 @@ namespace NxtLib.Messages
             return await Get<ReadMessageReply>("readMessage", queryParameters);
         }
 
-        public async Task<TransactionCreated> SendMessage(CreateTransactionParameters parameters, string recipient = null)
+        public async Task<TransactionCreatedReply> SendMessage(CreateTransactionParameters parameters, string recipient = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("recipient", recipient, queryParameters);
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("sendMessage", queryParameters);
+            return await Post<TransactionCreatedReply>("sendMessage", queryParameters);
         }
     }
 }

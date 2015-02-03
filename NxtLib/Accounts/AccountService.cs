@@ -27,31 +27,31 @@ namespace NxtLib.Accounts
             return await Get<AccountReply>("getAccount", queryParameters);
         }
 
-        public async Task<AccountBlockCount> GetAccountBlockCount(string accountId)
+        public async Task<AccountBlockCountReply> GetAccountBlockCount(string accountId)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
-            return await Get<AccountBlockCount>("getAccountBlockCount", queryParameters);
+            return await Get<AccountBlockCountReply>("getAccountBlockCount", queryParameters);
         }
 
-        public async Task<AccountBlockIds> GetAccountBlockIds(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null)
-        {
-            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
-            AddToParametersIfHasValue(timeStamp, queryParameters);
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            return await Get<AccountBlockIds>("getAccountBlockIds", queryParameters);
-        }
-
-        public async Task<AccountBlocks<ulong>> GetAccountBlocks(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null)
+        public async Task<AccountBlockIdsReply> GetAccountBlockIds(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
             AddToParametersIfHasValue(timeStamp, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            return await Get<AccountBlocks<ulong>>("getAccountBlocks", queryParameters);
+            return await Get<AccountBlockIdsReply>("getAccountBlockIds", queryParameters);
         }
 
-        public async Task<AccountBlocks<Transaction>> GetAccountBlocksIncludeTransactions(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null)
+        public async Task<AccountBlocksReply<ulong>> GetAccountBlocks(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null)
+        {
+            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
+            AddToParametersIfHasValue(timeStamp, queryParameters);
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Get<AccountBlocksReply<ulong>>("getAccountBlocks", queryParameters);
+        }
+
+        public async Task<AccountBlocksReply<Transaction>> GetAccountBlocksIncludeTransactions(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -61,92 +61,92 @@ namespace NxtLib.Accounts
             AddToParametersIfHasValue(timeStamp, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            return await Get<AccountBlocks<Transaction>>("getAccountBlocks", queryParameters);
+            return await Get<AccountBlocksReply<Transaction>>("getAccountBlocks", queryParameters);
         }
 
-        public async Task<AccountId> GetAccountId(AccountIdLocator locator)
+        public async Task<AccountIdReply> GetAccountId(AccountIdLocator locator)
         {
-            return await Post<AccountId>("getAccountId", locator.QueryParameters);
+            return await Post<AccountIdReply>("getAccountId", locator.QueryParameters);
         }
 
-        public async Task<AccountLessors> GetAccountLessors(string accountId, int? height = null)
+        public async Task<AccountLessorsReply> GetAccountLessors(string accountId, int? height = null)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
             if (height.HasValue)
             {
                 queryParameters.Add("height", height.Value.ToString());
             }
-            return await Get<AccountLessors>("getAccountLessors", queryParameters);
+            return await Get<AccountLessorsReply>("getAccountLessors", queryParameters);
         }
 
-        public async Task<AccountPublicKey> GetAccountPublicKey(string accountId)
+        public async Task<AccountPublicKeyReply> GetAccountPublicKey(string accountId)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
-            return await Get<AccountPublicKey>("getAccountPublicKey", queryParameters);
+            return await Get<AccountPublicKeyReply>("getAccountPublicKey", queryParameters);
         }
 
-        public async Task<AccountTransactionIds> GetAccountTransactionIds(string accountId, DateTime? timeStamp = null,
+        public async Task<AccountTransactionIdsReply> GetAccountTransactionIds(string accountId, DateTime? timeStamp = null,
             byte? type = null, byte? subtype = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null)
         {
             var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, type, subtype,
                 firstIndex, lastIndex, numberOfConfirmations, withMessage);
-            return await Get<AccountTransactionIds>("getAccountTransactionIds", queryParameters);
+            return await Get<AccountTransactionIdsReply>("getAccountTransactionIds", queryParameters);
         }
 
-        public async Task<AccountTransactions> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
+        public async Task<AccountTransactionsReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
             byte? type = null, byte? subtype = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null)
         {
             var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, type, subtype,
                 firstIndex, lastIndex, numberOfConfirmations, withMessage);
-            return await Get<AccountTransactions>("getAccountTransactions", queryParameters);
+            return await Get<AccountTransactionsReply>("getAccountTransactions", queryParameters);
         }
 
-        public async Task<AccountBalance> GetBalance(string accountId)
+        public async Task<BalanceReply> GetBalance(string accountId)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
-            return await Get<AccountBalance>("getBalance", queryParameters);
+            return await Get<BalanceReply>("getBalance", queryParameters);
         }
 
-        public async Task<AccountGuaranteedBalance> GetGuaranteedBalance(string accountId, int? numberOfConfirmations = null)
+        public async Task<GuaranteedBalanceReply> GetGuaranteedBalance(string accountId, int? numberOfConfirmations = null)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
             AddToParametersIfHasValue("numberOfConfirmations", numberOfConfirmations, queryParameters);
-            return await Get<AccountGuaranteedBalance>("getGuaranteedBalance", queryParameters);
+            return await Get<GuaranteedBalanceReply>("getGuaranteedBalance", queryParameters);
         }
 
-        public async Task<UnconfirmedAccountTransactionIds> GetUnconfirmedTransactionIds(string accountId = null)
+        public async Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(string accountId = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("account", accountId, queryParameters);
-            return await Get<UnconfirmedAccountTransactionIds>("getUnconfirmedTransactionIds", queryParameters);
+            return await Get<UnconfirmedTransactionIdsResply>("getUnconfirmedTransactionIds", queryParameters);
         }
 
-        public async Task<UnconfirmedAccountTransactions> GetUnconfirmedTransactions(string accountId = null)
+        public async Task<UnconfirmedTransactionsReply> GetUnconfirmedTransactions(string accountId = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("account", accountId, queryParameters);
-            return await Get<UnconfirmedAccountTransactions>("getUnconfirmedTransactions", queryParameters);
+            return await Get<UnconfirmedTransactionsReply>("getUnconfirmedTransactions", queryParameters);
         }
 
-        public async Task<TransactionCreated> SendMoney(CreateTransactionParameters parameters, string recipient, Amount amount)
+        public async Task<TransactionCreatedReply> SendMoney(CreateTransactionParameters parameters, string recipient, Amount amount)
         {
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
             queryParameters.Add("recipient", recipient);
             queryParameters.Add("amountNQT", amount.Nqt.ToString());
-            return await Post<TransactionCreated>("sendMoney", queryParameters);
+            return await Post<TransactionCreatedReply>("sendMoney", queryParameters);
         }
 
-        public async Task<TransactionCreated> SetAccountInfo(CreateTransactionParameters parameters, string name,
+        public async Task<TransactionCreatedReply> SetAccountInfo(CreateTransactionParameters parameters, string name,
             string description)
         {
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
             queryParameters.Add("name", name);
             queryParameters.Add("description", description);
-            return await Post<TransactionCreated>("setAccountInfo", queryParameters);
+            return await Post<TransactionCreatedReply>("setAccountInfo", queryParameters);
         }
 
         private Dictionary<string, string> GenerateQueryParamsForAccountTransactions(string accountId, DateTime? timeStamp, byte? type,

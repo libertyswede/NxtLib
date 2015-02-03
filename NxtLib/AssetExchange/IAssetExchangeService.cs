@@ -6,72 +6,72 @@ namespace NxtLib.AssetExchange
 {
     public interface IAssetExchangeService
     {
-        Task<TransactionCreated> CancelAskOrder(ulong orderId, CreateTransactionParameters parameters);
-        Task<TransactionCreated> CancelBidOrder(ulong orderId, CreateTransactionParameters parameters);
-        Task<TransactionCreated> DividendPayment(ulong assetId, int height, Amount amountPerQnt);
-        Task<AccountAsset> GetAccountAsset(string accountId, ulong assetId, int? height = null);
-        Task<AccountAssetCount> GetAccountAssetCount(string accountId, int? height = null);
-        Task<AccountAssets> GetAccountAssets(string accountId, int? height = null);
+        Task<TransactionCreatedReply> CancelAskOrder(ulong orderId, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> CancelBidOrder(ulong orderId, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> DividendPayment(ulong assetId, int height, Amount amountPerQnt);
+        Task<AccountAssetReply> GetAccountAsset(string accountId, ulong assetId, int? height = null);
+        Task<AccountAssetCountReply> GetAccountAssetCount(string accountId, int? height = null);
+        Task<AccountAssetsReply> GetAccountAssets(string accountId, int? height = null);
 
-        Task<AssetAskOrderIds> GetAccountCurrentAskOrderIds(string accountId, ulong? assetId = null,
+        Task<AskOrderIdsReply> GetAccountCurrentAskOrderIds(string accountId, ulong? assetId = null,
             int? firstIndex = null, int? lastIndex = null);
 
-        Task<AssetAskOrders> GetAccountCurrentAskOrders(string accountId, ulong? assetId = null,
+        Task<AskOrdersReply> GetAccountCurrentAskOrders(string accountId, ulong? assetId = null,
             int? firstIndex = null, int? lastIndex = null);
 
-        Task<AssetBidOrderIds> GetAccountCurrentBidOrderIds(string accountId, ulong? assetId = null,
+        Task<BidOrderIdsReply> GetAccountCurrentBidOrderIds(string accountId, ulong? assetId = null,
             int? firstIndex = null, int? lastIndex = null);
 
-        Task<AssetBidOrders> GetAccountCurrentBidOrders(string accountId, ulong? assetId = null,
+        Task<BidOrdersReply> GetAccountCurrentBidOrders(string accountId, ulong? assetId = null,
             int? firstIndex = null, int? lastIndex = null);
 
-        Task<Assets> GetAllAssets(int? firstIndex = null, int? lastIndex = null,
+        Task<AssetsReply> GetAllAssets(int? firstIndex = null, int? lastIndex = null,
             bool? includeCounts = null);
 
-        Task<AssetOrders> GetAllOpenAskOrders(int? firstIndex = null, int? lastIndex = null);
-        Task<AssetOrders> GetAllOpenBidOrders(int? firstIndex = null, int? lastIndex = null);
+        Task<OpenOrdersReply> GetAllOpenAskOrders(int? firstIndex = null, int? lastIndex = null);
+        Task<OpenOrdersReply> GetAllOpenBidOrders(int? firstIndex = null, int? lastIndex = null);
 
-        Task<AssetTrades> GetAllTrades(DateTime? timestamp = null, int? firstIndex = null, int? lastIndex = null,
+        Task<TradesReply> GetAllTrades(DateTime? timestamp = null, int? firstIndex = null, int? lastIndex = null,
             bool? includeAssetInfo = null);
 
-        Task<AssetOrder> GetAskOrder(ulong orderId);
-        Task<AssetAskOrderIds> GetAskOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);
-        Task<AssetAskOrders> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
-        Task<Asset> GetAsset(ulong assetId, bool? includeCounts = null);
+        Task<OrderReply> GetAskOrder(ulong orderId);
+        Task<AskOrderIdsReply> GetAskOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);
+        Task<AskOrdersReply> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
+        Task<AssetReply> GetAsset(ulong assetId, bool? includeCounts = null);
         Task<CountReply> GetAssetAccountCount(ulong assetId, int? height = null);
 
-        Task<AssetAccounts> GetAssetAccounts(ulong assetId, int? height = null,
+        Task<AssetAccountsReply> GetAssetAccounts(ulong assetId, int? height = null,
             int? firstIndex = null, int? lastIndex = null);
 
-        Task<AssetIds> GetAssetIds(int? firstIndex = null, int? lastIndex = null);
-        Task<Assets> GetAssets(IEnumerable<ulong> assetIds, bool? includeCounts = null);
+        Task<AssetIdsReply> GetAssetIds(int? firstIndex = null, int? lastIndex = null);
+        Task<AssetsReply> GetAssets(IEnumerable<ulong> assetIds, bool? includeCounts = null);
 
-        Task<AssetsByIssuer> GetAssetsByIssuer(IEnumerable<ulong> accountIds, int? firstIndex = null,
+        Task<AssetsByIssuerReply> GetAssetsByIssuer(IEnumerable<ulong> accountIds, int? firstIndex = null,
             int? lastIndex = null, bool? includeCounts = null);
 
-        Task<AssetTransfers> GetAssetTransfers(AssetIdOrAccountId assetIdOrAccountId,
+        Task<AssetTransfersReply> GetAssetTransfers(AssetIdOrAccountId assetIdOrAccountId,
             int? firstIndex = null, int? lastIndex = null, bool? includeAssetInfo = null);
 
-        Task<AssetOrder> GetBidOrder(ulong orderId);
-        Task<AssetBidOrderIds> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);
-        Task<AssetBidOrders> GetBidOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
+        Task<OrderReply> GetBidOrder(ulong orderId);
+        Task<BidOrderIdsReply> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);
+        Task<BidOrdersReply> GetBidOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
 
-        Task<AssetTrades> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null,
+        Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null,
             bool? includeAssetInfo = null);
 
-        Task<TransactionCreated> IssueAsset(string name, string description, long quantityQnt,
+        Task<TransactionCreatedReply> IssueAsset(string name, string description, long quantityQnt,
             CreateTransactionParameters parameters, int? decimals = null);
 
-        Task<TransactionCreated> PlaceAskOrder(ulong assetId, long quantityQnt, Amount price,
+        Task<TransactionCreatedReply> PlaceAskOrder(ulong assetId, long quantityQnt, Amount price,
             CreateTransactionParameters parameters);
 
-        Task<TransactionCreated> PlaceBidOrder(ulong assetId, long quantityQnt, Amount price,
+        Task<TransactionCreatedReply> PlaceBidOrder(ulong assetId, long quantityQnt, Amount price,
             CreateTransactionParameters parameters);
 
-        Task<Assets> SearchAssets(string query, int? firstIndex = null, int? lastIndex = null,
+        Task<AssetsReply> SearchAssets(string query, int? firstIndex = null, int? lastIndex = null,
             bool? includeCounts = null);
 
-        Task<TransactionCreated> TransferAsset(string recipientId, ulong assetId, long quantityQnt,
+        Task<TransactionCreatedReply> TransferAsset(string recipientId, ulong assetId, long quantityQnt,
             CreateTransactionParameters parameters);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace NxtLib.AssetExchange
 {
-    public class AccountAssetCount : BaseReply
+    public class AccountAssetCountReply : BaseReply
     {
         public int NumberOfAssets { get; set; }
     }

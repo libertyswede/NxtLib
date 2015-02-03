@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace NxtLib.Aliases
 {
-    public class Aliases : BaseReply
+    public class AliasesReply : BaseReply
     {
         [JsonProperty(PropertyName = "aliases")]
         public List<Alias> AliasList { get; set; }

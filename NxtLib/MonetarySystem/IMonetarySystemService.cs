@@ -7,15 +7,15 @@ namespace NxtLib.MonetarySystem
     public interface IMonetarySystemService
     {
         Task<CanDeleteCurrencyReply> CanDeleteCurrency(string accountId, ulong currencyId);
-        Task<TransactionCreated> CurrencyBuy(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters);
-        Task<TransactionCreated> CurrencyMint(ulong currencyId, long nonce, long units, long counter,
+        Task<TransactionCreatedReply> CurrencyBuy(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> CurrencyMint(ulong currencyId, long nonce, long units, long counter,
             CreateTransactionParameters parameters);
-        Task<TransactionCreated> CurrencyReserveClaim(ulong currencyId, long units,
+        Task<TransactionCreatedReply> CurrencyReserveClaim(ulong currencyId, long units,
             CreateTransactionParameters parameters);
-        Task<TransactionCreated> CurrencyReserveIncrease(ulong currencyId, Amount amountPerUnitNqt,
+        Task<TransactionCreatedReply> CurrencyReserveIncrease(ulong currencyId, Amount amountPerUnitNqt,
             CreateTransactionParameters parameters);
-        Task<TransactionCreated> CurrencySell(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters);
-        Task<TransactionCreated> DeleteCurrency(ulong currencyId, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> CurrencySell(ulong currencyId, Amount rate, long units, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> DeleteCurrency(ulong currencyId, CreateTransactionParameters parameters);
         Task<GetAccountCurrenciesReply> GetAccountCurrencies(string accountId, ulong? currencyId = null,
             int? height = null);
         Task<GetAccountCurrencyCountReply> GetAccountCurrencyCount(string accountId, int? height = null);
@@ -62,12 +62,12 @@ namespace NxtLib.MonetarySystem
         Task<GetOffersReply> GetSellOffers(CurrencyOrAccountLocator locator,
             bool? availableOnly = null, int? firstindex = null, int? lastindex = null);
 
-        Task<TransactionCreated> IssueCurrency(IssueCurrencyParameters issueCurrencyParameters, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> IssueCurrency(IssueCurrencyParameters issueCurrencyParameters, CreateTransactionParameters parameters);
 
-        Task<TransactionCreated> PublishExchangeOffer(PublishExchangeOfferParameters exchangeOfferParameters, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> PublishExchangeOffer(PublishExchangeOfferParameters exchangeOfferParameters, CreateTransactionParameters parameters);
 
         Task<CurrenciesReply> SearchCurrencies(string query, int? firstIndex = null, int? lastIndex = null, bool? includeCounts = null);
 
-        Task<TransactionCreated> TransferCurrency(string recipientId, ulong currencyId, long units, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> TransferCurrency(string recipientId, ulong currencyId, long units, CreateTransactionParameters parameters);
     }
 }

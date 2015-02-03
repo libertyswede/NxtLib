@@ -2,7 +2,7 @@
 
 namespace NxtLib.Accounts
 {
-    public class UnconfirmedAccountTransactions : BaseReply
+    public class UnconfirmedTransactionsReply : BaseReply
     {
         public List<Transaction> UnconfirmedTransactions { get; set; }
     }

@@ -3,7 +3,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.AssetExchange
 {
-    public class AccountAsset : BaseReply
+    public class AccountAsset
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong Asset { get; set; }

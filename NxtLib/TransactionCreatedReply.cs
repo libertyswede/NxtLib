@@ -3,7 +3,7 @@ using NxtLib.Internal;
 
 namespace NxtLib
 {
-    public class TransactionCreated : BaseReply
+    public class TransactionCreatedReply : BaseReply
     {
         public bool Broadcasted { get; set; }
         public string FullHash { get; set; }

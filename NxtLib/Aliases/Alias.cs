@@ -4,7 +4,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.Aliases
 {
-    public class Alias : BaseReply
+    public class Alias
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "account")]

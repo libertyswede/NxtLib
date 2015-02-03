@@ -21,7 +21,7 @@ namespace NxtLib.Forging
             return await Post<GetForgingReply>("getForging", queryParameters);
         }
 
-        public async Task<TransactionCreated> LeaseBalance(int period, string recipient, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> LeaseBalance(int period, string recipient, CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -29,7 +29,7 @@ namespace NxtLib.Forging
                 {"recipient", recipient}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            return await Post<TransactionCreated>("leaseBalance", queryParameters);
+            return await Post<TransactionCreatedReply>("leaseBalance", queryParameters);
         }
 
         public async Task<StartForgingReply> StartForging(string secretPhrase)

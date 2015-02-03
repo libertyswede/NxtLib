@@ -3,7 +3,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.Accounts
 {
-    public class AccountBalance : BaseReply
+    public class BalanceReply : BaseReply
     {
         [JsonConverter(typeof(NqtAmountConverter))]
         [JsonProperty(PropertyName = "unconfirmedBalanceNqt")]

@@ -4,7 +4,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.Accounts
 {
-    public class UnconfirmedAccountTransactionIds : BaseReply
+    public class UnconfirmedTransactionIdsResply : BaseReply
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public List<ulong> UnconfirmedTransactionIds { get; set; }
