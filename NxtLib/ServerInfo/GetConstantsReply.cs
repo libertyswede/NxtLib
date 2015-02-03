@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using NxtLib.Internal;
-using NxtLib.Networking;
 
 namespace NxtLib.ServerInfo
 {
