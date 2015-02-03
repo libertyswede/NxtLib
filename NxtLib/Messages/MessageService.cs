@@ -4,16 +4,6 @@ using NxtLib.Internal;
 
 namespace NxtLib.Messages
 {
-    public interface IMessageService
-    {
-        Task<DecryptedDataReply> DecryptDataFrom(string senderAccountId, string data, IEnumerable<byte> nonce, string secretPhrase);
-        Task<DecryptedMessageReply> DecryptMessageFrom(string senderAccountId, string data, IEnumerable<byte> nonce, string secretPhrase);
-        Task<EncryptedDataReply> EncryptTo(string recipient, string messageToEncrypt, string secretPhrase);
-        Task<EncryptedDataReply> EncryptTo(string recipient, IEnumerable<byte> messageToEncrypt, string secretPhrase);
-        Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null);
-        Task<TransactionCreated> SendMessage(CreateTransactionParameters parameters, string recipient = null);
-    }
-
     public class MessageService : BaseService, IMessageService
     {
         public MessageService(string baseAddress = DefaultBaseUrl)

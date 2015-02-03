@@ -4,12 +4,6 @@ using NxtLib.Internal;
 
 namespace NxtLib.Utils
 {
-    public interface IUtilService
-    {
-        Task<LongConvertReply> LongConvert(ulong id);
-        Task<RsConvertReply> RsConvert(string accountId);
-    }
-
     public class UtilService : BaseService, IUtilService
     {
         public UtilService(string baseAddress = DefaultBaseUrl)

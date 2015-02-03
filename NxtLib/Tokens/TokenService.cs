@@ -5,14 +5,6 @@ using NxtLib.Internal;
 
 namespace NxtLib.Tokens
 {
-    public interface ITokenService
-    {
-        Task<DecodeHallmarkReply> DecodeHallmark(string hallmark);
-        Task<Token> DecodeToken(string website, string token);
-        Task<TokenString> GenerateToken(string secretPhrase, string website);
-        Task<MarkHostReply> MarkHost(string secretPhrase, string host, int weight, DateTime date);
-    }
-
     public class TokenService : BaseService, ITokenService
     {
         public TokenService(string baseAddress = DefaultBaseUrl)

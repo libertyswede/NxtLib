@@ -4,14 +4,6 @@ using NxtLib.Internal;
 
 namespace NxtLib.ServerInfo
 {
-    public interface IServerInfoService
-    {
-        Task<GetBlockchainStatusReply> GetBlockchainStatus();
-        Task<GetConstantsReply> GetConstants();
-        Task<GetStateReply> GetState(bool? includeCounts = null);
-        Task<GetTimeReply> GetTime();
-    }
-
     public class ServerInfoService : BaseService, IServerInfoService
     {
         public ServerInfoService(string baseAddress = DefaultBaseUrl)
