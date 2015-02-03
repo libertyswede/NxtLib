@@ -4,146 +4,148 @@ Usually the function name remain the same in the service class as in the API.
 For example, if you are looking for "addPeer" function, it is located in the
 NetworkingService class. NetworkingService.AddPeer(...)
 
-addPeer : NetworkingService
-blacklistPeer : NetworkingService
-broadcastTransaction : TransactionService
-buyAlias : AliasService
-calculateFullHash : TransactionService
-cancelAskOrder : AssetExchangeService
-cancelBidOrder : AssetExchangeService
-canDeleteCurrency : MonetarySystemService
-clearUnconfirmedTransactions : DebugService
-currencyBuy : MonetarySystemService
-currencyMint : MonetarySystemService
-currencyReserveClaim : MonetarySystemService
-currencyReserveIncrease : MonetarySystemService
-currencySell : MonetarySystemService
-decodeHallmark : TokenService
-decodeToken : TokenService
-decryptFrom : MessageService (DecryptDataFrom and DecryptMessageFrom)
-deleteAlias : AliasService
-deleteCurrency : MonetarySystemService
-dgsDelisting : DigitalGoodsStoreService
-dgsDelivery : DigitalGoodsStoreService
-dgsFeedback : DigitalGoodsStoreService
-dgsListing : DigitalGoodsStoreService
-dgsPriceChange : DigitalGoodsStoreService
-dgsPurchase : DigitalGoodsStoreService
-dgsQuantityChange : DigitalGoodsStoreService
-dgsRefund : DigitalGoodsStoreService
-dividendPayment : AssetExchangeService
-encryptTo : MessageService
-fullReset : DebugService
-generateToken : TokenService
-getAccount : AccountService
-getAccountAssetCount : AssetExchangeService
-getAccountAssets : AssetExchangeService (GetAccountAsset and GetAccountAssets)
-getAccountBlockCount : AccountService
-getAccountBlockIds : AccountService
-getAccountBlocks : AccountService (GetAccountBlocks and GetAccountBlocksIncludeTransactions)
-getAccountCurrencies : MonetarySystemService
-getAccountCurrencyCount : MonetarySystemService
-getAccountCurrentAskOrderIds : AssetExchangeService
-getAccountCurrentAskOrders : AssetExchangeService
-getAccountCurrentBidOrderIds : AssetExchangeService
-getAccountCurrentBidOrders : AssetExchangeService
-getAccountExchangeRequests : MonetarySystemService
-getAccountId : AccountService
-getAccountLessors : AccountService
-getAccountPublicKey : AccountService
-getAccountTransactionIds : AccountService
-getAccountTransactions : AccountService
-getAlias : AliasService
-getAliasCount : AliasService
-getAliases : AliasService
-getAllAssets : AssetExchangeService
-getAllCurrencies : MonetarySystemService
-getAllExchanges : MonetarySystemService
-getAllOpenAskOrders : AssetExchangeService
-getAllOpenBidOrders : AssetExchangeService
-getAllTrades : AssetExchangeService
-getAskOrder : AssetExchangeService
-getAskOrderIds : AssetExchangeService
-getAskOrders : AssetExchangeService
-getAsset : AssetExchangeService
-getAssetAccountCount : AssetExchangeService
-getAssetAccounts : AssetExchangeService
-getAssetIds : AssetExchangeService
-getAssets : AssetExchangeService
-getAssetsByIssuer : AssetExchangeService
-getAssetTransfers : AssetExchangeService
-getBalance : AccountService
-getBidOrder : AssetExchangeService
-getBidOrderIds : AssetExchangeService
-getBidOrders : AssetExchangeService
-getBlock : BlockService (GetBlock and GetBlockIncludeTransactions)
-getBlockchainStatus : ServerInfoService
-getBlockId : BlockService
-getBlocks : BlockService (GetBlocks and GetBlocksIncludeTransactions)
-getBuyOffers : MonetarySystemService
-getConstants : ServerInfoService
-getCurrencies : MonetarySystemService
-getCurrenciesByIssuer : MonetarySystemService
-getCurrency : MonetarySystemService
-getCurrencyAccountCount : MonetarySystemService
-getCurrencyAccounts : MonetarySystemService
-getCurrencyFounders : MonetarySystemService
-getCurrencyIds : MonetarySystemService
-getCurrencyTransfers : MonetarySystemService
-getDGSGood : DigitalGoodsStoreService
-getDGSGoods : DigitalGoodsStoreService
-getDGSGoodsCount : DigitalGoodsStoreService
-getDGSGoodsPurchaseCount : DigitalGoodsStoreService
-getDGSGoodsPurchases : DigitalGoodsStoreService
-getDGSPendingPurchases : DigitalGoodsStoreService
-getDGSPurchase : DigitalGoodsStoreService
-getDGSPurchaseCount : DigitalGoodsStoreService
-getDGSPurchases : DigitalGoodsStoreService
-getDGSTagCount : DigitalGoodsStoreService
-getDGSTags : DigitalGoodsStoreService
-getECBlock : BlockService
-getExchanges : MonetarySystemService
-getExchangesByExchangeRequest : MonetarySystemService
-getExchangesByOffer : MonetarySystemService
-getForging : ForgingService
-getGuaranteedBalance : AccountService
-getMintingTarget : MonetarySystemService
-getMyInfo : NetworkingService
-getOffer : MonetarySystemService
-getPeer : NetworkingService
-getPeers : NetworkingService
-getSellOffers : MonetarySystemService
-getState : ServerInfoService
-getTime : ServerInfoService
-getTrades : AssetExchangeService
-getTransaction : TransactionService
-getTransactionBytes : TransactionService
-getUnconfirmedTransactionIds : AccountService
-getUnconfirmedTransactions : AccountService
-issueAsset : AssetExchangeService
-issueCurrency : MonetarySystemService
-leaseBalance : ForgingService
-longConvert : UtilService
-luceneReindex : DebugService
-markHost : TokenService
-parseTransaction : TransactionService
-placeAskOrder : AssetExchangeService
-placeBidOrder : AssetExchangeService
-popOff : DebugService
-publishExchangeOffer : MonetarySystemService
-readMessage : MessageService
-rsConvert : UtilService
-scan : DebugService
-searchAssets : AssetExchangeService
-searchCurrencies : MonetarySystemService
-searchDGSGoods : DigitalGoodsStoreService
-sellAlias : AliasService
-sendMessage : MessageService
-sendMoney : AccountService
-setAccountInfo : AccountService
-setAlias : AliasService
-signTransaction : TransactionService
-startForging : ForgingService
-stopForging : ForgingService
-transferAsset : AssetExchangeService
-transferCurrency : MonetarySystemService
+| Nxt api function | NxtLib service class | Note |
+| ---------------- | -------------------- | ---- |
+| addPeer | NetworkingService |  | 
+| blacklistPeer | NetworkingService |  | 
+| broadcastTransaction | TransactionService |  | 
+| buyAlias | AliasService |  | 
+| calculateFullHash | TransactionService |  | 
+| cancelAskOrder | AssetExchangeService |  | 
+| cancelBidOrder | AssetExchangeService |  | 
+| canDeleteCurrency | MonetarySystemService |  | 
+| clearUnconfirmedTransactions | DebugService |  | 
+| currencyBuy | MonetarySystemService |  | 
+| currencyMint | MonetarySystemService |  | 
+| currencyReserveClaim | MonetarySystemService |  | 
+| currencyReserveIncrease | MonetarySystemService |  | 
+| currencySell | MonetarySystemService |  | 
+| decodeHallmark | TokenService |  | 
+| decodeToken | TokenService |  | 
+| decryptFrom | MessageService | DecryptDataFrom and DecryptMessageFrom | 
+| deleteAlias | AliasService |  | 
+| deleteCurrency | MonetarySystemService |  | 
+| dgsDelisting | DigitalGoodsStoreService |  | 
+| dgsDelivery | DigitalGoodsStoreService |  | 
+| dgsFeedback | DigitalGoodsStoreService |  | 
+| dgsListing | DigitalGoodsStoreService |  | 
+| dgsPriceChange | DigitalGoodsStoreService |  | 
+| dgsPurchase | DigitalGoodsStoreService |  | 
+| dgsQuantityChange | DigitalGoodsStoreService |  | 
+| dgsRefund | DigitalGoodsStoreService |  | 
+| dividendPayment | AssetExchangeService |  | 
+| encryptTo | MessageService |  | 
+| fullReset | DebugService |  | 
+| generateToken | TokenService |  | 
+| getAccount | AccountService |  | 
+| getAccountAssetCount | AssetExchangeService |  | 
+| getAccountAssets | AssetExchangeService | GetAccountAsset and GetAccountAssets | 
+| getAccountBlockCount | AccountService |  | 
+| getAccountBlockIds | AccountService |  | 
+| getAccountBlocks | AccountService | GetAccountBlocks and GetAccountBlocksIncludeTransactions | 
+| getAccountCurrencies | MonetarySystemService |  | 
+| getAccountCurrencyCount | MonetarySystemService |  | 
+| getAccountCurrentAskOrderIds | AssetExchangeService |  | 
+| getAccountCurrentAskOrders | AssetExchangeService |  | 
+| getAccountCurrentBidOrderIds | AssetExchangeService |  | 
+| getAccountCurrentBidOrders | AssetExchangeService |  | 
+| getAccountExchangeRequests | MonetarySystemService |  | 
+| getAccountId | AccountService |  | 
+| getAccountLessors | AccountService |  | 
+| getAccountPublicKey | AccountService |  | 
+| getAccountTransactionIds | AccountService |  | 
+| getAccountTransactions | AccountService |  | 
+| getAlias | AliasService |  | 
+| getAliasCount | AliasService |  | 
+| getAliases | AliasService |  | 
+| getAllAssets | AssetExchangeService |  | 
+| getAllCurrencies | MonetarySystemService |  | 
+| getAllExchanges | MonetarySystemService |  | 
+| getAllOpenAskOrders | AssetExchangeService |  | 
+| getAllOpenBidOrders | AssetExchangeService |  | 
+| getAllTrades | AssetExchangeService |  | 
+| getAskOrder | AssetExchangeService |  | 
+| getAskOrderIds | AssetExchangeService |  | 
+| getAskOrders | AssetExchangeService |  | 
+| getAsset | AssetExchangeService |  | 
+| getAssetAccountCount | AssetExchangeService |  | 
+| getAssetAccounts | AssetExchangeService |  | 
+| getAssetIds | AssetExchangeService |  | 
+| getAssets | AssetExchangeService |  | 
+| getAssetsByIssuer | AssetExchangeService |  | 
+| getAssetTransfers | AssetExchangeService |  | 
+| getBalance | AccountService |  | 
+| getBidOrder | AssetExchangeService |  | 
+| getBidOrderIds | AssetExchangeService |  | 
+| getBidOrders | AssetExchangeService |  | 
+| getBlock | BlockService | GetBlock and GetBlockIncludeTransactions | 
+| getBlockchainStatus | ServerInfoService |  | 
+| getBlockId | BlockService |  | 
+| getBlocks | BlockService | GetBlocks and GetBlocksIncludeTransactions | 
+| getBuyOffers | MonetarySystemService |  | 
+| getConstants | ServerInfoService |  | 
+| getCurrencies | MonetarySystemService |  | 
+| getCurrenciesByIssuer | MonetarySystemService |  | 
+| getCurrency | MonetarySystemService |  | 
+| getCurrencyAccountCount | MonetarySystemService |  | 
+| getCurrencyAccounts | MonetarySystemService |  | 
+| getCurrencyFounders | MonetarySystemService |  | 
+| getCurrencyIds | MonetarySystemService |  | 
+| getCurrencyTransfers | MonetarySystemService |  | 
+| getDGSGood | DigitalGoodsStoreService |  | 
+| getDGSGoods | DigitalGoodsStoreService |  | 
+| getDGSGoodsCount | DigitalGoodsStoreService |  | 
+| getDGSGoodsPurchaseCount | DigitalGoodsStoreService |  | 
+| getDGSGoodsPurchases | DigitalGoodsStoreService |  | 
+| getDGSPendingPurchases | DigitalGoodsStoreService |  | 
+| getDGSPurchase | DigitalGoodsStoreService |  | 
+| getDGSPurchaseCount | DigitalGoodsStoreService |  | 
+| getDGSPurchases | DigitalGoodsStoreService |  | 
+| getDGSTagCount | DigitalGoodsStoreService |  | 
+| getDGSTags | DigitalGoodsStoreService |  | 
+| getECBlock | BlockService |  | 
+| getExchanges | MonetarySystemService |  | 
+| getExchangesByExchangeRequest | MonetarySystemService |  | 
+| getExchangesByOffer | MonetarySystemService |  | 
+| getForging | ForgingService |  | 
+| getGuaranteedBalance | AccountService |  | 
+| getMintingTarget | MonetarySystemService |  | 
+| getMyInfo | NetworkingService |  | 
+| getOffer | MonetarySystemService |  | 
+| getPeer | NetworkingService |  | 
+| getPeers | NetworkingService |  | 
+| getSellOffers | MonetarySystemService |  | 
+| getState | ServerInfoService |  | 
+| getTime | ServerInfoService |  | 
+| getTrades | AssetExchangeService |  | 
+| getTransaction | TransactionService |  | 
+| getTransactionBytes | TransactionService |  | 
+| getUnconfirmedTransactionIds | AccountService |  | 
+| getUnconfirmedTransactions | AccountService |  | 
+| issueAsset | AssetExchangeService |  | 
+| issueCurrency | MonetarySystemService |  | 
+| leaseBalance | ForgingService |  | 
+| longConvert | UtilService |  | 
+| luceneReindex | DebugService |  | 
+| markHost | TokenService |  | 
+| parseTransaction | TransactionService |  | 
+| placeAskOrder | AssetExchangeService |  | 
+| placeBidOrder | AssetExchangeService |  | 
+| popOff | DebugService |  | 
+| publishExchangeOffer | MonetarySystemService |  | 
+| readMessage | MessageService |  | 
+| rsConvert | UtilService |  | 
+| scan | DebugService |  | 
+| searchAssets | AssetExchangeService |  | 
+| searchCurrencies | MonetarySystemService |  | 
+| searchDGSGoods | DigitalGoodsStoreService |  | 
+| sellAlias | AliasService |  | 
+| sendMessage | MessageService |  | 
+| sendMoney | AccountService |  | 
+| setAccountInfo | AccountService |  | 
+| setAlias | AliasService |  | 
+| signTransaction | TransactionService |  | 
+| startForging | ForgingService |  | 
+| stopForging | ForgingService |  | 
+| transferAsset | AssetExchangeService |  | 
+| transferCurrency | MonetarySystemService |  | 
