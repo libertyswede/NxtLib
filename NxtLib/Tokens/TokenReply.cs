@@ -4,7 +4,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.Tokens
 {
-    public class Token : BaseReply
+    public class TokenReply : BaseReply
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "account")]

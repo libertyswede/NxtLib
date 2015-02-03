@@ -208,9 +208,9 @@
     <Compile Include="Networking\PeerState.cs" />
     <Compile Include="ServerInfo\ServerInfoService.cs" />
     <Compile Include="ServerInfo\TransactionTypeBase.cs" />
-    <Compile Include="Tokens\Token.cs" />
+    <Compile Include="Tokens\TokenReply.cs" />
     <Compile Include="Tokens\TokenService.cs" />
-    <Compile Include="Tokens\TokenString.cs" />
+    <Compile Include="Tokens\GenerateTokenReply.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="TransactionCreatedReply.cs" />
     <Compile Include="Transactions\BroadcastTransactionReply.cs" />

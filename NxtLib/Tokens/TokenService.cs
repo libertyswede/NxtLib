@@ -23,24 +23,24 @@ namespace NxtLib.Tokens
             return await Get<DecodeHallmarkReply>("decodeHallmark", queryParameters);
         }
 
-        public async Task<Token> DecodeToken(string website, string token)
+        public async Task<TokenReply> DecodeToken(string website, string token)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {"website", website},
                 {"token", token}
             };
-            return await Get<Token>("decodeToken", queryParameters);
+            return await Get<TokenReply>("decodeToken", queryParameters);
         }
 
-        public async Task<TokenString> GenerateToken(string secretPhrase, string website)
+        public async Task<GenerateTokenReply> GenerateToken(string secretPhrase, string website)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {"secretPhrase", secretPhrase},
                 {"website", website}
             };
-            return await Post<TokenString>("generateToken", queryParameters);
+            return await Post<GenerateTokenReply>("generateToken", queryParameters);
         }
 
         public async Task<MarkHostReply> MarkHost(string secretPhrase, string host, int weight, DateTime date)

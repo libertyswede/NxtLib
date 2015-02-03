@@ -1,6 +1,6 @@
 ﻿namespace NxtLib.Tokens
 {
-    public class TokenString : BaseReply
+    public class GenerateTokenReply : BaseReply
     {
         public string Token { get; set; }
     }
