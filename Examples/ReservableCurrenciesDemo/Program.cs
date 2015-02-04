@@ -24,6 +24,7 @@ namespace ReservableCurrenciesDemo
 
             Console.WriteLine("** Listing of all reservable currencies **");
             Console.WriteLine("");
+            var total = 0M;
 
             foreach (var currency in reservableCurrencies)
             {
@@ -34,12 +35,15 @@ namespace ReservableCurrenciesDemo
                 Console.WriteLine("Founders: {0}", founders.Founders.Count);
                 if (founders.Founders.Count > 0)
                 {
-                    Console.WriteLine("Amount: {0} NXT", founders.Founders.Sum(f => f.AmountPerUnit.Nxt));
+                    var reserved = founders.Founders.Sum(f => f.AmountPerUnit.Nxt);
+                    total += reserved;
+                    Console.WriteLine("Amount: {0} NXT", reserved);
                 }
                 Console.WriteLine("");
             }
 
             Console.WriteLine("----------------------------");
+            Console.WriteLine("Total reserved: {0} NXT", total);
             Console.WriteLine("");
             Console.WriteLine("Press any key to quit");
             Console.ReadLine();
