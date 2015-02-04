@@ -86,6 +86,7 @@
     <Compile Include="DigitalGoodsStore\IDigitalGoodsStoreService.cs" />
     <Compile Include="DigitalGoodsStore\PurchaseReply.cs" />
     <Compile Include="Forging\IForgingService.cs" />
+    <Compile Include="Forging\SecretPhraseOrAdminPassword.cs" />
     <Compile Include="Messages\IMessageService.cs" />
     <Compile Include="Messages\MessageService.cs" />
     <Compile Include="Messages\DecryptedDataReply.cs" />

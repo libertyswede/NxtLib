@@ -16,6 +16,7 @@ namespace NxtLib.ServerInfo
         public ulong LastBlock { get; set; }
         public string LastBlockchainFeeder { get; set; }
         public int LastBlockchainFeederHeight { get; set; }
+        public bool NeedsAdminPassword { get; set; }
         public long MaxMemory { get; set; }
         public int NumberOfAccounts { get; set; }
         public int NumberOfAliases { get; set; }

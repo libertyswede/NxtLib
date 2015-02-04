@@ -15,9 +15,9 @@ namespace NxtLib.Forging
         {
         }
 
-        public async Task<GetForgingReply> GetForging(string secretPhrase)
+        public async Task<GetForgingReply> GetForging(SecretPhraseOrAdminPassword secretPhraseOrAdminPassword)
         {
-            var queryParameters = new Dictionary<string, string> {{"secretPhrase", secretPhrase}};
+            var queryParameters = secretPhraseOrAdminPassword.QueryParameters;
             return await Post<GetForgingReply>("getForging", queryParameters);
         }
 
@@ -38,9 +38,9 @@ namespace NxtLib.Forging
             return await Post<StartForgingReply>("startForging", queryParameters);
         }
 
-        public async Task<StopForgingReply> StopForging(string secretPhrase)
+        public async Task<StopForgingReply> StopForging(SecretPhraseOrAdminPassword secretPhraseOrAdminPassword)
         {
-            var queryParameters = new Dictionary<string, string> {{"secretPhrase", secretPhrase}};
+            var queryParameters = secretPhraseOrAdminPassword.QueryParameters;
             return await Post<StopForgingReply>("stopForging", queryParameters);
         }
     }
