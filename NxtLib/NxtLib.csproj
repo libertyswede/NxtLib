@@ -105,8 +105,10 @@
     <Compile Include="MonetarySystem\CurrencyTransfersReply.cs" />
     <Compile Include="MonetarySystem\GetOffersReply.cs" />
     <Compile Include="MonetarySystem\IMonetarySystemService.cs" />
+    <Compile Include="Networking\GetPeersIncludeInfoReply.cs" />
     <Compile Include="Networking\INetworkingService.cs" />
     <Compile Include="Networking\NetworkingService.cs" />
+    <Compile Include="Networking\PeerInfo.cs" />
     <Compile Include="ServerInfo\IServerInfoService.cs" />
     <Compile Include="ServerInfo\PeerState.cs" />
     <Compile Include="Tokens\ITokenService.cs" />

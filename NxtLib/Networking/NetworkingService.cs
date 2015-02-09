@@ -47,5 +47,12 @@ namespace NxtLib.Networking
             }
             return await Get<GetPeersReply>("getPeers");
         }
+
+        public async Task<GetPeersIncludeInfoReply> GetPeersIncludeInfo(PeersLocator locator = null)
+        {
+            var queryParameters = locator != null ? locator.QueryParameters : new Dictionary<string, string>();
+            queryParameters.Add("includePeerInfo", true.ToString());
+            return await Get<GetPeersIncludeInfoReply>("getPeers", queryParameters);
+        }
     }
 }

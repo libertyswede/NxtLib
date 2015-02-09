@@ -9,5 +9,6 @@ namespace NxtLib.Networking
         Task<GetMyInfoReply> GetMyInfo();
         Task<PeerReply> GetPeer(string peer);
         Task<GetPeersReply> GetPeers(PeersLocator locator = null);
+        Task<GetPeersIncludeInfoReply> GetPeersIncludeInfo(PeersLocator locator = null);
     }
 }
