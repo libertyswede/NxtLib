@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace NxtLib
 {
+    [DebuggerDisplay("Amount: Nxt = {Nxt}")]
     public class Amount
     {
         private const long NqtMultiplier = 100000000;
