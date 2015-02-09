@@ -15,6 +15,7 @@ namespace NxtLib.ServerInfo
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong GenesisBlockId { get; set; }
+        public List<object> HashAlgorithms { get; set; }
         public List<PeerState> PeerStates { get; set; }
         public List<TransactionType> TransactionTypes { get; set; }
     }
