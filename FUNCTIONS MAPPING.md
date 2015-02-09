@@ -113,7 +113,7 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | getMyInfo | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) |  | 
 | getOffer | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getPeer | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) |  | 
-| getPeers | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) |  | 
+| getPeers | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) | GetPeers and GetPeersIncludeInfo | 
 | getSellOffers | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getState | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
 | getTime | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
