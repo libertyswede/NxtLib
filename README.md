@@ -5,5 +5,5 @@ NxtLib simplifies the development process when integrating to Nxt as it translat
 
 It currently supports NXT version 1.4.13 
 
-For some tips on how to get started, check out the [examples](https://github.com/libertyswede/NxtLib/tree/master/Examples).
+For some tips on how to get started, check out the [examples](https://github.com/libertyswede/NxtLib/tree/master/Examples).<br />
 Or see the [youtube video](https://www.youtube.com/watch?v=jc8BqEKIRjg) on how to check balance and send Nxt's.
