@@ -27,7 +27,7 @@ namespace NxtLib
         public PublicKeyAnnouncement PublicKeyAnnouncement { get; set; }
         public ulong Sender { get; set; }
         public string SenderRs { get; set; }
-        public string SenderPublicKey { get; set; }
+        public BinaryHexString SenderPublicKey { get; set; }
         public string Signature { get; set; }
         public string SignatureHash { get; set; }
         public TransactionSubType SubType { get; set; }
