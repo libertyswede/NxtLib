@@ -174,7 +174,7 @@ namespace NxtLib.Internal.LocalSign
 
             Array.Copy(p, 0, codeword, Base32Length, InitialCodeword.Length - Base32Length);
 
-            var cypherStringBuilder = new StringBuilder();
+            var cypherStringBuilder = new StringBuilder("NXT-");
             for (var i = 0; i < 17; i++)
             {
                 var codeworkIndex = CodewordMap[i];
