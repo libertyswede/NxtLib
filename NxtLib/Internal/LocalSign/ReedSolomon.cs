@@ -16,7 +16,7 @@ namespace NxtLib.Internal.LocalSign
         private const int Base32Length = 13;
         private const int Base10Length = 20;
 
-        public static long Decode(string cypherString)
+        public static ulong Decode(string cypherString)
         {
             var codeword = new int[InitialCodeword.Length];
             Array.Copy(InitialCodeword, 0, codeword, 0, InitialCodeword.Length);
@@ -77,7 +77,7 @@ namespace NxtLib.Internal.LocalSign
             } while (length > 0);
 
             var bigInt = BigInteger.Parse(Reverse(plainStringBuilder.ToString()));
-            return (long)(ulong)bigInt;
+            return (ulong)bigInt;
         }
 
         public static string Reverse(string str)
@@ -114,10 +114,10 @@ namespace NxtLib.Internal.LocalSign
             return sum == 0;
         }
 
-        public static string Encode(long id)
+        public static string Encode(ulong id)
         {
             var plainString10 = new int[Base10Length];
-            var stringId = ((ulong)id).ToString(CultureInfo.InvariantCulture);
+            var stringId = (id).ToString(CultureInfo.InvariantCulture);
             var length = stringId.Length;
             for (var i = 0; i < length; i++)
             {
