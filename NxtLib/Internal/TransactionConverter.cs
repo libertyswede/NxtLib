@@ -50,7 +50,7 @@ namespace NxtLib.Internal
             transaction.Sender = GetValueOrDefault(jObject, "sender", Convert.ToUInt64);
             transaction.SenderRs = GetValueOrDefault(jObject, "senderRS", obj => obj.ToString());
             transaction.SenderPublicKey = GetValueOrDefault(jObject, "senderPublicKey", obj => new BinaryHexString(obj.ToString()));
-            transaction.Signature = GetValueOrDefault(jObject, "signature", obj => obj.ToString());
+            transaction.Signature = GetValueOrDefault(jObject, "signature", obj => new BinaryHexString(obj.ToString()));
             transaction.SignatureHash = GetValueOrDefault(jObject, "signatureHash", obj => obj.ToString());
             transaction.SubType = subType;
             transaction.Timestamp = GetDateTimeOrDefault(jObject, "timestamp");
