@@ -7,7 +7,6 @@ namespace NxtLib.Crypto
     internal class Crypto : ICrypto
     {
         private readonly SHA256 _sha256;
-        public byte[] Hash { get { return _sha256.Hash; } }
 
         public Crypto()
         {
