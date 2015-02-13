@@ -1,4 +1,4 @@
-﻿namespace NxtLib.Crypto
+﻿namespace NxtLib.Internal.LocalSigning
 {
     internal interface ICrypto
     {
