@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace NxtLib.Crypto
@@ -27,31 +28,23 @@ namespace NxtLib.Crypto
             Curve25519.Keygen(p, s, sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase)));
 
             var m = sha256.ComputeHash(message);
-            // Java code below
-            //byte[] P = new byte[32];
-            //byte[] s = new byte[32];
-            //MessageDigest digest = Crypto.sha256();
-            //Curve25519.keygen(P, s, digest.digest(Convert.toBytes(secretPhrase)));
+            sha256.TransformBlock(m, 0, m.Length, m, 0);
+            sha256.TransformFinalBlock(s, 0, s.Length);
+            var x = sha256.Hash;
 
-            //byte[] m = digest.digest(message);
+            var y = new byte[32];
+            Curve25519.Keygen(y, null, x);
 
-            //digest.update(m);
-            //byte[] x = digest.digest(s);
+            sha256 = SHA256.Create();
+            sha256.TransformBlock(m, 0, m.Length, m, 0);
+            sha256.TransformFinalBlock(y, 0, y.Length);
+            var h = sha256.Hash;
 
-            //byte[] Y = new byte[32];
-            //Curve25519.keygen(Y, null, x);
+            var v = new byte[32];
+            Curve25519.Sign(v, h, x, s);
 
-            //digest.update(m);
-            //byte[] h = digest.digest(Y);
-
-            //byte[] v = new byte[32];
-            //Curve25519.sign(v, h, x, s);
-
-            //byte[] signature = new byte[64];
-            //System.arraycopy(v, 0, signature, 0, 32);
-            //System.arraycopy(h, 0, signature, 32, 32);
-
-            //return signature;
+            var signature = v.Concat(h).ToArray();
+            return signature;
         }
 
         public BinaryHexString GetPublicKey(string secretPhrase)
