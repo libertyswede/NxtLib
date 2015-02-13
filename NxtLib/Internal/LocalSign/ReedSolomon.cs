@@ -18,6 +18,7 @@ namespace NxtLib.Internal.LocalSign
 
         public static ulong Decode(string cypherString)
         {
+            cypherString = RemoveInitialNXT(cypherString);
             var codeword = new int[InitialCodeword.Length];
             Array.Copy(InitialCodeword, 0, codeword, 0, InitialCodeword.Length);
 
@@ -78,6 +79,15 @@ namespace NxtLib.Internal.LocalSign
 
             var bigInt = BigInteger.Parse(Reverse(plainStringBuilder.ToString()));
             return (ulong)bigInt;
+        }
+
+        private static string RemoveInitialNXT(string cypherString)
+        {
+            if (cypherString.StartsWith("NXT-"))
+            {
+                cypherString = cypherString.Substring(4);
+            }
+            return cypherString;
         }
 
         public static string Reverse(string str)
