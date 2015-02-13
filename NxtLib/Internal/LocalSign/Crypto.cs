@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace NxtLib.Internal.LocalSigning
+namespace NxtLib.Internal.LocalSign
 {
     internal class Crypto : ICrypto
     {

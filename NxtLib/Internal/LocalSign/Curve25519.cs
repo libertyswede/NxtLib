@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace NxtLib.Internal.LocalSigning
+namespace NxtLib.Internal.LocalSign
 {
     /// <summary>
     /// Ported from C to Java by Dmitry Skiba [sahn0], 23/02/08.

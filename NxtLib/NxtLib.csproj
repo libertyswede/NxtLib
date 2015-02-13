@@ -81,9 +81,9 @@
     <Compile Include="AssetExchange\OrderReply.cs" />
     <Compile Include="Blocks\IBlockService.cs" />
     <Compile Include="CountReply.cs" />
-    <Compile Include="Internal\LocalSigning\Crypto.cs" />
-    <Compile Include="Internal\LocalSigning\Curve25519.cs" />
-    <Compile Include="Internal\LocalSigning\ICrypto.cs" />
+    <Compile Include="Internal\LocalSign\Crypto.cs" />
+    <Compile Include="Internal\LocalSign\Curve25519.cs" />
+    <Compile Include="Internal\LocalSign\ICrypto.cs" />
     <Compile Include="CurrencyType.cs" />
     <Compile Include="Debug\IDebugService.cs" />
     <Compile Include="DigitalGoodsStore\GoodReply.cs" />
