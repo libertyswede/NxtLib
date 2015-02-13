@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -91,6 +92,7 @@
     <Compile Include="DigitalGoodsStore\PurchaseReply.cs" />
     <Compile Include="Forging\IForgingService.cs" />
     <Compile Include="Forging\SecretPhraseOrAdminPassword.cs" />
+    <Compile Include="Internal\LocalSign\ReedSolomon.cs" />
     <Compile Include="Messages\IMessageService.cs" />
     <Compile Include="Messages\MessageService.cs" />
     <Compile Include="Messages\DecryptedDataReply.cs" />
