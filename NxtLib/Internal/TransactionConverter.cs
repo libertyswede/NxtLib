@@ -39,7 +39,7 @@ namespace NxtLib.Internal
             transaction.EcBlockHeight = GetValueOrDefault(jObject, "ecBlockHeight", Convert.ToInt32);
             transaction.EncryptedMessage = EncryptedMessage.ParseJson(attachmentJobject);
             transaction.EncryptToSelfMessage = EncryptToSelfMessage.ParseJson(attachmentJobject);
-            transaction.FeeNqt = GetValueOrDefault(jObject, "feeNQT", obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
+            transaction.Fee = GetValueOrDefault(jObject, "feeNQT", obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
             transaction.FullHash = GetValueOrDefault(jObject, "fullHash", obj => obj.ToString());
             transaction.Height = GetValueOrDefault(jObject, "height", Convert.ToInt32);
             transaction.Message = Message.ParseJson(attachmentJobject);

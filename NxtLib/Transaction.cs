@@ -17,7 +17,7 @@ namespace NxtLib
         public int EcBlockHeight { get; set; }
         public EncryptedMessage EncryptedMessage { get; set; }
         public EncryptToSelfMessage EncryptToSelfMessage { get; set; }
-        public Amount FeeNqt { get; set; }
+        public Amount Fee { get; set; }
         public string FullHash { get; set; }
         public int Height { get; set; }
         public Message Message { get; set; }
