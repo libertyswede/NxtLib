@@ -58,12 +58,42 @@ namespace NxtLib.Internal.LocalSign
                 memoryStream.Write(BitConverter.GetBytes(transaction.Fee.Nqt), 0, 8);
                 memoryStream.Write(referencedTransactionFullHash, 0, 32);
                 memoryStream.Write(new byte[64], 0, 64);
-                memoryStream.Write(BitConverter.GetBytes(0), 0, 4);
+                memoryStream.Write(BitConverter.GetBytes(GetFlags(transaction)), 0, 4);
                 memoryStream.Write(BitConverter.GetBytes(transaction.EcBlockHeight), 0, 4);
                 memoryStream.Write(BitConverter.GetBytes(transaction.EcBlockId), 0, 8);
 
                 return memoryStream.ToArray();
             }
+        }
+
+        private static int GetFlags(Transaction transaction)
+        {
+            var flags = 0;
+            var position = 1;
+            if (transaction.Message != null)
+            {
+                flags |= position;
+            }
+
+            position <<= 1;
+            if (transaction.EncryptedMessage != null)
+            {
+                flags |= position;
+            }
+
+            position <<= 1;
+            if (transaction.PublicKeyAnnouncement != null)
+            {
+                flags |= position;
+            }
+
+            position <<= 1;
+            if (transaction.EncryptToSelfMessage != null)
+            {
+                flags |= position;
+            }
+
+            return flags;
         }
 
         private static ulong GetRecipientId(Transaction transaction)
