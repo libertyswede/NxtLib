@@ -7,8 +7,8 @@ namespace NxtLib
     {
         public BinaryHexString PublicKey { get; set; }
 
-        public CreateTransactionByPublicKey(bool broadcast, short deadline, Amount fee, BinaryHexString publicKey)
-            : base(broadcast, deadline, fee)
+        public CreateTransactionByPublicKey(short deadline, Amount fee, BinaryHexString publicKey)
+            : base(false, deadline, fee)
         {
             PublicKey = publicKey;
         }
