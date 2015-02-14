@@ -7,80 +7,76 @@ namespace NxtLib.Internal.LocalSign
 {
     internal class TransactionBuilder
     {
-        const byte Version = 1;
-
         // Experimental code
-        public string BuildSendMoney(CreateTransactionBySecretPhrase parameters,
-            string recipient, Amount amount, int ecBlockHeight, ulong ecBlockId)
+        public string CreateSignedTransaction(Transaction transaction, string secretPhrase)
         {
-            var recipientId = GetRecipientId(recipient);
-
-            var unsignedBytes = GetUnsignedTransactionBytes(parameters, recipientId, amount, ecBlockHeight, ecBlockId);
             var crypto = new Crypto();
-            var signature = new BinaryHexString(crypto.Sign(unsignedBytes, parameters.SecretPhrase));
-            var referencedTransactionFullHash = parameters.ReferencedTransactionFullHash != null
-                ? parameters.ReferencedTransactionFullHash.ToHexString()
+            var unsignedBytes = GetUnsignedTransactionBytes(transaction);
+
+            var signature = new BinaryHexString(crypto.Sign(unsignedBytes, secretPhrase));
+            var referencedTransactionFullHash = transaction.ReferencedTransactionFullHash != null
+                ? transaction.ReferencedTransactionFullHash.ToHexString()
                 : "";
             
             var jObject = new JObject();
-            jObject.Add("type", (byte)TransactionMainType.Payment);
-            jObject.Add("subtype", (byte) TransactionSubType.PaymentOrdinaryPayment);
-            jObject.Add("timestamp", DateTimeConverter.GetNxtTime(DateTime.UtcNow));
-            jObject.Add("deadline", parameters.Deadline);
-            jObject.Add("senderPublicKey", crypto.GetPublicKey(parameters.SecretPhrase).ToHexString());
-            jObject.Add("amountNQT", amount.Nqt.ToString());
-            jObject.Add("feeNQT", parameters.Fee.Nqt.ToString());
+            jObject.Add("type", (byte)  transaction.Type);
+            jObject.Add("subtype", (byte) transaction.SubType);
+            jObject.Add("timestamp", DateTimeConverter.GetNxtTime(transaction.Timestamp));
+            jObject.Add("deadline", transaction.Deadline);
+            jObject.Add("senderPublicKey", transaction.SenderPublicKey.ToHexString());
+            jObject.Add("amountNQT", transaction.Amount.Nqt.ToString());
+            jObject.Add("feeNQT", transaction.Fee.Nqt.ToString());
             if (!string.IsNullOrEmpty(referencedTransactionFullHash))
             {
                 jObject.Add("referencedTransactionFullHash", referencedTransactionFullHash);
             }
             jObject.Add("signature", signature.ToHexString());
-            jObject.Add("version", 1);
-            jObject.Add("ecBlockHeight", ecBlockHeight);
-            jObject.Add("ecBlockId", ecBlockId.ToString());
-            jObject.Add("recipient", recipientId.ToString());
+            jObject.Add("version", transaction.Version);
+            jObject.Add("ecBlockHeight", transaction.EcBlockHeight);
+            jObject.Add("ecBlockId", transaction.EcBlockId.ToString());
+            jObject.Add("recipient", GetRecipientId(transaction).ToString());
+
             return jObject.ToString();
         }
 
-        private static ulong GetRecipientId(string recipient)
-        {
-            ulong recipientId;
-            if (!UInt64.TryParse(recipient, out recipientId))
-            {
-                recipientId = ReedSolomon.Decode(recipient);
-            }
-            return recipientId;
-        }
-
-        private static byte[] GetUnsignedTransactionBytes(CreateTransactionBySecretPhrase parameters, ulong recipient,
-            Amount amount, int ecBlockHeight, ulong ecBlockId)
+        private static byte[] GetUnsignedTransactionBytes(Transaction transaction)
         {
             using (var memoryStream = new MemoryStream())
             {
-                var crypto = new Crypto();
-
-                var referencedTransactionFullHash = parameters.ReferencedTransactionFullHash != null
-                    ? parameters.ReferencedTransactionFullHash.ToBytes().ToArray()
+                var referencedTransactionFullHash = transaction.ReferencedTransactionFullHash != null
+                    ? transaction.ReferencedTransactionFullHash.ToBytes().ToArray()
                     : new byte[32];
-                var senderPublicKey = crypto.GetPublicKey(parameters.SecretPhrase).ToBytes().ToArray();
-
-
-                memoryStream.Write(new[] {(byte) TransactionMainType.Payment}, 0, 1);
-                memoryStream.Write(new[] {(byte) ((Version << 4) | (byte) TransactionSubType.PaymentOrdinaryPayment)}, 0, 1);
-                memoryStream.Write(BitConverter.GetBytes(DateTimeConverter.GetNxtTime(DateTime.UtcNow)), 0, 4);
-                memoryStream.Write(BitConverter.GetBytes(parameters.Deadline), 0, 2);
+                var senderPublicKey = transaction.SenderPublicKey.ToBytes().ToArray();
+                
+                memoryStream.Write(new[] {(byte) transaction.Type}, 0, 1);
+                memoryStream.Write(new[] {(byte) ((transaction.Version << 4) | (byte) transaction.SubType)}, 0, 1);
+                memoryStream.Write(BitConverter.GetBytes(DateTimeConverter.GetNxtTime(transaction.Timestamp)), 0, 4);
+                memoryStream.Write(BitConverter.GetBytes(transaction.Deadline), 0, 2);
                 memoryStream.Write(senderPublicKey, 0, senderPublicKey.Length);
-                memoryStream.Write(BitConverter.GetBytes(recipient), 0, 8);
-                memoryStream.Write(BitConverter.GetBytes(amount.Nqt), 0, 8);
-                memoryStream.Write(BitConverter.GetBytes(parameters.Fee.Nqt), 0, 8);
+                memoryStream.Write(BitConverter.GetBytes(GetRecipientId(transaction)), 0, 8);
+                memoryStream.Write(BitConverter.GetBytes(transaction.Amount.Nqt), 0, 8);
+                memoryStream.Write(BitConverter.GetBytes(transaction.Fee.Nqt), 0, 8);
                 memoryStream.Write(referencedTransactionFullHash, 0, 32);
                 memoryStream.Write(new byte[64], 0, 64);
                 memoryStream.Write(BitConverter.GetBytes(0), 0, 4);
-                memoryStream.Write(BitConverter.GetBytes(ecBlockHeight), 0, 4);
-                memoryStream.Write(BitConverter.GetBytes(ecBlockId), 0, 8);
+                memoryStream.Write(BitConverter.GetBytes(transaction.EcBlockHeight), 0, 4);
+                memoryStream.Write(BitConverter.GetBytes(transaction.EcBlockId), 0, 8);
 
                 return memoryStream.ToArray();
             }
+        }
+
+        private static ulong GetRecipientId(Transaction transaction)
+        {
+            if (transaction.SubType == TransactionSubType.PaymentOrdinaryPayment)
+            {
+                if (transaction.Recipient.HasValue)
+                {
+                    return transaction.Recipient.Value;
+                }
+                throw new ArgumentException("Transaction recipient must have a value for type: " + transaction.SubType);
+            }
+            throw new ArgumentException(string.Format("Transaction type {0} is not supported", transaction.SubType));
         }
     }
 }
