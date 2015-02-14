@@ -45,7 +45,7 @@ namespace NxtLib.Internal
             transaction.Message = Message.ParseJson(attachmentJobject);
             transaction.Recipient = GetValueOrNull(jObject, "recipient", Convert.ToUInt64);
             transaction.RecipientRs = GetValueOrDefault(jObject, "recipientRS", obj => obj.ToString());
-            transaction.ReferencedTransactionFullHash = GetValueOrDefault(jObject, "referencedTransactionFullHash", obj => obj.ToString());
+            transaction.ReferencedTransactionFullHash = GetValueOrDefault(jObject, "referencedTransactionFullHash", obj => new BinaryHexString(obj.ToString()));
             transaction.PublicKeyAnnouncement = PublicKeyAnnouncement.ParseJson(attachmentJobject);
             transaction.Sender = GetValueOrDefault(jObject, "sender", Convert.ToUInt64);
             transaction.SenderRs = GetValueOrDefault(jObject, "senderRS", obj => obj.ToString());

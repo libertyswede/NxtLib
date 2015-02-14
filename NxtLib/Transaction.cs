@@ -23,7 +23,7 @@ namespace NxtLib
         public Message Message { get; set; }
         public ulong? Recipient { get; set; }
         public string RecipientRs { get; set; }
-        public string ReferencedTransactionFullHash { get; set; }
+        public BinaryHexString ReferencedTransactionFullHash { get; set; }
         public PublicKeyAnnouncement PublicKeyAnnouncement { get; set; }
         public ulong Sender { get; set; }
         public string SenderRs { get; set; }
