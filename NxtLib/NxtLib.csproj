@@ -84,7 +84,6 @@
     <Compile Include="CountReply.cs" />
     <Compile Include="Internal\LocalSign\Crypto.cs" />
     <Compile Include="Internal\LocalSign\Curve25519.cs" />
-    <Compile Include="Internal\LocalSign\ICrypto.cs" />
     <Compile Include="CurrencyType.cs" />
     <Compile Include="Debug\IDebugService.cs" />
     <Compile Include="DigitalGoodsStore\GoodReply.cs" />

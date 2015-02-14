@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NxtLib.Internal.LocalSign
 {
-    internal class Crypto : ICrypto
+    internal class Crypto
     {
         private readonly SHA256 _sha256;
 
