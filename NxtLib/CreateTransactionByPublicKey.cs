@@ -5,9 +5,9 @@ namespace NxtLib
 {
     public class CreateTransactionByPublicKey : CreateTransactionParameters
     {
-        public string PublicKey { get; set; }
+        public BinaryHexString PublicKey { get; set; }
 
-        public CreateTransactionByPublicKey(bool broadcast, short deadline, Amount fee, string publicKey)
+        public CreateTransactionByPublicKey(bool broadcast, short deadline, Amount fee, BinaryHexString publicKey)
             : base(broadcast, deadline, fee)
         {
             PublicKey = publicKey;

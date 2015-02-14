@@ -26,5 +26,10 @@ namespace NxtLib
         {
             return ByteToHexStringConverter.ToBytes(_hexData);
         }
+
+        public override string ToString()
+        {
+            return ToHexString();
+        }
     }
 }
