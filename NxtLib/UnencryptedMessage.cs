@@ -1,25 +1,27 @@
-using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using NxtLib.Internal;
 
 namespace NxtLib
 {
     public class UnencryptedMessage
     {
-        private readonly string _message;
+        public byte[] MessageBytes { get; private set; }
+        public string MessageText { get; private set; }
+        public bool MessageIsText { get; private set; }
 
-        public UnencryptedMessage(string message)
+        public UnencryptedMessage(string messageText, bool messageIsText = true)
         {
-            _message = message;
+            MessageBytes = messageIsText ? Encoding.UTF8.GetBytes(messageText) : ByteToHexStringConverter.ToBytes(messageText).ToArray();
+            MessageText = messageText;
+            MessageIsText = messageIsText;
         }
 
-        public override string ToString()
+        public UnencryptedMessage(byte[] messageBytes, bool messageIsText = false)
         {
-            return _message;
-        }
-
-        public IEnumerable<byte> ToBytes()
-        {
-            return ByteToHexStringConverter.ToBytes(_message);
+            MessageBytes = messageBytes;
+            MessageText = messageIsText ? Encoding.UTF8.GetString(messageBytes) : ByteToHexStringConverter.ToHexString(messageBytes);
+            MessageIsText = messageIsText;
         }
     }
 }

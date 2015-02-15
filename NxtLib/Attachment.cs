@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
@@ -23,6 +24,11 @@ namespace NxtLib
         {
             Period = GetAttachmentValue<short>(attachments, PeriodKey);
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public abstract class ColoredCoinsOrderCancellationAttachment : Attachment
@@ -44,6 +50,11 @@ namespace NxtLib
             : base(attachments)
         {
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ColoredCoinsAskOrderPlacementAttachment : ColoredCoinsOrderPlacementAttachment
@@ -53,6 +64,11 @@ namespace NxtLib
         internal ColoredCoinsAskOrderPlacementAttachment(JToken attachments)
             : base(attachments)
         {
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -72,6 +88,11 @@ namespace NxtLib
             Description = GetAttachmentValue<string>(attachments, DescriptionKey);
             Name = GetAttachmentValue<string>(attachments, NameKey);
             QuantityQnt = GetAttachmentValue<long>(attachments, QuantityQntKey);
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -93,6 +114,11 @@ namespace NxtLib
                 Comment = GetAttachmentValue<string>(attachments, CommentKey);
             }
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ColoredCoinsBidOrderCancellationAttachment : ColoredCoinsOrderCancellationAttachment
@@ -102,6 +128,11 @@ namespace NxtLib
         internal ColoredCoinsBidOrderCancellationAttachment(JToken attachments)
             : base(attachments)
         {
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -129,6 +160,11 @@ namespace NxtLib
             : base(attachments)
         {
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DigitalGoodsDelistingAttachment : Attachment
@@ -140,6 +176,11 @@ namespace NxtLib
             : base(attachments)
         {
             GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -161,6 +202,11 @@ namespace NxtLib
             GoodsNonce = new BinaryHexString(GetAttachmentValue<string>(attachments, GoodsNonceKey));
             Purchase = GetAttachmentValue<ulong>(attachments, PurchaseKey);
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ColoredCoinsDividendPaymentAttachment : Attachment
@@ -177,6 +223,11 @@ namespace NxtLib
             AssetId = GetAttachmentValue<ulong>(attachments, AssetIdKey);
             Height = GetAttachmentValue<int>(attachments, HeightKey);
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DigitalGoodsFeedbackAttachment : Attachment
@@ -188,6 +239,11 @@ namespace NxtLib
             : base(attachments)
         {
             PurchaseId = GetAttachmentValue<ulong>(attachments, PurchaseKey);
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -209,6 +265,11 @@ namespace NxtLib
             Quantity = GetAttachmentValue<int>(attachments, QuantityKey);
             Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DigitalGoodsPriceChangeAttachment : Attachment
@@ -222,6 +283,11 @@ namespace NxtLib
         {
             GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
             Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -242,6 +308,11 @@ namespace NxtLib
             Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
             Quantity = GetAttachmentValue<int>(attachments, QuantityKey);
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DigitalGoodsQuantityChangeAttachment : Attachment
@@ -255,6 +326,11 @@ namespace NxtLib
         {
             DeltaQuantity = GetAttachmentValue<int>(attachments, DeltaQuantityKey);
             GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -270,6 +346,11 @@ namespace NxtLib
             PurchaseId = GetAttachmentValue<ulong>(attachments, PurchaseKey);
             Refund = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, RefundNqtKey));
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MessagingAccountInfoAttachment : Attachment
@@ -283,6 +364,11 @@ namespace NxtLib
         {
             Name = GetAttachmentValue<string>(attachments, NameKey);
             Description = GetAttachmentValue<string>(attachments, DescriptionKey);
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -298,6 +384,11 @@ namespace NxtLib
             Alias = GetAttachmentValue<string>(attachments, AliasKey);
             Uri = GetAttachmentValue<string>(attachments, UriKey);
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MessagingAliasBuyAttachment : Attachment
@@ -310,6 +401,11 @@ namespace NxtLib
         {
             Alias = GetAttachmentValue<string>(attachments, AliasKey);
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MessagingAliasDeleteAttachment : Attachment
@@ -321,6 +417,11 @@ namespace NxtLib
             : base(attachments)
         {
             Alias = GetAttachmentValue<string>(attachments, AliasKey);
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -335,6 +436,11 @@ namespace NxtLib
         {
             Alias = GetAttachmentValue<string>(attachments, AliasKey);
             Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -361,6 +467,11 @@ namespace NxtLib
             : base(attachments)
         {
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MonetarySystemExchangeSellAttachment : MonetarySystemExchange
@@ -370,6 +481,11 @@ namespace NxtLib
         internal MonetarySystemExchangeSellAttachment(JToken attachments)
             : base(attachments)
         {
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -382,6 +498,11 @@ namespace NxtLib
             : base(attachments)
         {
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -434,6 +555,11 @@ namespace NxtLib
                 }
             }
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MonetarySystemCurrencyMintingAttachment : Attachment
@@ -452,6 +578,11 @@ namespace NxtLib
             Nonce = GetAttachmentValue<long>(attachments, NonceKey);
             Units = GetAttachmentValue<long>(attachments, UnitsKey);
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MonetarySystemCurrencyTransferAttachment : Attachment
@@ -465,6 +596,11 @@ namespace NxtLib
         {
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
             Units = GetAttachmentValue<long>(attachments, UnitsKey);
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -492,6 +628,11 @@ namespace NxtLib
             TotalBuyLimit = GetAttachmentValue<long>(attachments, TotalBuyLimitKey);
             TotalSellLimit = GetAttachmentValue<long>(attachments, TotalSellLimitKey);
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MonetarySystemReserveClaimAttachment : Attachment
@@ -506,6 +647,11 @@ namespace NxtLib
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
             Units = GetAttachmentValue<long>(attachments, UnitsKey);
         }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MonetarySystemReserveIncrease : Attachment
@@ -519,6 +665,11 @@ namespace NxtLib
         {
             AmountPerUnit = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, AmountPerUnitNqtKey));
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
+        }
+
+        protected override void PutMyBytes(MemoryStream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

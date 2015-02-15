@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
@@ -61,8 +62,28 @@ namespace NxtLib.Internal.LocalSign
                 memoryStream.Write(BitConverter.GetBytes(GetFlags(transaction)), 0, 4);
                 memoryStream.Write(BitConverter.GetBytes(transaction.EcBlockHeight), 0, 4);
                 memoryStream.Write(BitConverter.GetBytes(transaction.EcBlockId), 0, 8);
+                var appendixBytes = GetAttachmentBytes(transaction);
+                memoryStream.Write(appendixBytes, 0, appendixBytes.Length);
 
                 return memoryStream.ToArray();
+            }
+        }
+
+        private static byte[] GetAttachmentBytes(Transaction transaction)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var appendixes = new List<Appendix>
+                {
+                    transaction.Attachment,
+                    transaction.Message,
+                    transaction.EncryptedMessage,
+                    transaction.PublicKeyAnnouncement,
+                    transaction.EncryptToSelfMessage
+                };
+
+                appendixes.Where(a => a != null).ToList().ForEach(a => a.PutBytes(stream));
+                return stream.ToArray();
             }
         }
 
