@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace NxtLib.Internal.LocalSign
 {
-    public class TransactionBuilder
+    internal class TransactionBuilder
     {
-        // Experimental code
         public string CreateSignedTransaction(TransactionCreatedReply transactionCreatedReply, string secretPhrase)
         {
             var crypto = new Crypto();
