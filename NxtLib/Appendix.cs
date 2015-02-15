@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace NxtLib
@@ -63,33 +61,6 @@ namespace NxtLib
         protected const string UnitsKey = "units";
         protected const string UriKey = "uri";
 
-        protected abstract string AppendixName { get; }
-        public byte Version { get; private set; }
-
-        protected Appendix(JToken jToken)
-        {
-            SetVersion(jToken);
-        }
-
-        public void PutBytes(MemoryStream stream)
-        {
-            if (Version > 0)
-            {
-                stream.Write(BitConverter.GetBytes(Version), 0, 1);
-            }
-            PutMyBytes(stream);
-        }
-
-        protected abstract void PutMyBytes(MemoryStream stream);
-
-        private void SetVersion(JToken jToken)
-        {
-            // TODO: Why the hell can't I make this work?!?!
-            //var versionJProperty = jToken.SelectToken("version." + AppendixName); 
-            var versionJProperty = jToken.Children<JProperty>().SingleOrDefault(child => child.Name.Equals("version." + AppendixName));
-            Version = (byte)((versionJProperty != null) ? versionJProperty.Value : 0);
-        }
-
         protected static T GetAttachmentValue<T>(JToken attachments, string key) where T : IConvertible
         {
             var obj = ((JValue)attachments.SelectToken(key)).Value;
@@ -99,24 +70,11 @@ namespace NxtLib
 
     public class Message : Appendix
     {
-        protected override string AppendixName { get { return "Message"; } }
         public UnencryptedMessage UnencryptedMessage { get; set; }
 
-        private Message(JObject jObject, JValue messageValue)
-            : base(jObject)
+        private Message(UnencryptedMessage unencryptedMessage)
         {
-            var messageIsText = Convert.ToBoolean(jObject.SelectToken(MessageIsTextKey));
-            UnencryptedMessage = new UnencryptedMessage(messageValue.Value.ToString(), messageIsText);
-        }
-
-        protected override void PutMyBytes(MemoryStream stream)
-        {
-            var messageLength = UnencryptedMessage.MessageIsText
-                ? (UnencryptedMessage.MessageBytes.Length | Int32.MinValue)
-                : UnencryptedMessage.MessageBytes.Length;
-
-            stream.Write(BitConverter.GetBytes(messageLength), 0, 4);
-            stream.Write(UnencryptedMessage.MessageBytes, 0, UnencryptedMessage.MessageBytes.Length);
+            UnencryptedMessage = unencryptedMessage;
         }
 
         internal static Message ParseJson(JObject jObject)
@@ -127,7 +85,8 @@ namespace NxtLib
                 return null;
             }
 
-            return new Message(jObject, messageToken);
+            var messageIsText = Convert.ToBoolean(jObject.SelectToken(MessageIsTextKey));
+            return new Message(new UnencryptedMessage(messageToken.Value.ToString(), messageIsText));
         }
     }
 
@@ -138,7 +97,6 @@ namespace NxtLib
         public BinaryHexString Data { get; set; }
 
         protected EncryptedMessageBase(JToken messageToken)
-            : base(messageToken)
         {
             IsText = Convert.ToBoolean(messageToken.SelectToken(IsTextKey));
             Nonce = new BinaryHexString(((JValue)messageToken.SelectToken(NonceKey)).Value.ToString());
@@ -148,16 +106,9 @@ namespace NxtLib
 
     public class EncryptedMessage : EncryptedMessageBase
     {
-        protected override string AppendixName { get { return "EncryptedMessage"; } }
-
         private EncryptedMessage(JToken messageToken)
             : base(messageToken)
         {
-        }
-
-        protected override void PutMyBytes(MemoryStream stream)
-        {
-            throw new NotImplementedException();
         }
 
         internal static EncryptedMessage ParseJson(JObject jObject)
@@ -173,16 +124,9 @@ namespace NxtLib
 
     public class EncryptToSelfMessage : EncryptedMessageBase
     {
-        protected override string AppendixName { get { return "EncryptToSelfMessage"; } }
-
         private EncryptToSelfMessage(JToken messageToken)
             : base(messageToken)
         {
-        }
-
-        protected override void PutMyBytes(MemoryStream stream)
-        {
-            throw new NotImplementedException();
         }
 
         internal static EncryptToSelfMessage ParseJson(JObject jObject)
@@ -198,18 +142,11 @@ namespace NxtLib
 
     public class PublicKeyAnnouncement : Appendix
     {
-        protected override string AppendixName { get { return "PublicKeyAnnouncement"; } }
         public string RecipientPublicKey { get; set; }
 
-        private PublicKeyAnnouncement(JToken jToken, string recipientPublicKey)
-            : base(jToken)
+        private PublicKeyAnnouncement(string recipientPublicKey)
         {
             RecipientPublicKey = recipientPublicKey;
-        }
-
-        protected override void PutMyBytes(MemoryStream stream)
-        {
-            throw new NotImplementedException();
         }
 
         internal static PublicKeyAnnouncement ParseJson(JObject jObject)
@@ -219,7 +156,7 @@ namespace NxtLib
             {
                 return null;
             }
-            return new PublicKeyAnnouncement(jObject, announcement.Value.ToString());
+            return new PublicKeyAnnouncement(announcement.Value.ToString());
         }
     }
 }
