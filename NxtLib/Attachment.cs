@@ -6,76 +6,20 @@ using NxtLib.Internal;
 
 namespace NxtLib
 {
-    public abstract class Attachment
+    public abstract class Attachment : Appendix
     {
-        protected const string AlgorithmKey = "algorithm";
-        protected const string AliasKey = "alias";
-        protected const string AmountNqtPerQntKey = "amountNQTPerQNT";
-        protected const string AmountPerUnitNqtKey = "amountPerUnitNQT";
-        protected const string AssetIdKey = "asset";
-        protected const string BuyRateNqtKey = "buyRateNQT";
-        protected const string CodeKey = "code";
-        protected const string CommentKey = "comment";
-        protected const string CounterKey = "counter";
-        protected const string CurrencyKey = "currency";
-        protected const string DataKey = "data";
-        protected const string DecimalsKey = "decimals";
-        protected const string DeliveryDeadlineTimestampKey = "deliveryDeadlineTimestamp";
-        protected const string DeltaQuantityKey = "deltaQuantity";
-        protected const string DescriptionKey = "description";
-        protected const string DiscountKey = "discountNQT";
-        protected const string EncryptedMessageKey = "encryptedMessage";
-        protected const string EncryptToSelfMessageKey = "encryptToSelfMessage";
-        protected const string ExpirationHeightKey = "expirationHeight";
-        protected const string GoodsIdKey = "goods";
-        protected const string GoodsDataKey = "goodsData";
-        protected const string GoodsIsTextKey = "goodsIsText";
-        protected const string GoodsNonceKey = "goodsNonce";
-        protected const string HeightKey = "height";
-        protected const string InitialBuySupplyKey = "initialBuySupply";
-        protected const string InitialSellSupplyKey = "initialSellSupply";
-        protected const string InitialSupplyKey = "initialSupply";
-        protected const string IssuanceHeightKey = "issuanceHeight";
-        protected const string IsTextKey = "isText";
-        protected const string MaxDifficultyKey = "maxDifficulty";
-        protected const string MaxSupplyKey = "maxSupply";
-        protected const string MessageKey = "message";
-        protected const string MessageIsTextKey = "messageIsText";
-        protected const string MinDifficultyKey = "minDifficulty";
-        protected const string MinReservePerUnitNqtKey = "minReservePerUnitNQT";
-        protected const string NameKey = "name";
-        protected const string NonceKey = "nonce";
-        protected const string OrderIdKey = "order";
-        protected const string PeriodKey = "period";
-        protected const string PriceNqtKey = "priceNQT";
-        protected const string PurchaseKey = "purchase";
-        protected const string QuantityKey = "quantity";
-        protected const string QuantityQntKey = "quantityQNT";
-        protected const string RateNqtKey = "rateNQT";
-        protected const string RecipientPublicKeyKey = "recipientPublicKey";
-        protected const string RefundNqtKey = "refundNQT";
-        protected const string ReserveSupplyKey = "reserveSupply";
-        protected const string RulesetKey = "ruleset";
-        protected const string SellRateNqtKey = "sellRateNQT";
-        protected const string TagsKey = "tags";
-        protected const string TotalBuyLimitKey = "totalBuyLimit";
-        protected const string TotalSellLimitKey = "totalSellLimit";
-        protected const string TypeKey = "type";
-        protected const string UnitsKey = "units";
-        protected const string UriKey = "uri";
-
-        protected static T GetAttachmentValue<T>(JToken attachments, string key) where T : IConvertible
+        protected Attachment(JToken jToken) : base(jToken)
         {
-            var obj = ((JValue) attachments.SelectToken(key)).Value;
-            return (T)Convert.ChangeType(obj, typeof(T));
         }
     }
 
     public class AccountControlEffectiveBalanceLeasingAttachment : Attachment
     {
+        protected override string AppendixName { get { return "EffectiveBalanceLeasing"; } }
         public short Period { get; set; }
 
         internal AccountControlEffectiveBalanceLeasingAttachment(JToken attachments)
+            : base(attachments)
         {
             Period = GetAttachmentValue<short>(attachments, PeriodKey);
         }
@@ -86,6 +30,7 @@ namespace NxtLib
         public ulong OrderId { get; private set; }
 
         protected ColoredCoinsOrderCancellationAttachment(JToken attachments)
+            : base(attachments)
         {
             OrderId = GetAttachmentValue<ulong>(attachments, OrderIdKey);
         }
@@ -93,6 +38,8 @@ namespace NxtLib
 
     public class ColoredCoinsAskOrderCancellationAttachment : ColoredCoinsOrderCancellationAttachment
     {
+        protected override string AppendixName { get { return "AskOrderCancellation"; } }
+
         internal ColoredCoinsAskOrderCancellationAttachment(JToken attachments)
             : base(attachments)
         {
@@ -101,6 +48,8 @@ namespace NxtLib
 
     public class ColoredCoinsAskOrderPlacementAttachment : ColoredCoinsOrderPlacementAttachment
     {
+        protected override string AppendixName { get { return "AskOrderPlacement"; } }
+
         internal ColoredCoinsAskOrderPlacementAttachment(JToken attachments)
             : base(attachments)
         {
@@ -109,12 +58,15 @@ namespace NxtLib
 
     public class ColoredCoinsAssetIssuanceAttachment : Attachment
     {
+        protected override string AppendixName { get { return "AssetIssuance"; } }
+
         public byte Decimals { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
         public long QuantityQnt { get; set; }
 
         internal ColoredCoinsAssetIssuanceAttachment(JToken attachments)
+            : base(attachments)
         {
             Decimals = GetAttachmentValue<byte>(attachments, DecimalsKey);
             Description = GetAttachmentValue<string>(attachments, DescriptionKey);
@@ -125,11 +77,14 @@ namespace NxtLib
 
     public class ColoredCoinsAssetTransferAttachment : Attachment
     {
+        protected override string AppendixName { get { return "AssetTransfer"; } }
+
         public ulong AssetId { get; set; }
         public long QuantityQnt { get; set; }
         public string Comment { get; set; }
 
         internal ColoredCoinsAssetTransferAttachment(JToken attachments)
+            : base(attachments)
         {
             AssetId = GetAttachmentValue<ulong>(attachments, AssetIdKey);
             QuantityQnt = GetAttachmentValue<long>(attachments, QuantityQntKey);
@@ -142,6 +97,8 @@ namespace NxtLib
 
     public class ColoredCoinsBidOrderCancellationAttachment : ColoredCoinsOrderCancellationAttachment
     {
+        protected override string AppendixName { get { return "BidOrderCancellation"; } }
+
         internal ColoredCoinsBidOrderCancellationAttachment(JToken attachments)
             : base(attachments)
         {
@@ -156,6 +113,7 @@ namespace NxtLib
 
 
         protected ColoredCoinsOrderPlacementAttachment(JToken attachments)
+            : base(attachments)
         {
             AssetId = GetAttachmentValue<ulong>(attachments, AssetIdKey);
             QuantityQnt = GetAttachmentValue<long>(attachments, QuantityQntKey);
@@ -165,6 +123,8 @@ namespace NxtLib
 
     public class ColoredCoinsBidOrderPlacementAttachment : ColoredCoinsOrderPlacementAttachment
     {
+        protected override string AppendixName { get { return "BidOrderPlacement"; } }
+
         internal ColoredCoinsBidOrderPlacementAttachment(JToken attachments)
             : base(attachments)
         {
@@ -173,9 +133,11 @@ namespace NxtLib
 
     public class DigitalGoodsDelistingAttachment : Attachment
     {
+        protected override string AppendixName { get { return "DigitalGoodsDelisting"; } }
         public ulong GoodsId { get; set; }
 
         internal DigitalGoodsDelistingAttachment(JToken attachments)
+            : base(attachments)
         {
             GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
         }
@@ -183,6 +145,7 @@ namespace NxtLib
 
     public class DigitalGoodsDeliveryAttachment : Attachment
     {
+        protected override string AppendixName { get { return "DigitalGoodsDelivery"; } }
         public Amount Discount { get; set; }
         public BinaryHexString GoodsData { get; set; }
         public bool GoodsIsText { get; set; }
@@ -190,6 +153,7 @@ namespace NxtLib
         public ulong Purchase { get; set; }
 
         internal DigitalGoodsDeliveryAttachment(JToken attachments)
+            : base(attachments)
         {
             Discount = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, DiscountKey));
             GoodsData = new BinaryHexString(GetAttachmentValue<string>(attachments, GoodsDataKey));
@@ -201,11 +165,13 @@ namespace NxtLib
 
     public class ColoredCoinsDividendPaymentAttachment : Attachment
     {
+        protected override string AppendixName { get { return "DividendPayment"; } }
         public Amount AmountPerQnt { get; set; }
         public ulong AssetId { get; set; }
         public int Height { get; set; }
 
         internal ColoredCoinsDividendPaymentAttachment(JToken attachments)
+            : base(attachments)
         {
             AmountPerQnt = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, AmountNqtPerQntKey));
             AssetId = GetAttachmentValue<ulong>(attachments, AssetIdKey);
@@ -215,9 +181,11 @@ namespace NxtLib
 
     public class DigitalGoodsFeedbackAttachment : Attachment
     {
+        protected override string AppendixName { get { return "DigitalGoodsFeedback"; } }
         public ulong PurchaseId { get; set; }
 
         internal DigitalGoodsFeedbackAttachment(JToken attachments)
+            : base(attachments)
         {
             PurchaseId = GetAttachmentValue<ulong>(attachments, PurchaseKey);
         }
@@ -225,6 +193,7 @@ namespace NxtLib
 
     public class DigitalGoodsListingAttachment : Attachment
     {
+        protected override string AppendixName { get { return "DigitalGoodsListing"; } }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Tags { get; set; }
@@ -232,6 +201,7 @@ namespace NxtLib
         public Amount Price { get; set; }
 
         internal DigitalGoodsListingAttachment(JToken attachments)
+            : base(attachments)
         {
             Name = GetAttachmentValue<string>(attachments, NameKey);
             Description = GetAttachmentValue<string>(attachments, DescriptionKey);
@@ -243,10 +213,12 @@ namespace NxtLib
 
     public class DigitalGoodsPriceChangeAttachment : Attachment
     {
+        protected override string AppendixName { get { return "DigitalGoodsPriceChange"; } }
         public ulong GoodsId { get; set; }
         public Amount Price { get; set; }
 
         internal DigitalGoodsPriceChangeAttachment(JToken attachments)
+            : base(attachments)
         {
             GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
             Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
@@ -255,12 +227,14 @@ namespace NxtLib
 
     public class DigitalGoodsPurchaseAttachment : Attachment
     {
+        protected override string AppendixName { get { return "DigitalGoodsPurchase"; } }
         public DateTime DeliveryDeadlineTimestamp { get; set; }
         public ulong GoodsId { get; set; }
         public Amount Price { get; set; }
         public int Quantity { get; set; }
 
         internal DigitalGoodsPurchaseAttachment(JToken attachments)
+            : base(attachments)
         {
             DeliveryDeadlineTimestamp =
                 DateTimeConverter.GetDateTime(GetAttachmentValue<int>(attachments, DeliveryDeadlineTimestampKey));
@@ -272,10 +246,12 @@ namespace NxtLib
 
     public class DigitalGoodsQuantityChangeAttachment : Attachment
     {
+        protected override string AppendixName { get { return "DigitalGoodsQuantityChange"; } }
         public int DeltaQuantity { get; set; }
         public ulong GoodsId { get; set; }
 
         internal DigitalGoodsQuantityChangeAttachment(JToken attachments)
+            : base(attachments)
         {
             DeltaQuantity = GetAttachmentValue<int>(attachments, DeltaQuantityKey);
             GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
@@ -284,10 +260,12 @@ namespace NxtLib
 
     public class DigitalGoodsRefundAttachment : Attachment
     {
+        protected override string AppendixName { get { return "DigitalGoodsRefund"; } }
         public ulong PurchaseId { get; set; }
         public Amount Refund { get; set; }
 
         internal DigitalGoodsRefundAttachment(JToken attachments)
+            : base(attachments)
         {
             PurchaseId = GetAttachmentValue<ulong>(attachments, PurchaseKey);
             Refund = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, RefundNqtKey));
@@ -296,10 +274,12 @@ namespace NxtLib
 
     public class MessagingAccountInfoAttachment : Attachment
     {
+        protected override string AppendixName { get { return "AccountInfo"; } }
         public string Name { get; set; }
         public string Description { get; set; }
 
         internal MessagingAccountInfoAttachment(JToken attachments)
+            : base(attachments)
         {
             Name = GetAttachmentValue<string>(attachments, NameKey);
             Description = GetAttachmentValue<string>(attachments, DescriptionKey);
@@ -308,10 +288,12 @@ namespace NxtLib
 
     public class MessagingAliasAssignmentAttachment : Attachment
     {
+        protected override string AppendixName { get { return "AliasAssignment"; } }
         public string Alias { get; set; }
         public string Uri { get; set; }
 
         internal MessagingAliasAssignmentAttachment(JToken attachments)
+            : base(attachments)
         {
             Alias = GetAttachmentValue<string>(attachments, AliasKey);
             Uri = GetAttachmentValue<string>(attachments, UriKey);
@@ -320,9 +302,11 @@ namespace NxtLib
 
     public class MessagingAliasBuyAttachment : Attachment
     {
+        protected override string AppendixName { get { return "AliasBuy"; } }
         public string Alias { get; set; }
 
         internal MessagingAliasBuyAttachment(JToken attachments)
+            : base(attachments)
         {
             Alias = GetAttachmentValue<string>(attachments, AliasKey);
         }
@@ -330,9 +314,11 @@ namespace NxtLib
 
     public class MessagingAliasDeleteAttachment : Attachment
     {
+        protected override string AppendixName { get { return "AliasDelete"; } }
         public string Alias { get; set; }
 
         internal MessagingAliasDeleteAttachment(JToken attachments)
+            : base(attachments)
         {
             Alias = GetAttachmentValue<string>(attachments, AliasKey);
         }
@@ -340,10 +326,12 @@ namespace NxtLib
 
     public class MessagingAliasSellAttachment : Attachment
     {
+        protected override string AppendixName { get { return "AliasSell"; } }
         public string Alias { get; set; }
         public Amount Price { get; set; }
 
         internal MessagingAliasSellAttachment(JToken attachments)
+            : base(attachments)
         {
             Alias = GetAttachmentValue<string>(attachments, AliasKey);
             Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
@@ -357,6 +345,7 @@ namespace NxtLib
         public long Units { get; set; }
 
         protected MonetarySystemExchange(JToken attachments)
+            : base(attachments)
         {
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
             Rate = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, RateNqtKey));
@@ -366,6 +355,8 @@ namespace NxtLib
 
     public class MonetarySystemExchangeBuyAttachment : MonetarySystemExchange
     {
+        protected override string AppendixName { get { return "ExchangeBuy"; } }
+
         internal MonetarySystemExchangeBuyAttachment(JToken attachments)
             : base(attachments)
         {
@@ -374,6 +365,8 @@ namespace NxtLib
 
     public class MonetarySystemExchangeSellAttachment : MonetarySystemExchange
     {
+        protected override string AppendixName { get { return "ExchangeSell"; } }
+
         internal MonetarySystemExchangeSellAttachment(JToken attachments)
             : base(attachments)
         {
@@ -382,9 +375,11 @@ namespace NxtLib
 
     public class MonetarySystemCurrencyDeletion : Attachment
     {
+        protected override string AppendixName { get { return "CurrencyDeletion"; } }
         public ulong CurrencyId { get; set; }
 
         internal MonetarySystemCurrencyDeletion(JToken attachments)
+            : base(attachments)
         {
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
         }
@@ -392,6 +387,7 @@ namespace NxtLib
 
     public class MonetarySystemCurrencyIssuanceAttachment : Attachment
     {
+        protected override string AppendixName { get { return "CurrencyIssuance"; } }
         public byte Algorithm { get; set; }
         public string Code { get; set; }
         public byte Decimals { get; set; }
@@ -408,6 +404,7 @@ namespace NxtLib
         public HashSet<CurrencyType> Types { get; set; }
 
         internal MonetarySystemCurrencyIssuanceAttachment(JToken attachments)
+            : base(attachments)
         {
             Algorithm = GetAttachmentValue<byte>(attachments, AlgorithmKey);
             Code = GetAttachmentValue<string>(attachments, CodeKey);
@@ -441,12 +438,14 @@ namespace NxtLib
 
     public class MonetarySystemCurrencyMintingAttachment : Attachment
     {
+        protected override string AppendixName { get { return "CurrencyMinting"; } }
         public long Counter { get; set; }
         public ulong CurrencyId { get; set; }
         public long Nonce { get; set; }
         public long Units { get; set; }
 
         internal MonetarySystemCurrencyMintingAttachment(JToken attachments)
+            : base(attachments)
         {
             Counter = GetAttachmentValue<long>(attachments, CounterKey);
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
@@ -457,10 +456,12 @@ namespace NxtLib
 
     public class MonetarySystemCurrencyTransferAttachment : Attachment
     {
+        protected override string AppendixName { get { return "CurrencyTransfer"; } }
         public ulong CurrencyId { get; set; }
         public long Units { get; set; }
 
         internal MonetarySystemCurrencyTransferAttachment(JToken attachments)
+            : base(attachments)
         {
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
             Units = GetAttachmentValue<long>(attachments, UnitsKey);
@@ -469,6 +470,7 @@ namespace NxtLib
 
     public class MonetarySystemPublishExchangeOfferAttachment : Attachment
     {
+        protected override string AppendixName { get { return "PublishExchangeOffer"; } }
         public Amount BuyRate { get; set; }
         public ulong CurrencyId { get; set; }
         public int ExpirationHeight { get; set; }
@@ -479,6 +481,7 @@ namespace NxtLib
         public long TotalSellLimit { get; set; }
 
         internal MonetarySystemPublishExchangeOfferAttachment(JToken attachments)
+            : base(attachments)
         {
             BuyRate = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, BuyRateNqtKey));
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
@@ -493,10 +496,12 @@ namespace NxtLib
 
     public class MonetarySystemReserveClaimAttachment : Attachment
     {
+        protected override string AppendixName { get { return "ReserveClaim"; } }
         public ulong CurrencyId { get; set; }
         public long Units { get; set; }
 
         internal MonetarySystemReserveClaimAttachment(JToken attachments)
+            : base(attachments)
         {
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
             Units = GetAttachmentValue<long>(attachments, UnitsKey);
@@ -505,10 +510,12 @@ namespace NxtLib
 
     public class MonetarySystemReserveIncrease : Attachment
     {
+        protected override string AppendixName { get { return "ReserveIncrease"; } }
         public Amount AmountPerUnit { get; set; }
         public ulong CurrencyId { get; set; }
 
-        internal MonetarySystemReserveIncrease(JToken attachments) 
+        internal MonetarySystemReserveIncrease(JToken attachments)
+            : base(attachments)
         {
             AmountPerUnit = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, AmountPerUnitNqtKey));
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
