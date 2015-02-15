@@ -16,6 +16,8 @@ namespace NxtLib
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "transaction")]
         public ulong? TransactionId { get; set; }
-        public string UnsignedTransactionBytes { get; set; }
+
+        [JsonConverter(typeof(ByteToHexStringConverter))]
+        public BinaryHexString UnsignedTransactionBytes { get; set; }
     }
 }
