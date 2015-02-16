@@ -1,22 +1,34 @@
 ﻿using System.Linq;
 using Newtonsoft.Json.Linq;
+using NxtLib.Internal;
+using NxtLib.Internal.LocalSign;
 
-namespace NxtLib.Internal.LocalSign
+namespace NxtLib.Local
 {
-    internal class TransactionBuilder
+    public class LocalCrypto : ILocalCrypto
     {
-        public string CreateSignedTransaction(TransactionCreatedReply transactionCreatedReply, string secretPhrase)
+        private readonly Crypto _crypto = new Crypto();
+
+        public BinaryHexString GetPublicKey(string secretPhrase)
         {
-            var crypto = new Crypto();
+            return _crypto.GetPublicKey(secretPhrase);
+        }
+
+        public JObject SignTransaction(TransactionCreatedReply transactionCreatedReply, string secretPhrase)
+        {
             var transaction = transactionCreatedReply.Transaction;
             var unsignedBytes = transactionCreatedReply.UnsignedTransactionBytes.ToBytes().ToArray();
-            var signature = new BinaryHexString(crypto.Sign(unsignedBytes, secretPhrase));
             var referencedTransactionFullHash = transaction.ReferencedTransactionFullHash != null
                 ? transaction.ReferencedTransactionFullHash.ToHexString()
                 : "";
-            var transactionCreatedJson = JObject.Parse(transactionCreatedReply.RawJsonReply);
-            var attachment = transactionCreatedJson.SelectToken("attachment");
-            
+            var attachment = JObject.Parse(transactionCreatedReply.RawJsonReply).SelectToken("attachment");
+            var signature = new BinaryHexString(_crypto.Sign(unsignedBytes, secretPhrase));
+            return BuildSignedTransaction(transaction, referencedTransactionFullHash, signature, attachment);
+        }
+
+        private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
+            BinaryHexString signature, JToken attachment)
+        {
             var resultJson = new JObject();
             resultJson.Add("type", (byte) transaction.Type);
             resultJson.Add("subtype", (byte) transaction.SubType);
@@ -38,8 +50,7 @@ namespace NxtLib.Internal.LocalSign
             resultJson.Add("ecBlockHeight", transaction.EcBlockHeight);
             resultJson.Add("ecBlockId", transaction.EcBlockId.ToString());
             resultJson.Add("recipient", transaction.Recipient.ToString());
-
-            return resultJson.ToString();
+            return resultJson;
         }
     }
 }

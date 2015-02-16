@@ -92,7 +92,8 @@
     <Compile Include="Forging\IForgingService.cs" />
     <Compile Include="Forging\SecretPhraseOrAdminPassword.cs" />
     <Compile Include="Internal\LocalSign\ReedSolomon.cs" />
-    <Compile Include="Internal\LocalSign\TransactionBuilder.cs" />
+    <Compile Include="Local\ILocalCrypto.cs" />
+    <Compile Include="Local\LocalCrypto.cs" />
     <Compile Include="Messages\IMessageService.cs" />
     <Compile Include="Messages\MessageService.cs" />
     <Compile Include="Messages\DecryptedDataReply.cs" />
