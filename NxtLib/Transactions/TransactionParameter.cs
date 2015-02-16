@@ -1,4 +1,6 @@
-﻿namespace NxtLib.Transactions
+﻿using Newtonsoft.Json.Linq;
+
+namespace NxtLib.Transactions
 {
     public class TransactionParameter
     {
@@ -13,6 +15,11 @@
         public TransactionParameter(string transactionJson)
         {
             TransactionJson = transactionJson;
+        }
+
+        public TransactionParameter(JObject transactionJson)
+        {
+            TransactionJson = transactionJson.ToString();
         }
     }
 }
