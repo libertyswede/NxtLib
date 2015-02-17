@@ -30,8 +30,8 @@ namespace NxtLib.Local
             BinaryHexString signature, JToken attachment)
         {
             var resultJson = new JObject();
-            resultJson.Add("type", (byte) transaction.Type);
-            resultJson.Add("subtype", (byte) transaction.SubType);
+            resultJson.Add("type", TransactionTypeMapper.GetMainTypeByte(transaction.Type));
+            resultJson.Add("subtype", TransactionTypeMapper.GetSubTypeByte(transaction.SubType));
             resultJson.Add("timestamp", DateTimeConverter.GetNxtTime(transaction.Timestamp));
             resultJson.Add("deadline", transaction.Deadline);
             resultJson.Add("senderPublicKey", transaction.SenderPublicKey.ToHexString());
