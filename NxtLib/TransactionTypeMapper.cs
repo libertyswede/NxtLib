@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NxtLib
 {
@@ -6,6 +7,9 @@ namespace NxtLib
     {
         private readonly static Dictionary<byte, TransactionMainType> MainTypes;
         private readonly static Dictionary<byte, Dictionary<byte, TransactionSubType>> SubTypes;
+
+        private readonly static Dictionary<TransactionMainType, byte> MainTypesToByte = new Dictionary<TransactionMainType, byte>();
+        private readonly static Dictionary<TransactionSubType, byte> SubTypesToByte = new Dictionary<TransactionSubType, byte>();
 
         static TransactionTypeMapper()
         {
@@ -87,6 +91,15 @@ namespace NxtLib
                     }
                 }
             };
+
+            MainTypes.ToList().ForEach(mainType => MainTypesToByte.Add(mainType.Value, mainType.Key));
+            foreach (var subType in SubTypes)
+            {
+                foreach (var type in subType.Value)
+                {
+                    SubTypesToByte.Add(type.Value, type.Key);
+                }
+            }
         }
 
         internal static TransactionMainType GetMainType(byte typeByte)
@@ -97,6 +110,16 @@ namespace NxtLib
         internal static TransactionSubType GetSubType(byte typeByte, byte subTypeByte)
         {
             return SubTypes[typeByte][subTypeByte];
+        }
+
+        internal static byte GetMainTypeByte(TransactionMainType type)
+        {
+            return MainTypesToByte[type];
+        }
+
+        internal static byte GetSubTypeByte(TransactionSubType type)
+        {
+            return SubTypesToByte[type];
         }
     }
 }
