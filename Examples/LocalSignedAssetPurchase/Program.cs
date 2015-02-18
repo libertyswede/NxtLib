@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json.Linq;
 using NxtLib;
 using NxtLib.AssetExchange;
 using NxtLib.Local;
@@ -9,27 +10,46 @@ namespace LocalSignedAssetPurchase
     class Program
     {
         private const string SecretPhrase = "abc123";
-        private const string TestnetUri = "http://localhost:6876/nxt";
+        private const string NxtServerUri = "http://localhost:7145/nxt";
+        private const ulong DeBuNeAssetId = 6926770479287491943;
 
         static void Main(string[] args)
         {
-            // Step 1, generate public key locally
             var localCrypto = new LocalCrypto();
+            
+            var publicKey = GeneratePublicKey(localCrypto);
+            var placeBidOrderReply = PlaceUnsignedBidOrder(publicKey);
+            var json = SignTransactionLocally(localCrypto, placeBidOrderReply);
+            BroadcastTransaction(json);
+
+            Console.ReadLine();
+        }
+
+        private static BinaryHexString GeneratePublicKey(ILocalCrypto localCrypto)
+        {
             var publicKey = localCrypto.GetPublicKey(SecretPhrase);
             Console.WriteLine("My public key is: " + publicKey.ToHexString());
+            return publicKey;
+        }
 
-            // Step 2, use public key to let a NXT server generate an unsigned transaction
-            var assetExchangeService = new AssetExchangeService(TestnetUri);
-            const int decimals = 8;
-            var amount = Amount.CreateAmountFromNxt(1 / (decimal)Math.Pow(10, decimals));
-            var quantity = (long) Math.Pow(10, decimals);
-            var placeBidOrderReply = assetExchangeService.PlaceBidOrder(9944395557828084479, quantity, amount, new CreateTransactionByPublicKey(1440, Amount.OneNxt, publicKey)).Result;
+        private static TransactionCreatedReply PlaceUnsignedBidOrder(BinaryHexString publicKey)
+        {
+            var assetExchangeService = new AssetExchangeService(NxtServerUri);
+            var deBuNeAsset = assetExchangeService.GetAsset(DeBuNeAssetId).Result;
+            var assetQntFactor = (long) Math.Pow(10, deBuNeAsset.Decimals);
+            var createTransaction = new CreateTransactionByPublicKey(1440, Amount.OneNxt, publicKey);
+            return assetExchangeService.PlaceBidOrder(DeBuNeAssetId, 1*assetQntFactor, 
+                Amount.CreateAmountFromNxt(30M/assetQntFactor), createTransaction).Result;
+        }
 
-            // Step 3, sign the transaction locally
-            var json = localCrypto.SignTransaction(placeBidOrderReply, SecretPhrase);
+        private static JObject SignTransactionLocally(ILocalCrypto localCrypto, TransactionCreatedReply placeBidOrderReply)
+        {
+            return localCrypto.SignTransaction(placeBidOrderReply, SecretPhrase);
+        }
 
-            // Step 4, Broadcast the signed transaction
-            var transactionService = new TransactionService(TestnetUri);
+        private static void BroadcastTransaction(JObject json)
+        {
+            var transactionService = new TransactionService(NxtServerUri);
             var broadcastReply = transactionService.BroadcastTransaction(new TransactionParameter(json)).Result;
             Console.WriteLine("Transaction created, transactionId: " + broadcastReply.TransactionId);
         }
