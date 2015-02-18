@@ -21,7 +21,7 @@ namespace NxtLib.Local
             var referencedTransactionFullHash = transaction.ReferencedTransactionFullHash != null
                 ? transaction.ReferencedTransactionFullHash.ToHexString()
                 : "";
-            var attachment = JObject.Parse(transactionCreatedReply.RawJsonReply).SelectToken("attachment");
+            var attachment = JObject.Parse(transactionCreatedReply.RawJsonReply).SelectToken("transactionJSON['attachment']");
             var signature = new BinaryHexString(_crypto.Sign(unsignedBytes, secretPhrase));
             return BuildSignedTransaction(transaction, referencedTransactionFullHash, signature, attachment);
         }
