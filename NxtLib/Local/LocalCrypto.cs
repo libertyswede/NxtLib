@@ -49,7 +49,10 @@ namespace NxtLib.Local
             }
             resultJson.Add("ecBlockHeight", transaction.EcBlockHeight);
             resultJson.Add("ecBlockId", transaction.EcBlockId.ToString());
-            resultJson.Add("recipient", transaction.Recipient.ToString());
+            if (transaction.Recipient.HasValue)
+            {
+                resultJson.Add("recipient", transaction.Recipient.ToString());
+            }
             return resultJson;
         }
     }
