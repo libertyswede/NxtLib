@@ -9,8 +9,7 @@ namespace LocalSignedAssetPurchase
 {
     class Program
     {
-        private const string SecretPhrase = "abc123";
-        private const string NxtServerUri = "http://localhost:7145/nxt";
+        private const string SecretPhrase = "secretPhrase";
         private const ulong DeBuNeAssetId = 6926770479287491943;
 
         static void Main(string[] args)
@@ -34,7 +33,7 @@ namespace LocalSignedAssetPurchase
 
         private static TransactionCreatedReply PlaceUnsignedBidOrder(BinaryHexString publicKey)
         {
-            var assetExchangeService = new AssetExchangeService(NxtServerUri);
+            var assetExchangeService = new AssetExchangeService();
             var deBuNeAsset = assetExchangeService.GetAsset(DeBuNeAssetId).Result;
             var assetQntFactor = (long) Math.Pow(10, deBuNeAsset.Decimals);
             var createTransaction = new CreateTransactionByPublicKey(1440, Amount.OneNxt, publicKey);
@@ -49,7 +48,7 @@ namespace LocalSignedAssetPurchase
 
         private static void BroadcastTransaction(JObject json)
         {
-            var transactionService = new TransactionService(NxtServerUri);
+            var transactionService = new TransactionService();
             var broadcastReply = transactionService.BroadcastTransaction(new TransactionParameter(json)).Result;
             Console.WriteLine("Transaction created, transactionId: " + broadcastReply.TransactionId);
         }
