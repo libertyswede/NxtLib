@@ -11,6 +11,7 @@ namespace LocalSignedAssetPurchase
     {
         private const string SecretPhrase = "secretPhrase";
         private const ulong DeBuNeAssetId = 6926770479287491943;
+        private const string NxtUri = "http://178.21.114.156/nxt";
 
         static void Main(string[] args)
         {
@@ -26,19 +27,17 @@ namespace LocalSignedAssetPurchase
 
         private static void BroadcastTransaction(JObject json)
         {
-            var transactionService = new TransactionService();
+            var transactionService = new TransactionService(NxtUri);
             var broadcastReply = transactionService.BroadcastTransaction(new TransactionParameter(json)).Result;
             Console.WriteLine("Transaction created, transactionId: " + broadcastReply.TransactionId);
         }
 
         private static TransactionCreatedReply PlaceUnsignedBidOrder(BinaryHexString publicKey)
         {
-            var service = new AssetExchangeService();
-            var asset = service.GetAsset(DeBuNeAssetId).Result;
-            var assetQntFactor = (long) Math.Pow(10, asset.Decimals);
+            var service = new AssetExchangeService(NxtUri);
+            var qntFactor = (int) Math.Pow(10, 4);
             var createTransaction = new CreateTransactionByPublicKey(1440, Amount.OneNxt, publicKey);
-            return service.PlaceBidOrder(DeBuNeAssetId, 1*assetQntFactor, 
-                Amount.CreateAmountFromNxt(30M/assetQntFactor), createTransaction).Result;
+            return service.PlaceBidOrder(DeBuNeAssetId, 1*qntFactor, Amount.CreateAmountFromNxt(26.9M/qntFactor), createTransaction).Result;
         }
 
         private static BinaryHexString GeneratePublicKey(ILocalCrypto localCrypto)
