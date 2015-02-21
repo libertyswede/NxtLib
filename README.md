@@ -14,4 +14,4 @@ A bit more advanced is the local signing feature, where you sign the transaction
 There's a sample code of how to use that [here](https://github.com/libertyswede/NxtLib/blob/master/Examples/LocalSignedAssetPurchase/Program.cs), and a [youtube video](https://www.youtube.com/watch?v=_H_xbLSSGkY) explaining the functionality.
 
 ### Support or contact
-There's a [thread about NxtLib](https://nxtforum.org/api-discussion/) on the nxtforum.org. You're welcome to join!
+There's a [thread about NxtLib](https://nxtforum.org/api-discussion/nxtlib-a-typed-net-api-wrapper-for-nxt/) on the nxtforum.org. You're welcome to join!
