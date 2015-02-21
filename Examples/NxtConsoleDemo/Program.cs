@@ -4,6 +4,8 @@ using NxtLib.Accounts;
 
 namespace NxtConsoleDemo
 {
+    // A video describing this code in detail can be found here: https://www.youtube.com/watch?v=jc8BqEKIRjg
+
     class Program
     {
         static void Main()

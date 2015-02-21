@@ -6,6 +6,8 @@ using NxtLib.Transactions;
 
 namespace LocalSignedAssetPurchase
 {
+    // A video describing this code in detail can be found here: https://www.youtube.com/watch?v=_H_xbLSSGkY
+
     class Program
     {
         private const string SecretPhrase = "secretPhrase"; // Set your secret phrase here!
