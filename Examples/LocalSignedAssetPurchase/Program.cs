@@ -17,33 +17,11 @@ namespace LocalSignedAssetPurchase
             var localCrypto = new LocalCrypto();
             
             var publicKey = GeneratePublicKey(localCrypto);
-            var placeBidOrderReply = PlaceUnsignedBidOrder(publicKey);
-            var json = SignTransactionLocally(localCrypto, placeBidOrderReply);
+            var unsignedBidOrder = PlaceUnsignedBidOrder(publicKey);
+            var json = localCrypto.SignTransaction(unsignedBidOrder, SecretPhrase);
             BroadcastTransaction(json);
 
             Console.ReadLine();
-        }
-
-        private static BinaryHexString GeneratePublicKey(ILocalCrypto localCrypto)
-        {
-            var publicKey = localCrypto.GetPublicKey(SecretPhrase);
-            Console.WriteLine("My public key is: " + publicKey.ToHexString());
-            return publicKey;
-        }
-
-        private static TransactionCreatedReply PlaceUnsignedBidOrder(BinaryHexString publicKey)
-        {
-            var assetExchangeService = new AssetExchangeService();
-            var deBuNeAsset = assetExchangeService.GetAsset(DeBuNeAssetId).Result;
-            var assetQntFactor = (long) Math.Pow(10, deBuNeAsset.Decimals);
-            var createTransaction = new CreateTransactionByPublicKey(1440, Amount.OneNxt, publicKey);
-            return assetExchangeService.PlaceBidOrder(DeBuNeAssetId, 1*assetQntFactor, 
-                Amount.CreateAmountFromNxt(30M/assetQntFactor), createTransaction).Result;
-        }
-
-        private static JObject SignTransactionLocally(ILocalCrypto localCrypto, TransactionCreatedReply placeBidOrderReply)
-        {
-            return localCrypto.SignTransaction(placeBidOrderReply, SecretPhrase);
         }
 
         private static void BroadcastTransaction(JObject json)
@@ -51,6 +29,23 @@ namespace LocalSignedAssetPurchase
             var transactionService = new TransactionService();
             var broadcastReply = transactionService.BroadcastTransaction(new TransactionParameter(json)).Result;
             Console.WriteLine("Transaction created, transactionId: " + broadcastReply.TransactionId);
+        }
+
+        private static TransactionCreatedReply PlaceUnsignedBidOrder(BinaryHexString publicKey)
+        {
+            var service = new AssetExchangeService();
+            var asset = service.GetAsset(DeBuNeAssetId).Result;
+            var assetQntFactor = (long) Math.Pow(10, asset.Decimals);
+            var createTransaction = new CreateTransactionByPublicKey(1440, Amount.OneNxt, publicKey);
+            return service.PlaceBidOrder(DeBuNeAssetId, 1*assetQntFactor, 
+                Amount.CreateAmountFromNxt(30M/assetQntFactor), createTransaction).Result;
+        }
+
+        private static BinaryHexString GeneratePublicKey(ILocalCrypto localCrypto)
+        {
+            var publicKey = localCrypto.GetPublicKey(SecretPhrase);
+            Console.WriteLine("My public key is: " + publicKey.ToHexString());
+            return publicKey;
         }
     }
 }
