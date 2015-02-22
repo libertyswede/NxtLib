@@ -61,7 +61,7 @@ namespace NxtLib
         protected const string UnitsKey = "units";
         protected const string UriKey = "uri";
 
-        protected static T GetAttachmentValue<T>(JToken attachments, string key) where T : IConvertible
+        protected static T GetAttachmentValue<T>(JToken attachments, string key)
         {
             var obj = ((JValue)attachments.SelectToken(key)).Value;
             return (T)Convert.ChangeType(obj, typeof(T));
