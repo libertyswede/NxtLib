@@ -238,7 +238,7 @@
     <Compile Include="Utils\UtilService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
+    <None Include="packages.NxtLib.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
