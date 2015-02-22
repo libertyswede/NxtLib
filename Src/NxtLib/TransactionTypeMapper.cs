@@ -92,13 +92,14 @@ namespace NxtLib
                 }
             };
 
-            MainTypes.ToList().ForEach(mainType => MainTypesToByte.Add(mainType.Value, mainType.Key));
-            foreach (var subType in SubTypes)
+            foreach (var mainType in MainTypes)
             {
-                foreach (var type in subType.Value)
-                {
-                    SubTypesToByte.Add(type.Value, type.Key);
-                }
+                MainTypesToByte.Add(mainType.Value, mainType.Key);
+            }
+
+            foreach (var type in SubTypes.SelectMany(subType => subType.Value))
+            {
+                SubTypesToByte.Add(type.Value, type.Key);
             }
         }
 
