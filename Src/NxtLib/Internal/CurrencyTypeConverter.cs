@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
 
 namespace NxtLib.Internal
@@ -56,15 +57,17 @@ namespace NxtLib.Internal
 
         private static CurrencyType GetTypeBasedOnDescription(string description)
         {
-            foreach (var field in typeof(CurrencyType).GetFields())
+            foreach (CurrencyType currencyType in Enum.GetValues(typeof(CurrencyType)))
             {
-                var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
-                if (attribute != null)
+                var displayAttribute = currencyType
+                    .GetType()
+                    .GetTypeInfo()
+                    .GetDeclaredField(currencyType.ToString())
+                    .GetCustomAttribute<DisplayAttribute>();
+
+                if (displayAttribute != null && string.Equals(displayAttribute.Description, description))
                 {
-                    if (attribute.Description == description)
-                    {
-                        return (CurrencyType) field.GetValue(null);
-                    }
+                    return currencyType;
                 }
             }
             throw new NotSupportedException("Could not find CurrencyType with description: " + description);

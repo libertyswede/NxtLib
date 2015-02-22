@@ -1,20 +1,20 @@
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace NxtLib
 {
     public enum CurrencyType
     {
-        [Description("EXCHANGEABLE")]
+        [Display(Description = "EXCHANGEABLE")]
         Exchangeable = 0x01,
-        [Description("CONTROLLABLE")]
+        [Display(Description = "CONTROLLABLE")]
         Controllable = 0x02,
-        [Description("RESERVABLE")]
+        [Display(Description = "RESERVABLE")]
         Reservable = 0x04,
-        [Description("CLAIMABLE")]
+        [Display(Description = "CLAIMABLE")]
         Claimable = 0x08,
-        [Description("MINTABLE")]
+        [Display(Description = "MINTABLE")]
         Mintable = 0x10,
-        [Description("NON_SHUFFLEABLE")]
+        [Display(Description = "NON_SHUFFLEABLE")]
         NonShuffleable = 0x20
     }
 }
