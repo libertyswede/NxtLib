@@ -202,11 +202,11 @@ namespace NxtLib.Internal.LocalSign
         }
     }
 
-    public class CodewordTooLongException : Exception
+    internal class CodewordTooLongException : Exception
     {
     }
 
-    public class CodewordInvalidException : Exception
+    internal class CodewordInvalidException : Exception
     {
     }
 }
