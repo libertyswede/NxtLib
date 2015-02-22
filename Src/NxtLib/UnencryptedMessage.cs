@@ -12,7 +12,9 @@ namespace NxtLib
 
         public UnencryptedMessage(string messageText, bool messageIsText = true)
         {
-            MessageBytes = messageIsText ? Encoding.UTF8.GetBytes(messageText) : ByteToHexStringConverter.ToBytes(messageText).ToArray();
+            MessageBytes = messageIsText
+                ? Encoding.UTF8.GetBytes(messageText)
+                : ByteToHexStringConverter.ToBytes(messageText).ToArray();
             MessageText = messageText;
             MessageIsText = messageIsText;
         }
@@ -20,7 +22,9 @@ namespace NxtLib
         public UnencryptedMessage(byte[] messageBytes, bool messageIsText = false)
         {
             MessageBytes = messageBytes;
-            MessageText = messageIsText ? Encoding.UTF8.GetString(messageBytes) : ByteToHexStringConverter.ToHexString(messageBytes);
+            MessageText = messageIsText
+                ? Encoding.UTF8.GetString(messageBytes, 0, messageBytes.Length)
+                : ByteToHexStringConverter.ToHexString(messageBytes);
             MessageIsText = messageIsText;
         }
     }
