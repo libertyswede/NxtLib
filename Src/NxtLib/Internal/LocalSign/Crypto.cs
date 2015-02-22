@@ -13,7 +13,7 @@ namespace NxtLib.Internal.LocalSign
             _sha256 = SHA256.Create();
         }
 
-        public byte[] ComputeHash(byte[] value)
+        private byte[] ComputeHash(byte[] value)
         {
             return _sha256.ComputeHash(value);
         }
