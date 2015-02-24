@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\WinRT\</OutputPath>
+    <OutputPath>bin\Debug\NetCore\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_APP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\WinRT\</OutputPath>
+    <OutputPath>bin\Release\NetCore\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_APP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -135,7 +135,7 @@
     <Compile Include="AssetExchange\OrderReply.cs" />
     <Compile Include="Blocks\IBlockService.cs" />
     <Compile Include="CountReply.cs" />
-    <Compile Include="Internal\LocalSign\CryptoWinRT.cs" />
+    <Compile Include="Internal\LocalSign\CryptoNetCore.cs" />
     <Compile Include="Internal\LocalSign\Curve25519.cs" />
     <Compile Include="CurrencyType.cs" />
     <Compile Include="Debug\IDebugService.cs" />
@@ -297,7 +297,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.NxtLib.WinRT.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
