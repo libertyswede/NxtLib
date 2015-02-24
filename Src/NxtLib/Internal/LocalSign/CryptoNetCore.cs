@@ -7,7 +7,7 @@ using Windows.Storage.Streams;
 
 namespace NxtLib.Internal.LocalSign
 {
-    // Crypto class specific for WinRT environment
+    // Crypto class specific for NetCore environment
     internal class Crypto
     {
         private readonly HashAlgorithmProvider _hashAlgorithmProvider;

@@ -12,4 +12,8 @@
     It currently supports NXT version 1.4.15 </releaseNotes>
     <tags>Nxt cryptocurrency</tags>
   </metadata>
+  <files>
+    <file src="..\Src\NxtLib\bin\Release\net45\NxtLib.dll" target="lib\net45" />
+    <file src="..\Src\NxtLib\bin\Release\NetCore\NxtLib.dll" target="lib\netcore45" />
+  </files>
 </package>
