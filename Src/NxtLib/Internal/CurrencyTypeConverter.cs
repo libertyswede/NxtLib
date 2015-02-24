@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -63,9 +62,9 @@ namespace NxtLib.Internal
                     .GetType()
                     .GetTypeInfo()
                     .GetDeclaredField(currencyType.ToString())
-                    .GetCustomAttribute<DisplayAttribute>();
+                    .GetCustomAttribute<DescriptionAttribute>();
 
-                if (displayAttribute != null && string.Equals(displayAttribute.Description, description))
+                if (displayAttribute != null && string.Equals(displayAttribute.Name, description))
                 {
                     return currencyType;
                 }
