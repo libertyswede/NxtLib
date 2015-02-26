@@ -35,9 +35,14 @@ namespace ReservableCurrenciesDemo
                 Console.WriteLine("Founders: {0}", founders.Founders.Count);
                 if (founders.Founders.Count > 0)
                 {
-                    var reserved = founders.Founders.Sum(f => f.AmountPerUnit.Nxt);
-                    total += reserved;
-                    Console.WriteLine("Amount: {0} NXT", reserved);
+                    // Can't really get my head around how this really works, code below does not show correct values
+                    var reserverdPerUnitNxt = founders.Founders.Sum(f => f.AmountPerUnit.Nxt);
+                    var reserveRatio = reserverdPerUnitNxt/currency.MinReservePerUnit.Nxt/(decimal)Math.Pow(10, currency.Decimals);
+                    var minimumReserveGoalNxt = currency.ReserveSupply*currency.MinReservePerUnit.Nxt;
+                    var reservedNxt = reserveRatio*minimumReserveGoalNxt;
+
+                    total += reservedNxt;
+                    Console.WriteLine("Amount: {0} NXT", reservedNxt);
                 }
                 Console.WriteLine("");
             }
