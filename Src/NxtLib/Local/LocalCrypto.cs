@@ -14,6 +14,21 @@ namespace NxtLib.Local
             return _crypto.GetPublicKey(secretPhrase);
         }
 
+        public ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
+        {
+            return _crypto.GetAccountIdFromPublicKey(publicKey);
+        }
+
+        public string GetReedSolomonFromAccountId(ulong accountId)
+        {
+            return ReedSolomon.Encode(accountId);
+        }
+
+        public ulong GetAccountIdFromReedSolomon(string reedSolomonAddress)
+        {
+            return ReedSolomon.Decode(reedSolomonAddress);
+        }
+
         public JObject SignTransaction(TransactionCreatedReply transactionCreatedReply, string secretPhrase)
         {
             var transaction = transactionCreatedReply.Transaction;

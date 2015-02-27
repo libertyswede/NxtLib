@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
@@ -71,6 +72,13 @@ namespace NxtLib.Internal.LocalSign
             Curve25519.Keygen(publicKey, null, hashedSecretPhrase);
             var binaryHexString = new BinaryHexString(publicKey);
             return binaryHexString;
+        }
+
+        public ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
+        {
+            var publicKeyHash = ComputeHash(publicKey.ToBytes().ToArray());
+            var bigInteger = new BigInteger(publicKeyHash.Take(8).ToArray());
+            return (ulong)(long)bigInteger;
         }
     }
 }
