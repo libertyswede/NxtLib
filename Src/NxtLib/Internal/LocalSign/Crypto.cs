@@ -1,7 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Modes;
+using Org.BouncyCastle.Crypto.Paddings;
+using Org.BouncyCastle.Crypto.Parameters;
+using AlreadyEncryptedMessage = NxtLib.CreateTransactionParameters.AlreadyEncryptedMessage;
+using MessageToBeEncrypted = NxtLib.CreateTransactionParameters.MessageToBeEncrypted;
 
 namespace NxtLib.Internal.LocalSign
 {
@@ -17,6 +26,57 @@ namespace NxtLib.Internal.LocalSign
         private byte[] ComputeHash(byte[] value)
         {
             return _sha256.ComputeHash(value);
+        }
+
+        public byte[] GenerateNonceBytes()
+        {
+            RandomNumberGenerator random = new RNGCryptoServiceProvider();
+            var nonceBytes = new byte[32];
+            random.GetBytes(nonceBytes);
+            return nonceBytes;
+        }
+
+        public byte[] GetPrivateKey(string secretPhrase)
+        {
+            var s = _sha256.ComputeHash(ByteToHexStringConverter.ToBytes(secretPhrase).ToArray());
+            Curve25519.Clamp(s);
+            return s;
+        }
+
+        public byte[] AesEncrypt(byte[] message, byte[] secretPhrase, byte[] theirPublicKey, byte[] nonce)
+        {
+            var compressedMessage = Compress(message);
+
+            var sharedSecret = new byte[32];
+            Curve25519.Curve(sharedSecret, secretPhrase, theirPublicKey);
+            for (var i = 0; i < 32; i++)
+            {
+                sharedSecret[i] ^= nonce[i];
+            }
+            var key = _sha256.ComputeHash(message);
+            var iv = new byte[16];
+            RandomNumberGenerator random = new RNGCryptoServiceProvider();
+            random.GetBytes(iv);
+            var aes = new PaddedBufferedBlockCipher(new CbcBlockCipher(new AesEngine()));
+            var ivAndKey = new ParametersWithIV(new KeyParameter(key), iv);
+            aes.Init(true, ivAndKey);
+            var output = new byte[aes.GetOutputSize(compressedMessage.Length)];
+            var ciphertextLength = aes.ProcessBytes(compressedMessage, 0, compressedMessage.Length, output, 0);
+            ciphertextLength += aes.DoFinal(output, ciphertextLength);
+            var result = new byte[iv.Length + ciphertextLength];
+            Array.Copy(iv, 0, result, 0, iv.Length);
+            Array.Copy(output, 0, result, iv.Length, ciphertextLength);
+            return result;
+        }
+
+        private static byte[] Compress(byte[] data)
+        {
+            using (var memoryStream = new MemoryStream())
+            using (var gZipStream = new GZipStream(memoryStream, CompressionMode.Compress))
+            {
+                gZipStream.Write(data, 0, data.Length);
+                return memoryStream.ToArray();
+            }
         }
 
         public byte[] Sign(byte[] message, string secretPhrase)

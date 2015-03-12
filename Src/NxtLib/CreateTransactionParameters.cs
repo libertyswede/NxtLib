@@ -98,7 +98,7 @@ namespace NxtLib
 
         public abstract class AbstractEncryptedMessage
         {
-            public bool MessageIsText { get; private set; }
+            public bool MessageIsText { get; internal set; }
             public string Message { get; private set; }
 
             internal AbstractEncryptedMessage(string message, bool messageIsText)

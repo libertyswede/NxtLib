@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
+using AlreadyEncryptedMessage = NxtLib.CreateTransactionParameters.AlreadyEncryptedMessage;
 
 namespace NxtLib.Local
 {
@@ -27,6 +29,41 @@ namespace NxtLib.Local
         public ulong GetAccountIdFromReedSolomon(string reedSolomonAddress)
         {
             return ReedSolomon.Decode(reedSolomonAddress);
+        }
+
+        public AlreadyEncryptedMessage AesEncryptMessage(string message, string secretPhrase,
+            BinaryHexString recipientPublicKey, out IEnumerable<byte> nonce)
+        {
+            var encryptedMessage = AesEncryptMessage(ByteToHexStringConverter.ToBytes(message), secretPhrase,
+                recipientPublicKey, out nonce);
+            encryptedMessage.MessageIsText = true;
+            return encryptedMessage;
+        }
+
+        public AlreadyEncryptedMessage AesEncryptMessage(string message, string secretPhrase, BinaryHexString recipientPublicKey,
+            IEnumerable<byte> nonce)
+        {
+            var encryptedMessage = AesEncryptMessage(ByteToHexStringConverter.ToBytes(message), secretPhrase, recipientPublicKey, nonce);
+            encryptedMessage.MessageIsText = true;
+            return encryptedMessage;
+        }
+
+        public AlreadyEncryptedMessage AesEncryptMessage(IEnumerable<byte> message, string secretPhrase,
+            BinaryHexString recipientPublicKey, out IEnumerable<byte> nonce)
+        {
+            nonce = _crypto.GenerateNonceBytes();
+            return AesEncryptMessage(message, secretPhrase, recipientPublicKey, nonce);
+        }
+
+        public AlreadyEncryptedMessage AesEncryptMessage(IEnumerable<byte> message, string secretPhrase,
+            BinaryHexString recipientPublicKey, IEnumerable<byte> nonce)
+        {
+            var nonceArray = nonce.ToArray();
+            var privateKey = _crypto.GetPrivateKey(secretPhrase);
+            var encryptedBytes = _crypto.AesEncrypt(message.ToArray(), privateKey,
+                recipientPublicKey.ToBytes().ToArray(), nonceArray);
+            var encryptedMessage = new AlreadyEncryptedMessage(encryptedBytes, nonceArray, false);
+            return encryptedMessage;
         }
 
         public JObject SignTransaction(TransactionCreatedReply transactionCreatedReply, string secretPhrase)
