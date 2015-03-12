@@ -12,7 +12,13 @@ namespace NxtLib.Internal
             return BitConverter.ToString(bytes.ToArray()).Replace("-", "").ToLowerInvariant();
         }
 
-        internal static IEnumerable<byte> ToBytes(string hexString)
+        internal static IEnumerable<byte> ToBytes(string input)
+        {
+            var bytes = System.Text.Encoding.UTF8.GetBytes(input);
+            return bytes;
+        }
+
+        internal static IEnumerable<byte> ToBytesFromHexString(string hexString)
         {
             var numberChars = hexString.Length;
             var bytes = new byte[numberChars / 2];
@@ -29,7 +35,7 @@ namespace NxtLib.Internal
             {
                 if (objectType == typeof(IEnumerable<byte>))
                 {
-                    return ToBytes(reader.Value.ToString());
+                    return ToBytesFromHexString(reader.Value.ToString());
                 }
                 if (objectType == typeof (BinaryHexString))
                 {

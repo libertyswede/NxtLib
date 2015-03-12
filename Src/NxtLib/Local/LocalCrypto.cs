@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
+using AlreadyEncryptedMessage = NxtLib.CreateTransactionParameters.AlreadyEncryptedMessage;
 
 namespace NxtLib.Local
 {
@@ -12,6 +14,56 @@ namespace NxtLib.Local
         public BinaryHexString GetPublicKey(string secretPhrase)
         {
             return _crypto.GetPublicKey(secretPhrase);
+        }
+
+        public ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
+        {
+            return _crypto.GetAccountIdFromPublicKey(publicKey);
+        }
+
+        public string GetReedSolomonFromAccountId(ulong accountId)
+        {
+            return ReedSolomon.Encode(accountId);
+        }
+
+        public ulong GetAccountIdFromReedSolomon(string reedSolomonAddress)
+        {
+            return ReedSolomon.Decode(reedSolomonAddress);
+        }
+
+        public AlreadyEncryptedMessage AesEncryptMessage(string message, string secretPhrase,
+            BinaryHexString recipientPublicKey, out IEnumerable<byte> nonce)
+        {
+            var encryptedMessage = AesEncryptMessage(ByteToHexStringConverter.ToBytes(message), secretPhrase,
+                recipientPublicKey, out nonce);
+            encryptedMessage.MessageIsText = true;
+            return encryptedMessage;
+        }
+
+        public AlreadyEncryptedMessage AesEncryptMessage(string message, string secretPhrase, BinaryHexString recipientPublicKey,
+            IEnumerable<byte> nonce)
+        {
+            var encryptedMessage = AesEncryptMessage(ByteToHexStringConverter.ToBytes(message), secretPhrase, recipientPublicKey, nonce);
+            encryptedMessage.MessageIsText = true;
+            return encryptedMessage;
+        }
+
+        public AlreadyEncryptedMessage AesEncryptMessage(IEnumerable<byte> message, string secretPhrase,
+            BinaryHexString recipientPublicKey, out IEnumerable<byte> nonce)
+        {
+            nonce = _crypto.GenerateNonceBytes();
+            return AesEncryptMessage(message, secretPhrase, recipientPublicKey, nonce);
+        }
+
+        public AlreadyEncryptedMessage AesEncryptMessage(IEnumerable<byte> message, string secretPhrase,
+            BinaryHexString recipientPublicKey, IEnumerable<byte> nonce)
+        {
+            var nonceArray = nonce.ToArray();
+            var privateKey = _crypto.GetPrivateKey(secretPhrase);
+            var encryptedBytes = _crypto.AesEncrypt(message.ToArray(), privateKey,
+                recipientPublicKey.ToBytes().ToArray(), nonceArray);
+            var encryptedMessage = new AlreadyEncryptedMessage(encryptedBytes, nonceArray, false);
+            return encryptedMessage;
         }
 
         public JObject SignTransaction(TransactionCreatedReply transactionCreatedReply, string secretPhrase)
@@ -30,8 +82,8 @@ namespace NxtLib.Local
             BinaryHexString signature, JToken attachment)
         {
             var resultJson = new JObject();
-            resultJson.Add("type", TransactionTypeMapper.GetMainTypeByte(transaction.Type));
-            resultJson.Add("subtype", TransactionTypeMapper.GetSubTypeByte(transaction.SubType));
+            resultJson.Add("type", (int)TransactionTypeMapper.GetMainTypeByte(transaction.Type));
+            resultJson.Add("subtype", (int)TransactionTypeMapper.GetSubTypeByte(transaction.SubType));
             resultJson.Add("timestamp", DateTimeConverter.GetNxtTime(transaction.Timestamp));
             resultJson.Add("deadline", transaction.Deadline);
             resultJson.Add("senderPublicKey", transaction.SenderPublicKey.ToHexString());
