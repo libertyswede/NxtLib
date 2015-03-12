@@ -24,7 +24,7 @@ namespace NxtLib
 
         public IEnumerable<byte> ToBytes()
         {
-            return ByteToHexStringConverter.ToBytes(_hexData);
+            return ByteToHexStringConverter.ToBytesFromHexString(_hexData);
         }
 
         public override string ToString()

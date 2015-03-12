@@ -14,7 +14,7 @@ namespace NxtLib
         {
             MessageBytes = messageIsText
                 ? Encoding.UTF8.GetBytes(messageText)
-                : ByteToHexStringConverter.ToBytes(messageText).ToArray();
+                : ByteToHexStringConverter.ToBytesFromHexString(messageText).ToArray();
             MessageText = messageText;
             MessageIsText = messageIsText;
         }
