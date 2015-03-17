@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using NxtExchange.DAL;
 using NxtLib.Accounts;
 using NxtLib.Blocks;
 
@@ -11,17 +11,10 @@ namespace NxtExchange
 
         static void Main()
         {
-            var accountService = new AccountService();
-            var blockService = new BlockService();
-            var settings = GetExchangeSettings(accountService).Result;
-            var nxtService = new NxtService(settings, accountService, blockService);
-            nxtService.StartListeningToNxt().Wait();
-        }
-
-        private static async Task<ExchangeSettings> GetExchangeSettings(IAccountService accountService)
-        {
-            var accountIdReply = await accountService.GetAccountId(AccountIdLocator.BySecretPhrase(SecretPhrase));
-            return new ExchangeSettings(SecretPhrase, accountIdReply.AccountRs, accountIdReply.PublicKey, GenesisBlockId);
+            var nxtService = new NxtService(SecretPhrase, new AccountService(), new BlockService());
+            var context = new NxtContext();
+            var controller = new ExchangeController(nxtService, context);
+            controller.Start().Wait();
         }
     }
 }
