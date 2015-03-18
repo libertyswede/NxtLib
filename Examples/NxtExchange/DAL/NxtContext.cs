@@ -1,10 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Threading.Tasks;
 
 namespace NxtExchange.DAL
 {
-    public interface INxtContext
+    public interface INxtContext : IDisposable
     {
         Task<int> SaveChangesAsync();
         DbSet<BlockchainStatus> BlockchainStatus { get; set; }

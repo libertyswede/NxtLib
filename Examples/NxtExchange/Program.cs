@@ -6,14 +6,12 @@ namespace NxtExchange
 {
     class Program
     {
-        private const string SecretPhrase = "Nxt Exchange Demo Program";
-        private const ulong GenesisBlockId = 2680262203532249785;
+        private const string SecretPhrase = "abc123";
 
         static void Main()
         {
             var nxtService = new NxtService(SecretPhrase, new AccountService(), new BlockService());
-            var context = new NxtContext();
-            var controller = new ExchangeController(nxtService, context);
+            var controller = new ExchangeController(nxtService, new NxtContextFactory());
             controller.Start().Wait();
         }
     }

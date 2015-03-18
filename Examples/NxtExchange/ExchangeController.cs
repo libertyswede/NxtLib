@@ -7,33 +7,27 @@ namespace NxtExchange
     public class ExchangeController
     {
         private readonly INxtService _nxtService;
-        private readonly INxtContext _nxtContext;
-        private const ulong GenesisBlockId = 2680262203532249785;
+        private readonly INxtContextFactory _contextFactory;
+        private BlockchainStatus _blockchainStatus;
 
-        public ExchangeController(INxtService nxtService, INxtContext nxtContext)
+        public ExchangeController(INxtService nxtService, INxtContextFactory contextFactory)
         {
             _nxtService = nxtService;
-            _nxtContext = nxtContext;
+            _contextFactory = contextFactory;
         }
 
         public async Task Start()
         {
             await Init();
+            await _nxtService.ScanBlockchain(_blockchainStatus.LastConfirmedBlockId.ToUnsigned());
         }
 
         private async Task Init()
         {
             await _nxtService.Init();
-            var blockchainStatus = await _nxtContext.BlockchainStatus.FirstOrDefaultAsync();
-            if (blockchainStatus == null)
+            using (var context = _contextFactory.Create())
             {
-                blockchainStatus = new BlockchainStatus
-                {
-                    LastConfirmedBlockId = (long) GenesisBlockId,
-                    LastKnownBlockId = (long) GenesisBlockId
-                };
-                _nxtContext.BlockchainStatus.Add(blockchainStatus);
-                await _nxtContext.SaveChangesAsync();
+                _blockchainStatus = await context.BlockchainStatus.SingleAsync();
             }
         }
     }

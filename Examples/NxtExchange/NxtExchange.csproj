@@ -39,12 +39,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="NxtLib, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NxtLib">
-      <HintPath>packages\NxtLib.1.1.0\lib\net45\NxtLib.dll</HintPath>
+      <HintPath>packages\NxtLib.1.1.1\lib\net45\NxtLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -59,9 +56,15 @@
     <Compile Include="DAL\BlockchainStatus.cs" />
     <Compile Include="DAL\InboundTransaction.cs" />
     <Compile Include="DAL\NxtContext.cs" />
+    <Compile Include="DAL\NxtContextFactory.cs" />
     <Compile Include="ExchangeController.cs" />
     <Compile Include="ExchangeSettings.cs" />
     <Compile Include="LongExtension.cs" />
+    <Compile Include="Migrations\201503172028191_InitialCreate.cs" />
+    <Compile Include="Migrations\201503172028191_InitialCreate.Designer.cs">
+      <DependentUpon>201503172028191_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NxtService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +72,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503172028191_InitialCreate.resx">
+      <DependentUpon>201503172028191_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
