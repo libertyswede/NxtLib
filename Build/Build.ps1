@@ -23,7 +23,6 @@ $ReadMe = "..\README.md"
 $Devenv = "devenv"
 
 &$Devenv "..\Src\NxtLib\NxtLib.csproj" /rebuild Release
-&$Devenv "..\Src\NxtLib\NxtLib.Portable.csproj" /rebuild Release
 
 #Step 3, Create nuget package
 $Nuget = "NuGet.exe"
