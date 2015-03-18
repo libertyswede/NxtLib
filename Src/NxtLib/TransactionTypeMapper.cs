@@ -118,6 +118,11 @@ namespace NxtLib
             return MainTypesToByte[type];
         }
 
+        internal static byte GetMainTypeByte(TransactionSubType type)
+        {
+            return SubTypes.Single(st => st.Value.ContainsValue(type)).Key;
+        }
+
         internal static byte GetSubTypeByte(TransactionSubType type)
         {
             return SubTypesToByte[type];

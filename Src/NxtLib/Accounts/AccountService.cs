@@ -86,19 +86,19 @@ namespace NxtLib.Accounts
         }
 
         public async Task<AccountTransactionIdsReply> GetAccountTransactionIds(string accountId, DateTime? timeStamp = null,
-            byte? type = null, byte? subtype = null, int? firstIndex = null, int? lastIndex = null,
+            TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null)
         {
-            var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, type, subtype,
+            var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, transactionType,
                 firstIndex, lastIndex, numberOfConfirmations, withMessage);
             return await Get<AccountTransactionIdsReply>("getAccountTransactionIds", queryParameters);
         }
 
         public async Task<AccountTransactionsReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
-            byte? type = null, byte? subtype = null, int? firstIndex = null, int? lastIndex = null,
+            TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null)
         {
-            var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, type, subtype,
+            var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, transactionType,
                 firstIndex, lastIndex, numberOfConfirmations, withMessage);
             return await Get<AccountTransactionsReply>("getAccountTransactions", queryParameters);
         }
@@ -149,13 +149,16 @@ namespace NxtLib.Accounts
             return await Post<TransactionCreatedReply>("setAccountInfo", queryParameters);
         }
 
-        private Dictionary<string, string> GenerateQueryParamsForAccountTransactions(string accountId, DateTime? timeStamp, byte? type,
-            byte? subtype, int? firstIndex, int? lastIndex, int? numberOfConfirmations, bool? withMessage)
+        private Dictionary<string, string> GenerateQueryParamsForAccountTransactions(string accountId, DateTime? timeStamp,
+            TransactionSubType? transactionType, int? firstIndex, int? lastIndex, int? numberOfConfirmations, bool? withMessage)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
             AddToParametersIfHasValue(timeStamp, queryParameters);
-            AddToParametersIfHasValue("type", type, queryParameters);
-            AddToParametersIfHasValue("subtype", subtype, queryParameters);
+            if (transactionType.HasValue)
+            {
+                queryParameters.Add("type", TransactionTypeMapper.GetMainTypeByte(transactionType.Value).ToString());
+                queryParameters.Add("subtype", TransactionTypeMapper.GetSubTypeByte(transactionType.Value).ToString());
+            }
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("numberOfConfirmations", numberOfConfirmations, queryParameters);

@@ -15,10 +15,10 @@ namespace NxtLib.Accounts
         Task<AccountLessorsReply> GetAccountLessors(string accountId, int? height = null);
         Task<AccountPublicKeyReply> GetAccountPublicKey(string accountId);
         Task<AccountTransactionIdsReply> GetAccountTransactionIds(string accountId, DateTime? timeStamp = null,
-            byte? type = null, byte? subtype = null, int? firstIndex = null, int? lastIndex = null,
+            TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null);
         Task<AccountTransactionsReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
-            byte? type = null, byte? subtype = null, int? firstIndex = null, int? lastIndex = null,
+            TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null);
         Task<BalanceReply> GetBalance(string accountId);
         Task<GuaranteedBalanceReply> GetGuaranteedBalance(string accountId, int? numberOfConfirmations = null);
