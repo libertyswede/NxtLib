@@ -11,7 +11,7 @@ namespace NxtExchange.Migrations
                 c => new
                     {
                         Id = c.Int(false, true),
-                        LastConfirmedBlockId = c.Long(false),
+                        LastSecureBlockId = c.Long(false),
                         LastKnownBlockId = c.Long(false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -23,15 +23,18 @@ namespace NxtExchange.Migrations
                         Id = c.Int(false, true),
                         TransactionId = c.Long(false),
                         CustomerId = c.Int(false),
+                        DecryptedMessage = c.String(),
                         AmountNqt = c.Long(false),
                         Status = c.Int(false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.TransactionId, unique: true, name: "UQ_TransactionId");
             
         }
         
         public override void Down()
         {
+            DropIndex("dbo.InboundTransaction", "UQ_TransactionId");
             DropTable("dbo.InboundTransaction");
             DropTable("dbo.BlockchainStatus");
         }

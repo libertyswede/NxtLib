@@ -6,5 +6,10 @@
         {
             return (ulong) me;
         }
+
+        public static long ToSigned(this ulong me)
+        {
+            return (long) me;
+        }
     }
 }

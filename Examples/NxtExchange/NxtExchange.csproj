@@ -41,7 +41,7 @@
     </Reference>
     <Reference Include="NxtLib, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\NxtLib.1.1.1\lib\net45\NxtLib.dll</HintPath>
+      <HintPath>..\..\Src\NxtLib\bin\Debug\net45\NxtLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -57,12 +57,13 @@
     <Compile Include="DAL\InboundTransaction.cs" />
     <Compile Include="DAL\NxtContext.cs" />
     <Compile Include="DAL\NxtContextFactory.cs" />
+    <Compile Include="DAL\NxtRepository.cs" />
     <Compile Include="ExchangeController.cs" />
     <Compile Include="ExchangeSettings.cs" />
     <Compile Include="LongExtension.cs" />
-    <Compile Include="Migrations\201503172028191_InitialCreate.cs" />
-    <Compile Include="Migrations\201503172028191_InitialCreate.Designer.cs">
-      <DependentUpon>201503172028191_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201503191324055_InitialCreate.cs" />
+    <Compile Include="Migrations\201503191324055_InitialCreate.Designer.cs">
+      <DependentUpon>201503191324055_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NxtService.cs" />
@@ -74,8 +75,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503172028191_InitialCreate.resx">
-      <DependentUpon>201503172028191_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503191324055_InitialCreate.resx">
+      <DependentUpon>201503191324055_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
