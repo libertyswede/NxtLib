@@ -15,7 +15,7 @@ namespace NxtExchange.Migrations
         {
             context.BlockchainStatus.Add(new BlockchainStatus
             {
-                LastConfirmedBlockId = 2680262203532249785, 
+                LastSecureBlockId = 2680262203532249785, 
                 LastKnownBlockId = 2680262203532249785
             });
         }
