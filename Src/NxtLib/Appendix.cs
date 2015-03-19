@@ -98,7 +98,7 @@ namespace NxtLib
 
         protected EncryptedMessageBase(JToken messageToken)
         {
-            IsText = Convert.ToBoolean(messageToken.SelectToken(IsTextKey));
+            IsText = Convert.ToBoolean(((JValue)messageToken.SelectToken(IsTextKey)).Value.ToString());
             Nonce = new BinaryHexString(((JValue)messageToken.SelectToken(NonceKey)).Value.ToString());
             Data = new BinaryHexString(((JValue)messageToken.SelectToken(DataKey)).Value.ToString());
         }
