@@ -17,7 +17,7 @@ namespace NxtExchange.DAL
         {
             using (var context = new NxtContext())
             {
-                return await context.BlockchainStatus.SingleOrDefaultAsync();
+                return await context.BlockchainStatus.SingleAsync();
             }
         }
 

@@ -1,9 +1,7 @@
-﻿using System.Data.Entity;
-using System.Diagnostics;
-using System.Linq;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NxtExchange.DAL;
-using NxtLib;
 
 namespace NxtExchange
 {
@@ -28,22 +26,30 @@ namespace NxtExchange
         private async Task ScanBlockchain()
         {
             var transactions = await _nxtService.ScanBlockchain(_blockchainStatus.LastSecureBlockId.ToUnsigned());
-            transactions.ForEach(VerifyTransaction);
+            foreach (var transaction in transactions)
+            {
+                await VerifyTransaction(transaction);
+            }
         }
 
-        private void VerifyTransaction(InboundTransaction transaction)
+        private async Task VerifyTransaction(InboundTransaction transaction)
         {
-            var dbTransaction = _repository.GetInboundTransactionAsync(transaction.TransactionId);
+            var dbTransaction = await _repository.GetInboundTransactionAsync(transaction.TransactionId);
             if (dbTransaction == null)
             {
-                NewTransaction(transaction);
+                ProcessTransaction(transaction);
             }
 
         }
 
-        private void NewTransaction(InboundTransaction transaction)
+        private void ProcessTransaction(InboundTransaction transaction)
         {
-
+            var accountRegex = new Regex("account:\\s?([\\d]+)", RegexOptions.IgnoreCase);
+            var match = accountRegex.Match(transaction.DecryptedMessage);
+            if (match.Success)
+            {
+                transaction.CustomerId = Convert.ToInt32(match.Groups[1].Value);
+            }
             _repository.AddInboundTransactionAsync(transaction);
         }
 

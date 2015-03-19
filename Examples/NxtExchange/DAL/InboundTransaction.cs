@@ -13,6 +13,10 @@ namespace NxtExchange.DAL
 
     public class InboundTransaction
     {
+        public InboundTransaction()
+        {
+        }
+
         public InboundTransaction(Transaction transaction)
         {
             TransactionId = transaction.TransactionId.Value.ToSigned();
