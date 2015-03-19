@@ -11,5 +11,7 @@ namespace NxtLib.Messages
         Task<EncryptedDataReply> EncryptTo(string recipient, IEnumerable<byte> messageToEncrypt, string secretPhrase);
         Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null);
         Task<TransactionCreatedReply> SendMessage(CreateTransactionParameters parameters, string recipient = null);
+        Task<DecryptedDataReply> DecryptDataFrom(string senderAccountId, EncryptedMessage encryptedMessage, string secretPhrase);
+        Task<DecryptedMessageReply> DecryptMessageFrom(string senderAccountId, EncryptedMessage encryptedMessage, string secretPhrase);
     }
 }

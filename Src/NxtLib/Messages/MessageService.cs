@@ -18,6 +18,7 @@ namespace NxtLib.Messages
 
         public async Task<DecryptedDataReply> DecryptDataFrom(string senderAccountId, string data, IEnumerable<byte> nonce, string secretPhrase)
         {
+            
             var queryParameters = new Dictionary<string, string>
             {
                 {"account", senderAccountId},
@@ -27,6 +28,11 @@ namespace NxtLib.Messages
                 {"decryptedMessageIsText", false.ToString()}
             };
             return await Get<DecryptedDataReply>("decryptFrom", queryParameters);
+        }
+
+        public async Task<DecryptedDataReply> DecryptDataFrom(string senderAccountId, EncryptedMessage encryptedMessage, string secretPhrase)
+        {
+            return await DecryptDataFrom(senderAccountId, encryptedMessage.Data.ToHexString(), encryptedMessage.Nonce.ToBytes(), secretPhrase);
         }
 
         public async Task<DecryptedMessageReply> DecryptMessageFrom(string senderAccountId, string data, IEnumerable<byte> nonce, string secretPhrase)
@@ -40,6 +46,11 @@ namespace NxtLib.Messages
                 {"decryptedMessageIsText", true.ToString()}
             };
             return await Get<DecryptedMessageReply>("decryptFrom", queryParameters);
+        }
+
+        public async Task<DecryptedMessageReply> DecryptMessageFrom(string senderAccountId, EncryptedMessage encryptedMessage, string secretPhrase)
+        {
+            return await DecryptMessageFrom(senderAccountId, encryptedMessage.Data.ToHexString(), encryptedMessage.Nonce.ToBytes(), secretPhrase);
         }
 
         public async Task<EncryptedDataReply> EncryptTo(string recipient, IEnumerable<byte> messageToEncrypt, string secretPhrase)
