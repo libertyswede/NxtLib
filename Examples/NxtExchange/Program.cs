@@ -16,6 +16,7 @@ namespace NxtExchange
             var nxtService = new NxtService(SecretPhrase, new AccountService(NxtUri), new BlockService(NxtUri), new MessageService(NxtUri));
             var controller = new ExchangeController(nxtService, new NxtRepository());
             controller.IncomingTransaction += OnIncomingTransaction;
+            controller.UpdatedTransactionStatus += OnUpdatedTransactionStatus;
             controller.Start().Wait();
             
             Console.WriteLine("All done, press enter to exit");
@@ -25,13 +26,26 @@ namespace NxtExchange
         private static void OnIncomingTransaction(object sender, IncomingTransactionEventArgs eventArgs)
         {
             var transaction = eventArgs.Transaction;
-            var amount = transaction.GetAmount();
 
             Console.WriteLine("*** New incoming transaction ***");
             Console.WriteLine("----------------------------------------");
-            Console.WriteLine("Transaction ID: {0}", transaction.TransactionId);
-            Console.WriteLine("        Amount: {0} NXT", amount.Nxt);
-            Console.WriteLine("      Customer: {0}", transaction.CustomerId);
+            Console.WriteLine(" Transaction ID: {0}", transaction.TransactionId);
+            Console.WriteLine("         Amount: {0} NXT", transaction.GetAmount().Nxt);
+            Console.WriteLine("       Customer: {0}", transaction.CustomerId);
+            Console.WriteLine("         Status: {0}", transaction.Status);
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("");
+        }
+
+        private static void OnUpdatedTransactionStatus(object sender, StatusUpdatedEventArgs eventArgs)
+        {
+            var transaction = eventArgs.Transaction;
+
+            Console.WriteLine("*** Updated transaction status ***");
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine(" Transaction ID: {0}", transaction.TransactionId);
+            Console.WriteLine("Previous status: {0}", eventArgs.PreviousStatus);
+            Console.WriteLine("     New status: {0}", transaction.Status);
             Console.WriteLine("----------------------------------------");
             Console.WriteLine("");
         }

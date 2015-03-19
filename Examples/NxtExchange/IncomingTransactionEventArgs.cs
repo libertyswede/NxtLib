@@ -6,7 +6,7 @@ namespace NxtExchange
 
     public class IncomingTransactionEventArgs
     {
-        public InboundTransaction Transaction { get; set; }
+        public InboundTransaction Transaction { get; private set; }
 
         public IncomingTransactionEventArgs(InboundTransaction transaction)
         {

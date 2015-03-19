@@ -5,10 +5,10 @@ using NxtExchange.DAL;
 
 namespace NxtExchange
 {
-
     public class ExchangeController
     {
         public event IncomingTransactionHandler IncomingTransaction;
+        public event TransactionStatusUpdatedHandler UpdatedTransactionStatus;
 
         private readonly INxtService _nxtService;
         private readonly INxtRepository _repository;
@@ -49,9 +49,10 @@ namespace NxtExchange
                 await _repository.AddInboundTransactionAsync(transaction);
                 OnIncomingTransaction(new IncomingTransactionEventArgs(transaction));
             }
-            else
+            else if (dbTransaction.Status != transaction.Status)
             {
-                // Compare with existing, and if modified update and fire modified event.
+                await _repository.UpdateTransactionStatusAsync(transaction.TransactionId, transaction.Status);
+                OnUpdatedTransactionStatus(new StatusUpdatedEventArgs(transaction, dbTransaction.Status));
             }
         }
 
@@ -64,6 +65,12 @@ namespace NxtExchange
         private void OnIncomingTransaction(IncomingTransactionEventArgs e)
         {
             var handler = IncomingTransaction;
+            if (handler != null) handler(this, e);
+        }
+
+        protected virtual void OnUpdatedTransactionStatus(StatusUpdatedEventArgs e)
+        {
+            var handler = UpdatedTransactionStatus;
             if (handler != null) handler(this, e);
         }
     }

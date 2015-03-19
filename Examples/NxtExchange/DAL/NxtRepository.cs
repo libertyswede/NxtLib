@@ -9,6 +9,7 @@ namespace NxtExchange.DAL
         Task<BlockchainStatus> GetBlockchainStatusAsync();
         Task<InboundTransaction> GetInboundTransactionAsync(long transactionId);
         Task AddInboundTransactionAsync(InboundTransaction transaction);
+        Task UpdateTransactionStatusAsync(long transactionId, TransactionStatus status);
     }
 
     public class NxtRepository : INxtRepository
@@ -34,6 +35,16 @@ namespace NxtExchange.DAL
             using (var context = new NxtContext())
             {
                 context.InboundTransactions.Add(transaction);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdateTransactionStatusAsync(long transactionId, TransactionStatus status)
+        {
+            using (var context = new NxtContext())
+            {
+                var dbTransaction = await context.InboundTransactions.SingleAsync(t => t.TransactionId == transactionId);
+                dbTransaction.Status = status;
                 await context.SaveChangesAsync();
             }
         }
