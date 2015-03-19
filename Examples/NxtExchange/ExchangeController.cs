@@ -5,8 +5,11 @@ using NxtExchange.DAL;
 
 namespace NxtExchange
 {
+
     public class ExchangeController
     {
+        public event IncomingTransactionHandler IncomingTransaction;
+
         private readonly INxtService _nxtService;
         private readonly INxtRepository _repository;
         private BlockchainStatus _blockchainStatus;
@@ -28,35 +31,40 @@ namespace NxtExchange
             var transactions = await _nxtService.ScanBlockchain(_blockchainStatus.LastSecureBlockId.ToUnsigned());
             foreach (var transaction in transactions)
             {
-                await VerifyTransaction(transaction);
+                await ProcessTransaction(transaction);
             }
         }
 
-        private async Task VerifyTransaction(InboundTransaction transaction)
+        private async Task ProcessTransaction(InboundTransaction transaction)
         {
             var dbTransaction = await _repository.GetInboundTransactionAsync(transaction.TransactionId);
-            if (dbTransaction == null)
-            {
-                ProcessTransaction(transaction);
-            }
-
-        }
-
-        private void ProcessTransaction(InboundTransaction transaction)
-        {
             var accountRegex = new Regex("account:\\s?([\\d]+)", RegexOptions.IgnoreCase);
             var match = accountRegex.Match(transaction.DecryptedMessage);
             if (match.Success)
             {
                 transaction.CustomerId = Convert.ToInt32(match.Groups[1].Value);
             }
-            _repository.AddInboundTransactionAsync(transaction);
+            if (dbTransaction == null)
+            {
+                await _repository.AddInboundTransactionAsync(transaction);
+                OnIncomingTransaction(new IncomingTransactionEventArgs(transaction));
+            }
+            else
+            {
+                // Compare with existing, and if modified update and fire modified event.
+            }
         }
 
         private async Task Init()
         {
             await _nxtService.Init();
             _blockchainStatus = await _repository.GetBlockchainStatusAsync();
+        }
+
+        private void OnIncomingTransaction(IncomingTransactionEventArgs e)
+        {
+            var handler = IncomingTransaction;
+            if (handler != null) handler(this, e);
         }
     }
 }

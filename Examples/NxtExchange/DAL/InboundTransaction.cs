@@ -13,6 +13,16 @@ namespace NxtExchange.DAL
 
     public class InboundTransaction
     {
+
+        public int Id { get; set; }
+
+        [Index("UQ_TransactionId", IsUnique = true)]
+        public long TransactionId { get; set; }
+        public int CustomerId { get; set; }
+        public string DecryptedMessage { get; set; }
+        public long AmountNqt { get; set; }
+        public TransactionStatus Status { get; set; }
+
         public InboundTransaction()
         {
         }
@@ -22,6 +32,11 @@ namespace NxtExchange.DAL
             TransactionId = transaction.TransactionId.Value.ToSigned();
             AmountNqt = transaction.Amount.Nqt;
             SetStatus(transaction.Confirmations);
+        }
+
+        public Amount GetAmount()
+        {
+            return Amount.CreateAmountFromNqt(AmountNqt);
         }
 
         private void SetStatus(int? confirmations)
@@ -51,14 +66,5 @@ namespace NxtExchange.DAL
                 Status = TransactionStatus.Secured;
             }
         }
-
-        public int Id { get; set; }
-
-        [Index("UQ_TransactionId", IsUnique = true)]
-        public long TransactionId { get; set; }
-        public int CustomerId { get; set; }
-        public string DecryptedMessage { get; set; }
-        public long AmountNqt { get; set; }
-        public TransactionStatus Status { get; set; }
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="DAL\NxtRepository.cs" />
     <Compile Include="ExchangeController.cs" />
     <Compile Include="ExchangeSettings.cs" />
+    <Compile Include="IncomingTransactionEventArgs.cs" />
     <Compile Include="LongExtension.cs" />
     <Compile Include="Migrations\201503191324055_InitialCreate.cs" />
     <Compile Include="Migrations\201503191324055_InitialCreate.Designer.cs">
