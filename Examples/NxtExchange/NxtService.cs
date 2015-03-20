@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using NxtExchange.DAL;
 using NxtLib;
@@ -6,6 +8,7 @@ using NxtLib.Accounts;
 using NxtLib.Blocks;
 using NxtLib.Messages;
 using NxtLib.ServerInfo;
+using NxtLib.Transactions;
 using TransactionSubType = NxtLib.TransactionSubType;
 
 namespace NxtExchange
@@ -13,16 +16,10 @@ namespace NxtExchange
     public interface INxtService
     {
         Task Init();
-        Task<List<InboundTransaction>> ScanBlockchain(ulong lastSecureBlockId);
-        Task<List<Transaction>> CheckForTransactions(int firstIndex, int lastIndex);
+        Task<List<InboundTransaction>> CheckForTransactions(DateTime blockDateTime, int? numberOfConfirmations = null);
         Task<BlockchainStatus> GetBlockchainStatus();
-    }
-
-    public enum BlockStatus
-    {
-        ExistsAndIsLast,
-        ExistsButNotLast,
-        DoesNotExist
+        Task<string> DecryptMessage(Transaction transaction);
+        Task<Transaction> GetTransaction(ulong transactionId);
     }
 
     public class NxtService : INxtService
@@ -31,17 +28,19 @@ namespace NxtExchange
         private readonly IBlockService _blockService;
         private readonly IMessageService _messageService;
         private readonly IServerInfoService _serverInfoService;
+        private readonly ITransactionService _transactionService;
         private readonly string _secretPhrase;
         private string _accountRs;
 
         public NxtService(string secretPhrase, IAccountService accountService, IBlockService blockService,
-            IMessageService messageService, IServerInfoService serverInfoService)
+            IMessageService messageService, IServerInfoService serverInfoService, ITransactionService transactionService)
         {
             _secretPhrase = secretPhrase;
             _accountService = accountService;
             _blockService = blockService;
             _messageService = messageService;
             _serverInfoService = serverInfoService;
+            _transactionService = transactionService;
         }
 
         public async Task Init()
@@ -55,24 +54,29 @@ namespace NxtExchange
             var status = new BlockchainStatus();
 
             var blockchainStatusReply = await _serverInfoService.GetBlockchainStatus();
+            var lastBlock = await _blockService.GetBlock(BlockLocator.BlockId(blockchainStatusReply.LastBlockId));
+            var confirmedBlock = await _blockService.GetBlock(BlockLocator.Height(blockchainStatusReply.NumberOfBlocks - 11));
             var secureBlock = await _blockService.GetBlock(BlockLocator.Height(blockchainStatusReply.NumberOfBlocks - 721));
 
             status.LastKnownBlockId = blockchainStatusReply.LastBlockId.ToSigned();
-            status.LastKnownBlockHeight = blockchainStatusReply.NumberOfBlocks - 1;
+            status.LastKnownBlockTimestamp = lastBlock.Timestamp;
+
+            status.LastConfirmedBlockId = confirmedBlock.BlockId.ToSigned();
+            status.LastConfirmedBlockTimestamp = confirmedBlock.Timestamp;
+
             status.LastSecureBlockId = secureBlock.BlockId.ToSigned();
-            status.LastSecureBlockHeight = secureBlock.Height;
+            status.LastSecureBlockTimestamp = secureBlock.Timestamp;
 
             return status;
         }
 
-        public async Task<List<InboundTransaction>> ScanBlockchain(ulong lastSecureBlockId)
+        public async Task<List<InboundTransaction>> CheckForTransactions(DateTime blockDateTime, int? numberOfConfirmations = null)
         {
             var recievedTransactions = new List<InboundTransaction>();
-            var block = await _blockService.GetBlock(BlockLocator.BlockId(lastSecureBlockId));
-            var accountTransactions = await _accountService.GetAccountTransactions(_accountRs, 
-                block.Timestamp.AddSeconds(1), TransactionSubType.PaymentOrdinaryPayment);
+            var accountTransactions = await _accountService.GetAccountTransactions(_accountRs,
+                blockDateTime, TransactionSubType.PaymentOrdinaryPayment, numberOfConfirmations: numberOfConfirmations);
 
-            foreach (var transaction in accountTransactions.Transactions)
+            foreach (var transaction in accountTransactions.Transactions.Where(t => t.RecipientRs.Equals(_accountRs)))
             {
                 var inboundTransaction = new InboundTransaction(transaction)
                 {
@@ -84,35 +88,7 @@ namespace NxtExchange
             return recievedTransactions;
         }
 
-        // Varför behöver jag veta blockkedjan egentligen?
-        // Det borde räcka med transaktioner och hur många confirmations de har
-        public async Task<BlockStatus> CheckBlockStatus(ulong blockId)
-        {
-            try
-            {
-                var blockReply = await _blockService.GetBlock(BlockLocator.BlockId(blockId));
-                return blockReply.NextBlock.HasValue ? BlockStatus.ExistsButNotLast : BlockStatus.ExistsAndIsLast;
-            }
-            catch (NxtException e)
-            {
-                return BlockStatus.DoesNotExist;
-            }
-        }
-
-        public async Task<List<Transaction>> CheckForTransactions(int firstIndex, int lastIndex)
-        {
-            //var service = new NxtLib.ServerInfo.ServerInfoService();
-            //var blocks = await _blockService.GetBlocks(0, 1);
-            //blocks.BlockList.First().
-            _accountService.GetAccountTransactions()
-
-            var accountTransactions = await _accountService.GetAccountTransactions(_accountRs, 
-                transactionType: TransactionSubType.PaymentOrdinaryPayment, firstIndex: firstIndex, lastIndex: lastIndex);
-            
-            return accountTransactions.Transactions;
-        }
-
-        private async Task<string> DecryptMessage(Transaction transaction)
+        public async Task<string> DecryptMessage(Transaction transaction)
         {
             if (transaction.EncryptedMessage == null)
             {
@@ -120,6 +96,19 @@ namespace NxtExchange
             }
             var decryptedMessage = await _messageService.DecryptMessageFrom(transaction.SenderRs, transaction.EncryptedMessage, _secretPhrase);
             return decryptedMessage.Message;
+        }
+
+        public async Task<Transaction> GetTransaction(ulong transactionId)
+        {
+            try
+            {
+                var transactionReply = await _transactionService.GetTransaction(new GetTransactionLocator(transactionId));
+                return (Transaction) transactionReply;
+            }
+            catch (NxtException)
+            {
+                return null;
+            }
         }
     }
 }

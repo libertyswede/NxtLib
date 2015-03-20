@@ -12,10 +12,12 @@ namespace NxtExchange.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        LastSecureBlockId = c.Long(nullable: false),
-                        LastSecureBlockHeight = c.Int(nullable: false),
                         LastKnownBlockId = c.Long(nullable: false),
-                        LastKnownBlockHeight = c.Int(nullable: false),
+                        LastKnownBlockTimestamp = c.DateTime(nullable: false),
+                        LastConfirmedBlockId = c.Long(nullable: false),
+                        LastConfirmedBlockTimestamp = c.DateTime(nullable: false),
+                        LastSecureBlockId = c.Long(nullable: false),
+                        LastSecureBlockTimestamp = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -25,7 +27,6 @@ namespace NxtExchange.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         TransactionId = c.Long(nullable: false),
-                        CustomerId = c.Int(nullable: false),
                         DecryptedMessage = c.String(),
                         AmountNqt = c.Long(nullable: false),
                         Status = c.Int(nullable: false),

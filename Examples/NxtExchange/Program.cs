@@ -4,6 +4,7 @@ using NxtLib.Accounts;
 using NxtLib.Blocks;
 using NxtLib.Messages;
 using NxtLib.ServerInfo;
+using NxtLib.Transactions;
 
 namespace NxtExchange
 {
@@ -15,7 +16,7 @@ namespace NxtExchange
         static void Main()
         {
             var nxtService = new NxtService(SecretPhrase, new AccountService(NxtUri), new BlockService(NxtUri),
-                new MessageService(NxtUri), new ServerInfoService(NxtUri));
+                new MessageService(NxtUri), new ServerInfoService(NxtUri), new TransactionService(NxtUri));
             var controller = new ExchangeController(nxtService, new NxtRepository());
             controller.IncomingTransaction += OnIncomingTransaction;
             controller.UpdatedTransactionStatus += OnUpdatedTransactionStatus;
@@ -33,7 +34,7 @@ namespace NxtExchange
             Console.WriteLine("----------------------------------------");
             Console.WriteLine(" Transaction ID: {0}", transaction.TransactionId);
             Console.WriteLine("         Amount: {0} NXT", transaction.GetAmount().Nxt);
-            Console.WriteLine("       Customer: {0}", transaction.CustomerId);
+            Console.WriteLine("        Message: {0}", transaction.DecryptedMessage);
             Console.WriteLine("         Status: {0}", transaction.Status);
             Console.WriteLine("----------------------------------------");
             Console.WriteLine("");

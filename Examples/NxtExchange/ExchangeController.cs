@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using NxtExchange.DAL;
+using NxtLib;
 
 namespace NxtExchange
 {
@@ -29,68 +28,111 @@ namespace NxtExchange
             await ListenForTransactions();
         }
 
+        private async Task Init()
+        {
+            await _nxtService.Init();
+            _blockchainStatus = await _repository.GetBlockchainStatus();
+        }
+
+        /// <summary>
+        /// Scans the blockchain from last known secure block id until last block
+        /// </summary>
+        private async Task ScanBlockchain()
+        {
+            // Fetch new blockchain status before we start processing transactions
+            var newBlockchainStatus = await _nxtService.GetBlockchainStatus();
+
+            // Fetch transactions from blockchain and process them
+            var transactions = await _nxtService.CheckForTransactions(_blockchainStatus.LastSecureBlockTimestamp.AddSeconds(1));
+            transactions.ForEach(async t => await ProcessTransaction(t));
+
+            // Look for previously recorded transactions in db that has been orphaned
+            var dbTransactions = await _repository.GetNonSecuredTransactions();
+            foreach (var dbTransaction in dbTransactions.Where(dbTransaction => transactions.All(t => t.TransactionId != dbTransaction.TransactionId)))
+            {
+                await UpdatedTransaction(dbTransaction, TransactionStatus.Removed);
+            }
+
+            await UpdateBlockchainStatus(newBlockchainStatus);
+        }
+
         private async Task ListenForTransactions()
         {
             while (true)
             {
-                var index = 0;
-                const int page = 10;
-                var hasMore = true;
-                while (hasMore)
+                var newBlockchainStatus = await _nxtService.GetBlockchainStatus();
+                var confirmedTransactions = await _nxtService.CheckForTransactions(_blockchainStatus.LastSecureBlockTimestamp.AddSeconds(1), 0);
+                var dbTransactions = await _repository.GetNonSecuredTransactions();
+
+                confirmedTransactions.ForEach(t => ProcessTransaction(t));
+
+                // unprocessed means the transaction either became secured or orphaned (removed)
+                var unprocessedDbTransactions = (from dbT in dbTransactions
+                    where confirmedTransactions.All(t => t.TransactionId != dbT.TransactionId)
+                    select dbT).ToList();
+
+                foreach (var unprocessedDbTransaction in unprocessedDbTransactions)
                 {
-                    var transactions = await _nxtService.CheckForTransactions(index, page);
-                    transactions.ForEach(t => t.);
-                    var transactionIds = transactions.Select(t => t.TransactionId.Value.ToSigned());
-                    var inboundTransactions = await _repository.GetInboundTransactions(transactionIds);
-                    index += page;
+                    var transaction = await _nxtService.GetTransaction(unprocessedDbTransaction.TransactionId.ToUnsigned());
+                    if (transaction != null)
+                    {
+                        var status = TransactionStatusCalculator.GetStatus(transaction.Confirmations);
+                        if (unprocessedDbTransaction.Status != status)
+                        {
+                            await UpdatedTransaction(unprocessedDbTransaction, status);
+                        }
+                    }
+                    else
+                    {
+                        await UpdatedTransaction(unprocessedDbTransaction, TransactionStatus.Removed);
+                    }
                 }
+
+                await UpdateBlockchainStatus(newBlockchainStatus);
 
                 await Task.Delay(new TimeSpan(0, 0, 10));
             }
         }
 
-        private async Task ScanBlockchain()
+        private async Task ProcessTransaction(Transaction transaction, TransactionStatus status)
         {
-            var newBlockchainStatus = await _nxtService.GetBlockchainStatus();
-            var transactions = await _nxtService.ScanBlockchain(_blockchainStatus.LastSecureBlockId.ToUnsigned());
-            foreach (var transaction in transactions)
+            var dbTransaction = await _repository.GetInboundTransaction(transaction.TransactionId.ToSigned());
+            if (dbTransaction == null)
             {
-                await ProcessTransaction(transaction);
+                await NewTransaction(new InboundTransaction(transaction)
+                {
+                    DecryptedMessage = await _nxtService.DecryptMessage(transaction)
+                });
             }
-            await UpdateBlockchainStatus(newBlockchainStatus);
-        }
-
-        private async Task UpdateBlockchainStatus(BlockchainStatus newBlockchainStatus)
-        {
-            _blockchainStatus = newBlockchainStatus;
-            await _repository.UpdateBlockchainStatus(_blockchainStatus);
+            else if (dbTransaction.Status != status)
+            {
+                await UpdatedTransaction(dbTransaction, status);
+            }
         }
 
         private async Task ProcessTransaction(InboundTransaction transaction)
         {
             var dbTransaction = await _repository.GetInboundTransaction(transaction.TransactionId);
-            var accountRegex = new Regex("account:\\s?([\\d]+)", RegexOptions.IgnoreCase);
-            var match = accountRegex.Match(transaction.DecryptedMessage);
-            if (match.Success)
-            {
-                transaction.CustomerId = Convert.ToInt32(match.Groups[1].Value);
-            }
             if (dbTransaction == null)
             {
-                await _repository.AddInboundTransaction(transaction);
-                OnIncomingTransaction(new IncomingTransactionEventArgs(transaction));
+                await NewTransaction(transaction);
             }
             else if (dbTransaction.Status != transaction.Status)
             {
-                await _repository.UpdateTransactionStatus(transaction.TransactionId, transaction.Status);
-                OnUpdatedTransactionStatus(new StatusUpdatedEventArgs(transaction, dbTransaction.Status));
+                await UpdatedTransaction(dbTransaction, transaction.Status);
             }
         }
 
-        private async Task Init()
+        private async Task NewTransaction(InboundTransaction transaction)
         {
-            await _nxtService.Init();
-            _blockchainStatus = await _repository.GetBlockchainStatus();
+            await _repository.AddInboundTransaction(transaction);
+            OnIncomingTransaction(new IncomingTransactionEventArgs(transaction));
+        }
+
+        private async Task UpdatedTransaction(InboundTransaction transaction, TransactionStatus status)
+        {
+            await _repository.UpdateTransactionStatus(transaction.TransactionId, status);
+            OnUpdatedTransactionStatus(new StatusUpdatedEventArgs(transaction, status));
         }
 
         private void OnIncomingTransaction(IncomingTransactionEventArgs e)
@@ -103,6 +145,12 @@ namespace NxtExchange
         {
             var handler = UpdatedTransactionStatus;
             if (handler != null) handler(this, e);
+        }
+
+        private async Task UpdateBlockchainStatus(BlockchainStatus newBlockchainStatus)
+        {
+            _blockchainStatus = newBlockchainStatus;
+            await _repository.UpdateBlockchainStatus(_blockchainStatus);
         }
     }
 }

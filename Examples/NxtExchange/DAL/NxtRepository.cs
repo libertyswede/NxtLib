@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace NxtExchange.DAL
         Task AddInboundTransaction(InboundTransaction transaction);
         Task UpdateTransactionStatus(long transactionId, TransactionStatus status);
         Task<List<InboundTransaction>>  GetInboundTransactions(IEnumerable<long> transactionIds);
+        Task<List<InboundTransaction>> GetNonSecuredTransactions();
         Task UpdateBlockchainStatus(BlockchainStatus blockchainStatus);
     }
 
@@ -21,8 +23,20 @@ namespace NxtExchange.DAL
         {
             using (var context = new NxtContext())
             {
-                return await context.BlockchainStatus.SingleAsync();
+                var blockchainStatus = await context.BlockchainStatus.SingleAsync();
+
+                // Workaround to get datetime values into utc kind
+                blockchainStatus.LastKnownBlockTimestamp = ConvertToUtc(blockchainStatus.LastKnownBlockTimestamp);
+                blockchainStatus.LastConfirmedBlockTimestamp = ConvertToUtc(blockchainStatus.LastConfirmedBlockTimestamp);
+                blockchainStatus.LastSecureBlockTimestamp = ConvertToUtc(blockchainStatus.LastSecureBlockTimestamp);
+
+                return blockchainStatus;
             }
+        }
+
+        private static DateTime ConvertToUtc(DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, DateTimeKind.Utc);
         }
 
         public async Task<InboundTransaction> GetInboundTransaction(long transactionId)
@@ -57,6 +71,14 @@ namespace NxtExchange.DAL
             using (var context = new NxtContext())
             {
                 return await context.InboundTransactions.Where(t => transactionIds.Contains(t.TransactionId)).ToListAsync();
+            }
+        }
+
+        public async Task<List<InboundTransaction>> GetNonSecuredTransactions()
+        {
+            using (var context = new NxtContext())
+            {
+                return await context.InboundTransactions.Where(t => t.Status != TransactionStatus.Secured).ToListAsync();
             }
         }
 

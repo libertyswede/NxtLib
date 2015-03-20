@@ -56,29 +56,28 @@
     <Compile Include="DAL\BlockchainStatus.cs" />
     <Compile Include="DAL\InboundTransaction.cs" />
     <Compile Include="DAL\NxtContext.cs" />
-    <Compile Include="DAL\NxtContextFactory.cs" />
     <Compile Include="DAL\NxtRepository.cs" />
     <Compile Include="ExchangeController.cs" />
-    <Compile Include="ExchangeSettings.cs" />
     <Compile Include="IncomingTransactionEventArgs.cs" />
     <Compile Include="LongExtension.cs" />
-    <Compile Include="Migrations\201503200911536_InitialCreate.cs" />
-    <Compile Include="Migrations\201503200911536_InitialCreate.Designer.cs">
-      <DependentUpon>201503200911536_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201503202212235_InitialCreate.cs" />
+    <Compile Include="Migrations\201503202212235_InitialCreate.Designer.cs">
+      <DependentUpon>201503202212235_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NxtService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusUpdatedEventArgs.cs" />
+    <Compile Include="TransactionStatusCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503200911536_InitialCreate.resx">
-      <DependentUpon>201503200911536_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503202212235_InitialCreate.resx">
+      <DependentUpon>201503202212235_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
