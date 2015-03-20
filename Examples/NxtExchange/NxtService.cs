@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using NxtExchange.DAL;
 using NxtLib;
 using NxtLib.Accounts;
 using NxtLib.Blocks;
 using NxtLib.Messages;
+using NxtLib.ServerInfo;
+using TransactionSubType = NxtLib.TransactionSubType;
 
 namespace NxtExchange
 {
@@ -13,6 +16,7 @@ namespace NxtExchange
         Task Init();
         Task<List<InboundTransaction>> ScanBlockchain(ulong lastSecureBlockId);
         Task<List<Transaction>> CheckForTransactions(int firstIndex, int lastIndex);
+        Task<BlockchainStatus> GetBlockchainStatus();
     }
 
     public class NxtService : INxtService
@@ -20,21 +24,39 @@ namespace NxtExchange
         private readonly IAccountService _accountService;
         private readonly IBlockService _blockService;
         private readonly IMessageService _messageService;
+        private readonly IServerInfoService _serverInfoService;
         private readonly string _secretPhrase;
         private string _accountRs;
 
-        public NxtService(string secretPhrase, IAccountService accountService, IBlockService blockService, IMessageService messageService)
+        public NxtService(string secretPhrase, IAccountService accountService, IBlockService blockService,
+            IMessageService messageService, IServerInfoService serverInfoService)
         {
             _secretPhrase = secretPhrase;
             _accountService = accountService;
             _blockService = blockService;
             _messageService = messageService;
+            _serverInfoService = serverInfoService;
         }
 
         public async Task Init()
         {
             var accountIdReply = await _accountService.GetAccountId(AccountIdLocator.BySecretPhrase(_secretPhrase));
             _accountRs = accountIdReply.AccountRs;
+        }
+
+        public async Task<BlockchainStatus> GetBlockchainStatus()
+        {
+            var status = new BlockchainStatus();
+
+            var blockchainStatusReply = await _serverInfoService.GetBlockchainStatus();
+            var secureBlock = await _blockService.GetBlock(BlockLocator.Height(blockchainStatusReply.NumberOfBlocks - 720));
+
+            status.LastKnownBlockId = blockchainStatusReply.LastBlockId.ToSigned();
+            status.LastKnownBlockHeight = blockchainStatusReply.NumberOfBlocks;
+            status.LastSecureBlockId = secureBlock.BlockId.ToSigned();
+            status.LastSecureBlockHeight = secureBlock.Height;
+
+            return status;
         }
 
         public async Task<List<InboundTransaction>> ScanBlockchain(ulong lastSecureBlockId)
@@ -58,6 +80,10 @@ namespace NxtExchange
 
         public async Task<List<Transaction>> CheckForTransactions(int firstIndex, int lastIndex)
         {
+            var service = new NxtLib.ServerInfo.ServerInfoService();
+            var blocks = await _blockService.GetBlocks(0, 1);
+            blocks.BlockList.First().
+
             var accountTransactions = await _accountService.GetAccountTransactions(_accountRs, 
                 transactionType: TransactionSubType.PaymentOrdinaryPayment, firstIndex: firstIndex, lastIndex: lastIndex);
             

@@ -38,8 +38,8 @@ namespace NxtExchange
                 while (hasMore)
                 {
                     var transactions = await _nxtService.CheckForTransactions(index, 10);
-                    var transactionIds = transactions.Select(t => t.TransactionId.Value);
-                    var inboundTransactions = await _repository.GetInboundTransactionsAsync(transactionIds);
+                    var transactionIds = transactions.Select(t => t.TransactionId.Value.ToSigned());
+                    var inboundTransactions = await _repository.GetInboundTransactions(transactionIds);
                     index += 10;
                 }
                 
@@ -49,16 +49,24 @@ namespace NxtExchange
 
         private async Task ScanBlockchain()
         {
+            var newBlockchainStatus = await _nxtService.GetBlockchainStatus();
             var transactions = await _nxtService.ScanBlockchain(_blockchainStatus.LastSecureBlockId.ToUnsigned());
             foreach (var transaction in transactions)
             {
                 await ProcessTransaction(transaction);
             }
+            await UpdateBlockchainStatus(newBlockchainStatus);
+        }
+
+        private async Task UpdateBlockchainStatus(BlockchainStatus newBlockchainStatus)
+        {
+            _blockchainStatus = newBlockchainStatus;
+            await _repository.UpdateBlockchainStatus(_blockchainStatus);
         }
 
         private async Task ProcessTransaction(InboundTransaction transaction)
         {
-            var dbTransaction = await _repository.GetInboundTransactionAsync(transaction.TransactionId);
+            var dbTransaction = await _repository.GetInboundTransaction(transaction.TransactionId);
             var accountRegex = new Regex("account:\\s?([\\d]+)", RegexOptions.IgnoreCase);
             var match = accountRegex.Match(transaction.DecryptedMessage);
             if (match.Success)
@@ -67,12 +75,12 @@ namespace NxtExchange
             }
             if (dbTransaction == null)
             {
-                await _repository.AddInboundTransactionAsync(transaction);
+                await _repository.AddInboundTransaction(transaction);
                 OnIncomingTransaction(new IncomingTransactionEventArgs(transaction));
             }
             else if (dbTransaction.Status != transaction.Status)
             {
-                await _repository.UpdateTransactionStatusAsync(transaction.TransactionId, transaction.Status);
+                await _repository.UpdateTransactionStatus(transaction.TransactionId, transaction.Status);
                 OnUpdatedTransactionStatus(new StatusUpdatedEventArgs(transaction, dbTransaction.Status));
             }
         }
@@ -80,7 +88,7 @@ namespace NxtExchange
         private async Task Init()
         {
             await _nxtService.Init();
-            _blockchainStatus = await _repository.GetBlockchainStatusAsync();
+            _blockchainStatus = await _repository.GetBlockchainStatus();
         }
 
         private void OnIncomingTransaction(IncomingTransactionEventArgs e)
