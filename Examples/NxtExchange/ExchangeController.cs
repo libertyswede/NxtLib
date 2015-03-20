@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using NxtExchange.DAL;
 
@@ -24,6 +26,25 @@ namespace NxtExchange
         {
             await Init();
             await ScanBlockchain();
+            await ListenForTransactions();
+        }
+
+        private async Task ListenForTransactions()
+        {
+            while (true)
+            {
+                var index = 0;
+                var hasMore = true;
+                while (hasMore)
+                {
+                    var transactions = await _nxtService.CheckForTransactions(index, 10);
+                    var transactionIds = transactions.Select(t => t.TransactionId.Value);
+                    var inboundTransactions = await _repository.GetInboundTransactionsAsync(transactionIds);
+                    index += 10;
+                }
+                
+                await Task.Delay(new TimeSpan(0, 0, 10));
+            }
         }
 
         private async Task ScanBlockchain()

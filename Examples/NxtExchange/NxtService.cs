@@ -12,6 +12,7 @@ namespace NxtExchange
     {
         Task Init();
         Task<List<InboundTransaction>> ScanBlockchain(ulong lastSecureBlockId);
+        Task<List<Transaction>> CheckForTransactions(int firstIndex, int lastIndex);
     }
 
     public class NxtService : INxtService
@@ -21,7 +22,6 @@ namespace NxtExchange
         private readonly IMessageService _messageService;
         private readonly string _secretPhrase;
         private string _accountRs;
-        private string _publicKey;
 
         public NxtService(string secretPhrase, IAccountService accountService, IBlockService blockService, IMessageService messageService)
         {
@@ -35,17 +35,16 @@ namespace NxtExchange
         {
             var accountIdReply = await _accountService.GetAccountId(AccountIdLocator.BySecretPhrase(_secretPhrase));
             _accountRs = accountIdReply.AccountRs;
-            _publicKey = accountIdReply.PublicKey;
         }
 
         public async Task<List<InboundTransaction>> ScanBlockchain(ulong lastSecureBlockId)
         {
             var recievedTransactions = new List<InboundTransaction>();
             var block = await _blockService.GetBlock(BlockLocator.BlockId(lastSecureBlockId));
-            var accountTransactionsReply = await _accountService.GetAccountTransactions(_accountRs, 
+            var accountTransactions = await _accountService.GetAccountTransactions(_accountRs, 
                 block.Timestamp.AddSeconds(1), TransactionSubType.PaymentOrdinaryPayment);
 
-            foreach (var transaction in accountTransactionsReply.Transactions)
+            foreach (var transaction in accountTransactions.Transactions)
             {
                 var inboundTransaction = new InboundTransaction(transaction)
                 {
@@ -55,6 +54,14 @@ namespace NxtExchange
             }
 
             return recievedTransactions;
+        }
+
+        public async Task<List<Transaction>> CheckForTransactions(int firstIndex, int lastIndex)
+        {
+            var accountTransactions = await _accountService.GetAccountTransactions(_accountRs, 
+                transactionType: TransactionSubType.PaymentOrdinaryPayment, firstIndex: firstIndex, lastIndex: lastIndex);
+            
+            return accountTransactions.Transactions;
         }
 
         private async Task<string> DecryptMessage(Transaction transaction)
