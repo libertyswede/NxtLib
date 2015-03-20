@@ -64,7 +64,6 @@ namespace NxtExchange.DAL
         {
             using (var context = new NxtContext())
             {
-                blockchainStatus.Id = 1;
                 context.BlockchainStatus.Attach(blockchainStatus);
                 context.Entry(blockchainStatus).State = EntityState.Modified;
                 await context.SaveChangesAsync();

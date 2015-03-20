@@ -39,6 +39,7 @@ namespace NxtExchange
                 while (hasMore)
                 {
                     var transactions = await _nxtService.CheckForTransactions(index, page);
+                    transactions.ForEach(t => t.);
                     var transactionIds = transactions.Select(t => t.TransactionId.Value.ToSigned());
                     var inboundTransactions = await _repository.GetInboundTransactions(transactionIds);
                     index += page;

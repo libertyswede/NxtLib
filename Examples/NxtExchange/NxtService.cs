@@ -18,6 +18,13 @@ namespace NxtExchange
         Task<BlockchainStatus> GetBlockchainStatus();
     }
 
+    public enum BlockStatus
+    {
+        ExistsAndIsLast,
+        ExistsButNotLast,
+        DoesNotExist
+    }
+
     public class NxtService : INxtService
     {
         private readonly IAccountService _accountService;
@@ -77,11 +84,27 @@ namespace NxtExchange
             return recievedTransactions;
         }
 
+        // Varför behöver jag veta blockkedjan egentligen?
+        // Det borde räcka med transaktioner och hur många confirmations de har
+        public async Task<BlockStatus> CheckBlockStatus(ulong blockId)
+        {
+            try
+            {
+                var blockReply = await _blockService.GetBlock(BlockLocator.BlockId(blockId));
+                return blockReply.NextBlock.HasValue ? BlockStatus.ExistsButNotLast : BlockStatus.ExistsAndIsLast;
+            }
+            catch (NxtException e)
+            {
+                return BlockStatus.DoesNotExist;
+            }
+        }
+
         public async Task<List<Transaction>> CheckForTransactions(int firstIndex, int lastIndex)
         {
             //var service = new NxtLib.ServerInfo.ServerInfoService();
             //var blocks = await _blockService.GetBlocks(0, 1);
             //blocks.BlockList.First().
+            _accountService.GetAccountTransactions()
 
             var accountTransactions = await _accountService.GetAccountTransactions(_accountRs, 
                 transactionType: TransactionSubType.PaymentOrdinaryPayment, firstIndex: firstIndex, lastIndex: lastIndex);
