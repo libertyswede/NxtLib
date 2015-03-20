@@ -3,6 +3,7 @@ using NxtExchange.DAL;
 using NxtLib.Accounts;
 using NxtLib.Blocks;
 using NxtLib.Messages;
+using NxtLib.ServerInfo;
 
 namespace NxtExchange
 {
@@ -13,7 +14,8 @@ namespace NxtExchange
 
         static void Main()
         {
-            var nxtService = new NxtService(SecretPhrase, new AccountService(NxtUri), new BlockService(NxtUri), new MessageService(NxtUri));
+            var nxtService = new NxtService(SecretPhrase, new AccountService(NxtUri), new BlockService(NxtUri),
+                new MessageService(NxtUri), new ServerInfoService(NxtUri));
             var controller = new ExchangeController(nxtService, new NxtRepository());
             controller.IncomingTransaction += OnIncomingTransaction;
             controller.UpdatedTransactionStatus += OnUpdatedTransactionStatus;

@@ -13,7 +13,7 @@ namespace NxtExchange.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201503191324055_InitialCreate"; }
+            get { return "201503200911536_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

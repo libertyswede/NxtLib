@@ -34,15 +34,16 @@ namespace NxtExchange
             while (true)
             {
                 var index = 0;
+                const int page = 10;
                 var hasMore = true;
                 while (hasMore)
                 {
-                    var transactions = await _nxtService.CheckForTransactions(index, 10);
+                    var transactions = await _nxtService.CheckForTransactions(index, page);
                     var transactionIds = transactions.Select(t => t.TransactionId.Value.ToSigned());
                     var inboundTransactions = await _repository.GetInboundTransactions(transactionIds);
-                    index += 10;
+                    index += page;
                 }
-                
+
                 await Task.Delay(new TimeSpan(0, 0, 10));
             }
         }

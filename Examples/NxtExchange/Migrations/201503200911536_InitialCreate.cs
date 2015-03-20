@@ -1,7 +1,8 @@
-using System.Data.Entity.Migrations;
-
 namespace NxtExchange.Migrations
 {
+    using System;
+    using System.Data.Entity.Migrations;
+    
     public partial class InitialCreate : DbMigration
     {
         public override void Up()
@@ -10,9 +11,11 @@ namespace NxtExchange.Migrations
                 "dbo.BlockchainStatus",
                 c => new
                     {
-                        Id = c.Int(false, true),
-                        LastSecureBlockId = c.Long(false),
-                        LastKnownBlockId = c.Long(false),
+                        Id = c.Int(nullable: false, identity: true),
+                        LastSecureBlockId = c.Long(nullable: false),
+                        LastSecureBlockHeight = c.Int(nullable: false),
+                        LastKnownBlockId = c.Long(nullable: false),
+                        LastKnownBlockHeight = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -20,12 +23,12 @@ namespace NxtExchange.Migrations
                 "dbo.InboundTransaction",
                 c => new
                     {
-                        Id = c.Int(false, true),
-                        TransactionId = c.Long(false),
-                        CustomerId = c.Int(false),
+                        Id = c.Int(nullable: false, identity: true),
+                        TransactionId = c.Long(nullable: false),
+                        CustomerId = c.Int(nullable: false),
                         DecryptedMessage = c.String(),
-                        AmountNqt = c.Long(false),
-                        Status = c.Int(false),
+                        AmountNqt = c.Long(nullable: false),
+                        Status = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.TransactionId, unique: true, name: "UQ_TransactionId");

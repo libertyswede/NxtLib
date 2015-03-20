@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using NxtExchange.DAL;
 using NxtLib;
@@ -49,10 +48,10 @@ namespace NxtExchange
             var status = new BlockchainStatus();
 
             var blockchainStatusReply = await _serverInfoService.GetBlockchainStatus();
-            var secureBlock = await _blockService.GetBlock(BlockLocator.Height(blockchainStatusReply.NumberOfBlocks - 720));
+            var secureBlock = await _blockService.GetBlock(BlockLocator.Height(blockchainStatusReply.NumberOfBlocks - 721));
 
             status.LastKnownBlockId = blockchainStatusReply.LastBlockId.ToSigned();
-            status.LastKnownBlockHeight = blockchainStatusReply.NumberOfBlocks;
+            status.LastKnownBlockHeight = blockchainStatusReply.NumberOfBlocks - 1;
             status.LastSecureBlockId = secureBlock.BlockId.ToSigned();
             status.LastSecureBlockHeight = secureBlock.Height;
 
@@ -80,9 +79,9 @@ namespace NxtExchange
 
         public async Task<List<Transaction>> CheckForTransactions(int firstIndex, int lastIndex)
         {
-            var service = new NxtLib.ServerInfo.ServerInfoService();
-            var blocks = await _blockService.GetBlocks(0, 1);
-            blocks.BlockList.First().
+            //var service = new NxtLib.ServerInfo.ServerInfoService();
+            //var blocks = await _blockService.GetBlocks(0, 1);
+            //blocks.BlockList.First().
 
             var accountTransactions = await _accountService.GetAccountTransactions(_accountRs, 
                 transactionType: TransactionSubType.PaymentOrdinaryPayment, firstIndex: firstIndex, lastIndex: lastIndex);
