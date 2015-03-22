@@ -27,9 +27,9 @@ namespace NxtExchange.DAL
 
         public InboundTransaction(Transaction transaction)
         {
-            TransactionId = transaction.TransactionId.Value.ToSigned();
+            TransactionId = transaction.TransactionId.ToSigned();
             AmountNqt = transaction.Amount.Nqt;
-            Status = TransactionStatusCalculator.GetStatus(transaction.Confirmations);
+            Status = TransactionStatusCalculator.GetStatus(transaction);
         }
 
         public Amount GetAmount()

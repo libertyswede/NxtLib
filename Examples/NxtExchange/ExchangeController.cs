@@ -75,7 +75,7 @@ namespace NxtExchange
                     var transaction = await _nxtService.GetTransaction(unprocessedDbTransaction.TransactionId.ToUnsigned());
                     if (transaction != null)
                     {
-                        var status = TransactionStatusCalculator.GetStatus(transaction.Confirmations);
+                        var status = TransactionStatusCalculator.GetStatus(transaction);
                         if (unprocessedDbTransaction.Status != status)
                         {
                             await UpdatedTransaction(unprocessedDbTransaction, status);

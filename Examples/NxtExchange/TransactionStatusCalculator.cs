@@ -1,15 +1,34 @@
-﻿using NxtExchange.DAL;
+﻿using System;
+using NxtExchange.DAL;
+using NxtLib;
 
 namespace NxtExchange
 {
     public class TransactionStatusCalculator
     {
-        public static TransactionStatus GetStatus(int? confirmations)
+        public static TransactionStatus GetStatus(Transaction transaction)
         {
-            return !confirmations.HasValue ? TransactionStatus.Pending : GetStatus(confirmations.Value);
+            var confirmations = transaction.Confirmations;
+            var blockTimestamp = transaction.BlockTimestamp;
+
+            return !confirmations.HasValue || !blockTimestamp.HasValue
+                ? TransactionStatus.Pending
+                : GetStatus(transaction, confirmations.Value, blockTimestamp.Value);
         }
 
-        public static TransactionStatus GetStatus(int confirmations)
+        private static TransactionStatus GetStatus(Transaction transaction, int confirmations, DateTime blockTimestamp)
+        {
+            var status = GetStatus(confirmations);
+
+            // Check for risk of getting orphaned, see details on page 6 here: http://nxtinside.org/downloads/nxt-integration.pdf
+            if (transaction.Timestamp.AddMinutes(transaction.Deadline) <= blockTimestamp.AddHours(23))
+            {
+                status = status == TransactionStatus.Confirmed ? TransactionStatus.Pending : status;
+            }
+            return status;
+        }
+
+        private static TransactionStatus GetStatus(int confirmations)
         {
             if (confirmations < 10)
             {
