@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NxtExchange.DAL;
-using NxtLib;
 
 namespace NxtExchange
 {
@@ -67,9 +66,9 @@ namespace NxtExchange
                 confirmedTransactions.ForEach(t => ProcessTransaction(t));
 
                 // unprocessed means the transaction either became secured or orphaned (removed)
-                var unprocessedDbTransactions = (from dbT in dbTransactions
-                    where confirmedTransactions.All(t => t.TransactionId != dbT.TransactionId)
-                    select dbT).ToList();
+                var unprocessedDbTransactions = dbTransactions.Where(dbTransaction => 
+                    confirmedTransactions.All(t => t.TransactionId != dbTransaction.TransactionId))
+                    .ToList();
 
                 foreach (var unprocessedDbTransaction in unprocessedDbTransactions)
                 {
@@ -91,22 +90,6 @@ namespace NxtExchange
                 await UpdateBlockchainStatus(newBlockchainStatus);
 
                 await Task.Delay(new TimeSpan(0, 0, 10));
-            }
-        }
-
-        private async Task ProcessTransaction(Transaction transaction, TransactionStatus status)
-        {
-            var dbTransaction = await _repository.GetInboundTransaction(transaction.TransactionId.ToSigned());
-            if (dbTransaction == null)
-            {
-                await NewTransaction(new InboundTransaction(transaction)
-                {
-                    DecryptedMessage = await _nxtService.DecryptMessage(transaction)
-                });
-            }
-            else if (dbTransaction.Status != status)
-            {
-                await UpdatedTransaction(dbTransaction, status);
             }
         }
 
