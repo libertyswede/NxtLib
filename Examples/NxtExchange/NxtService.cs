@@ -30,7 +30,7 @@ namespace NxtExchange
         private readonly IServerInfoService _serverInfoService;
         private readonly ITransactionService _transactionService;
         private readonly string _secretPhrase;
-        private string _accountRs;
+        private ulong _accountId;
 
         public NxtService(string secretPhrase, IAccountService accountService, IBlockService blockService,
             IMessageService messageService, IServerInfoService serverInfoService, ITransactionService transactionService)
@@ -46,7 +46,7 @@ namespace NxtExchange
         public async Task Init()
         {
             var accountIdReply = await _accountService.GetAccountId(AccountIdLocator.BySecretPhrase(_secretPhrase));
-            _accountRs = accountIdReply.AccountRs;
+            _accountId = accountIdReply.Account;
         }
 
         public async Task<BlockchainStatus> GetBlockchainStatus()
@@ -73,10 +73,10 @@ namespace NxtExchange
         public async Task<List<InboundTransaction>> CheckForTransactions(DateTime blockDateTime, int? numberOfConfirmations = null)
         {
             var recievedTransactions = new List<InboundTransaction>();
-            var accountTransactions = await _accountService.GetAccountTransactions(_accountRs,
+            var accountTransactions = await _accountService.GetAccountTransactions(_accountId.ToString(),
                 blockDateTime, TransactionSubType.PaymentOrdinaryPayment, numberOfConfirmations: numberOfConfirmations);
 
-            foreach (var transaction in accountTransactions.Transactions.Where(t => t.RecipientRs.Equals(_accountRs)))
+            foreach (var transaction in accountTransactions.Transactions.Where(t => t.Recipient == _accountId))
             {
                 var inboundTransaction = new InboundTransaction(transaction)
                 {
