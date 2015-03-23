@@ -13,7 +13,7 @@ using TransactionSubType = NxtLib.TransactionSubType;
 
 namespace NxtExchange
 {
-    public interface INxtService
+    public interface INxtConnector
     {
         Task Init();
         Task<List<InboundTransaction>> CheckForTransactions(DateTime blockDateTime, int? numberOfConfirmations = null);
@@ -22,7 +22,7 @@ namespace NxtExchange
         Task<Transaction> GetTransaction(ulong transactionId);
     }
 
-    public class NxtService : INxtService
+    public class NxtConnector : INxtConnector
     {
         private readonly IAccountService _accountService;
         private readonly IBlockService _blockService;
@@ -32,7 +32,7 @@ namespace NxtExchange
         private readonly string _secretPhrase;
         private ulong _accountId;
 
-        public NxtService(string secretPhrase, IAccountService accountService, IBlockService blockService,
+        public NxtConnector(string secretPhrase, IAccountService accountService, IBlockService blockService,
             IMessageService messageService, IServerInfoService serverInfoService, ITransactionService transactionService)
         {
             _secretPhrase = secretPhrase;

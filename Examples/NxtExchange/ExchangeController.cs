@@ -10,13 +10,13 @@ namespace NxtExchange
         public event IncomingTransactionHandler IncomingTransaction;
         public event TransactionStatusUpdatedHandler UpdatedTransactionStatus;
 
-        private readonly INxtService _nxtService;
+        private readonly INxtConnector _nxtConnector;
         private readonly INxtRepository _repository;
         private BlockchainStatus _blockchainStatus;
 
-        public ExchangeController(INxtService nxtService, INxtRepository repository)
+        public ExchangeController(INxtConnector nxtConnector, INxtRepository repository)
         {
-            _nxtService = nxtService;
+            _nxtConnector = nxtConnector;
             _repository = repository;
         }
 
@@ -29,7 +29,7 @@ namespace NxtExchange
 
         private async Task Init()
         {
-            await _nxtService.Init();
+            await _nxtConnector.Init();
             _blockchainStatus = await _repository.GetBlockchainStatus();
         }
 
@@ -39,10 +39,10 @@ namespace NxtExchange
         private async Task ScanBlockchain()
         {
             // Fetch new blockchain status before we start processing transactions
-            var newBlockchainStatus = await _nxtService.GetBlockchainStatus();
+            var newBlockchainStatus = await _nxtConnector.GetBlockchainStatus();
 
             // Fetch transactions from blockchain and process them
-            var transactions = await _nxtService.CheckForTransactions(_blockchainStatus.LastSecureBlockTimestamp.AddSeconds(1));
+            var transactions = await _nxtConnector.CheckForTransactions(_blockchainStatus.LastSecureBlockTimestamp.AddSeconds(1));
             transactions.ForEach(async t => await ProcessTransaction(t));
 
             // Look for previously recorded transactions in db that has been orphaned
@@ -55,12 +55,15 @@ namespace NxtExchange
             await UpdateBlockchainStatus(newBlockchainStatus);
         }
 
+        /// <summary>
+        /// Main function when it comes to periodically checking for new transactions.
+        /// </summary>
         private async Task ListenForTransactions()
         {
             while (true)
             {
-                var newBlockchainStatus = await _nxtService.GetBlockchainStatus();
-                var confirmedTransactions = await _nxtService.CheckForTransactions(_blockchainStatus.LastSecureBlockTimestamp.AddSeconds(1), 0);
+                var newBlockchainStatus = await _nxtConnector.GetBlockchainStatus();
+                var confirmedTransactions = await _nxtConnector.CheckForTransactions(_blockchainStatus.LastSecureBlockTimestamp.AddSeconds(1), 0);
                 var dbTransactions = await _repository.GetNonSecuredTransactions();
 
                 confirmedTransactions.ForEach(t => ProcessTransaction(t));
@@ -72,7 +75,7 @@ namespace NxtExchange
 
                 foreach (var unprocessedDbTransaction in unprocessedDbTransactions)
                 {
-                    var transaction = await _nxtService.GetTransaction(unprocessedDbTransaction.TransactionId.ToUnsigned());
+                    var transaction = await _nxtConnector.GetTransaction(unprocessedDbTransaction.TransactionId.ToUnsigned());
                     if (transaction != null)
                     {
                         var status = TransactionStatusCalculator.GetStatus(transaction);

@@ -15,7 +15,7 @@ namespace NxtExchange
 
         static void Main()
         {
-            var nxtService = new NxtService(SecretPhrase, new AccountService(NxtUri), new BlockService(NxtUri),
+            var nxtService = new NxtConnector(SecretPhrase, new AccountService(NxtUri), new BlockService(NxtUri),
                 new MessageService(NxtUri), new ServerInfoService(NxtUri), new TransactionService(NxtUri));
             var controller = new ExchangeController(nxtService, new NxtRepository());
             controller.IncomingTransaction += OnIncomingTransaction;
