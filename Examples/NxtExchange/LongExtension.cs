@@ -2,6 +2,10 @@
 
 namespace NxtExchange
 {
+    /// <summary>
+    /// Since ID's in NXT are unsigned long's but Entity Framework does not support that, a lot of conversion between long <--> ulong is going on.
+    /// These methods help out a bit in the process.
+    /// </summary>
     public static class LongExtension
     {
         public static ulong ToUnsigned(this long? me)

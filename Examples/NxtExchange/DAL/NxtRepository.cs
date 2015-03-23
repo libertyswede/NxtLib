@@ -34,6 +34,9 @@ namespace NxtExchange.DAL
             }
         }
 
+        /// <summary>
+        /// Convert the datetime into utc kind, while maintaining the same time as before.
+        /// </summary>
         private static DateTime ConvertToUtc(DateTime dateTime)
         {
             return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, DateTimeKind.Utc);

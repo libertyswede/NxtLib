@@ -48,3 +48,4 @@ See TransactionStatusCalculator or page 6 here: http://nxtinside.org/downloads/n
 -- Todo --
 
 * Withdraw functionality
+* Error handling
