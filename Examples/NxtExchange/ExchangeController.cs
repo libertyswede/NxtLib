@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using NxtExchange.DAL;
 
@@ -20,11 +21,18 @@ namespace NxtExchange
             _repository = repository;
         }
 
-        public async Task Start()
+        public async Task Start(CancellationToken cancellationToken)
         {
-            await Init();
-            await ScanBlockchain();
-            await ListenForTransactions();
+            try
+            {
+                await Init();
+                await ScanBlockchain();
+                await ListenForTransactions(cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                // cancellationToken was cancelled, ignore this exception
+            }
         }
 
         private async Task Init()
@@ -43,7 +51,7 @@ namespace NxtExchange
 
             // Fetch transactions from blockchain and process them
             var transactions = await _nxtConnector.CheckForTransactions(_blockchainStatus.LastSecureBlockTimestamp.AddSeconds(1));
-            transactions.ForEach(async t => await ProcessTransaction(t));
+            transactions.ForEach(ProcessTransaction);
 
             // Look for previously recorded transactions in db that has been orphaned
             var dbTransactions = await _repository.GetNonSecuredTransactions();
@@ -58,15 +66,15 @@ namespace NxtExchange
         /// <summary>
         /// Main function when it comes to periodically checking for new transactions.
         /// </summary>
-        private async Task ListenForTransactions()
+        private async Task ListenForTransactions(CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 var newBlockchainStatus = await _nxtConnector.GetBlockchainStatus();
                 var confirmedTransactions = await _nxtConnector.CheckForTransactions(_blockchainStatus.LastSecureBlockTimestamp.AddSeconds(1), 0);
                 var dbTransactions = await _repository.GetNonSecuredTransactions();
 
-                confirmedTransactions.ForEach(t => ProcessTransaction(t));
+                confirmedTransactions.ForEach(ProcessTransaction);
 
                 // unprocessed means the transaction either became secured or orphaned (removed)
                 var unprocessedDbTransactions = dbTransactions.Where(dbTransaction => 
@@ -92,20 +100,20 @@ namespace NxtExchange
 
                 await UpdateBlockchainStatus(newBlockchainStatus);
 
-                await Task.Delay(new TimeSpan(0, 0, 10));
+                await Task.Delay(new TimeSpan(0, 0, 10), cancellationToken);
             }
         }
 
-        private async Task ProcessTransaction(InboundTransaction transaction)
+        private void ProcessTransaction(InboundTransaction transaction)
         {
-            var dbTransaction = await _repository.GetInboundTransaction(transaction.TransactionId);
+            var dbTransaction = _repository.GetInboundTransaction(transaction.TransactionId).Result;
             if (dbTransaction == null)
             {
-                await NewTransaction(transaction);
+                NewTransaction(transaction).Wait();
             }
             else if (dbTransaction.Status != transaction.Status)
             {
-                await UpdatedTransaction(dbTransaction, transaction.Status);
+                UpdatedTransaction(dbTransaction, transaction.Status).Wait();
             }
         }
 

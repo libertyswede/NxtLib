@@ -46,4 +46,3 @@ See TransactionStatusCalculator or page 6 here: http://nxtinside.org/downloads/n
 
 * Withdraw functionality
 * Error handling
-* A way to safely cancel the execution of ExchangeController.ListenForTransactions() through CancellationToken
