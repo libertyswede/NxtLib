@@ -120,6 +120,7 @@
     <Compile Include="Networking\PeerInfo.cs" />
     <Compile Include="ServerInfo\IServerInfoService.cs" />
     <Compile Include="ServerInfo\PeerState.cs" />
+    <Compile Include="ServiceFactory.cs" />
     <Compile Include="Tokens\ITokenService.cs" />
     <Compile Include="Transactions\ITransactionService.cs" />
     <Compile Include="Transactions\TransactionParameter.cs" />

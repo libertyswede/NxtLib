@@ -14,7 +14,7 @@ namespace NxtLib
         private readonly IDateTimeConverter _dateTimeConverter;
         private readonly string _baseUrl;
 
-        protected const string DefaultBaseUrl = "http://localhost:7876/nxt";
+        internal const string DefaultBaseUrl = "http://localhost:7876/nxt";
 
         protected BaseService(IDateTimeConverter dateTimeConverter, string baseUrl = DefaultBaseUrl)
         {
