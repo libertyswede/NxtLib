@@ -1,30 +1,34 @@
-﻿using System;
+﻿using System.Reflection;
+using NxtLib.Internal;
 
 namespace NxtLib.Networking
 {
     public class PeersLocator : LocatorBase
     {
-        private PeersLocator(string key, string value) : base(key, value)
+        public readonly bool? Active;
+        public readonly PeerInfo.PeerState? State;
+
+        private PeersLocator()
+            :base("active", true.ToString())
         {
+            Active = true;
+        }
+
+        private PeersLocator(PeerInfo.PeerState state, string value)
+            : base("state", value)
+        {
+            State = state;
         }
 
         public static PeersLocator ByActive()
         {
-            return new PeersLocator("active", true.ToString());
+            return new PeersLocator();
         }
 
         public static PeersLocator ByState(PeerInfo.PeerState state)
         {
-            switch (state)
-            {
-                case PeerInfo.PeerState.Connected:
-                    return new PeersLocator("state", "CONNECTED");
-                case PeerInfo.PeerState.Disconnected:
-                    return new PeersLocator("state", "DISCONNECTED");
-                case PeerInfo.PeerState.NonConnected:
-                    return new PeersLocator("state", "NON_CONNECTED");
-            }
-            throw new NotSupportedException(string.Format("State {0} is not supported type", state));
+            var value = state.GetType().GetTypeInfo().GetCustomAttribute<DescriptionAttribute>().Name;
+            return new PeersLocator(state, value);
         }
     }
 }

@@ -2,18 +2,30 @@
 {
     public class HeightOrNumberOfBlocksLocator : LocatorBase
     {
-        private HeightOrNumberOfBlocksLocator(string key, string value) : base(key, value)
+        public readonly int? Height;
+        public readonly int? NumBlocks;
+
+        private HeightOrNumberOfBlocksLocator(string key, int value)
+            : base(key, value.ToString())
         {
+            if (key.Equals("height"))
+            {
+                Height = value;
+            }
+            else if (key.Equals("numBlocks"))
+            {
+                NumBlocks = value;
+            }
         }
 
         public static HeightOrNumberOfBlocksLocator ByHeight(int height)
         {
-            return new HeightOrNumberOfBlocksLocator("height", height.ToString());
+            return new HeightOrNumberOfBlocksLocator("height", height);
         }
 
         public static HeightOrNumberOfBlocksLocator ByNumBlocks(int numBlocks)
         {
-            return new HeightOrNumberOfBlocksLocator("numBlocks", numBlocks.ToString());
+            return new HeightOrNumberOfBlocksLocator("numBlocks", numBlocks);
         }
     }
 }

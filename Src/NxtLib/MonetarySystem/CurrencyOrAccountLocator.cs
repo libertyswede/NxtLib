@@ -4,23 +4,36 @@ namespace NxtLib.MonetarySystem
 {
     public class CurrencyOrAccountLocator : LocatorBase
     {
-        private CurrencyOrAccountLocator(string key, string value) : base(key, value)
+        public readonly string AccountId;
+        public readonly ulong? CurrencyId;
+
+        private CurrencyOrAccountLocator(ulong currencyId)
+            : base("currency", currencyId.ToString())
         {
+            CurrencyId = currencyId;
         }
 
-        private CurrencyOrAccountLocator(Dictionary<string, string> parameters)
+        private CurrencyOrAccountLocator(string accountId)
+            : base("account", accountId)
+        {
+            AccountId = accountId;
+        }
+
+        private CurrencyOrAccountLocator(ulong currencyId, string accountId, Dictionary<string, string> parameters)
             : base(parameters)
         {
+            AccountId = accountId;
+            CurrencyId = currencyId;
         }
 
         public static CurrencyOrAccountLocator ByCurrencyId(ulong currencyId)
         {
-            return new CurrencyOrAccountLocator("currency", currencyId.ToString());
+            return new CurrencyOrAccountLocator(currencyId);
         }
 
         public static CurrencyOrAccountLocator ByAccountId(string accountId)
         {
-            return new CurrencyOrAccountLocator("account", accountId);
+            return new CurrencyOrAccountLocator(accountId);
         }
 
         public static CurrencyOrAccountLocator ByCurrencyAndAccount(ulong currencyId, string accountId)
@@ -30,7 +43,7 @@ namespace NxtLib.MonetarySystem
                 {"currency", currencyId.ToString()},
                 {"account", accountId}
             };
-            return new CurrencyOrAccountLocator(dictionary);
+            return new CurrencyOrAccountLocator(currencyId, accountId, dictionary);
         }
     }
 }
