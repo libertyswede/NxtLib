@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using NxtLib;
 using NxtLib.AssetExchange;
@@ -23,6 +24,7 @@ namespace DividendTracker
             var assetService = new AssetExchangeService();
             var currentHeight = serverInfoService.GetBlockchainStatus().Result.NumberOfBlocks;
             var blockHeight = 335690;
+            Block<Transaction> block = null;
 
             if (args.Length > 0 && args[0].Equals("-height", StringComparison.InvariantCultureIgnoreCase))
                 Int32.TryParse(args[1], out blockHeight);
@@ -30,7 +32,7 @@ namespace DividendTracker
             Console.WriteLine("Start scanning blockchain at height: {0}", blockHeight);
             for (; blockHeight < currentHeight; blockHeight++)
             {
-                var block = blockService.GetBlockIncludeTransactions(BlockLocator.Height(blockHeight)).Result;
+                block = blockService.GetBlockIncludeTransactions(BlockLocator.Height(blockHeight)).Result;
                 foreach (var transaction in block.Transactions.Where(transaction => transaction.SubType == TransactionSubType.ColoredCoinsDividendPayment))
                 {
                     var attachment = (ColoredCoinsDividendPaymentAttachment)transaction.Attachment;
@@ -38,7 +40,10 @@ namespace DividendTracker
                     Console.WriteLine("{0} {1} {2} {3}", transaction.Timestamp.ToString("d"), transaction.TransactionId, asset.Name, attachment.AmountPerQnt.Nxt);
                 }
             }
-            Console.WriteLine("Last checked block height: {0}", blockHeight);
+            if (block != null)
+            {
+                Console.WriteLine("Last checked block height: {0} ({1})", blockHeight, block.Timestamp.ToString(CultureInfo.InvariantCulture));
+            }
             Console.ReadLine();
         }
     }
