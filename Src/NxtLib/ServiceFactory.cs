@@ -8,10 +8,12 @@ using NxtLib.Forging;
 using NxtLib.Messages;
 using NxtLib.MonetarySystem;
 using NxtLib.Networking;
+using NxtLib.Phasing;
 using NxtLib.ServerInfo;
 using NxtLib.Tokens;
 using NxtLib.Transactions;
 using NxtLib.Utils;
+using NxtLib.Voting_System;
 
 namespace NxtLib
 {
@@ -27,10 +29,12 @@ namespace NxtLib
         IMessageService CreateMessageService();
         IMonetarySystemService CreateMonetarySystemService();
         INetworkingService CreateNetworkingService();
+        IPhasingService CreatePhasingService();
         IServerInfoService CreateServerInfoService();
         ITokenService CreateTokenService();
         ITransactionService CreateTransactionService();
         IUtilService CreateUtilService();
+        IVotingSystemService CreateVotingSystemService();
     }
 
     public class ServiceFactory : IServiceFactory
@@ -92,6 +96,11 @@ namespace NxtLib
             return new NetworkingService(_baseAddress);
         }
 
+        public IPhasingService CreatePhasingService()
+        {
+            return new PhasingService(_baseAddress);
+        }
+
         public IServerInfoService CreateServerInfoService()
         {
             return new ServerInfoService(_baseAddress);
@@ -110,6 +119,11 @@ namespace NxtLib
         public IUtilService CreateUtilService()
         {
             return new UtilService(_baseAddress);
+        }
+
+        public IVotingSystemService CreateVotingSystemService()
+        {
+            return new VotingSystemService(_baseAddress);
         }
     }
 }
