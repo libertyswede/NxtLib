@@ -1,4 +1,4 @@
-﻿namespace NxtLib.Voting_System
+﻿namespace NxtLib.VotingSystem
 {
     public interface IVotingSystemService
     {

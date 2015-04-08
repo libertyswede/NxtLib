@@ -13,7 +13,7 @@ using NxtLib.ServerInfo;
 using NxtLib.Tokens;
 using NxtLib.Transactions;
 using NxtLib.Utils;
-using NxtLib.Voting_System;
+using NxtLib.VotingSystem;
 
 namespace NxtLib
 {
