@@ -244,9 +244,14 @@
     <Compile Include="VotingSystem\GetPollReply.cs" />
     <Compile Include="VotingSystem\GetPollResultReply.cs" />
     <Compile Include="VotingSystem\GetPollsReply.cs" />
+    <Compile Include="VotingSystem\GetPollVoteReply.cs" />
+    <Compile Include="VotingSystem\GetPollVotesReply.cs" />
     <Compile Include="VotingSystem\IVotingSystemService.cs" />
+    <Compile Include="VotingSystem\MinBalanceModel.cs" />
     <Compile Include="VotingSystem\Poll.cs" />
     <Compile Include="VotingSystem\PollResult.cs" />
+    <Compile Include="VotingSystem\PollVote.cs" />
+    <Compile Include="VotingSystem\VotingModel.cs" />
     <Compile Include="VotingSystem\VotingSystemService.cs" />
   </ItemGroup>
   <ItemGroup>

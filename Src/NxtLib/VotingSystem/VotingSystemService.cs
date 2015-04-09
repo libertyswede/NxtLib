@@ -97,31 +97,14 @@ namespace NxtLib.VotingSystem
             return await Get<GetPollVotesReply>("getPollVotes", queryParameters);
         }
 
-        public void SearchPolls()
+        public async Task<GetPollsReply> SearchPolls(string query, int? firstIndex = null, int? lastIndex = null,
+            bool? includeFinished = null)
         {
+            var queryParameters = new Dictionary<string, string> {{"query", query}};
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("includeFinished", includeFinished, queryParameters);
+            return await Get<GetPollsReply>("searchPolls", queryParameters);
         }
-    }
-
-    public class GetPollVoteReply : BaseReply
-    {
-    }
-
-    public class GetPollVotesReply : BaseReply
-    {
-    }
-
-    public enum MinBalanceModel
-    {
-        Nxt = 0,
-        AssetBalance = 1,
-        CurrencyBalance = 2
-    }
-
-    public enum VotingModel
-    {
-        OneVotePerAccount = 0,
-        VoteByNxtBalance = 1,
-        VoteByAsset = 2,
-        VoteByCurrency = 3
     }
 }
