@@ -29,7 +29,7 @@ namespace NxtLib.VotingSystem
 
         public async Task<TransactionCreatedReply> CreatePoll(string name, string description, int finishHeight,
             VotingModel votingModel, int minNumberOfOptions, int maxNumberOfOptions, int minRangeValue,
-            int maxRangeValue, List<string> options, CreateTransactionParameters parameters, ulong? minBalance = null,
+            int maxRangeValue, List<string> options, CreateTransactionParameters parameters, long? minBalance = null,
             MinBalanceModel? minBalanceModel = null, ulong? holdingId = null)
         {
             var queryParameters = new Dictionary<string, string>
@@ -61,25 +61,53 @@ namespace NxtLib.VotingSystem
             return await Get<GetPollReply>("getPoll", queryParameters);
         }
 
-        public void GetPollResult()
+        public async Task<GetPollResultReply> GetPollResult(ulong pollId, VotingModel? votingModel,
+            ulong? holdingId = null, long? minBalance = null, MinBalanceModel? minBalanceModel = null)
         {
+            var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}};
+            AddToParametersIfHasValue("votingModel", votingModel.HasValue ? (int?)votingModel.Value : null,
+                queryParameters);
+            AddToParametersIfHasValue("holding", holdingId, queryParameters);
+            AddToParametersIfHasValue("minBalance", minBalance, queryParameters);
+            AddToParametersIfHasValue("minBalanceModel", minBalanceModel.HasValue ? (int?)minBalanceModel.Value : null,
+                queryParameters);
+            return await Get<GetPollResultReply>("getPollResult", queryParameters);
         }
 
-        public void GetPollVote()
+        public async Task<GetPollsReply> GetPolls(string accountId = null, int? firstIndex = null, int? lastIndex = null)
         {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Get<GetPollsReply>("getPolls", queryParameters);
         }
 
-        public void GetPollVotes()
+        public async Task<GetPollVoteReply> GetPollVote(ulong pollId, string accountId)
         {
+            var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}, {"account", accountId}};
+            return await Get<GetPollVoteReply>("getPollVote", queryParameters);
         }
 
-        public void GetPolls()
+        public async Task<GetPollVotesReply> GetPollVotes(ulong pollId, int? firstIndex = null, int? lastIndex = null)
         {
+            var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}};
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Get<GetPollVotesReply>("getPollVotes", queryParameters);
         }
 
         public void SearchPolls()
         {
         }
+    }
+
+    public class GetPollVoteReply : BaseReply
+    {
+    }
+
+    public class GetPollVotesReply : BaseReply
+    {
     }
 
     public enum MinBalanceModel

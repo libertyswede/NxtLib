@@ -242,7 +242,11 @@
     <Compile Include="Utils\RsConvertReply.cs" />
     <Compile Include="Utils\UtilService.cs" />
     <Compile Include="VotingSystem\GetPollReply.cs" />
+    <Compile Include="VotingSystem\GetPollResultReply.cs" />
+    <Compile Include="VotingSystem\GetPollsReply.cs" />
     <Compile Include="VotingSystem\IVotingSystemService.cs" />
+    <Compile Include="VotingSystem\Poll.cs" />
+    <Compile Include="VotingSystem\PollResult.cs" />
     <Compile Include="VotingSystem\VotingSystemService.cs" />
   </ItemGroup>
   <ItemGroup>
