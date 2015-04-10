@@ -13,12 +13,14 @@ namespace NxtLib
         public UnencryptedMessage Message { get; set; }
         public AbstractEncryptedMessage EncryptedMessage { get; set; }
         public AbstractEncryptedMessage EncryptedMessageToSelf { get; set; }
+        public TransactionPhasing Phasing { get; private set; }
 
         protected CreateTransactionParameters(bool broadcast, short deadline, Amount fee)
         {
             Broadcast = broadcast;
             Deadline = deadline;
             Fee = fee;
+            Phasing = new TransactionPhasing();
         }
 
         internal virtual void AppendToQueryParameters(Dictionary<string, string> queryParameters)
@@ -31,6 +33,7 @@ namespace NxtLib
             AddUnencryptedMessage(queryParameters);
             AddEncryptedMessage(queryParameters);
             AddToSelfMessage(queryParameters);
+            Phasing.AppendToQueryParameters(queryParameters);
         }
 
         private void AddUnencryptedMessage(IDictionary<string, string> queryParameters)

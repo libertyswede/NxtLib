@@ -118,6 +118,7 @@
     <Compile Include="Networking\INetworkingService.cs" />
     <Compile Include="Networking\NetworkingService.cs" />
     <Compile Include="Networking\PeerInfo.cs" />
+    <Compile Include="TransactionPhasing.cs" />
     <Compile Include="Phasing\IPhasingService.cs" />
     <Compile Include="Phasing\PhasingService.cs" />
     <Compile Include="ServerInfo\IServerInfoService.cs" />
