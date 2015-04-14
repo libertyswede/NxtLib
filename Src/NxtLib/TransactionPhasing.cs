@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using NxtLib.Internal;
 using NxtLib.VotingSystem;
 
 namespace NxtLib
