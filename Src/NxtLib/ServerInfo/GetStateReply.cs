@@ -34,12 +34,16 @@ namespace NxtLib.ServerInfo
         public int NumberOfOffers { get; set; }
         public int NumberOfOrders { get; set; }
         public int NumberOfPeers { get; set; }
+        public int NumberOfPhasedTransactions { get; set; }
+        public int NumberOfPolls { get; set; }
+        public int NumberOfPrunableMessages { get; set; }
         public int NumberOfPurchases { get; set; }
         public int NumberOfTrades { get; set; }
         public int NumberOfTags { get; set; }
         public int NumberOfTransactions { get; set; }
         public int NumberOfTransfers { get; set; }
         public int NumberOfUnlockedAccounts { get; set; }
+        public int NumberOfVotes { get; set; }
         public int PeerPort { get; set; }
 
         [JsonConverter(typeof(DateTimeConverter))]
