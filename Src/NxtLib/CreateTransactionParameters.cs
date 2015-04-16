@@ -20,7 +20,6 @@ namespace NxtLib
             Broadcast = broadcast;
             Deadline = deadline;
             Fee = fee;
-            Phasing = new TransactionPhasing();
         }
 
         internal virtual void AppendToQueryParameters(Dictionary<string, string> queryParameters)
