@@ -9,6 +9,7 @@ namespace NxtLib.ServerInfo
         public string Application { get; set; }
         public int AvailableProcessors { get; set; }
         public ulong CumulativeDifficulty { get; set; }
+        public int CurrentMinRollbackHeight { get; set; }
         public ulong FreeMemory { get; set; }
         public bool IsScanning { get; set; }
         public bool IsOffline { get; set; }
@@ -18,6 +19,8 @@ namespace NxtLib.ServerInfo
         public int LastBlockchainFeederHeight { get; set; }
         public bool NeedsAdminPassword { get; set; }
         public long MaxMemory { get; set; }
+        public int MaxPrunableLifetime { get; set; }
+        public int MaxRollback { get; set; }
         public int NumberOfAccounts { get; set; }
         public int NumberOfAliases { get; set; }
         public int NumberOfAskOrders { get; set; }
