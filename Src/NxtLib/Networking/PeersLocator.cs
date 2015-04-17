@@ -27,7 +27,12 @@ namespace NxtLib.Networking
 
         public static PeersLocator ByState(PeerInfo.PeerState state)
         {
-            var value = state.GetType().GetTypeInfo().GetCustomAttribute<DescriptionAttribute>().Name;
+            var value = state
+                .GetType()
+                .GetTypeInfo()
+                .GetDeclaredField(state.ToString())
+                .GetCustomAttribute<DescriptionAttribute>().Name;
+
             return new PeersLocator(state, value);
         }
     }
