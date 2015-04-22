@@ -442,12 +442,12 @@ namespace NxtLib
         }
     }
 
-    public class MonetarySystemReserveIncrease : Attachment
+    public class MonetarySystemReserveIncreaseAttachment : Attachment
     {
         public Amount AmountPerUnit { get; set; }
         public ulong CurrencyId { get; set; }
 
-        internal MonetarySystemReserveIncrease(JToken attachments)
+        internal MonetarySystemReserveIncreaseAttachment(JToken attachments)
         {
             AmountPerUnit = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, AmountPerUnitNqtKey));
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
