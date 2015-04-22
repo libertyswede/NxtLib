@@ -453,4 +453,11 @@ namespace NxtLib
             CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
         }
     }
+
+    public class OrdinaryPaymentAttachment : Attachment
+    {
+        internal OrdinaryPaymentAttachment(JToken attachments)
+        {
+        }
+    }
 }
