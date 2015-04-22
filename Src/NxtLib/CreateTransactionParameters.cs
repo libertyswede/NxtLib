@@ -13,7 +13,7 @@ namespace NxtLib
         public UnencryptedMessage Message { get; set; }
         public AbstractEncryptedMessage EncryptedMessage { get; set; }
         public AbstractEncryptedMessage EncryptedMessageToSelf { get; set; }
-        public TransactionPhasing Phasing { get; private set; }
+        public TransactionPhasing Phasing { get; set; }
 
         protected CreateTransactionParameters(bool broadcast, short deadline, Amount fee)
         {
@@ -32,7 +32,10 @@ namespace NxtLib
             AddUnencryptedMessage(queryParameters);
             AddEncryptedMessage(queryParameters);
             AddToSelfMessage(queryParameters);
-            Phasing.AppendToQueryParameters(queryParameters);
+            if (Phasing != null)
+            {
+                Phasing.AppendToQueryParameters(queryParameters);
+            }
         }
 
         private void AddUnencryptedMessage(IDictionary<string, string> queryParameters)
