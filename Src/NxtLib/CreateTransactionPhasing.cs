@@ -3,21 +3,21 @@ using NxtLib.VotingSystem;
 
 namespace NxtLib
 {
-    public class TransactionPhasing
+    public class CreateTransactionPhasing
     {
         public bool Phased { get; set; }
         public int FinishHeight { get; set; }
-        public VotingModel VotingModel { get; set; }
-        public string Quorum { get; set; }
-        public long? MinBalance { get; set; }
-        public ulong? HoldingId { get; set; }
-        public MinBalanceModel? MinBalanceModel { get; set; }
-        public List<string> WhiteListed { get; set; }
-        public List<BinaryHexString> LinkedFullHash { get; set; }
         public BinaryHexString HashedSecret { get; set; }
         public string HashedSecretAlgorithm { get; set; }
+        public ulong? HoldingId { get; set; }
+        public List<BinaryHexString> LinkedFullHash { get; set; }
+        public long? MinBalance { get; set; }
+        public MinBalanceModel? MinBalanceModel { get; set; }
+        public string Quorum { get; set; }
+        public VotingModel VotingModel { get; set; }
+        public List<string> WhiteListed { get; set; }
 
-        public TransactionPhasing(int finishHeight, VotingModel votingModel, string quorum)
+        public CreateTransactionPhasing(int finishHeight, VotingModel votingModel, string quorum)
         {
             Phased = true;
             FinishHeight = finishHeight;

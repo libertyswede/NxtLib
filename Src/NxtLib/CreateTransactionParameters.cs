@@ -13,7 +13,7 @@ namespace NxtLib
         public UnencryptedMessage Message { get; set; }
         public AbstractEncryptedMessage EncryptedMessage { get; set; }
         public AbstractEncryptedMessage EncryptedMessageToSelf { get; set; }
-        public TransactionPhasing Phasing { get; set; }
+        public CreateTransactionPhasing Phasing { get; set; }
 
         protected CreateTransactionParameters(bool broadcast, short deadline, Amount fee)
         {
