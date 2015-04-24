@@ -11,6 +11,7 @@ namespace NxtLib.ServerInfo
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong CumulativeDifficulty { get; set; }
         public int CurrentMinRollbackHeight { get; set; }
+        public bool IncludeExpiredPrunable { get; set; }
         public bool IsScanning { get; set; }
         public bool IsTestnet { get; set; }
         public string LastBlockchainFeeder { get; set; }
