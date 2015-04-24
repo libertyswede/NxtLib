@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
+using NxtLib.VotingSystem;
 
 namespace NxtLib
 {
@@ -104,15 +107,17 @@ namespace NxtLib
 
     public abstract class EncryptedMessageBase : Appendix
     {
+        public bool IsCompressed { get; set; }
         public bool IsText { get; set; }
         public BinaryHexString Nonce { get; set; }
         public BinaryHexString Data { get; set; }
 
         protected EncryptedMessageBase(JToken messageToken)
         {
-            IsText = Convert.ToBoolean(((JValue)messageToken.SelectToken(IsTextKey)).Value.ToString());
-            Nonce = new BinaryHexString(((JValue)messageToken.SelectToken(NonceKey)).Value.ToString());
-            Data = new BinaryHexString(((JValue)messageToken.SelectToken(DataKey)).Value.ToString());
+            IsCompressed = Convert.ToBoolean(((JValue) messageToken.SelectToken(IsCompressedKey)).Value.ToString());
+            IsText = Convert.ToBoolean(((JValue) messageToken.SelectToken(IsTextKey)).Value.ToString());
+            Nonce = new BinaryHexString(((JValue) messageToken.SelectToken(NonceKey)).Value.ToString());
+            Data = new BinaryHexString(((JValue) messageToken.SelectToken(DataKey)).Value.ToString());
         }
     }
 
