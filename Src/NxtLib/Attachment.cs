@@ -297,7 +297,7 @@ namespace NxtLib
         public ulong HoldingId { get; set; }
         public int MaxNumberOfOptions { get; set; }
         public int MaxRangeValue { get; set; }
-        public int MinBalance { get; set; }
+        public long MinBalance { get; set; }
         public MinBalanceModel MinBalanceModel { get; set; }
         public int MinNumberOfOptions { get; set; }
         public int MinRangeValue { get; set; }
@@ -312,7 +312,7 @@ namespace NxtLib
             HoldingId = UInt64.Parse(GetAttachmentValue<string>(attachments, HoldingKey));
             MaxNumberOfOptions = GetAttachmentValue<int>(attachments, MaxNumberOfOptionsKey);
             MaxRangeValue = GetAttachmentValue<int>(attachments, MaxRangeValueKey);
-            MinBalance = GetAttachmentValue<int>(attachments, MinBalanceKey);
+            MinBalance = GetAttachmentValue<long>(attachments, MinBalanceKey);
             MinBalanceModel = (MinBalanceModel) GetAttachmentValue<int>(attachments, MinBalanceModelKey);
             MinRangeValue = GetAttachmentValue<int>(attachments, MinRangeValueKey);
             MinNumberOfOptions = GetAttachmentValue<int>(attachments, MinNumberOfOptionsKey);

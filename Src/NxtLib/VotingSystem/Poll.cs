@@ -19,7 +19,7 @@ namespace NxtLib.VotingSystem
         public ulong HoldingId { get; set; }
         public int MaxNumberOfOptions { get; set; }
         public int MaxRangeValue { get; set; }
-        public int MinBalance { get; set; }
+        public long MinBalance { get; set; }
         public MinBalanceModel MinBalanceModel { get; set; }
         public int MinNumberOfOptions { get; set; }
         public int MinRangeValue { get; set; }
