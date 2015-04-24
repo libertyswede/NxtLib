@@ -290,7 +290,7 @@ namespace NxtLib
         }
     }
 
-    public class MessagingPollCreation : Attachment
+    public class MessagingPollCreationAttachment : Attachment
     {
         public string Description { get; set; }
         public int FinishHeight { get; set; }
@@ -305,7 +305,7 @@ namespace NxtLib
         public List<string> Options { get; set; }
         public VotingModel VotingModel { get; set; }
 
-        internal MessagingPollCreation(JToken attachments)
+        internal MessagingPollCreationAttachment(JToken attachments)
         {
             Description = GetAttachmentValue<string>(attachments, DescriptionKey);
             FinishHeight = GetAttachmentValue<int>(attachments, FinishHeightKey);
