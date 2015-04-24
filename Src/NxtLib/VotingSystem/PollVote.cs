@@ -11,6 +11,6 @@ namespace NxtLib.VotingSystem
         [JsonProperty(PropertyName = "voter")]
         public ulong VoterId { get; set; }
         public string VoterRs { get; set; }
-        public List<string> Votes { get; set; }
+        public List<int> Votes { get; set; }
     }
 }
