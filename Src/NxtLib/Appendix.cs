@@ -37,6 +37,7 @@ namespace NxtLib
         protected const string InitialBuySupplyKey = "initialBuySupply";
         protected const string InitialSellSupplyKey = "initialSellSupply";
         protected const string InitialSupplyKey = "initialSupply";
+        protected const string IsCompressedKey = "isCompressed";
         protected const string IssuanceHeightKey = "issuanceHeight";
         protected const string IsTextKey = "isText";
         protected const string MaxDifficultyKey = "maxDifficulty";
@@ -56,6 +57,7 @@ namespace NxtLib
         protected const string OptionsKey = "options";
         protected const string OrderIdKey = "order";
         protected const string PeriodKey = "period";
+        protected const string PhasingFinishHeightKey = "phasingFinishHeight";
         protected const string PollKey = "poll";
         protected const string PriceNqtKey = "priceNQT";
         protected const string PurchaseKey = "purchase";
@@ -70,6 +72,7 @@ namespace NxtLib
         protected const string TagsKey = "tags";
         protected const string TotalBuyLimitKey = "totalBuyLimit";
         protected const string TotalSellLimitKey = "totalSellLimit";
+        protected const string TransactionFullHashesKey = "transactionFullHashes";
         protected const string TypeKey = "type";
         protected const string UnitsKey = "units";
         protected const string UriKey = "uri";
