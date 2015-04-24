@@ -179,4 +179,39 @@ namespace NxtLib
             return new PublicKeyAnnouncement(announcement.Value.ToString());
         }
     }
+
+    public class TransactionPhasing : Appendix
+    {
+        public int FinishHeight { get; set; }
+        public ulong HoldingId { get; set; }
+        public long MinBalance { get; set; }
+        public MinBalanceModel? MinBalanceModel { get; set; }
+        public string Quorum { get; set; }
+        public VotingModel VotingModel { get; set; }
+        public List<string> WhiteList { get; set; }
+        
+        private TransactionPhasing()
+        {
+        }
+
+        internal static TransactionPhasing ParseJson(JToken jObject)
+        {
+            // TODO: Remove test code
+            if (jObject != null)
+            {
+                var found = jObject.Children().OfType<JProperty>().Any(childProperty => childProperty.Name.Contains("phasing"));
+                if (!found)
+                {
+                    return null;
+                }
+            }
+
+            return new TransactionPhasing
+            {
+                FinishHeight = GetAttachmentValue<int>(jObject, FinishHeightKey),
+                HoldingId = UInt64.Parse(GetAttachmentValue<string>(jObject, HoldingKey)),
+                MinBalance = Int64.Parse(GetAttachmentValue<string>(jObject, MinBalanceKey))
+            };
+        }
+    }
 }
