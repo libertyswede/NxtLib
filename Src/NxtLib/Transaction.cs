@@ -60,6 +60,7 @@ namespace NxtLib
         MessagingAliasSell,
         MessagingAliasBuy,
         MessagingAliasDelete,
+        MessagingPhasingVoteCasting,
         MessagingPollCreation,
         MessagingVoteCasting,
         MessagingHubTerminalAnnouncement,

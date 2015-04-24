@@ -327,6 +327,23 @@ namespace NxtLib
         }
     }
 
+    public class MessagingPhasingVoteCasting : Attachment
+    {
+        public BinaryHexString RevealedSecret { get; set; }
+        public string RevealedSecretText { get; set; }
+        public List<BinaryHexString> TransactionFullHashes { get; set; }
+
+        internal MessagingPhasingVoteCasting(JToken attachments)
+        {
+            TransactionFullHashes = ParseHashes(attachments.SelectToken(TransactionFullHashesKey)).ToList();
+        }
+
+        private static IEnumerable<BinaryHexString> ParseHashes(JToken hashesToken)
+        {
+            return hashesToken.Children<JValue>().Select(optionToken => new BinaryHexString(optionToken.Value.ToString()));
+        }
+    }
+
     public class MessagingVoteCastingAttachment : Attachment
     {
         public ulong PollId { get; set; }

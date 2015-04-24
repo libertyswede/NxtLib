@@ -38,6 +38,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, value => null);
             //attachmentFuncs.Add(TransactionSubType.MessagingHubTerminalAnnouncement, TODO: .... );
             attachmentFuncs.Add(TransactionSubType.MessagingPollCreation, value => new MessagingPollCreationAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MessagingPhasingVoteCasting, value => new MessagingPhasingVoteCasting(value));
             attachmentFuncs.Add(TransactionSubType.MessagingVoteCasting, value => new MessagingVoteCastingAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyDeletion, value => new MonetarySystemCurrencyDeletion(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyIssuance, value => new MonetarySystemCurrencyIssuanceAttachment(value));
