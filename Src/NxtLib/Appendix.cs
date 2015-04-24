@@ -24,6 +24,8 @@ namespace NxtLib
         protected const string EncryptedMessageKey = "encryptedMessage";
         protected const string EncryptToSelfMessageKey = "encryptToSelfMessage";
         protected const string ExpirationHeightKey = "expirationHeight";
+        protected const string FinishHeightKey = "finishHeight";
+        protected const string HoldingKey = "holding";
         protected const string GoodsIdKey = "goods";
         protected const string GoodsDataKey = "goodsData";
         protected const string GoodsIsTextKey = "goodsIsText";
@@ -35,13 +37,20 @@ namespace NxtLib
         protected const string IssuanceHeightKey = "issuanceHeight";
         protected const string IsTextKey = "isText";
         protected const string MaxDifficultyKey = "maxDifficulty";
+        protected const string MaxNumberOfOptionsKey = "maxNumberOfOptions";
+        protected const string MaxRangeValueKey = "maxRangeValue";
         protected const string MaxSupplyKey = "maxSupply";
         protected const string MessageKey = "message";
         protected const string MessageIsTextKey = "messageIsText";
+        protected const string MinBalanceKey = "minBalance";
+        protected const string MinBalanceModelKey = "minBalanceModel";
         protected const string MinDifficultyKey = "minDifficulty";
+        protected const string MinNumberOfOptionsKey = "minNumberOfOptions";
+        protected const string MinRangeValueKey = "minRangeValue";
         protected const string MinReservePerUnitNqtKey = "minReservePerUnitNQT";
         protected const string NameKey = "name";
         protected const string NonceKey = "nonce";
+        protected const string OptionsKey = "options";
         protected const string OrderIdKey = "order";
         protected const string PeriodKey = "period";
         protected const string PriceNqtKey = "priceNQT";
@@ -60,6 +69,7 @@ namespace NxtLib
         protected const string TypeKey = "type";
         protected const string UnitsKey = "units";
         protected const string UriKey = "uri";
+        protected const string VotingModelKey = "votingModel";
 
         protected static T GetAttachmentValue<T>(JToken attachments, string key)
         {

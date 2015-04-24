@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
+using NxtLib.VotingSystem;
 
 namespace NxtLib
 {
@@ -286,6 +287,43 @@ namespace NxtLib
         {
             Alias = GetAttachmentValue<string>(attachments, AliasKey);
             Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
+        }
+    }
+
+    public class MessagingPollCreation : Attachment
+    {
+        public string Description { get; set; }
+        public int FinishHeight { get; set; }
+        public ulong HoldingId { get; set; }
+        public int MaxNumberOfOptions { get; set; }
+        public int MaxRangeValue { get; set; }
+        public int MinBalance { get; set; }
+        public MinBalanceModel MinBalanceModel { get; set; }
+        public int MinNumberOfOptions { get; set; }
+        public int MinRangeValue { get; set; }
+        public string Name { get; set; }
+        public List<string> Options { get; set; }
+        public VotingModel VotingModel { get; set; }
+
+        internal MessagingPollCreation(JToken attachments)
+        {
+            Description = GetAttachmentValue<string>(attachments, DescriptionKey);
+            FinishHeight = GetAttachmentValue<int>(attachments, FinishHeightKey);
+            HoldingId = UInt64.Parse(GetAttachmentValue<string>(attachments, HoldingKey));
+            MaxNumberOfOptions = GetAttachmentValue<int>(attachments, MaxNumberOfOptionsKey);
+            MaxRangeValue = GetAttachmentValue<int>(attachments, MaxRangeValueKey);
+            MinBalance = GetAttachmentValue<int>(attachments, MinBalanceKey);
+            MinBalanceModel = (MinBalanceModel) GetAttachmentValue<int>(attachments, MinBalanceModelKey);
+            MinRangeValue = GetAttachmentValue<int>(attachments, MinRangeValueKey);
+            MinNumberOfOptions = GetAttachmentValue<int>(attachments, MinNumberOfOptionsKey);
+            Name = GetAttachmentValue<string>(attachments, NameKey);
+            Options = ParseOptions(attachments.SelectToken(OptionsKey)).ToList();
+            VotingModel = (VotingModel)GetAttachmentValue<int>(attachments, VotingModelKey);
+        }
+
+        private static IEnumerable<string> ParseOptions(JToken optionsToken)
+        {
+            return optionsToken.Children<JValue>().Select(optionToken => optionToken.Value.ToString());
         }
     }
 
