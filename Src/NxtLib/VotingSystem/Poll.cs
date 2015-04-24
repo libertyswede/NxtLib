@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
+using NxtLib.Internal;
 
 namespace NxtLib.VotingSystem
 {
-    public abstract class Poll
+    public class Poll
     {
         [JsonProperty(PropertyName = "account")]
         public ulong AcountId { get; set; }
@@ -13,13 +15,19 @@ namespace NxtLib.VotingSystem
         public int FinishHeight { get; set; }
         public int MaxNumberOfOptions { get; set; }
         public int MaxRangeValue { get; set; }
+        public int MinBalance { get; set; }
         public MinBalanceModel MinBalanceModel { get; set; }
         public long MinNumberOfBalance { get; set; }
         public int MinNumberOfOptions { get; set; }
         public int MinRangeValue { get; set; }
         public string Name { get; set; }
         public List<string> Options { get; set; }
+
+        [JsonProperty(PropertyName = "poll")]
         public ulong PollId { get; set; }
+
+        [JsonConverter(typeof(DateTimeConverter))]
+        public DateTime Timestamp { get; set; }
         public VotingModel VotingModel { get; set; }
     }
 }
