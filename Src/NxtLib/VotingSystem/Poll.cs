@@ -13,6 +13,10 @@ namespace NxtLib.VotingSystem
         public string Description { get; set; }
         public bool Finished { get; set; }
         public int FinishHeight { get; set; }
+
+        [JsonProperty(PropertyName = "holding")]
+        [JsonConverter(typeof(StringToIntegralTypeConverter))]
+        public ulong HoldingId { get; set; }
         public int MaxNumberOfOptions { get; set; }
         public int MaxRangeValue { get; set; }
         public int MinBalance { get; set; }
