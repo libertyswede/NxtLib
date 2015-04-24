@@ -494,8 +494,10 @@ namespace NxtLib
 
     public class OrdinaryPaymentAttachment : Attachment
     {
+        // ReSharper disable UnusedParameter.Local
         internal OrdinaryPaymentAttachment(JToken attachments)
         {
         }
+        // ReSharper restore UnusedParameter.Local
     }
 }
