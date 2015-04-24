@@ -327,6 +327,23 @@ namespace NxtLib
         }
     }
 
+    public class MessagingVoteCastingAttachment : Attachment
+    {
+        public ulong PollId { get; set; }
+        public List<int> Votes { get; set; }
+
+        internal MessagingVoteCastingAttachment(JToken attachments)
+        {
+            PollId = UInt64.Parse(GetAttachmentValue<string>(attachments, PollKey));
+            Votes = ParseVotes(attachments.SelectToken(VoteKey)).ToList();
+        }
+
+        private IEnumerable<int> ParseVotes(JToken votesToken)
+        {
+            return votesToken.Children<JValue>().Select(optionToken => (int)(long)optionToken.Value);
+        }
+    }
+
     public abstract class MonetarySystemExchange : Attachment
     {
         public ulong CurrencyId { get; set; }

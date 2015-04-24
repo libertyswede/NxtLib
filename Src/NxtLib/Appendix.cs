@@ -53,6 +53,7 @@ namespace NxtLib
         protected const string OptionsKey = "options";
         protected const string OrderIdKey = "order";
         protected const string PeriodKey = "period";
+        protected const string PollKey = "poll";
         protected const string PriceNqtKey = "priceNQT";
         protected const string PurchaseKey = "purchase";
         protected const string QuantityKey = "quantity";
@@ -69,6 +70,7 @@ namespace NxtLib
         protected const string TypeKey = "type";
         protected const string UnitsKey = "units";
         protected const string UriKey = "uri";
+        protected const string VoteKey = "vote";
         protected const string VotingModelKey = "votingModel";
 
         protected static T GetAttachmentValue<T>(JToken attachments, string key)
