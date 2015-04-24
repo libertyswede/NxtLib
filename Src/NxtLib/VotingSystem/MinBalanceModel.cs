@@ -2,8 +2,8 @@ namespace NxtLib.VotingSystem
 {
     public enum MinBalanceModel
     {
-        Nxt = 0,
-        AssetBalance = 1,
-        CurrencyBalance = 2
+        Nxt = 1,
+        AssetBalance = 2,
+        CurrencyBalance = 3
     }
 }
