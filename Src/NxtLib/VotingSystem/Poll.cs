@@ -21,7 +21,6 @@ namespace NxtLib.VotingSystem
         public int MaxRangeValue { get; set; }
         public int MinBalance { get; set; }
         public MinBalanceModel MinBalanceModel { get; set; }
-        public long MinNumberOfBalance { get; set; }
         public int MinNumberOfOptions { get; set; }
         public int MinRangeValue { get; set; }
         public string Name { get; set; }
