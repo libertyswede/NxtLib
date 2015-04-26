@@ -27,6 +27,7 @@ namespace NxtLib
         protected const string EncryptedMessageKey = "encryptedMessage";
         protected const string EncryptToSelfMessageKey = "encryptToSelfMessage";
         protected const string ExpirationHeightKey = "expirationHeight";
+        protected const string FilenameKey = "filename";
         protected const string FinishHeightKey = "finishHeight";
         protected const string HashKey = "hash";
         protected const string HoldingKey = "holding";

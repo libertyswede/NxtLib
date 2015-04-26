@@ -533,23 +533,50 @@ namespace NxtLib
         }
     }
 
-    public class TaggedDataExtendAttachment : Attachment
+    public abstract class TaggedDataAttachment : Attachment
     {
-        public string TaggedData { get; set; }
+        public string Data { get; set; }
+        public string DataType { get; set; }
+        public string Description { get; set; }
+        public string Filename { get; set; }
+        public bool IsText { get; set; }
+        public string Name { get; set; }
+        public string Tags { get; set; }
 
-        internal TaggedDataExtendAttachment(JToken jToken)
+        protected void ParseTaggedData(JToken jToken)
         {
-            TaggedData = GetAttachmentValue<string>(jToken, TaggedDataKey);
+            if (jToken.SelectToken(DataKey) != null)
+            {
+                Data = GetAttachmentValue<string>(jToken, DataKey);
+                DataType = GetAttachmentValue<string>(jToken, TypeKey);
+                Description = GetAttachmentValue<string>(jToken, DescriptionKey);
+                Filename = GetAttachmentValue<string>(jToken, FilenameKey);
+                IsText = GetAttachmentValue<bool>(jToken, IsTextKey);
+                Name = GetAttachmentValue<string>(jToken, NameKey);
+                Tags = GetAttachmentValue<string>(jToken, TagsKey);
+            }
         }
     }
 
-    public class TaggedDataUploadAttachment : Attachment
+    public class TaggedDataExtendAttachment : TaggedDataAttachment
+    {
+        public ulong TaggedDataId { get; set; }
+
+        internal TaggedDataExtendAttachment(JToken jToken)
+        {
+            TaggedDataId = GetAttachmentValue<ulong>(jToken, TaggedDataKey);
+            ParseTaggedData(jToken);
+        }
+    }
+
+    public class TaggedDataUploadAttachment : TaggedDataAttachment
     {
         public BinaryHexString Hash { get; set; }
 
         internal TaggedDataUploadAttachment(JToken jToken)
         {
             Hash = new BinaryHexString(GetAttachmentValue<string>(jToken, HashKey));
+            ParseTaggedData(jToken);
         }
     }
 }
