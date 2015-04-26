@@ -10,6 +10,7 @@ using NxtLib.MonetarySystem;
 using NxtLib.Networking;
 using NxtLib.Phasing;
 using NxtLib.ServerInfo;
+using NxtLib.TaggedData;
 using NxtLib.Tokens;
 using NxtLib.Transactions;
 using NxtLib.Utils;
@@ -31,6 +32,7 @@ namespace NxtLib
         INetworkingService CreateNetworkingService();
         IPhasingService CreatePhasingService();
         IServerInfoService CreateServerInfoService();
+        ITaggedDataService CreateTaggedDataService();
         ITokenService CreateTokenService();
         ITransactionService CreateTransactionService();
         IUtilService CreateUtilService();
@@ -104,6 +106,11 @@ namespace NxtLib
         public IServerInfoService CreateServerInfoService()
         {
             return new ServerInfoService(_baseAddress);
+        }
+
+        public ITaggedDataService CreateTaggedDataService()
+        {
+            return new TaggedDataService(_baseAddress);
         }
 
         public ITokenService CreateTokenService()
