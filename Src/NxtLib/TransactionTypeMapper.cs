@@ -20,7 +20,8 @@ namespace NxtLib
                 {2, TransactionMainType.ColoredCoins},
                 {3, TransactionMainType.DigitalGoods},
                 {4, TransactionMainType.AccountControl},
-                {5, TransactionMainType.MonetarySystem}
+                {5, TransactionMainType.MonetarySystem},
+                {6, TransactionMainType.TaggedData}
             };
 
             SubTypes = new Dictionary<byte, Dictionary<byte, TransactionSubType>>
@@ -90,7 +91,15 @@ namespace NxtLib
                         {7, TransactionSubType.MonetarySystemCurrencyMinting},
                         {8, TransactionSubType.MonetarySystemCurrencyDeletion}
                     }
+                },
+                {
+                    6, new Dictionary<byte, TransactionSubType>
+                    {
+                        {0, TransactionSubType.TaggedDataUpload},
+                        {1, TransactionSubType.TaggedDataExtend}
+                    }
                 }
+
             };
 
             foreach (var mainType in MainTypes)

@@ -46,7 +46,8 @@ namespace NxtLib
         ColoredCoins,
         DigitalGoods,
         AccountControl,
-        MonetarySystem
+        MonetarySystem,
+        TaggedData
     }
 
     public enum TransactionSubType
@@ -97,6 +98,10 @@ namespace NxtLib
         MonetarySystemExchangeBuy,
         MonetarySystemExchangeSell,
         MonetarySystemCurrencyMinting,
-        MonetarySystemCurrencyDeletion
+        MonetarySystemCurrencyDeletion,
+
+        // TaggedData
+        TaggedDataUpload,
+        TaggedDataExtend
     }
 }
