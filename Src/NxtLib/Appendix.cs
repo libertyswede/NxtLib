@@ -28,6 +28,7 @@ namespace NxtLib
         protected const string EncryptToSelfMessageKey = "encryptToSelfMessage";
         protected const string ExpirationHeightKey = "expirationHeight";
         protected const string FinishHeightKey = "finishHeight";
+        protected const string HashKey = "hash";
         protected const string HoldingKey = "holding";
         protected const string GoodsIdKey = "goods";
         protected const string GoodsDataKey = "goodsData";
@@ -78,6 +79,7 @@ namespace NxtLib
         protected const string ReserveSupplyKey = "reserveSupply";
         protected const string RulesetKey = "ruleset";
         protected const string SellRateNqtKey = "sellRateNQT";
+        protected const string TaggedDataKey = "taggedData";
         protected const string TagsKey = "tags";
         protected const string TotalBuyLimitKey = "totalBuyLimit";
         protected const string TotalSellLimitKey = "totalSellLimit";

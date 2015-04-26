@@ -528,10 +528,28 @@ namespace NxtLib
 
     public class OrdinaryPaymentAttachment : Attachment
     {
-        // ReSharper disable UnusedParameter.Local
-        internal OrdinaryPaymentAttachment(JToken attachments)
+        internal OrdinaryPaymentAttachment()
         {
         }
-        // ReSharper restore UnusedParameter.Local
+    }
+
+    public class TaggedDataExtendAttachment : Attachment
+    {
+        public string TaggedData { get; set; }
+
+        internal TaggedDataExtendAttachment(JToken jToken)
+        {
+            TaggedData = GetAttachmentValue<string>(jToken, TaggedDataKey);
+        }
+    }
+
+    public class TaggedDataUploadAttachment : Attachment
+    {
+        public BinaryHexString Hash { get; set; }
+
+        internal TaggedDataUploadAttachment(JToken jToken)
+        {
+            Hash = new BinaryHexString(GetAttachmentValue<string>(jToken, HashKey));
+        }
     }
 }
