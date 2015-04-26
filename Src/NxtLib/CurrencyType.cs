@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using NxtLib.Internal;
 
 namespace NxtLib
 {
+    [DebuggerDisplay("{ToString()} - {GetHashCode()}")]
     public enum CurrencyType
     {
         [Description("EXCHANGEABLE")]

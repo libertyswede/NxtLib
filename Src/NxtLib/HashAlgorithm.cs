@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace NxtLib
 {
+    [DebuggerDisplay("{ToString()} - {GetHashCode()}")]
     public enum HashAlgorithm
     {
         Sha256 = 2,

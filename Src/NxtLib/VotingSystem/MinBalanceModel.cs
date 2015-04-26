@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace NxtLib.VotingSystem
 {
+    [DebuggerDisplay("{ToString()} - {GetHashCode()}")]
     public enum MinBalanceModel
     {
         Nxt = 1,
