@@ -115,6 +115,7 @@
     <Compile Include="MonetarySystem\CurrencyTransfer.cs" />
     <Compile Include="MonetarySystem\CurrencyTransfersReply.cs" />
     <Compile Include="MonetarySystem\GetOffersReply.cs" />
+    <Compile Include="HashAlgorithm.cs" />
     <Compile Include="MonetarySystem\IMonetarySystemService.cs" />
     <Compile Include="Networking\GetPeersIncludeInfoReply.cs" />
     <Compile Include="Networking\INetworkingService.cs" />

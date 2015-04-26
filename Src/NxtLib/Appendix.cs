@@ -58,6 +58,15 @@ namespace NxtLib
         protected const string OrderIdKey = "order";
         protected const string PeriodKey = "period";
         protected const string PhasingFinishHeightKey = "phasingFinishHeight";
+        protected const string PhasingHashedSecretKey = "phasingHashedSecret";
+        protected const string PhasingHashedSecretAlgorithmKey = "phasingHashedSecretAlgorithm";
+        protected const string PhasingHoldingKey = "phasingHolding";
+        protected const string PhasingLinkedFullHashesKey = "phasingLinkedFullHashes";
+        protected const string PhasingMinBalanceKey = "phasingMinBalance";
+        protected const string PhasingMinBalanceModelKey = "phasingMinBalanceModel";
+        protected const string PhasingQuorumKey = "phasingQuorum";
+        protected const string PhasingVotingModelKey = "phasingVotingModel";
+        protected const string PhasingWhitelistKey = "phasingWhitelist";
         protected const string PollKey = "poll";
         protected const string PriceNqtKey = "priceNQT";
         protected const string PurchaseKey = "purchase";
@@ -183,35 +192,63 @@ namespace NxtLib
     public class TransactionPhasing : Appendix
     {
         public int FinishHeight { get; set; }
+        public BinaryHexString HashedSecret { get; set; }
+        public HashAlgorithm? HashedSecretAlgorithm { get; set; }
         public ulong HoldingId { get; set; }
+        public List<BinaryHexString> LinkedFullHashes { get; set; }
         public long MinBalance { get; set; }
-        public MinBalanceModel? MinBalanceModel { get; set; }
+        public MinBalanceModel MinBalanceModel { get; set; }
         public string Quorum { get; set; }
         public VotingModel VotingModel { get; set; }
-        public List<string> WhiteList { get; set; }
-        
+        public List<ulong> WhiteList { get; set; }
+
         private TransactionPhasing()
         {
+            WhiteList = new List<ulong>();
+            LinkedFullHashes = new List<BinaryHexString>();
         }
 
-        internal static TransactionPhasing ParseJson(JToken jObject)
+        internal static TransactionPhasing ParseJson(JObject jObject)
         {
-            // TODO: Remove test code
-            if (jObject != null)
+            if (jObject == null || jObject.SelectToken(PhasingFinishHeightKey) == null)
             {
-                var found = jObject.Children().OfType<JProperty>().Any(childProperty => childProperty.Name.Contains("phasing"));
-                if (!found)
-                {
-                    return null;
-                }
+                return null;
             }
 
-            return new TransactionPhasing
+            var phasing = new TransactionPhasing
             {
-                FinishHeight = GetAttachmentValue<int>(jObject, FinishHeightKey),
-                HoldingId = UInt64.Parse(GetAttachmentValue<string>(jObject, HoldingKey)),
-                MinBalance = Int64.Parse(GetAttachmentValue<string>(jObject, MinBalanceKey))
+                FinishHeight = GetAttachmentValue<int>(jObject, PhasingFinishHeightKey),
+                HoldingId = UInt64.Parse(GetAttachmentValue<string>(jObject, PhasingHoldingKey)),
+                MinBalance = Int64.Parse(GetAttachmentValue<string>(jObject, PhasingMinBalanceKey)),
+                MinBalanceModel = (MinBalanceModel)GetAttachmentValue<int>(jObject, PhasingMinBalanceModelKey),
+                Quorum = GetAttachmentValue<string>(jObject, PhasingQuorumKey),
+                VotingModel = (VotingModel)GetAttachmentValue<int>(jObject, PhasingVotingModelKey)
             };
+
+            if (jObject.SelectToken(PhasingWhitelistKey) != null)
+            {
+                phasing.WhiteList = ParseWhitelist(jObject.SelectToken(PhasingWhitelistKey)).Select(UInt64.Parse).ToList();
+            }
+            if (jObject.SelectToken(PhasingHashedSecretKey) != null)
+            {
+                phasing.HashedSecret = new BinaryHexString(GetAttachmentValue<string>(jObject, PhasingHashedSecretKey));
+                phasing.HashedSecretAlgorithm = (HashAlgorithm)GetAttachmentValue<int>(jObject, PhasingHashedSecretAlgorithmKey);
+            }
+            if (jObject.SelectToken(PhasingLinkedFullHashesKey) != null)
+            {
+                phasing.LinkedFullHashes =
+                    ParseWhitelist(jObject.SelectToken(PhasingLinkedFullHashesKey))
+                        .Select(s => new BinaryHexString(s))
+                        .ToList();
+            }
+
+            return phasing;
+        }
+
+
+        private static IEnumerable<string> ParseWhitelist(JToken whitelistToken)
+        {
+            return whitelistToken.Children<JValue>().Select(optionToken => optionToken.Value.ToString());
         }
     }
 }

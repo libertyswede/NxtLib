@@ -6,7 +6,7 @@ namespace NxtLib.MonetarySystem
 {
     public class IssueCurrencyParameters
     {
-        public MintAlgorithm? Algorithm { get; set; }
+        public HashAlgorithm? Algorithm { get; set; }
         public string Code { get; set; }
         public byte? Decimals { get; set; }
         public string Description { get; set; }
@@ -56,13 +56,5 @@ namespace NxtLib.MonetarySystem
             var currencyType = Types.Any() ? 0 : (int?)null;
             return Types.Aggregate(currencyType, (current, type) => current | (int) type);
         }
-    }
-
-    public enum MintAlgorithm
-    {
-        Sha256 = 2,
-        Sha3 = 3,
-        Scrypt = 5,
-        Keccak25 = 25
     }
 }
