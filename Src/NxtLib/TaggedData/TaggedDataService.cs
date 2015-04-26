@@ -94,7 +94,7 @@ namespace NxtLib.TaggedData
             throw new NotImplementedException();
         }
 
-        public async Task<object> UploadTaggedData(string name, string data, CreateTransactionParameters parameters,
+        public async Task<TransactionCreatedReply> UploadTaggedData(string name, string data, CreateTransactionParameters parameters,
             string description = null, string tags = null, string type = null, bool? isText = null,
             string filename = null)
         {
@@ -106,7 +106,7 @@ namespace NxtLib.TaggedData
             AddToParametersIfHasValue("filename", filename, queryParameters);
             parameters.AppendToQueryParameters(queryParameters);
 
-            throw new NotImplementedException();
+            return await Post<TransactionCreatedReply>("uploadTaggedData", queryParameters);
         }
 
         public async Task<object> VerifyTaggedData(ulong transactionId, string name, string data, string description = null,

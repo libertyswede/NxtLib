@@ -127,6 +127,8 @@
     <Compile Include="ServerInfo\IServerInfoService.cs" />
     <Compile Include="ServerInfo\PeerState.cs" />
     <Compile Include="ServiceFactory.cs" />
+    <Compile Include="TaggedData\ITaggedDataService.cs" />
+    <Compile Include="TaggedData\TaggedDataService.cs" />
     <Compile Include="Tokens\ITokenService.cs" />
     <Compile Include="Transactions\ITransactionService.cs" />
     <Compile Include="Transactions\TransactionParameter.cs" />
