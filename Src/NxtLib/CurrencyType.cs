@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using NxtLib.Internal;
 
 namespace NxtLib
 {

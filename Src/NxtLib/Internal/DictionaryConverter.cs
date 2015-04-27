@@ -4,19 +4,19 @@ using Newtonsoft.Json;
 
 namespace NxtLib.Internal
 {
-    internal class DictionaryConverter<TKey, TValue> : JsonConverter
+    internal class DictionaryConverter : JsonConverter
     {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.StartObject)
             {
-                var reply = new Dictionary<TKey, TValue>();
+                var reply = new Dictionary<string, sbyte>();
                 reader.Read();
                 while (reader.TokenType != JsonToken.EndObject)
                 {
-                    var propertyName = (TKey) reader.Value;
+                    var propertyName = (string)reader.Value;
                     reader.Read();
-                    var propertyValue = (TValue) reader.Value;
+                    var propertyValue = (sbyte)(long)reader.Value;
                     reader.Read();
                     reply.Add(propertyName, propertyValue);
                 }

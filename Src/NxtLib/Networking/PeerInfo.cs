@@ -28,11 +28,11 @@ namespace NxtLib.Networking
         public enum PeerState
         {
             [Description("NON_CONNECTED")]
-            NonConnected,
+            NonConnected = 0,
             [Description("CONNECTED")]
-            Connected,
+            Connected = 1,
             [Description("DISCONNECTED")]
-            Disconnected
+            Disconnected = 2
         }
     }
 }

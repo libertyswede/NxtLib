@@ -53,55 +53,93 @@ namespace NxtLib
     public enum TransactionSubType
     {
         // Payment
+        [Description("OrdinaryPayment")]
         PaymentOrdinaryPayment,
 
         // Messaging
+        [Description("ArbitraryMessage")]
         MessagingArbitraryMessage,
+        [Description("AliasAssignment")]
         MessagingAliasAssignment,
-        MessagingAliasSell,
-        MessagingAliasBuy,
-        MessagingAliasDelete,
-        MessagingPhasingVoteCasting,
+        [Description("PollCreation")]
         MessagingPollCreation,
+        [Description("VoteCasting")]
         MessagingVoteCasting,
+        [Description("HubAnnouncement")]
         MessagingHubTerminalAnnouncement,
+        [Description("AccountInfo")]
         MessagingAccountInfo,
+        [Description("AliasSell")]
+        MessagingAliasSell,
+        [Description("AliasBuy")]
+        MessagingAliasBuy,
+        [Description("AliasDelete")]
+        MessagingAliasDelete,
+        [Description("PhasingVoteCasting")]
+        MessagingPhasingVoteCasting,
 
         // ColoredCoins
+        [Description("AssetIssuance")]
         ColoredCoinsAssetIssuance,
+        [Description("AssetTransfer")]
         ColoredCoinsAssetTransfer,
+        [Description("AskOrderPlacement")]
         ColoredCoinsAskOrderPlacement,
+        [Description("BidOrderPlacement")]
         ColoredCoinsBidOrderPlacement,
+        [Description("AskOrderCancellation")]
         ColoredCoinsAskOrderCancellation,
+        [Description("BidOrderCancellation")]
         ColoredCoinsBidOrderCancellation,
+        [Description("DividendPayment")]
         ColoredCoinsDividendPayment,
 
         // DigitalGoods
+        [Description("DigitalGoodsListing")]
         DigitalGoodsListing,
+        [Description("DigitalGoodsDelisting")]
         DigitalGoodsDelisting,
+        [Description("DigitalGoodsPriceChange")]
         DigitalGoodsPriceChange,
+        [Description("DigitalGoodsQuantityChange")]
         DigitalGoodsQuantityChange,
+        [Description("DigitalGoodsPurchase")]
         DigitalGoodsPurchase,
+        [Description("DigitalGoodsDelivery")]
         DigitalGoodsDelivery,
+        [Description("DigitalGoodsFeedback")]
         DigitalGoodsFeedback,
+        [Description("DigitalGoodsRefund")]
         DigitalGoodsRefund,
 
         // AccountControl
+        [Description("EffectiveBalanceLeasing")]
         AccountControlEffectiveBalanceLeasing,
 
         // MonetarySystem
+        [Description("CurrencyIssuance")]
         MonetarySystemCurrencyIssuance,
+        [Description("ReserveIncrease")]
         MonetarySystemReserveIncrease,
+        [Description("ReserveClaim")]
         MonetarySystemReserveClaim,
+        [Description("CurrencyTransfer")]
         MonetarySystemCurrencyTransfer,
+        [Description("PublishExchangeOffer")]
         MonetarySystemPublishExchangeOffer,
+        [Description("ExchangeBuy")]
         MonetarySystemExchangeBuy,
+        [Description("ExchangeSell")]
         MonetarySystemExchangeSell,
+        [Description("CurrencyMinting")]
         MonetarySystemCurrencyMinting,
+        [Description("CurrencyDeletion")]
         MonetarySystemCurrencyDeletion,
 
         // TaggedData
+        [Description("TaggedDataUpload")]
         TaggedDataUpload,
+        [Description("TaggedDataExtend")]
         TaggedDataExtend
     }
 }

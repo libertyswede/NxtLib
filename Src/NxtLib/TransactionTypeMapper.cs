@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace NxtLib
 {
-    internal static class TransactionTypeMapper
+    public static class TransactionTypeMapper
     {
         private readonly static Dictionary<byte, TransactionMainType> MainTypes;
         private readonly static Dictionary<byte, Dictionary<byte, TransactionSubType>> SubTypes;
@@ -113,27 +113,27 @@ namespace NxtLib
             }
         }
 
-        internal static TransactionMainType GetMainType(byte typeByte)
+        public static TransactionMainType GetMainType(byte typeByte)
         {
             return MainTypes[typeByte];
         }
 
-        internal static TransactionSubType GetSubType(byte typeByte, byte subTypeByte)
+        public static TransactionSubType GetSubType(byte typeByte, byte subTypeByte)
         {
             return SubTypes[typeByte][subTypeByte];
         }
 
-        internal static byte GetMainTypeByte(TransactionMainType type)
+        public static byte GetMainTypeByte(TransactionMainType type)
         {
             return MainTypesToByte[type];
         }
 
-        internal static byte GetMainTypeByte(TransactionSubType type)
+        public static byte GetMainTypeByte(TransactionSubType type)
         {
             return SubTypes.Single(st => st.Value.ContainsValue(type)).Key;
         }
 
-        internal static byte GetSubTypeByte(TransactionSubType type)
+        public static byte GetSubTypeByte(TransactionSubType type)
         {
             return SubTypesToByte[type];
         }

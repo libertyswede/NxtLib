@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace NxtLib.Internal
+namespace NxtLib
 {
     [AttributeUsage(AttributeTargets.All)]
-    internal class DescriptionAttribute : Attribute
+    public class DescriptionAttribute : Attribute
     {
-        internal string Name { get; private set; }
+        public string Name { get; private set; }
 
         internal DescriptionAttribute(string name)
         {
