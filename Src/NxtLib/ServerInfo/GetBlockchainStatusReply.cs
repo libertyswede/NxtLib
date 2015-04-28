@@ -1,31 +1,9 @@
-﻿using System;
-using Newtonsoft.Json;
-using NxtLib.Internal;
-
-namespace NxtLib.ServerInfo
+﻿namespace NxtLib.ServerInfo
 {
-    public class GetBlockchainStatusReply : BaseReply
+    public class GetBlockchainStatusReply : BlockchainStatus, IBaseReply
     {
-        public string Application { get; set; }
-
-        [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong CumulativeDifficulty { get; set; }
-        public int CurrentMinRollbackHeight { get; set; }
-        public bool IncludeExpiredPrunable { get; set; }
-        public bool IsScanning { get; set; }
-        public bool IsTestnet { get; set; }
-        public string LastBlockchainFeeder { get; set; }
-        public int LastBlockchainFeederHeight { get; set; }
-
-        [JsonProperty(PropertyName = "lastBlock")]
-        [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong LastBlockId { get; set; }
-        public int MaxPrunableLifetime { get; set; }
-        public int MaxRollback { get; set; }
-        public int NumberOfBlocks { get; set; }
-
-        [JsonConverter(typeof(DateTimeConverter))]
-        public DateTime Time { get; set; }
-        public string Version { get; set; }
+        public string RawJsonReply { get; set; }
+        public int RequestProcessingTime { get; set; }
+        public string RequestUri { get; set; }
     }
 }
