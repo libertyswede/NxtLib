@@ -31,7 +31,7 @@ namespace NxtLib.Networking
                 .GetType()
                 .GetTypeInfo()
                 .GetDeclaredField(state.ToString())
-                .GetCustomAttribute<DescriptionAttribute>().Name;
+                .GetCustomAttribute<NxtApiAttribute>().Name;
 
             return new PeersLocator(state, value);
         }

@@ -53,93 +53,93 @@ namespace NxtLib
     public enum TransactionSubType
     {
         // Payment
-        [Description("OrdinaryPayment")]
+        [NxtApi("OrdinaryPayment")]
         PaymentOrdinaryPayment,
 
         // Messaging
-        [Description("ArbitraryMessage")]
+        [NxtApi("ArbitraryMessage")]
         MessagingArbitraryMessage,
-        [Description("AliasAssignment")]
+        [NxtApi("AliasAssignment")]
         MessagingAliasAssignment,
-        [Description("PollCreation")]
+        [NxtApi("PollCreation")]
         MessagingPollCreation,
-        [Description("VoteCasting")]
+        [NxtApi("VoteCasting")]
         MessagingVoteCasting,
-        [Description("HubAnnouncement")]
+        [NxtApi("HubAnnouncement")]
         MessagingHubTerminalAnnouncement,
-        [Description("AccountInfo")]
+        [NxtApi("AccountInfo")]
         MessagingAccountInfo,
-        [Description("AliasSell")]
+        [NxtApi("AliasSell")]
         MessagingAliasSell,
-        [Description("AliasBuy")]
+        [NxtApi("AliasBuy")]
         MessagingAliasBuy,
-        [Description("AliasDelete")]
+        [NxtApi("AliasDelete")]
         MessagingAliasDelete,
-        [Description("PhasingVoteCasting")]
+        [NxtApi("PhasingVoteCasting")]
         MessagingPhasingVoteCasting,
 
         // ColoredCoins
-        [Description("AssetIssuance")]
+        [NxtApi("AssetIssuance")]
         ColoredCoinsAssetIssuance,
-        [Description("AssetTransfer")]
+        [NxtApi("AssetTransfer")]
         ColoredCoinsAssetTransfer,
-        [Description("AskOrderPlacement")]
+        [NxtApi("AskOrderPlacement")]
         ColoredCoinsAskOrderPlacement,
-        [Description("BidOrderPlacement")]
+        [NxtApi("BidOrderPlacement")]
         ColoredCoinsBidOrderPlacement,
-        [Description("AskOrderCancellation")]
+        [NxtApi("AskOrderCancellation")]
         ColoredCoinsAskOrderCancellation,
-        [Description("BidOrderCancellation")]
+        [NxtApi("BidOrderCancellation")]
         ColoredCoinsBidOrderCancellation,
-        [Description("DividendPayment")]
+        [NxtApi("DividendPayment")]
         ColoredCoinsDividendPayment,
 
         // DigitalGoods
-        [Description("DigitalGoodsListing")]
+        [NxtApi("DigitalGoodsListing")]
         DigitalGoodsListing,
-        [Description("DigitalGoodsDelisting")]
+        [NxtApi("DigitalGoodsDelisting")]
         DigitalGoodsDelisting,
-        [Description("DigitalGoodsPriceChange")]
+        [NxtApi("DigitalGoodsPriceChange")]
         DigitalGoodsPriceChange,
-        [Description("DigitalGoodsQuantityChange")]
+        [NxtApi("DigitalGoodsQuantityChange")]
         DigitalGoodsQuantityChange,
-        [Description("DigitalGoodsPurchase")]
+        [NxtApi("DigitalGoodsPurchase")]
         DigitalGoodsPurchase,
-        [Description("DigitalGoodsDelivery")]
+        [NxtApi("DigitalGoodsDelivery")]
         DigitalGoodsDelivery,
-        [Description("DigitalGoodsFeedback")]
+        [NxtApi("DigitalGoodsFeedback")]
         DigitalGoodsFeedback,
-        [Description("DigitalGoodsRefund")]
+        [NxtApi("DigitalGoodsRefund")]
         DigitalGoodsRefund,
 
         // AccountControl
-        [Description("EffectiveBalanceLeasing")]
+        [NxtApi("EffectiveBalanceLeasing")]
         AccountControlEffectiveBalanceLeasing,
 
         // MonetarySystem
-        [Description("CurrencyIssuance")]
+        [NxtApi("CurrencyIssuance")]
         MonetarySystemCurrencyIssuance,
-        [Description("ReserveIncrease")]
+        [NxtApi("ReserveIncrease")]
         MonetarySystemReserveIncrease,
-        [Description("ReserveClaim")]
+        [NxtApi("ReserveClaim")]
         MonetarySystemReserveClaim,
-        [Description("CurrencyTransfer")]
+        [NxtApi("CurrencyTransfer")]
         MonetarySystemCurrencyTransfer,
-        [Description("PublishExchangeOffer")]
+        [NxtApi("PublishExchangeOffer")]
         MonetarySystemPublishExchangeOffer,
-        [Description("ExchangeBuy")]
+        [NxtApi("ExchangeBuy")]
         MonetarySystemExchangeBuy,
-        [Description("ExchangeSell")]
+        [NxtApi("ExchangeSell")]
         MonetarySystemExchangeSell,
-        [Description("CurrencyMinting")]
+        [NxtApi("CurrencyMinting")]
         MonetarySystemCurrencyMinting,
-        [Description("CurrencyDeletion")]
+        [NxtApi("CurrencyDeletion")]
         MonetarySystemCurrencyDeletion,
 
         // TaggedData
-        [Description("TaggedDataUpload")]
+        [NxtApi("TaggedDataUpload")]
         TaggedDataUpload,
-        [Description("TaggedDataExtend")]
+        [NxtApi("TaggedDataExtend")]
         TaggedDataExtend
     }
 }

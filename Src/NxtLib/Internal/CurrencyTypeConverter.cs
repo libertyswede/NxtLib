@@ -62,7 +62,7 @@ namespace NxtLib.Internal
                     .GetType()
                     .GetTypeInfo()
                     .GetDeclaredField(currencyType.ToString())
-                    .GetCustomAttribute<DescriptionAttribute>();
+                    .GetCustomAttribute<NxtApiAttribute>();
 
                 if (displayAttribute != null && string.Equals(displayAttribute.Name, description))
                 {

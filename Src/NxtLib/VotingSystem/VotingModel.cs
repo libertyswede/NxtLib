@@ -5,19 +5,19 @@ namespace NxtLib.VotingSystem
     [DebuggerDisplay("{ToString()} - {GetHashCode()}")]
     public enum VotingModel
     {
-        [Description("NONE")]
+        [NxtApi("NONE")]
         None = -1,
-        [Description("ACCOUNT")]
+        [NxtApi("ACCOUNT")]
         Account = 0,
-        [Description("NQT")]
+        [NxtApi("NQT")]
         Nqt = 1,
-        [Description("ASSET")]
+        [NxtApi("ASSET")]
         Asset = 2,
-        [Description("CURRENCY")]
+        [NxtApi("CURRENCY")]
         Currency = 3,
-        [Description("TRANSACTION")]
+        [NxtApi("TRANSACTION")]
         Transaction = 4,
-        [Description("HASH")]
+        [NxtApi("HASH")]
         Hash = 5
     }
 }

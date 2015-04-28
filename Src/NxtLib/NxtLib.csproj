@@ -83,7 +83,7 @@
     <Compile Include="AssetExchange\OrderReply.cs" />
     <Compile Include="Blocks\IBlockService.cs" />
     <Compile Include="CountReply.cs" />
-    <Compile Include="DescriptionAttribute.cs" />
+    <Compile Include="NxtApiAttribute.cs" />
     <Compile Include="Internal\LocalSign\Crypto.cs" />
     <Compile Include="Internal\LocalSign\Curve25519.cs" />
     <Compile Include="CurrencyType.cs" />

@@ -5,17 +5,17 @@ namespace NxtLib
     [DebuggerDisplay("{ToString()} - {GetHashCode()}")]
     public enum HashAlgorithm
     {
-        [Description("SHA256")]
+        [NxtApi("SHA256")]
         Sha256 = 2,
-        [Description("SHA3")]
+        [NxtApi("SHA3")]
         Sha3 = 3,
-        [Description("SCRYPT")]
+        [NxtApi("SCRYPT")]
         Scrypt = 5,
-        [Description("RIPEMD160")]
+        [NxtApi("RIPEMD160")]
         Ripemd160 = 6,
-        [Description("Keccak25")]
+        [NxtApi("Keccak25")]
         Keccak25 = 25,
-        [Description("RIPEMD160_SHA256")]
+        [NxtApi("RIPEMD160_SHA256")]
         Ripemd160Sha256 = 62
     }
 }

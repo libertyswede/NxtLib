@@ -5,13 +5,13 @@ namespace NxtLib.VotingSystem
     [DebuggerDisplay("{ToString()} - {GetHashCode()}")]
     public enum MinBalanceModel
     {
-        [Description("NONE")]
+        [NxtApi("NONE")]
         None = 0,
-        [Description("NQT")]
+        [NxtApi("NQT")]
         Nqt = 1,
-        [Description("ASSET")]
+        [NxtApi("ASSET")]
         Asset = 2,
-        [Description("CURRENCY")]
+        [NxtApi("CURRENCY")]
         Currency = 3
     }
 }

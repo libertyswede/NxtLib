@@ -5,17 +5,17 @@ namespace NxtLib
     [DebuggerDisplay("{ToString()} - {GetHashCode()}")]
     public enum CurrencyType
     {
-        [Description("EXCHANGEABLE")]
+        [NxtApi("EXCHANGEABLE")]
         Exchangeable = 0x01,
-        [Description("CONTROLLABLE")]
+        [NxtApi("CONTROLLABLE")]
         Controllable = 0x02,
-        [Description("RESERVABLE")]
+        [NxtApi("RESERVABLE")]
         Reservable = 0x04,
-        [Description("CLAIMABLE")]
+        [NxtApi("CLAIMABLE")]
         Claimable = 0x08,
-        [Description("MINTABLE")]
+        [NxtApi("MINTABLE")]
         Mintable = 0x10,
-        [Description("NON_SHUFFLEABLE")]
+        [NxtApi("NON_SHUFFLEABLE")]
         NonShuffleable = 0x20
     }
 }

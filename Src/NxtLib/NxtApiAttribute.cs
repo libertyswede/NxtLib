@@ -3,11 +3,11 @@
 namespace NxtLib
 {
     [AttributeUsage(AttributeTargets.All)]
-    public class DescriptionAttribute : Attribute
+    public class NxtApiAttribute : Attribute
     {
         public string Name { get; private set; }
 
-        internal DescriptionAttribute(string name)
+        internal NxtApiAttribute(string name)
         {
             Name = name;
         }
