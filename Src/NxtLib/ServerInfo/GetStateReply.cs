@@ -9,6 +9,7 @@ namespace NxtLib.ServerInfo
         public bool NeedsAdminPassword { get; set; }
         public long MaxMemory { get; set; }
         public int NumberOfAccounts { get; set; }
+        public int NumberOfActivePeers { get; set; }
         public int NumberOfAliases { get; set; }
         public int NumberOfAskOrders { get; set; }
         public int NumberOfAssets { get; set; }
