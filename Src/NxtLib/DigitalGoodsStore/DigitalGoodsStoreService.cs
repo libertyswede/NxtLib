@@ -57,6 +57,14 @@ namespace NxtLib.DigitalGoodsStore
             return await Post<TransactionCreatedReply>("dgsFeedback", queryParameters);
         }
 
+        public async Task<PurchasesReply> GetExpiredPurchases(string sellerId, int? firstIndex = null, int? lastIndex = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{"seller", sellerId}};
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Post<PurchasesReply>("getExpiredPurchases", queryParameters);
+        }
+
         public async Task<GoodReply> GetGood(ulong goodsId, bool? includeCounts = null)
         {
             var queryParameters = new Dictionary<string, string>

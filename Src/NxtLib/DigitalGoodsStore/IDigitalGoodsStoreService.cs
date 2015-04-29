@@ -14,6 +14,8 @@ namespace NxtLib.DigitalGoodsStore
 
         Task<TransactionCreatedReply> Feedback(ulong purchaseId, CreateTransactionParameters parameters);
 
+        Task<PurchasesReply> GetExpiredPurchases(string sellerId, int? firstIndex = null, int? lastIndex = null);
+
         Task<GoodReply> GetGood(ulong goodsId, bool? includeCounts = null);
 
         Task<GoodsReply> GetGoods(ulong? sellerId = null, int? firstIndex = null, int? lastIndex = null,
