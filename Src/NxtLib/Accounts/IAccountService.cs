@@ -16,14 +16,15 @@ namespace NxtLib.Accounts
         Task<AccountPublicKeyReply> GetAccountPublicKey(string accountId);
         Task<AccountTransactionIdsReply> GetAccountTransactionIds(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
-            int? numberOfConfirmations = null, bool? withMessage = null);
+            int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null);
         Task<AccountTransactionsReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
-            int? numberOfConfirmations = null, bool? withMessage = null);
+            int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null);
         Task<BalanceReply> GetBalance(string accountId);
         Task<GuaranteedBalanceReply> GetGuaranteedBalance(string accountId, int? numberOfConfirmations = null);
         Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(string accountId = null);
         Task<UnconfirmedTransactionsReply> GetUnconfirmedTransactions(string accountId = null);
+        Task<SearchAccountsReply> SearchAccounts(string query, int? firstIndex = null, int? lastIndex = null);
         Task<TransactionCreatedReply> SendMoney(CreateTransactionParameters parameters, string recipient, Amount amount);
         Task<TransactionCreatedReply> SetAccountInfo(CreateTransactionParameters parameters, string name, string description);
     }

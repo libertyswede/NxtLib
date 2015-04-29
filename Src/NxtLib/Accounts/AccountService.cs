@@ -87,19 +87,19 @@ namespace NxtLib.Accounts
 
         public async Task<AccountTransactionIdsReply> GetAccountTransactionIds(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
-            int? numberOfConfirmations = null, bool? withMessage = null)
+            int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null)
         {
             var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, transactionType,
-                firstIndex, lastIndex, numberOfConfirmations, withMessage);
+                firstIndex, lastIndex, numberOfConfirmations, withMessage, phased);
             return await Get<AccountTransactionIdsReply>("getAccountTransactionIds", queryParameters);
         }
 
         public async Task<AccountTransactionsReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
-            int? numberOfConfirmations = null, bool? withMessage = null)
+            int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null)
         {
             var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, transactionType,
-                firstIndex, lastIndex, numberOfConfirmations, withMessage);
+                firstIndex, lastIndex, numberOfConfirmations, withMessage, phased);
             return await Get<AccountTransactionsReply>("getAccountTransactions", queryParameters);
         }
 
@@ -130,6 +130,14 @@ namespace NxtLib.Accounts
             return await Get<UnconfirmedTransactionsReply>("getUnconfirmedTransactions", queryParameters);
         }
 
+        public Task<SearchAccountsReply> SearchAccounts(string query, int? firstIndex = null, int? lastIndex = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{"query", query}};
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return Get<SearchAccountsReply>("searchAccounts", queryParameters);
+        }
+
         public async Task<TransactionCreatedReply> SendMoney(CreateTransactionParameters parameters, string recipient, Amount amount)
         {
             var queryParameters = new Dictionary<string, string>();
@@ -150,7 +158,7 @@ namespace NxtLib.Accounts
         }
 
         private Dictionary<string, string> GenerateQueryParamsForAccountTransactions(string accountId, DateTime? timeStamp,
-            TransactionSubType? transactionType, int? firstIndex, int? lastIndex, int? numberOfConfirmations, bool? withMessage)
+            TransactionSubType? transactionType, int? firstIndex, int? lastIndex, int? numberOfConfirmations, bool? withMessage, bool? phased)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
             AddToParametersIfHasValue(timeStamp, queryParameters);
@@ -163,6 +171,7 @@ namespace NxtLib.Accounts
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("numberOfConfirmations", numberOfConfirmations, queryParameters);
             AddToParametersIfHasValue("withMessage", withMessage, queryParameters);
+            AddToParametersIfHasValue("phased", phased, queryParameters);
             return queryParameters;
         }
     }

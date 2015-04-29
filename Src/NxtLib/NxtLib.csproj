@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="AccountCurrency.cs" />
     <Compile Include="Accounts\AccountAssetBalance.cs" />
+    <Compile Include="Accounts\AccountInfo.cs" />
     <Compile Include="Accounts\BalanceReply.cs" />
     <Compile Include="Accounts\AccountBlockCountReply.cs" />
     <Compile Include="Accounts\AccountBlockIdsReply.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Accounts\AccountTransactionsReply.cs" />
     <Compile Include="Accounts\IAccountService.cs" />
     <Compile Include="Accounts\LessorInfo.cs" />
+    <Compile Include="Accounts\SearchAccountsReply.cs" />
     <Compile Include="Accounts\UnconfirmedAccountAssetBalance.cs" />
     <Compile Include="Accounts\UnconfirmedTransactionIdsResply.cs" />
     <Compile Include="Accounts\UnconfirmedTransactionsReply.cs" />
