@@ -50,14 +50,9 @@ namespace NxtLib.DigitalGoodsStore
             return await Post<TransactionCreatedReply>("dgsDelivery", queryParameters);
         }
 
-        public async Task<TransactionCreatedReply> Feedback(ulong purchaseId, string message,
-            CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> Feedback(ulong purchaseId, CreateTransactionParameters parameters)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"purchase", purchaseId.ToString()},
-                {"message", message}
-            };
+            var queryParameters = new Dictionary<string, string> {{"purchase", purchaseId.ToString()}};
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dgsFeedback", queryParameters);
         }

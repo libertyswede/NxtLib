@@ -12,8 +12,7 @@ namespace NxtLib.DigitalGoodsStore
             Amount discount = null, string goodsToEncrypt = null, bool? goodsIsText = null, string goodsData = null,
             IEnumerable<byte> goodsNonce = null);
 
-        Task<TransactionCreatedReply> Feedback(ulong purchaseId, string message,
-            CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> Feedback(ulong purchaseId, CreateTransactionParameters parameters);
 
         Task<GoodReply> GetGood(ulong goodsId, bool? includeCounts = null);
 
