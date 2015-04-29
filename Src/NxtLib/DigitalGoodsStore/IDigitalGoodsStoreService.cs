@@ -41,7 +41,10 @@ namespace NxtLib.DigitalGoodsStore
             int? firstIndex = null, int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null);
 
         Task<TagCountReply> GetTagCount(bool? inStockOnly = null);
+
         Task<TagsReply> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null);
+
+        Task<TagsReply> GetTagsLike(string tagPrefix, bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null);
 
         Task<TransactionCreatedReply> Listing(string name, string description, int quantity, Amount price,
             CreateTransactionParameters parameters, string tags = null);

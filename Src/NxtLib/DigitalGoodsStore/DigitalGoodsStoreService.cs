@@ -171,6 +171,15 @@ namespace NxtLib.DigitalGoodsStore
             return await Get<TagsReply>("getDGSTags", queryParameters);
         }
 
+        public async Task<TagsReply> GetTagsLike(string tagPrefix, bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{"tagPrefix", tagPrefix}};
+            AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Get<TagsReply>("getDGSTagsLike", queryParameters);
+        }
+
         public async Task<TransactionCreatedReply> Listing(string name, string description, int quantity, Amount price,
             CreateTransactionParameters parameters, string tags = null)
         {
