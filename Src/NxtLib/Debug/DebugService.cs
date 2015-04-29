@@ -104,5 +104,10 @@ namespace NxtLib.Debug
             AddToParametersIfHasValue("scan", scan, queryParameters);
             return await Post<ShutdownReply>("shutdown", queryParameters);
         }
+
+        public async Task<DoneReply> TrimDerivedTables()
+        {
+            return await Post<DoneReply>("trimDerivedTables");
+        }
     }
 }
