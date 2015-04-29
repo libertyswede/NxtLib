@@ -7,7 +7,8 @@ namespace NxtLib.Debug
         Task<DoneReply> ClearUnconfirmedTransactions();
         Task<DumpPeersReply> DumpPeers(string version);
         Task<DoneReply> FullReset();
-        Task<BroadcastedTransactionsReply> GetAllBroadcastedTransactions();
+        Task<TransactionsListReply> GetAllBroadcastedTransactions();
+        Task<TransactionsListReply> GetAllWaitingTransactions();
         Task<DoneReply> LuceneReindex();
         Task<BlocksReply<Transaction>> PopOff(HeightOrNumberOfBlocksLocator locator);
         Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null);
