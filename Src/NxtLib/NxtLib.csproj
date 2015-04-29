@@ -86,6 +86,7 @@
     <Compile Include="Blocks\IBlockService.cs" />
     <Compile Include="CountReply.cs" />
     <Compile Include="Debug\LogReply.cs" />
+    <Compile Include="Debug\SetLoggingReply.cs" />
     <Compile Include="Debug\TransactionsListReply.cs" />
     <Compile Include="Debug\DumpPeersReply.cs" />
     <Compile Include="NxtApiAttribute.cs" />

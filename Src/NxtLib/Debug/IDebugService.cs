@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -17,5 +18,6 @@ namespace NxtLib.Debug
         Task<DoneReply> RebroadcastUnconfirmedTransactions();
         Task<DoneReply> RequeueUnconfirmedTransactions();
         Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null);
+        Task<SetLoggingReply> SetLogging(string logLevel, IEnumerable<string> communicationEvents);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
@@ -80,6 +81,21 @@ namespace NxtLib.Debug
             var queryParameters = locator.QueryParameters;
             AddToParametersIfHasValue("validate", validate, queryParameters);
             return await Post<ScanReply>("scan", queryParameters);
+        }
+
+        public async Task<SetLoggingReply> SetLogging(string logLevel, IEnumerable<string> communicationEvents)
+        {
+            var communicationEventList = communicationEvents.ToList();
+            var queryParameters = new Dictionary<string, List<string>>();
+            if (!string.IsNullOrEmpty(logLevel))
+            {
+                queryParameters.Add("logLevel", new List<string>{logLevel});
+            }
+            if (communicationEventList.Any())
+            {
+                queryParameters.Add("communicationEvent", communicationEventList);
+            }
+            return await Post<SetLoggingReply>("setLogging", queryParameters);
         }
     }
 }

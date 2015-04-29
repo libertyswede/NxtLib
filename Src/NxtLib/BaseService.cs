@@ -22,9 +22,9 @@ namespace NxtLib
             _baseUrl = baseUrl;
         }
 
-        protected async Task<T> Get<T>(string requestType) where T : IBaseReply
+        protected async Task<JObject> Get(string requestType)
         {
-            return await Get<T>(requestType, new Dictionary<string, string>());
+            return await Get(requestType, new Dictionary<string, string>());
         }
 
         protected async Task<JObject> Get(string requestType, Dictionary<string, string> queryParameters)
@@ -55,22 +55,25 @@ namespace NxtLib
             }
         }
 
+        protected async Task<T> Get<T>(string requestType) where T : IBaseReply
+        {
+            return await Get<T>(requestType, new Dictionary<string, string>());
+        }
+
         protected async Task<T> Get<T>(string requestType, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
             var url = BuidUrl(requestType, queryParamsDictionary);
-
-            using (var client = new HttpClient())
-            using (var response = await client.GetAsync(url))
-            using (var content = response.Content)
-            {
-                return await ReadAndDeserializeResponse<T>(content, url);
-            }
+            return await GetUrl<T>(url);
         }
 
         protected async Task<T> Get<T>(string requestType, Dictionary<string, List<string>> queryParamsDictionary) where T : IBaseReply
         {
             var url = BuidUrl(requestType, queryParamsDictionary);
+            return await GetUrl<T>(url);
+        }
 
+        private static async Task<T> GetUrl<T>(string url) where T : IBaseReply
+        {
             using (var client = new HttpClient())
             using (var response = await client.GetAsync(url))
             using (var content = response.Content)
@@ -87,7 +90,17 @@ namespace NxtLib
         protected async Task<T> Post<T>(string requestType, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
             var url = BuidUrl(requestType, queryParamsDictionary);
+            return await PostUrl<T>(url);
+        }
 
+        protected async Task<T> Post<T>(string requestType, Dictionary<string, List<string>> queryParamsDictionary) where T : IBaseReply
+        {
+            var url = BuidUrl(requestType, queryParamsDictionary);
+            return await PostUrl<T>(url);
+        }
+
+        private static async Task<T> PostUrl<T>(string url) where T : IBaseReply
+        {
             using (var client = new HttpClient())
             using (var response = await client.PostAsync(url, new StringContent(string.Empty, Encoding.UTF8, "application/json")))
             using (var content = response.Content)
