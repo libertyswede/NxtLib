@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 
@@ -14,6 +15,16 @@ namespace NxtLib.ServerInfo
         public ServerInfoService(IDateTimeConverter dateTimeConverter) 
             : base(dateTimeConverter)
         {
+        }
+
+        public async Task<object> EventRegister(List<string> events, string add, string remove)
+        {
+            throw new NotSupportedException("Not enough documentation about this function exist yet");
+        }
+
+        public async Task<object> EventWait(long timeout)
+        {
+            throw new NotSupportedException("Not enough documentation about this function exist yet");
         }
 
         public async Task<GetBlockchainStatusReply> GetBlockchainStatus()
