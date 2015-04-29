@@ -19,12 +19,25 @@ namespace NxtLib.ServerInfo
 
         public async Task<object> EventRegister(List<string> events, string add, string remove)
         {
-            throw new NotSupportedException("Not enough documentation about this function exist yet");
+            throw new NotImplementedException("Not enough documentation about this function exist yet");
         }
 
+        // Sample response on eventWait:
+
+        //{
+        //    "requestProcessingTime": 0,
+        //    "events": [
+        //        {
+        //            "name": "Peer.DEACTIVATE",
+        //            "ids": [
+        //                "74.74.83.190"
+        //            ]
+        //        }
+        //    ]
+        //}
         public async Task<object> EventWait(long timeout)
         {
-            throw new NotSupportedException("Not enough documentation about this function exist yet");
+            throw new NotImplementedException("Not enough documentation about this function exist yet");
         }
 
         public async Task<GetBlockchainStatusReply> GetBlockchainStatus()
