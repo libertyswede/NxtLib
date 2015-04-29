@@ -53,6 +53,14 @@ namespace NxtLib.Aliases
             return await Get<AliasesReply>("getAliases", queryParameters);
         }
 
+        public async Task<AliasesReply> GetAliasesLike(string prefix, int? firstIndex = null, int? lastIndex = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{"prefix", prefix}};
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Get<AliasesReply>("getAliasesLike", queryParameters);
+        }
+
         public async Task<TransactionCreatedReply> SellAlias(AliasLocator query, Amount price, CreateTransactionParameters parameters, string recipient = null)
         {
             var queryParameters = query.QueryParameters;
