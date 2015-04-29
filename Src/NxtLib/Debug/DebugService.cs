@@ -97,5 +97,12 @@ namespace NxtLib.Debug
             }
             return await Post<SetLoggingReply>("setLogging", queryParameters);
         }
+
+        public async Task<ShutdownReply> Shutdown(bool? scan = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("scan", scan, queryParameters);
+            return await Post<ShutdownReply>("shutdown", queryParameters);
+        }
     }
 }
