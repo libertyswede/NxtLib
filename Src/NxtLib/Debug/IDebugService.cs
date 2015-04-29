@@ -9,6 +9,7 @@ namespace NxtLib.Debug
         Task<DoneReply> FullReset();
         Task<TransactionsListReply> GetAllBroadcastedTransactions();
         Task<TransactionsListReply> GetAllWaitingTransactions();
+        Task<LogReply> GetLog(int count);
         Task<DoneReply> LuceneReindex();
         Task<BlocksReply<Transaction>> PopOff(HeightOrNumberOfBlocksLocator locator);
         Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null);

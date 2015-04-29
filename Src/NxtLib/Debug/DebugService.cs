@@ -42,6 +42,12 @@ namespace NxtLib.Debug
             return await Get<TransactionsListReply>("getAllWaitingTransactions");
         }
 
+        public async Task<LogReply> GetLog(int count)
+        {
+            var queryParameters = new Dictionary<string, string> {{"count", count.ToString()}};
+            return await Get<LogReply>("logReply", queryParameters);
+        }
+
         public async Task<DoneReply> LuceneReindex()
         {
             return await Post<DoneReply>("luceneReindex");
