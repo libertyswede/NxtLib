@@ -125,6 +125,7 @@
     <Compile Include="Phasing\IPhasingService.cs" />
     <Compile Include="Phasing\PhasingService.cs" />
     <Compile Include="ServerInfo\BlockchainStatus.cs" />
+    <Compile Include="ServerInfo\GetPluginsReply.cs" />
     <Compile Include="ServerInfo\IServerInfoService.cs" />
     <Compile Include="ServerInfo\PeerState.cs" />
     <Compile Include="ServiceFactory.cs" />

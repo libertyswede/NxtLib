@@ -26,6 +26,11 @@ namespace NxtLib.ServerInfo
             return await Get<GetConstantsReply>("getConstants");
         }
 
+        public async Task<GetPluginsReply> GetPlugins()
+        {
+            return await Get<GetPluginsReply>("getPlugins");
+        }
+
         public async Task<GetStateReply> GetState(bool? includeCounts = null)
         {
             var queryParameters = new Dictionary<string, string>();
