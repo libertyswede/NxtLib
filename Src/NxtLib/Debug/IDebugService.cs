@@ -14,6 +14,7 @@ namespace NxtLib.Debug
         Task<JObject> GetStackTraces();
         Task<DoneReply> LuceneReindex();
         Task<BlocksReply<Transaction>> PopOff(HeightOrNumberOfBlocksLocator locator);
+        Task<DoneReply> RebroadcastUnconfirmedTransactions();
         Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null);
     }
 }

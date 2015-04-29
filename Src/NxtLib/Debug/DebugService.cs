@@ -65,6 +65,11 @@ namespace NxtLib.Debug
             return await Post<BlocksReply<Transaction>>("popOff", locator.QueryParameters);
         }
 
+        public async Task<DoneReply> RebroadcastUnconfirmedTransactions()
+        {
+            return await Post<DoneReply>("rebroadcastUnconfirmedTransactions");
+        }
+
         public async Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null)
         {
             var queryParameters = locator.QueryParameters;
