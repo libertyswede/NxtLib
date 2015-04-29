@@ -56,8 +56,8 @@ namespace NxtLib.AssetExchange
         Task<BidOrderIdsReply> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);
         Task<BidOrdersReply> GetBidOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
 
-        Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null,
-            bool? includeAssetInfo = null);
+        Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null, 
+            DateTime? timestamp = null, bool? includeAssetInfo = null);
 
         Task<TransactionCreatedReply> IssueAsset(string name, string description, long quantityQnt,
             CreateTransactionParameters parameters, int? decimals = null);

@@ -281,7 +281,7 @@ namespace NxtLib.AssetExchange
         }
 
         public async Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null,
-            bool? includeAssetInfo = null)
+            DateTime? timestamp = null, bool? includeAssetInfo = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("asset", assetIdOrAccountId.AssetId, queryParameters);
@@ -289,6 +289,7 @@ namespace NxtLib.AssetExchange
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("includeAssetInfo", includeAssetInfo, queryParameters);
+            AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
             return await Get<TradesReply>("getTrades", queryParameters);
         }
 
