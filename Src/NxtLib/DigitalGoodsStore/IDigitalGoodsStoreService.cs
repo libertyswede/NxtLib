@@ -26,8 +26,8 @@ namespace NxtLib.DigitalGoodsStore
         Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null,
             bool? completed = null);
 
-        Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
-            bool? withPublickKeedbacksOnly = null, bool? completed = null);
+        Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, string buyerId = null, int? firstIndex = null, 
+            int? lastIndex = null, bool? withPublickKeedbacksOnly = null, bool? completed = null);
 
         Task<PurchasesReply> GetPendingPurchases(string sellerId, int? firstIndex = null,
             int? lastIndex = null);

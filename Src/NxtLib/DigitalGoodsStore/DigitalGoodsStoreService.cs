@@ -104,10 +104,11 @@ namespace NxtLib.DigitalGoodsStore
             return await Get<PuchaseCountReply>("getDGSGoodsPurchaseCount", queryParameters);
         }
 
-        public async Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, int? firstIndex = null, int? lastIndex = null,
-            bool? withPublickKeedbacksOnly = null, bool? completed = null)
+        public async Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, string buyerId = null, int? firstIndex = null, 
+            int? lastIndex = null, bool? withPublickKeedbacksOnly = null, bool? completed = null)
         {
             var queryParameters = new Dictionary<string, string> { { "goods", goodsId.ToString() } };
+            AddToParametersIfHasValue("buyer", buyerId, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("withPublickKeedbacksOnly", withPublickKeedbacksOnly, queryParameters);
