@@ -5,6 +5,7 @@ namespace NxtLib.Debug
     public interface IDebugService
     {
         Task<DoneReply> ClearUnconfirmedTransactions();
+        Task<DumpPeersReply> DumpPeers(string version);
         Task<DoneReply> FullReset();
         Task<DoneReply> LuceneReindex();
         Task<BlocksReply<Transaction>> PopOff(HeightOrNumberOfBlocksLocator locator);

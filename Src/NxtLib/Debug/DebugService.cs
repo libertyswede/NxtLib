@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using NxtLib.Internal;
 
 namespace NxtLib.Debug
@@ -18,6 +19,12 @@ namespace NxtLib.Debug
         public async Task<DoneReply> ClearUnconfirmedTransactions()
         {
             return await Post<DoneReply>("clearUnconfirmedTransactions");
+        }
+
+        public async Task<DumpPeersReply> DumpPeers(string version)
+        {
+            var queryParameters = new Dictionary<string, string> {{"version", version}};
+            return await Get<DumpPeersReply>("dumpPeers", queryParameters);
         }
 
         public async Task<DoneReply> FullReset()
