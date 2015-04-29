@@ -32,6 +32,11 @@ namespace NxtLib.Debug
             return await Post<DoneReply>("fullReset");
         }
 
+        public async Task<BroadcastedTransactionsReply> GetAllBroadcastedTransactions()
+        {
+            return await Get<BroadcastedTransactionsReply>("getAllBroadcastedTransactions");
+        }
+
         public async Task<DoneReply> LuceneReindex()
         {
             return await Post<DoneReply>("luceneReindex");

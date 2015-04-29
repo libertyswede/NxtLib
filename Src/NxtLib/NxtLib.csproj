@@ -85,6 +85,7 @@
     <Compile Include="AssetExchange\OrderReply.cs" />
     <Compile Include="Blocks\IBlockService.cs" />
     <Compile Include="CountReply.cs" />
+    <Compile Include="Debug\BroadcastedTransactionsReply.cs" />
     <Compile Include="Debug\DumpPeersReply.cs" />
     <Compile Include="NxtApiAttribute.cs" />
     <Compile Include="Internal\LocalSign\Crypto.cs" />
