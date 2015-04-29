@@ -17,7 +17,7 @@ namespace NxtLib.VotingSystem
         Task<GetPollResultReply> GetPollResult(ulong pollId, VotingModel? votingModel,
             ulong? holdingId = null, long? minBalance = null, MinBalanceModel? minBalanceModel = null);
 
-        Task<GetPollsReply> GetPolls(string accountId = null, int? firstIndex = null, int? lastIndex = null);
+        Task<GetPollsReply> GetPolls(string accountId = null, int? firstIndex = null, int? lastIndex = null, bool? includeFinished = null);
         Task<GetPollVoteReply> GetPollVote(ulong pollId, string accountId);
         Task<GetPollVotesReply> GetPollVotes(ulong pollId, int? firstIndex = null, int? lastIndex = null);
 
