@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 
 namespace NxtLib.Debug
@@ -46,6 +47,12 @@ namespace NxtLib.Debug
         {
             var queryParameters = new Dictionary<string, string> {{"count", count.ToString()}};
             return await Get<LogReply>("logReply", queryParameters);
+        }
+
+        // TODO: Implement with proper reply
+        public async Task<JObject> GetStackTraces()
+        {
+            return await Get("getStackTraces");
         }
 
         public async Task<DoneReply> LuceneReindex()
