@@ -17,6 +17,8 @@ namespace NxtLib.Messages
 
         Task<EncryptedDataReply> EncryptTo(string recipientAccountId, IEnumerable<byte> data, bool compressMessageToEncrypt, string secretPhrase);
 
+        Task<PrunableMessagesReply> GetAllPrunableMessages(int? firstIndex = null, int? lastIndex = null);
+
         Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null);
 
         Task<TransactionCreatedReply> SendMessage(CreateTransactionParameters parameters, string recipient = null);

@@ -90,7 +90,10 @@
     <Compile Include="Debug\ShutdownReply.cs" />
     <Compile Include="Debug\TransactionsListReply.cs" />
     <Compile Include="Debug\DumpPeersReply.cs" />
+    <Compile Include="EncryptedData.cs" />
     <Compile Include="Messages\DecryptedReply.cs" />
+    <Compile Include="Messages\PrunableMessage.cs" />
+    <Compile Include="Messages\PrunableMessagesReply.cs" />
     <Compile Include="NxtApiAttribute.cs" />
     <Compile Include="Internal\LocalSign\Crypto.cs" />
     <Compile Include="Internal\LocalSign\Curve25519.cs" />

@@ -64,6 +64,14 @@ namespace NxtLib.Messages
                 compressMessageToEncrypt, secretPhrase);
         }
 
+        public async Task<PrunableMessagesReply> GetAllPrunableMessages(int? firstIndex = null, int? lastIndex = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            return await Get<PrunableMessagesReply>("getAllPrunableMessages", queryParameters);
+        }
+
         private async Task<EncryptedDataReply> EncryptTo(string recipientAccountId, string messageToEncrypt, bool messageToEncryptIsText,
             bool compressMessageToEncrypt, string secretPhrase)
         {

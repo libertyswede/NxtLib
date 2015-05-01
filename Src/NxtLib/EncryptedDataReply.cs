@@ -1,14 +1,9 @@
-﻿using Newtonsoft.Json;
-using NxtLib.Internal;
-
-namespace NxtLib
+﻿namespace NxtLib
 {
-    public class EncryptedDataReply : BaseReply
+    public class EncryptedDataReply : EncryptedData, IBaseReply
     {
-        [JsonConverter(typeof(ByteToHexStringConverter))]
-        public BinaryHexString Data { get; set; }
-
-        [JsonConverter(typeof(ByteToHexStringConverter))]
-        public BinaryHexString Nonce { get; set; }
+        public string RawJsonReply { get; set; }
+        public int RequestProcessingTime { get; set; }
+        public string RequestUri { get; set; }
     }
 }
