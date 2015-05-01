@@ -49,7 +49,7 @@ namespace NxtLib.MonetarySystem
             int? lastIndex = null, bool? includeCurrencyInfo = null);
 
         Task<ExchangesReply> GetExchanges(CurrencyOrAccountLocator locator, int? firstIndex = null,
-            int? lastIndex = null, bool? includeCurrencyInfo = null);
+            int? lastIndex = null, DateTime? timestamp = null, bool? includeCurrencyInfo = null);
 
         Task<ExchangesReply> GetExchangesByExchangeRequest(ulong transactionId, bool? includeCurrencyInfo = null);
 
