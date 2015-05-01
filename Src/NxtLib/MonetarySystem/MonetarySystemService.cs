@@ -201,9 +201,13 @@ namespace NxtLib.MonetarySystem
             return await Get<CurrencyAccountsReply>("getCurrencyAccounts", queryParameters);
         }
 
-        public async Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId)
+        public async Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId, string accountId = null,
+            int? firstIndex = null, int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string> {{"currency", currencyId.ToString()}};
+            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             return await Get<CurrencyFoundersReply>("getCurrencyFounders", queryParameters);
         }
 

@@ -40,7 +40,8 @@ namespace NxtLib.MonetarySystem
         Task<CurrencyAccountsReply> GetCurrencyAccounts(ulong currencyId, int? height = null, int? firstIndex = null,
             int? lastIndex = null);
 
-        Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId);
+        Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId, string accountId = null, 
+            int? firstIndex = null, int? lastIndex = null);
 
         Task<CurrencyIdsReply> GetCurrencyIds(int? firstIndex = null, int? lastIndex = null);
 
