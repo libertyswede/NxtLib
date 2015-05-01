@@ -53,6 +53,11 @@ namespace NxtLib.TaggedData
             throw new NotImplementedException();
         }
 
+        public async Task<object> GetChannelTaggedData()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<object> GetDataTagCount()
         {
             throw new NotImplementedException();
@@ -83,12 +88,14 @@ namespace NxtLib.TaggedData
             throw new NotImplementedException();
         }
 
-        public async Task<object> SearchTaggedData(string query = null, string tag = null, string account = null, int? firstIndex = null, int? lastIndex = null)
+        public async Task<object> SearchTaggedData(string query = null, string tag = null, string account = null, string channel = null, 
+            int? firstIndex = null, int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("query", query, queryParameters);
             AddToParametersIfHasValue("tag", tag, queryParameters);
             AddToParametersIfHasValue("account", account, queryParameters);
+            AddToParametersIfHasValue("channel", channel, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
 
