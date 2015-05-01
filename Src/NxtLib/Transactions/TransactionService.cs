@@ -86,6 +86,10 @@ namespace NxtLib.Transactions
                 queryParameters.Add(!unsigned ? "transactionJSON" : "unsignedTransactionJSON",
                     parameter.TransactionJson);
             }
+            if (!string.IsNullOrEmpty(parameter.PrunableAttachmentJson))
+            {
+                queryParameters.Add("prunableAttachmentJSON", parameter.PrunableAttachmentJson);
+            }
             return queryParameters;
         }
     }
