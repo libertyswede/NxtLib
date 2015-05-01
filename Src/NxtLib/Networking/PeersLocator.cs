@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using NxtLib.Internal;
 
 namespace NxtLib.Networking
 {
