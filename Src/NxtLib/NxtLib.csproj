@@ -261,6 +261,7 @@
     <Compile Include="Utils\LongConvertReply.cs" />
     <Compile Include="Utils\RsConvertReply.cs" />
     <Compile Include="Utils\UtilService.cs" />
+    <Compile Include="VotingSystem\CreatePollParameters.cs" />
     <Compile Include="VotingSystem\GetPollReply.cs" />
     <Compile Include="VotingSystem\GetPollResultReply.cs" />
     <Compile Include="VotingSystem\GetPollsReply.cs" />

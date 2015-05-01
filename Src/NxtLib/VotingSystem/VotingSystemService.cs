@@ -27,6 +27,32 @@ namespace NxtLib.VotingSystem
             return await Post<TransactionCreatedReply>("castVote", queryParameters);
         }
 
+        public async Task<TransactionCreatedReply> CreatePoll(CreatePollParameters createPollParameters, CreateTransactionParameters parameters)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"name", createPollParameters.Name},
+                {"description", createPollParameters.Description},
+                {"finishHeight", createPollParameters.FinishHeight.ToString()},
+                {"votingModel", ((int) createPollParameters.VotingModel).ToString()},
+                {"minNumberOfOptions", createPollParameters.MinNumberOfOptions.ToString()},
+                {"maxNumberOfOptions", createPollParameters.MaxNumberOfOptions.ToString()},
+                {"minRangeValue", createPollParameters.MinRangeValue.ToString()},
+                {"maxRangeValue", createPollParameters.MaxRangeValue.ToString()}
+            };
+            for (var i = 0; i < createPollParameters.Options.Count; i++)
+            {
+                queryParameters.Add("option" + i.ToString().PadLeft(2, '0'), createPollParameters.Options[i]);
+            }
+            AddToParametersIfHasValue("minBalance", createPollParameters.MinBalance, queryParameters);
+            AddToParametersIfHasValue("minBalanceModel",
+                createPollParameters.MinBalanceModel.HasValue ? (int?) createPollParameters.MinBalanceModel.Value : null,
+                queryParameters);
+            AddToParametersIfHasValue("holding", createPollParameters.HoldingId, queryParameters);
+            parameters.AppendToQueryParameters(queryParameters);
+            return await Post<TransactionCreatedReply>("createPoll", queryParameters);
+        }
+
         public async Task<TransactionCreatedReply> CreatePoll(string name, string description, int finishHeight,
             VotingModel votingModel, int minNumberOfOptions, int maxNumberOfOptions, int minRangeValue,
             int maxRangeValue, List<string> options, CreateTransactionParameters parameters, long? minBalance = null,

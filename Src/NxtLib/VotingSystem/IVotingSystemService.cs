@@ -7,10 +7,7 @@ namespace NxtLib.VotingSystem
     {
         Task<TransactionCreatedReply> CastVote(ulong pollId, Dictionary<int, int> votes, CreateTransactionParameters parameters);
 
-        Task<TransactionCreatedReply> CreatePoll(string name, string description, int finishHeight,
-            VotingModel votingModel, int minNumberOfOptions, int maxNumberOfOptions, int minRangeValue,
-            int maxRangeValue, List<string> options, CreateTransactionParameters parameters, long? minBalance = null,
-            MinBalanceModel? minBalanceModel = null, ulong? holdingId = null);
+        Task<TransactionCreatedReply> CreatePoll(CreatePollParameters createPollParameters, CreateTransactionParameters parameters);
 
         Task<GetPollReply> GetPoll(ulong pollId);
 
