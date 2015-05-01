@@ -44,6 +44,20 @@ namespace NxtLib.Transactions
             return await Get<TransactionBytesReply>("getTransactionBytes", queryParameters);
         }
 
+        public async Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(string accountId = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("account", accountId, queryParameters);
+            return await Get<UnconfirmedTransactionIdsResply>("getUnconfirmedTransactionIds", queryParameters);
+        }
+
+        public async Task<UnconfirmedTransactionsReply> GetUnconfirmedTransactions(string accountId = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("account", accountId, queryParameters);
+            return await Get<UnconfirmedTransactionsReply>("getUnconfirmedTransactions", queryParameters);
+        }
+
         public async Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter)
         {
             var queryParameters = CreateQueryParameters(parameter);

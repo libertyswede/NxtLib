@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NxtLib.Accounts
+namespace NxtLib.Transactions
 {
     public class UnconfirmedTransactionsReply : BaseReply
     {

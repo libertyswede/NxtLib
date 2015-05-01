@@ -68,8 +68,8 @@
     <Compile Include="Accounts\LessorInfo.cs" />
     <Compile Include="Accounts\SearchAccountsReply.cs" />
     <Compile Include="Accounts\UnconfirmedAccountAssetBalance.cs" />
-    <Compile Include="Accounts\UnconfirmedTransactionIdsResply.cs" />
-    <Compile Include="Accounts\UnconfirmedTransactionsReply.cs" />
+    <Compile Include="Transactions\UnconfirmedTransactionIdsResply.cs" />
+    <Compile Include="Transactions\UnconfirmedTransactionsReply.cs" />
     <Compile Include="Aliases\Alias.cs" />
     <Compile Include="Aliases\AliasCountReply.cs" />
     <Compile Include="Aliases\AliasesReply.cs" />

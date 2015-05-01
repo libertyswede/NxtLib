@@ -116,20 +116,6 @@ namespace NxtLib.Accounts
             return await Get<GuaranteedBalanceReply>("getGuaranteedBalance", queryParameters);
         }
 
-        public async Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(string accountId = null)
-        {
-            var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("account", accountId, queryParameters);
-            return await Get<UnconfirmedTransactionIdsResply>("getUnconfirmedTransactionIds", queryParameters);
-        }
-
-        public async Task<UnconfirmedTransactionsReply> GetUnconfirmedTransactions(string accountId = null)
-        {
-            var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("account", accountId, queryParameters);
-            return await Get<UnconfirmedTransactionsReply>("getUnconfirmedTransactions", queryParameters);
-        }
-
         public Task<SearchAccountsReply> SearchAccounts(string query, int? firstIndex = null, int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string> {{"query", query}};

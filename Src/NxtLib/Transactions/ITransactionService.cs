@@ -11,8 +11,9 @@ namespace NxtLib.Transactions
 
         Task<TransactionReply> GetTransaction(GetTransactionLocator locator);
         Task<TransactionBytesReply> GetTransactionBytes(ulong transactionId);
+        Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(string accountId = null);
+        Task<UnconfirmedTransactionsReply> GetUnconfirmedTransactions(string accountId = null);
         Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter);
-
         Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase,
             bool? validate = null);
     }

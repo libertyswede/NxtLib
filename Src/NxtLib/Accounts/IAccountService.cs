@@ -22,8 +22,6 @@ namespace NxtLib.Accounts
             int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null);
         Task<BalanceReply> GetBalance(string accountId);
         Task<GuaranteedBalanceReply> GetGuaranteedBalance(string accountId, int? numberOfConfirmations = null);
-        Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(string accountId = null);
-        Task<UnconfirmedTransactionsReply> GetUnconfirmedTransactions(string accountId = null);
         Task<SearchAccountsReply> SearchAccounts(string query, int? firstIndex = null, int? lastIndex = null);
         Task<TransactionCreatedReply> SendMoney(CreateTransactionParameters parameters, string recipient, Amount amount);
         Task<TransactionCreatedReply> SetAccountInfo(CreateTransactionParameters parameters, string name, string description);
