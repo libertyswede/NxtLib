@@ -21,6 +21,9 @@ namespace NxtLib.Messages
 
         Task<PrunableMessageReply> GetPrunableMessage(ulong transactionId, string secretPhrase = null);
 
+        Task<PrunableMessagesReply> GetPrunableMessages(string accountId, string otherAccountId = null,
+            string secretPhrase = null, int? firstIndex = null, int? lastIndex = null);
+
         Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null);
 
         Task<TransactionCreatedReply> SendMessage(CreateTransactionParameters parameters, string recipient = null);
