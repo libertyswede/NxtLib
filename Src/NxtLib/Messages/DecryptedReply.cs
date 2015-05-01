@@ -4,7 +4,7 @@ using NxtLib.Internal;
 
 namespace NxtLib.Messages
 {
-    public class DecryptedDataReply : BaseReply
+    public class DecryptedReply : BaseReply
     {
         [JsonProperty(PropertyName = "decryptedMessage")]
         [JsonConverter(typeof(ByteToHexStringConverter))]

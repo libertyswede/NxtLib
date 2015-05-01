@@ -16,67 +16,64 @@ namespace NxtLib.Messages
         {
         }
 
-        public async Task<DecryptedDataReply> DecryptDataFrom(string senderAccountId, string data,
-            IEnumerable<byte> nonce, bool uncompressDecryptedMessage, string secretPhrase)
+        public async Task<DecryptedReply> DecryptFrom(string accountId, string message, BinaryHexString nonce,
+            bool uncompressDecryptedMessage, string secretPhrase)
+        {
+            return await DecryptFrom(accountId, message, true, nonce.ToHexString(), 
+                uncompressDecryptedMessage, secretPhrase);
+        }
+
+        public async Task<DecryptedReply> DecryptFrom(string accountId, IEnumerable<byte> data,
+            BinaryHexString nonce, bool uncompressDecryptedMessage, string secretPhrase)
+        {
+            return await DecryptFrom(accountId, ByteToHexStringConverter.ToHexString(data), false, 
+                nonce.ToHexString(), uncompressDecryptedMessage, secretPhrase);
+        }
+        
+        public async Task<DecryptedReply> DecryptFrom(string accountId, EncryptedMessage encryptedMessage, string secretPhrase)
+        {
+            return await DecryptFrom(accountId, encryptedMessage.Data.ToHexString(), encryptedMessage.IsText, 
+                encryptedMessage.Nonce.ToHexString(), encryptedMessage.IsCompressed, secretPhrase);
+        }
+
+        private async Task<DecryptedReply> DecryptFrom(string accountId, string data, bool decryptedMessageIsText, string nonce,
+            bool uncompressDecryptedMessage, string secretPhrase)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"account", senderAccountId},
+                {"account", accountId},
                 {"data", data},
-                {"nonce", ByteToHexStringConverter.ToHexString(nonce)},
+                {"nonce", nonce},
                 {"secretPhrase", secretPhrase},
                 {"uncompressDecryptedMessage", uncompressDecryptedMessage.ToString()},
-                {"decryptedMessageIsText", false.ToString()}
+                {"decryptedMessageIsText", decryptedMessageIsText.ToString()}
             };
-            return await Get<DecryptedDataReply>("decryptFrom", queryParameters);
+            return await Get<DecryptedReply>("decryptFrom", queryParameters);
         }
 
-        public async Task<DecryptedDataReply> DecryptDataFrom(string senderAccountId, EncryptedMessage encryptedMessage,
-            string secretPhrase)
-        {
-            return await DecryptDataFrom(senderAccountId, encryptedMessage.Data.ToHexString(),
-                encryptedMessage.Nonce.ToBytes(), encryptedMessage.IsCompressed, secretPhrase);
-        }
-
-        public async Task<DecryptedMessageReply> DecryptMessageFrom(string senderAccountId, string data,
-            IEnumerable<byte> nonce, bool uncompressDecryptedMessage, string secretPhrase)
-        {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"account", senderAccountId},
-                {"data", data},
-                {"nonce", ByteToHexStringConverter.ToHexString(nonce)},
-                {"secretPhrase", secretPhrase},
-                {"uncompressDecryptedMessage", uncompressDecryptedMessage.ToString()},
-                {"decryptedMessageIsText", true.ToString()}
-            };
-            return await Get<DecryptedMessageReply>("decryptFrom", queryParameters);
-        }
-
-        public async Task<DecryptedMessageReply> DecryptMessageFrom(string senderAccountId, EncryptedMessage encryptedMessage,
-            string secretPhrase)
-        {
-            return await DecryptMessageFrom(senderAccountId, encryptedMessage.Data.ToHexString(), 
-                encryptedMessage.Nonce.ToBytes(), encryptedMessage.IsCompressed, secretPhrase);
-        }
-
-        public async Task<EncryptedDataReply> EncryptTo(string recipient, IEnumerable<byte> messageToEncrypt,
+        public async Task<EncryptedDataReply> EncryptTo(string recipientAccountId, string message,
             bool compressMessageToEncrypt, string secretPhrase)
         {
-            return await EncryptTo(recipient, ByteToHexStringConverter.ToHexString(messageToEncrypt), 
+            return await EncryptTo(recipientAccountId, message, true, compressMessageToEncrypt, secretPhrase);
+        }
+
+        public async Task<EncryptedDataReply> EncryptTo(string recipientAccountId, IEnumerable<byte> data,
+            bool compressMessageToEncrypt, string secretPhrase)
+        {
+            return await EncryptTo(recipientAccountId, ByteToHexStringConverter.ToHexString(data), false,
                 compressMessageToEncrypt, secretPhrase);
         }
 
-        public async Task<EncryptedDataReply> EncryptTo(string recipient, string messageToEncrypt,
+        private async Task<EncryptedDataReply> EncryptTo(string recipientAccountId, string messageToEncrypt, bool messageToEncryptIsText,
             bool compressMessageToEncrypt, string secretPhrase)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"recipient", recipient},
+                {"recipient", recipientAccountId},
                 {"messageToEncrypt", messageToEncrypt},
                 {"secretPhrase", secretPhrase},
                 {"compressMessageToEncrypt", compressMessageToEncrypt.ToString()},
-                {"messageToEncryptIsText", true.ToString()}
+                {"messageToEncryptIsText", messageToEncryptIsText.ToString()}
             };
             return await Get<EncryptedDataReply>("encryptTo", queryParameters);
         }

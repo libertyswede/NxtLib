@@ -90,6 +90,7 @@
     <Compile Include="Debug\ShutdownReply.cs" />
     <Compile Include="Debug\TransactionsListReply.cs" />
     <Compile Include="Debug\DumpPeersReply.cs" />
+    <Compile Include="Messages\DecryptedReply.cs" />
     <Compile Include="NxtApiAttribute.cs" />
     <Compile Include="Internal\LocalSign\Crypto.cs" />
     <Compile Include="Internal\LocalSign\Curve25519.cs" />
@@ -107,8 +108,6 @@
     <Compile Include="Local\LocalCrypto.cs" />
     <Compile Include="Messages\IMessageService.cs" />
     <Compile Include="Messages\MessageService.cs" />
-    <Compile Include="Messages\DecryptedDataReply.cs" />
-    <Compile Include="Messages\DecryptedMessageReply.cs" />
     <Compile Include="BinaryHexString.cs" />
     <Compile Include="DoneReply.cs" />
     <Compile Include="MonetarySystem\CurrencyAccount.cs" />
