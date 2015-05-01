@@ -19,7 +19,7 @@ namespace NxtLib.TaggedData
 
         public async Task<object> ExtendTaggedData(ulong transactionId, CreateTransactionParameters parameters,
             string name, string data, string description = null, string tags = null, string type = null,
-            bool? isText = null, string filename = null)
+            bool? isText = null, string filename = null, string channel = null)
         {
             var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
             AddToParametersIfHasValue("name", name, queryParameters);
@@ -29,6 +29,7 @@ namespace NxtLib.TaggedData
             AddToParametersIfHasValue("type", type, queryParameters);
             AddToParametersIfHasValue("isText", isText, queryParameters);
             AddToParametersIfHasValue("filename", filename, queryParameters);
+            AddToParametersIfHasValue("channel", channel, queryParameters);
             parameters.AppendToQueryParameters(queryParameters);
 
             throw new NotImplementedException();
