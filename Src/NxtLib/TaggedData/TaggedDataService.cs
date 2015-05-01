@@ -103,13 +103,14 @@ namespace NxtLib.TaggedData
         }
 
         public async Task<TransactionCreatedReply> UploadTaggedData(string name, string data, CreateTransactionParameters parameters,
-            string description = null, string tags = null, string type = null, bool? isText = null,
-            string filename = null)
+            string description = null, string tags = null, string channel = null, string type = null, 
+            bool? isText = null, string filename = null)
         {
             var queryParameters = new Dictionary<string, string> {{"name", name}, {"data", data}};
             AddToParametersIfHasValue("description", description, queryParameters);
             AddToParametersIfHasValue("tags", tags, queryParameters);
             AddToParametersIfHasValue("type", type, queryParameters);
+            AddToParametersIfHasValue("channel", channel, queryParameters);
             AddToParametersIfHasValue("isText", isText, queryParameters);
             AddToParametersIfHasValue("filename", filename, queryParameters);
             parameters.AppendToQueryParameters(queryParameters);
@@ -118,7 +119,7 @@ namespace NxtLib.TaggedData
         }
 
         public async Task<object> VerifyTaggedData(ulong transactionId, string name, string data, string description = null,
-            string tags = null, string type = null, bool? isText = null, string filename = null)
+            string tags = null, string channel = null, string type = null, bool? isText = null, string filename = null)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -129,6 +130,7 @@ namespace NxtLib.TaggedData
             AddToParametersIfHasValue("description", description, queryParameters);
             AddToParametersIfHasValue("tags", tags, queryParameters);
             AddToParametersIfHasValue("type", type, queryParameters);
+            AddToParametersIfHasValue("channel", channel, queryParameters);
             AddToParametersIfHasValue("isText", isText, queryParameters);
             AddToParametersIfHasValue("filename", filename, queryParameters);
 
