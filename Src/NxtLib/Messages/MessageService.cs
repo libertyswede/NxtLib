@@ -72,6 +72,13 @@ namespace NxtLib.Messages
             return await Get<PrunableMessagesReply>("getAllPrunableMessages", queryParameters);
         }
 
+        public async Task<PrunableMessageReply> GetPrunableMessage(ulong transactionId, string secretPhrase = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            AddToParametersIfHasValue("secretPhrase", secretPhrase, queryParameters);
+            return await Get<PrunableMessageReply>("getPrunableMessage", queryParameters);
+        }
+
         private async Task<EncryptedDataReply> EncryptTo(string recipientAccountId, string messageToEncrypt, bool messageToEncryptIsText,
             bool compressMessageToEncrypt, string secretPhrase)
         {

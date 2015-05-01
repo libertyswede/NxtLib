@@ -93,6 +93,7 @@
     <Compile Include="EncryptedData.cs" />
     <Compile Include="Messages\DecryptedReply.cs" />
     <Compile Include="Messages\PrunableMessage.cs" />
+    <Compile Include="Messages\PrunableMessageReply.cs" />
     <Compile Include="Messages\PrunableMessagesReply.cs" />
     <Compile Include="NxtApiAttribute.cs" />
     <Compile Include="Internal\LocalSign\Crypto.cs" />
