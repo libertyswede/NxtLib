@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NxtLib.Internal;
 using NxtLib.VotingSystem;
 
 namespace NxtLib
@@ -124,7 +126,11 @@ namespace NxtLib
     {
         public bool IsCompressed { get; set; }
         public bool IsText { get; set; }
+
+        [JsonConverter(typeof(ByteToHexStringConverter))]
         public BinaryHexString Nonce { get; set; }
+
+        [JsonConverter(typeof(ByteToHexStringConverter))]
         public BinaryHexString Data { get; set; }
 
         protected EncryptedMessageBase(JToken messageToken)
@@ -134,12 +140,20 @@ namespace NxtLib
             Nonce = new BinaryHexString(((JValue) messageToken.SelectToken(NonceKey)).Value.ToString());
             Data = new BinaryHexString(((JValue) messageToken.SelectToken(DataKey)).Value.ToString());
         }
+
+        protected EncryptedMessageBase()
+        {
+        }
     }
 
     public class EncryptedMessage : EncryptedMessageBase
     {
         private EncryptedMessage(JToken messageToken)
             : base(messageToken)
+        {
+        }
+
+        public EncryptedMessage()
         {
         }
 

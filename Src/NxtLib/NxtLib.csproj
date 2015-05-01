@@ -95,6 +95,8 @@
     <Compile Include="Messages\PrunableMessage.cs" />
     <Compile Include="Messages\PrunableMessageReply.cs" />
     <Compile Include="Messages\PrunableMessagesReply.cs" />
+    <Compile Include="Messages\VerifyPrunableEncryptedMessageReply.cs" />
+    <Compile Include="Messages\VerifyPrunableMessageReply.cs" />
     <Compile Include="NxtApiAttribute.cs" />
     <Compile Include="Internal\LocalSign\Crypto.cs" />
     <Compile Include="Internal\LocalSign\Curve25519.cs" />

@@ -5,11 +5,8 @@ namespace NxtLib.Messages
 {
     public interface IMessageService
     {
-        Task<DecryptedReply> DecryptFrom(string accountId, string message, BinaryHexString nonce, 
-            bool uncompressDecryptedMessage, string secretPhrase);
-
-        Task<DecryptedReply> DecryptFrom(string accountId, IEnumerable<byte> data, BinaryHexString nonce, 
-            bool uncompressDecryptedMessage, string secretPhrase);
+        Task<DecryptedReply> DecryptFrom(string accountId, BinaryHexString data, bool messageIsText, 
+            BinaryHexString nonce, bool uncompressDecryptedMessage, string secretPhrase);
 
         Task<DecryptedReply> DecryptFrom(string accountId, EncryptedMessage encryptedMessage, string secretPhrase);
 
@@ -27,5 +24,12 @@ namespace NxtLib.Messages
         Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null);
 
         Task<TransactionCreatedReply> SendMessage(CreateTransactionParameters parameters, string recipient = null);
+
+        Task<VerifyPrunableMessageReply> VerifyPrunableMessage(ulong transactionId, string message);
+
+        Task<VerifyPrunableMessageReply> VerifyPrunableMessage(ulong transactionId, IEnumerable<byte> data);
+
+        Task<VerifyPrunableEncryptedMessageReply> VerifyPrunableEncryptedMessage(ulong transactionId, BinaryHexString encryptedMessageData, 
+            BinaryHexString encryptedMessageNonce, bool? messageToEncryptIsText = null, bool? compressMessageToEncrypt = null);
     }
 }

@@ -16,18 +16,11 @@ namespace NxtLib.Messages
         {
         }
 
-        public async Task<DecryptedReply> DecryptFrom(string accountId, string message, BinaryHexString nonce,
+        public async Task<DecryptedReply> DecryptFrom(string accountId, BinaryHexString data, bool messageIsText, BinaryHexString nonce,
             bool uncompressDecryptedMessage, string secretPhrase)
         {
-            return await DecryptFrom(accountId, message, true, nonce.ToHexString(), 
+            return await DecryptFrom(accountId, data.ToHexString(), messageIsText, nonce.ToHexString(), 
                 uncompressDecryptedMessage, secretPhrase);
-        }
-
-        public async Task<DecryptedReply> DecryptFrom(string accountId, IEnumerable<byte> data,
-            BinaryHexString nonce, bool uncompressDecryptedMessage, string secretPhrase)
-        {
-            return await DecryptFrom(accountId, ByteToHexStringConverter.ToHexString(data), false, 
-                nonce.ToHexString(), uncompressDecryptedMessage, secretPhrase);
         }
         
         public async Task<DecryptedReply> DecryptFrom(string accountId, EncryptedMessage encryptedMessage, string secretPhrase)
@@ -117,6 +110,43 @@ namespace NxtLib.Messages
             AddToParametersIfHasValue("recipient", recipient, queryParameters);
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("sendMessage", queryParameters);
+        }
+
+        public async Task<VerifyPrunableMessageReply> VerifyPrunableMessage(ulong transactionId, string message)
+        {
+            return await VerifyPrunableMessage(transactionId, message, true);
+        }
+
+        public async Task<VerifyPrunableMessageReply> VerifyPrunableMessage(ulong transactionId, IEnumerable<byte> data)
+        {
+            return await VerifyPrunableMessage(transactionId, ByteToHexStringConverter.ToHexString(data), false);
+        }
+
+        private async Task<VerifyPrunableMessageReply> VerifyPrunableMessage(ulong transactionId, string message, bool messageIsText)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"transaction", transactionId.ToString()},
+                {"message", message},
+                {"messageIsText", messageIsText.ToString()},
+                {"messageIsPrunable", true.ToString()}
+            };
+            return await Get<VerifyPrunableMessageReply>("verifyPrunableMessage", queryParameters);
+        }
+
+        public async Task<VerifyPrunableEncryptedMessageReply> VerifyPrunableEncryptedMessage(ulong transactionId, BinaryHexString encryptedMessageData, 
+            BinaryHexString encryptedMessageNonce, bool? messageToEncryptIsText = null, bool? compressMessageToEncrypt = null)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"transaction", transactionId.ToString()},
+                {"encryptedMessageData", encryptedMessageData.ToHexString()},
+                {"encryptedMessageNonce", encryptedMessageNonce.ToHexString()},
+                {"encryptedMessageIsPrunable", true.ToString()}
+            };
+            AddToParametersIfHasValue("messageToEncryptIsText", messageToEncryptIsText, queryParameters);
+            AddToParametersIfHasValue("compressMessageToEncrypt", compressMessageToEncrypt, queryParameters);
+            return await Get<VerifyPrunableEncryptedMessageReply>("verifyPrunableMessage", queryParameters);
         }
     }
 }
