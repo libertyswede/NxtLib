@@ -6,7 +6,8 @@ namespace NxtLib.Accounts
     public class AccountIdReply : BaseReply
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong Account { get; set; }
+        [JsonProperty(PropertyName = "account")]
+        public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
         public string PublicKey { get; set; }
     }
