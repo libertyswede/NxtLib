@@ -31,15 +31,5 @@ namespace NxtLib.VotingSystem
             MaxRangeValue = maxRangeValue;
             Options = options;
         }
-
-        public CreatePollParameters(string name, string description, int finishHeight,
-            VotingModel votingModel, int minNumberOfOptions, int maxNumberOfOptions, int minRangeValue,
-            int maxRangeValue, List<string> options, long minBalance, MinBalanceModel minBalanceModel, ulong holdingId)
-            : this(name, description, finishHeight, votingModel, minNumberOfOptions, maxNumberOfOptions, minRangeValue, maxRangeValue, options)
-        {
-            MinBalance = minBalance;
-            MinBalanceModel = minBalanceModel;
-            HoldingId = holdingId;
-        }
     }
 }
