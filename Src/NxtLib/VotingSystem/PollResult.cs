@@ -1,8 +1,12 @@
+using Newtonsoft.Json;
+using NxtLib.Internal;
+
 namespace NxtLib.VotingSystem
 {
     public class PollResult
     {
-        public long Result { get; set; }
+        [JsonConverter(typeof(StringToIntegralTypeConverter))]
+        public long? Result { get; set; }
         public long Weight { get; set; }
     }
 }
