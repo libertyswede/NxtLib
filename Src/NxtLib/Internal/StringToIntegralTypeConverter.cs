@@ -29,25 +29,32 @@ namespace NxtLib.Internal
             }
             if (reader.TokenType == JsonToken.String || reader.TokenType == JsonToken.Integer)
             {
+                var value = reader.Value.ToString();
+                if (string.IsNullOrEmpty(value) &&
+                    (objectType == typeof (byte?) || objectType == typeof (short?) || objectType == typeof (int?) ||
+                     objectType == typeof (long?) || objectType == typeof (ulong?)))
+                {
+                    return null;
+                }
                 if (objectType == typeof(byte) || objectType == typeof(byte?))
                 {
-                    return Convert.ToByte(reader.Value.ToString());
+                    return Convert.ToByte(value);
                 }
                 if (objectType == typeof(short) || objectType == typeof(short?))
                 {
-                    return Convert.ToInt16(reader.Value.ToString());
+                    return Convert.ToInt16(value);
                 }
                 if (objectType == typeof(int) || objectType == typeof(int?))
                 {
-                    return Convert.ToInt32(reader.Value.ToString());
+                    return Convert.ToInt32(value);
                 }
                 if (objectType == typeof(long) || objectType == typeof(long?))
                 {
-                    return Convert.ToInt64(reader.Value.ToString());
+                    return Convert.ToInt64(value);
                 }
                 if (objectType == typeof(ulong) || objectType == typeof(ulong?))
                 {
-                    return Convert.ToUInt64(reader.Value.ToString());
+                    return Convert.ToUInt64(value);
                 }
             }
 
