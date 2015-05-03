@@ -117,7 +117,7 @@ namespace NxtLib
                 return null;
             }
 
-            var messageIsText = Convert.ToBoolean(jObject.SelectToken(MessageIsTextKey));
+            var messageIsText = Convert.ToBoolean(jObject.SelectToken(MessageIsTextKey).ToString());
             return new Message(new UnencryptedMessage(messageToken.Value.ToString(), messageIsText));
         }
     }
