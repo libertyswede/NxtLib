@@ -87,7 +87,7 @@ namespace NxtLib.VotingSystem
             return await Get<GetPollReply>("getPoll", queryParameters);
         }
 
-        public async Task<GetPollResultReply> GetPollResult(ulong pollId, VotingModel? votingModel,
+        public async Task<GetPollResultReply> GetPollResult(ulong pollId, VotingModel? votingModel = null,
             ulong? holdingId = null, long? minBalance = null, MinBalanceModel? minBalanceModel = null)
         {
             var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}};
