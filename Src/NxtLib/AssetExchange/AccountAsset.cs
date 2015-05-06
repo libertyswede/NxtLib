@@ -11,9 +11,9 @@ namespace NxtLib.AssetExchange
         public string Name { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong QuantityQnt { get; set; }
+        public long QuantityQnt { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong UnconfirmedQuantityQnt { get; set; }
+        public long UnconfirmedQuantityQnt { get; set; }
     }
 }
