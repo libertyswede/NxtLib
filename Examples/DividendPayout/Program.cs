@@ -27,13 +27,13 @@ namespace DividendPayout
 
             var asset = assetService.GetAsset(attachment.AssetId).Result;
 
-            var assetAccounts = assetService.GetAssetAccounts(attachment.AssetId, transaction.Height).Result;
+            var assetAccounts = assetService.GetAssetAccounts(attachment.AssetId, attachment.Height).Result;
             var totalSpent = Amount.CreateAmountFromNqt(((long)asset.QuantityQnt) * nqtPerQnt);
 
             Console.WriteLine("Fetching dividend payments for asset: {0} using transaction id: {1}", asset.Name, transactionId);
             Console.WriteLine("Total in dividend: {0} NXT", totalSpent.Nxt);
             Console.WriteLine("Per share (qnt): {0} NQT / {1} NXT", nqtPerQnt, attachment.AmountPerQnt.Nxt);
-            Console.WriteLine("Number of shareholders at height {0}: {1}", transaction.Height, assetAccounts.AccountAssets.Count);
+            Console.WriteLine("Number of shareholders at height {0}: {1}", attachment.Height, assetAccounts.AccountAssets.Count);
 
             foreach (var accountAsset in assetAccounts.AccountAssets.OrderByDescending(a => a.QuantityQnt))
             {
