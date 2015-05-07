@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NxtLib;
-using NxtLib.Accounts;
 using NxtLib.AssetExchange;
 using NxtLib.Transactions;
 
@@ -14,6 +13,7 @@ namespace DividendPayout
         private static Asset _asset;
         private static TransactionService _transactionService;
         private const ulong GenesisAccountId = 1739068987193023818;
+        private const string GenesisAccountRs = "NXT-MRCC-2YLS-8M54-3CMAJ";
 
         static void Main(string[] args)
         {
@@ -43,12 +43,11 @@ namespace DividendPayout
 
         private static IEnumerable<DividendReciever> GetRecievers(int height)
         {
-            IEnumerable<DividendReciever> dividendRecievers;
             try
             {
                 var assetAccounts = _assetService.GetAssetAccounts(_asset.AssetId, height).Result;
-                dividendRecievers = assetAccounts.AccountAssets
-                    .Where(FilterRecievers())
+                return assetAccounts.AccountAssets
+                    .Where(aa => aa.AccountId != _asset.AccountId && aa.AccountId != GenesisAccountId)
                     .Select(aa => new DividendReciever(aa.AccountRs, aa.QuantityQnt));
             }
             catch (AggregateException ae)
@@ -62,24 +61,45 @@ namespace DividendPayout
             return GetRecieversTheHardWay(height);
         }
 
-        private static Func<AssetAccount, bool> FilterRecievers()
-        {
-            return aa => aa.AccountId != _asset.AccountId && aa.AccountId != GenesisAccountId;
-        }
-
         private static IEnumerable<DividendReciever> GetRecieversTheHardWay(int height)
         {
-            var transaction = _transactionService.GetTransaction(new GetTransactionLocator(_asset.AssetId)).Result;
-            //transaction.Height
-            var accountService = new AccountService();
-
-            var getTradesResult = _assetService.GetTrades(new AssetIdOrAccountId(_asset.AssetId), 0, 100, false).Result;
-            foreach (var assetTrade in getTradesResult.Trades)
+            var owners = new Dictionary<string, long> {{_asset.AccountRs, (long) _asset.QuantityQnt}};
+            var index = 0;
+            while (index < _asset.NumberOfTrades)
             {
-
-                //assetTrade.QuantityQnt
+                var getTradesResult = _assetService.GetTrades(new AssetIdOrAccountId(_asset.AssetId), index, index + 100, false).Result;
+                getTradesResult.Trades.Where(t => t.Height <= height)
+                    .ToList()
+                    .ForEach(t => UpdateOwnership(owners, t.BuyerRs, t.SellerRs, (long) t.QuantityQnt));
+                index += 100;
             }
-            throw new NotImplementedException();
+            index = 0;
+            while (index < _asset.NumberOfTransfers)
+            {
+                var getTransfersResult = _assetService.GetAssetTransfers(new AssetIdOrAccountId(_asset.AssetId), index, index + 100, false).Result;
+                getTransfersResult.Transfers.Where(t => t.Height <= height)
+                    .ToList()
+                    .ForEach(t => UpdateOwnership(owners, t.RecipientRs, t.SenderRs, (long)t.QuantityQnt));
+                index += 100;
+            }
+            return owners.ToList().OrderBy(o => o.Value)
+                    .Where(o => o.Key != _asset.AccountRs && o.Key != GenesisAccountRs)
+                    .Select(o => new DividendReciever(o.Key, o.Value));
+        }
+
+        private static void UpdateOwnership(Dictionary<string, long> owners, string buyerRs, string sellerRs,
+            long quantity)
+        {
+            if (!owners.ContainsKey(sellerRs))
+            {
+                owners.Add(sellerRs, 0);
+            }
+            if (!owners.ContainsKey(buyerRs))
+            {
+                owners.Add(buyerRs, 0);
+            }
+            owners[sellerRs] -= quantity;
+            owners[buyerRs] += quantity;
         }
 
         private static ulong GetTransactionIdFromArguments(string[] args)
@@ -102,10 +122,15 @@ namespace DividendPayout
         public string AccountRs { get; set; }
         public long QuantityQnt { get; set; }
 
-        public DividendReciever(string accountRs, ulong quantityQnt)
+        public DividendReciever(string accountRs, long quantityQnt)
         {
             AccountRs = accountRs;
-            QuantityQnt = (long)quantityQnt;
+            QuantityQnt = quantityQnt;
+        }
+
+        public DividendReciever(string accountRs, ulong quantityQnt)
+            : this(accountRs, (long)quantityQnt)
+        {
         }
     }
 }
