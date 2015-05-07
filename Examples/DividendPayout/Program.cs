@@ -37,16 +37,16 @@ namespace DividendPayout
                 Console.WriteLine("Account: {0}, Shares: {1}, Amount: {2} NXT",
                     assetOwner.AccountRs, assetOwner.QuantityQnt / decimalMultiplier, amountRecieved.Nxt);
             }
+
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadLine();
         }
 
         private static ulong GetTransactionIdFromArguments(IReadOnlyList<string> args)
         {
-            var transactionId = 0UL;
-            if (args.Count > 0 && args[0].Equals("-transaction", StringComparison.InvariantCultureIgnoreCase))
-            {
-                UInt64.TryParse(args[1], out transactionId);
-            }
-            else
+            ulong transactionId = 0;
+            if (args.Count <= 1 || !args[0].Equals("-transaction") || !UInt64.TryParse(args[1], out transactionId))
             {
                 Console.WriteLine("Provide a dividend transaction id as argument using -transaction xxxxx");
                 Environment.Exit(0);
