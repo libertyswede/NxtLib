@@ -23,6 +23,24 @@ namespace NxtLib.ServerInfo
             throw new NotImplementedException("Not enough documentation about this function exist yet");
         }
 
+        //Block.BLOCK_GENERATED
+        //Block.BLOCK_POPPED
+        //Block.BLOCK_PUSHED
+        //Peer.ADD_INBOUND
+        //Peer.ADDED_ACTIVE_PEER
+        //Peer.BLACKLIST
+        //Peer.CHANGED_ACTIVE_PEER
+        //Peer.DEACTIVATE
+        //Peer.NEW_PEER
+        //Peer.REMOVE
+        //Peer.REMOVE_INBOUND
+        //Peer.UNBLACKLIST
+        //Transaction.ADDED_CONFIRMED_TRANSACTIONS
+        //Transaction.ADDED_UNCONFIRMED_TRANSACTIONS
+        //Transaction.REJECT_PHASED_TRANSACTION
+        //Transaction.RELEASE_PHASED_TRANSACTION
+        //Transaction.REMOVE_UNCONFIRMED_TRANSACTIONS
+
         // Sample response on eventWait:
 
         //{
