@@ -95,13 +95,13 @@ namespace NxtLib.Accounts
             return await Get<AccountTransactionIdsReply>("getAccountTransactionIds", queryParameters);
         }
 
-        public async Task<AccountTransactionsReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
+        public async Task<TransactionListReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null)
         {
             var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, transactionType,
                 firstIndex, lastIndex, numberOfConfirmations, withMessage, phased);
-            return await Get<AccountTransactionsReply>("getAccountTransactions", queryParameters);
+            return await Get<TransactionListReply>("getAccountTransactions", queryParameters);
         }
 
         public async Task<BalanceReply> GetBalance(string accountId)

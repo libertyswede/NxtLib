@@ -17,7 +17,7 @@ namespace NxtLib.Accounts
         Task<AccountTransactionIdsReply> GetAccountTransactionIds(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null);
-        Task<AccountTransactionsReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
+        Task<TransactionListReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null);
         Task<BalanceReply> GetBalance(string accountId);

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace NxtLib.Accounts
+namespace NxtLib
 {
-    public class AccountTransactionsReply : BaseReply
+    public class TransactionListReply : BaseReply
     {
         public List<Transaction> Transactions { get; set; }
     }

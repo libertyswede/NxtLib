@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using NxtLib.Internal;
 
 namespace NxtLib
@@ -36,6 +37,13 @@ namespace NxtLib
             {
                 Phasing.AppendToQueryParameters(queryParameters);
             }
+        }
+
+        internal virtual void AppendToQueryParameters(Dictionary<string, List<string>> queryParameters)
+        {
+            var dictionary = new Dictionary<string, string>();
+            AppendToQueryParameters(dictionary);
+            dictionary.ToList().ForEach(kvp => queryParameters.Add(kvp.Key, new List<string>{kvp.Value}));
         }
 
         private void AddUnencryptedMessage(IDictionary<string, string> queryParameters)
