@@ -215,7 +215,7 @@ namespace NxtLib
         public List<BinaryHexString> LinkedFullHashes { get; set; }
         public long MinBalance { get; set; }
         public MinBalanceModel MinBalanceModel { get; set; }
-        public string Quorum { get; set; }
+        public long Quorum { get; set; }
         public VotingModel VotingModel { get; set; }
         public List<ulong> WhiteList { get; set; }
 
@@ -238,7 +238,7 @@ namespace NxtLib
                 HoldingId = UInt64.Parse(GetAttachmentValue<string>(jObject, PhasingHoldingKey)),
                 MinBalance = Int64.Parse(GetAttachmentValue<string>(jObject, PhasingMinBalanceKey)),
                 MinBalanceModel = (MinBalanceModel)GetAttachmentValue<int>(jObject, PhasingMinBalanceModelKey),
-                Quorum = GetAttachmentValue<string>(jObject, PhasingQuorumKey),
+                Quorum = GetAttachmentValue<long>(jObject, PhasingQuorumKey),
                 VotingModel = (VotingModel)GetAttachmentValue<int>(jObject, PhasingVotingModelKey)
             };
 

@@ -13,11 +13,11 @@ namespace NxtLib
         public List<BinaryHexString> LinkedFullHash { get; set; }
         public long? MinBalance { get; set; }
         public MinBalanceModel? MinBalanceModel { get; set; }
-        public string Quorum { get; set; }
+        public long Quorum { get; set; }
         public VotingModel VotingModel { get; set; }
         public List<string> WhiteListed { get; set; }
 
-        public CreateTransactionPhasing(int finishHeight, VotingModel votingModel, string quorum)
+        public CreateTransactionPhasing(int finishHeight, VotingModel votingModel, long quorum)
         {
             Phased = true;
             FinishHeight = finishHeight;
@@ -34,7 +34,7 @@ namespace NxtLib
                 queryParameters.Add("phased", Phased.ToString());
                 queryParameters.Add("phasingFinishHeight", FinishHeight.ToString());
                 queryParameters.Add("phasingVotingModel", ((int)VotingModel).ToString());
-                queryParameters.Add("phasingQuorum", Quorum);
+                queryParameters.Add("phasingQuorum", Quorum.ToString());
 
                 if (MinBalance.HasValue)
                 {
