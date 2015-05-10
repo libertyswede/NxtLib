@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace NxtLib.ServerInfo
 {
     public interface IServerInfoService
     {
-        Task<object> EventRegister(List<string> events, string add, string remove);
+        Task<EventRegisterReply> EventRegister(NxtEvent? nxtEvent, bool? add = null, bool? remove = null);
         Task<object> EventWait(long timeout);
         Task<GetBlockchainStatusReply> GetBlockchainStatus();
         Task<GetConstantsReply> GetConstants();

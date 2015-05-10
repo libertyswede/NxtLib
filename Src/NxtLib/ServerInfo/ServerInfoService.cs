@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -18,28 +20,38 @@ namespace NxtLib.ServerInfo
         {
         }
 
-        public async Task<object> EventRegister(List<string> events, string add, string remove)
+        public async Task<EventRegisterReply> EventRegister(NxtEvent? nxtEvent, bool? add = null, bool? remove = null)
         {
-            throw new NotImplementedException("Not enough documentation about this function exist yet");
+            var queryParameters = new Dictionary<string, List<string>>();
+            if (nxtEvent.HasValue)
+            {
+                queryParameters.Add("event", GetEventList(nxtEvent.Value));
+            }
+            if (add.HasValue)
+            {
+                queryParameters.Add("add", new List<string>{add.ToString()});
+            }
+            if (remove.HasValue)
+            {
+                queryParameters.Add("remove", new List<string> {remove.ToString()});
+            }
+            return await Post<EventRegisterReply>("eventRegister", queryParameters);
         }
 
-        //Block.BLOCK_GENERATED
-        //Block.BLOCK_POPPED
-        //Block.BLOCK_PUSHED
-        //Peer.ADD_INBOUND
-        //Peer.ADDED_ACTIVE_PEER
-        //Peer.BLACKLIST
-        //Peer.CHANGED_ACTIVE_PEER
-        //Peer.DEACTIVATE
-        //Peer.NEW_PEER
-        //Peer.REMOVE
-        //Peer.REMOVE_INBOUND
-        //Peer.UNBLACKLIST
-        //Transaction.ADDED_CONFIRMED_TRANSACTIONS
-        //Transaction.ADDED_UNCONFIRMED_TRANSACTIONS
-        //Transaction.REJECT_PHASED_TRANSACTION
-        //Transaction.RELEASE_PHASED_TRANSACTION
-        //Transaction.REMOVE_UNCONFIRMED_TRANSACTIONS
+        private static List<string> GetEventList(NxtEvent nxtEvent)
+        {
+            var events = from NxtEvent flag in Enum.GetValues(typeof (NxtEvent))
+                where nxtEvent.HasFlag(flag)
+                select
+                    flag.GetType()
+                        .GetTypeInfo()
+                        .GetDeclaredField(flag.ToString())
+                        .GetCustomAttribute<NxtApiAttribute>()
+                into apiAttribute
+                select apiAttribute.Name;
+            
+            return events.ToList();
+        }
 
         // Sample response on eventWait:
 
