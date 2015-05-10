@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NxtLib.Local;
 
 namespace NxtLib
 {
@@ -14,9 +15,7 @@ namespace NxtLib
         private readonly IDateTimeConverter _dateTimeConverter;
         private readonly string _baseUrl;
 
-        internal const string DefaultBaseUrl = "http://localhost:7876/nxt";
-
-        protected BaseService(IDateTimeConverter dateTimeConverter, string baseUrl = DefaultBaseUrl)
+        protected BaseService(IDateTimeConverter dateTimeConverter, string baseUrl = Constants.DefaultNxtUrl)
         {
             _dateTimeConverter = dateTimeConverter;
             _baseUrl = baseUrl;

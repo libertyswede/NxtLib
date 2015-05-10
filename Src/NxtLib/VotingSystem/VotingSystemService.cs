@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.VotingSystem
 {
     public class VotingSystemService : BaseService, IVotingSystemService
     {
-        public VotingSystemService(string baseAddress = DefaultBaseUrl)
+        public VotingSystemService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

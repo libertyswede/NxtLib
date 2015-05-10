@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.Forging
 {
     public class ForgingService : BaseService, IForgingService
     {
-        public ForgingService(string baseAddress = DefaultBaseUrl)
+        public ForgingService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

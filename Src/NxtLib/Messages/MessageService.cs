@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.Messages
 {
     public class MessageService : BaseService, IMessageService
     {
-        public MessageService(string baseAddress = DefaultBaseUrl)
+        public MessageService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

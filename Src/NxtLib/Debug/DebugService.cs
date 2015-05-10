@@ -3,12 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.Debug
 {
     public class DebugService : BaseService, IDebugService
     {
-        public DebugService(string baseAddress = DefaultBaseUrl)
+        public DebugService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

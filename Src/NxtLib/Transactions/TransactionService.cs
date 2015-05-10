@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.Transactions
 {
     public class TransactionService : BaseService, ITransactionService
     {
-        public TransactionService(string baseAddress = DefaultBaseUrl)
+        public TransactionService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

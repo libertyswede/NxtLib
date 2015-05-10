@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.ServerInfo
 {
     public class ServerInfoService : BaseService, IServerInfoService
     {
-        public ServerInfoService(string baseAddress = DefaultBaseUrl)
+        public ServerInfoService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

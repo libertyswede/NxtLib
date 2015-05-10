@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.Accounts
 {
     public class AccountService : BaseService, IAccountService
     {
-        public AccountService(string baseAddress = DefaultBaseUrl)
+        public AccountService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

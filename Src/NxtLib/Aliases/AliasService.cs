@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.Aliases
 {
     public class AliasService : BaseService, IAliasService
     {
-        public AliasService(string baseAddress = DefaultBaseUrl)
+        public AliasService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

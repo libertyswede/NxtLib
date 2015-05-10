@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.AssetExchange
 {
     public class AssetExchangeService : BaseService, IAssetExchangeService
     {
-        public AssetExchangeService(string baseAddress = DefaultBaseUrl)
+        public AssetExchangeService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

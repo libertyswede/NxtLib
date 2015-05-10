@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.Networking
 {
     public class NetworkingService : BaseService, INetworkingService
     {
-        public NetworkingService(string baseAddress = DefaultBaseUrl)
+        public NetworkingService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

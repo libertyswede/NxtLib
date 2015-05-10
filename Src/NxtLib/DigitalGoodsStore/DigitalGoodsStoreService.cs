@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.DigitalGoodsStore
 {
     public class DigitalGoodsStoreService : BaseService, IDigitalGoodsStoreService
     {
-        public DigitalGoodsStoreService(string baseAddress = DefaultBaseUrl)
+        public DigitalGoodsStoreService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

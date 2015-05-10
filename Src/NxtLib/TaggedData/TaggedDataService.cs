@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.TaggedData
 {
     public class TaggedDataService : BaseService, ITaggedDataService
     {
-        public TaggedDataService(string baseUrl = DefaultBaseUrl) 
+        public TaggedDataService(string baseUrl = Constants.DefaultNxtUrl) 
             : base(new DateTimeConverter(), baseUrl)
         {
         }

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.MonetarySystem
 {
     public class MonetarySystemService : BaseService, IMonetarySystemService
     {
-        public MonetarySystemService(string baseAddress = DefaultBaseUrl)
+        public MonetarySystemService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

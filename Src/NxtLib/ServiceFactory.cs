@@ -5,6 +5,7 @@ using NxtLib.Blocks;
 using NxtLib.Debug;
 using NxtLib.DigitalGoodsStore;
 using NxtLib.Forging;
+using NxtLib.Local;
 using NxtLib.Messages;
 using NxtLib.MonetarySystem;
 using NxtLib.Networking;
@@ -43,7 +44,7 @@ namespace NxtLib
     {
         private readonly string _baseAddress;
 
-        public ServiceFactory(string baseAddress = BaseService.DefaultBaseUrl)
+        public ServiceFactory(string baseAddress = Constants.DefaultNxtUrl)
         {
             _baseAddress = baseAddress;
         }

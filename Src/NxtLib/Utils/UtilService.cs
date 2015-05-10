@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.Utils
 {
     public class UtilService : BaseService, IUtilService
     {
-        public UtilService(string baseAddress = DefaultBaseUrl)
+        public UtilService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

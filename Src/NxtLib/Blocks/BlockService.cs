@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
+using NxtLib.Local;
 
 namespace NxtLib.Blocks
 {
     public class BlockService : BaseService, IBlockService
     {
-        public BlockService(string baseAddress = DefaultBaseUrl)
+        public BlockService(string baseAddress = Constants.DefaultNxtUrl)
             : base(new DateTimeConverter(), baseAddress)
         {
         }

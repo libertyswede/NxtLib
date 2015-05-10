@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using NxtLib.Local;
 
 namespace NxtLib
 {
@@ -12,7 +13,7 @@ namespace NxtLib
 
     public class NxtService : BaseService, INxtService
     {
-        public NxtService(IDateTimeConverter dateTimeConverter, string baseUrl = DefaultBaseUrl)
+        public NxtService(IDateTimeConverter dateTimeConverter, string baseUrl = Constants.DefaultNxtUrl)
             : base(dateTimeConverter, baseUrl)
         {
         }
