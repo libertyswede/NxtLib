@@ -34,7 +34,7 @@ namespace NxtLib.AssetExchange
         public Amount Price { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong QuantityQnt { get; set; }
+        public long QuantityQnt { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong Seller { get; set; }
