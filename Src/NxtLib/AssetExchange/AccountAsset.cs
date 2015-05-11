@@ -6,7 +6,8 @@ namespace NxtLib.AssetExchange
     public class AccountAsset
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong Asset { get; set; }
+        [JsonProperty(PropertyName = "asset")]
+        public ulong AssetId { get; set; }
         public byte Decimals { get; set; }
         public string Name { get; set; }
 
