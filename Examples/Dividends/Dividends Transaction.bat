@@ -1,0 +1,1 @@
+bin\debug\Dividends.exe -transaction 12856883435251942058 > output.txt

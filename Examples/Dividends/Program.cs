@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NxtLib.Local;
 
 namespace Dividends
 {
@@ -32,9 +33,21 @@ namespace Dividends
             if (args.Count == 2)
             {
                 ulong id;
-                if (args[0].Equals("-account") && UInt64.TryParse(args[1], out id))
+                if (args[0].Equals("-account"))
                 {
-                    return new ProgramOptions { Id = id, Mode = Mode.Account };
+                    if (UInt64.TryParse(args[1], out id))
+                    {
+                        return new ProgramOptions { Id = id, Mode = Mode.Account };
+                    }
+                    if (args[1].StartsWith("NXT-"))
+                    {
+                        var localCrypto = new LocalCrypto();
+                        return new ProgramOptions
+                        {
+                            Id = localCrypto.GetAccountIdFromReedSolomon(args[1]),
+                            Mode = Mode.Account
+                        };
+                    }
                 }
                 if (args[0].Equals("-transaction") && UInt64.TryParse(args[1], out id))
                 {
@@ -42,7 +55,7 @@ namespace Dividends
                 }
                 if (args[0].Equals("-asset") && UInt64.TryParse(args[1], out id))
                 {
-                    return new ProgramOptions { Id = id, Mode = Mode.Transaction };
+                    return new ProgramOptions { Id = id, Mode = Mode.Asset };
                 }
             }
             Console.WriteLine("Usage: ");

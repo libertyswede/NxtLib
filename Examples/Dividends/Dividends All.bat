@@ -1,0 +1,1 @@
+bin\debug\Dividends.exe > output.txt
