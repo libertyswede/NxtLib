@@ -5,7 +5,7 @@ namespace NxtLib.ServerInfo
     public interface IServerInfoService
     {
         Task<EventRegisterReply> EventRegister(NxtEvent? nxtEvent, bool? add = null, bool? remove = null);
-        Task<object> EventWait(long timeout);
+        Task<EventWaitReply> EventWait(long timeout);
         Task<GetBlockchainStatusReply> GetBlockchainStatus();
         Task<GetConstantsReply> GetConstants();
         Task<GetPluginsReply> GetPlugins();

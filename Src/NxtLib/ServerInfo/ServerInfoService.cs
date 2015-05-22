@@ -52,23 +52,11 @@ namespace NxtLib.ServerInfo
             
             return events.ToList();
         }
-
-        // Sample response on eventWait:
-
-        //{
-        //    "requestProcessingTime": 0,
-        //    "events": [
-        //        {
-        //            "name": "Peer.DEACTIVATE",
-        //            "ids": [
-        //                "74.74.83.190"
-        //            ]
-        //        }
-        //    ]
-        //}
-        public async Task<object> EventWait(long timeout)
+        
+        public async Task<EventWaitReply> EventWait(long timeout)
         {
-            throw new NotImplementedException("Not enough documentation about this function exist yet");
+            var queryParameters = new Dictionary<string, string> {{"timeout", timeout.ToString()}};
+            return await Post<EventWaitReply>("eventWait", queryParameters);
         }
 
         public async Task<GetBlockchainStatusReply> GetBlockchainStatus()

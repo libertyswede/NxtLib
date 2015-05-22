@@ -71,7 +71,9 @@
     <Compile Include="Phasing\PhasingPollVotesReply.cs" />
     <Compile Include="Phasing\PhasingPollWhiteList.cs" />
     <Compile Include="ServerInfo\EventRegisterReply.cs" />
+    <Compile Include="ServerInfo\EventWaitReply.cs" />
     <Compile Include="ServerInfo\NxtEvent.cs" />
+    <Compile Include="ServerInfo\WaitEvent.cs" />
     <Compile Include="TransactionListReply.cs" />
     <Compile Include="Accounts\IAccountService.cs" />
     <Compile Include="Accounts\LessorInfo.cs" />
