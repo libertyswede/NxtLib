@@ -22,14 +22,9 @@ namespace Dividends
         private IList<Asset> GetAssetList(ProgramOptions options)
         {
             var assetList = new List<Asset>();
-            if (options.Mode == Mode.All)
+            if (options.Mode == Mode.All || options.Mode == Mode.Account)
             {
                 assetList = _assetService.GetAllAssets().Result.AssetList;
-            }
-            else if (options.Mode == Mode.Account)
-            {
-                var accountAssetList = _assetService.GetAccountAssets(options.Id.ToString()).Result.AccountAssetList;
-                assetList = _assetService.GetAssets(accountAssetList.Select(a => a.AssetId)).Result.AssetList;
             }
             else if (options.Mode == Mode.Asset)
             {
