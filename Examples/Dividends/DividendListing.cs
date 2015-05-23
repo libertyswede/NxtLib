@@ -11,20 +11,31 @@ namespace Dividends
     {
         private readonly IAssetExchangeService _assetService = new AssetExchangeService();
         private readonly IAccountService _accountService = new AccountService();
+        private List<AssetTrade> _trades;
+        private List<AssetTransfer> _transfers;
 
         public void List(ProgramOptions options)
         {
             var assetList = GetAssetList(options);
-            var dividendTransactions = GetDividendTransactions(assetList);
+            var dividendTransactions = GetDividendTransactions(assetList, options);
             PrintDividendTransactions(dividendTransactions, assetList);
         }
 
         private IList<Asset> GetAssetList(ProgramOptions options)
         {
             var assetList = new List<Asset>();
-            if (options.Mode == Mode.All || options.Mode == Mode.Account)
+            if (options.Mode == Mode.All)
             {
                 assetList = _assetService.GetAllAssets().Result.AssetList;
+            }
+            else if (options.Mode == Mode.Account)
+            {
+                _transfers = _assetService.GetAssetTransfers(AssetIdOrAccountId.ByAccountId(options.Id.ToString()), includeAssetInfo: false).Result.Transfers;
+                _trades = _assetService.GetTrades(AssetIdOrAccountId.ByAccountId(options.Id.ToString()), includeAssetInfo: false).Result.Trades;
+
+                var assetIds = _transfers.Select(transfer => transfer.AssetId).Union(_trades.Select(trade => trade.AssetId)).Distinct();
+
+                assetList = _assetService.GetAssets(assetIds).Result.AssetList;
             }
             else if (options.Mode == Mode.Asset)
             {
@@ -33,7 +44,7 @@ namespace Dividends
             return assetList;
         }
 
-        private IEnumerable<Transaction> GetDividendTransactions(IEnumerable<Asset> assetList)
+        private IEnumerable<Transaction> GetDividendTransactions(IEnumerable<Asset> assetList, ProgramOptions options)
         {
             var dividendTransactions = new List<Transaction>();
 
@@ -42,10 +53,29 @@ namespace Dividends
                 if (dividendTransactions.All(t => t.Sender != asset.AccountId))
                 {
                     var transactionsReply = _accountService.GetAccountTransactions(asset.AccountRs, transactionType: TransactionSubType.ColoredCoinsDividendPayment).Result;
-                    dividendTransactions.AddRange(transactionsReply.Transactions);
+                    transactionsReply.Transactions
+                        .Where(t => options.Mode != Mode.Account || OwnsAssetAtHeight(options.Id, t))
+                        .ToList()
+                        .ForEach(t => dividendTransactions.Add(t));
                 }
             }
             return dividendTransactions;
+        }
+
+        private bool OwnsAssetAtHeight(ulong accountId, Transaction dividendTransaction)
+        {
+            var quantity = 0L;
+            var attachment = (ColoredCoinsDividendPaymentAttachment) dividendTransaction.Attachment;
+            var assetId = attachment.AssetId;
+            var height = attachment.Height;
+
+            _trades.Where(t => t.Buyer == accountId && t.AssetId == assetId && t.Height < height).ToList().ForEach(t => quantity += t.QuantityQnt);
+            _trades.Where(t => t.Seller == accountId && t.AssetId == assetId && t.Height < height).ToList().ForEach(t => quantity -= t.QuantityQnt);
+
+            _transfers.Where(t => t.RecipientId == accountId && t.AssetId == assetId && t.Height < height).ToList().ForEach(t => quantity += t.QuantityQnt);
+            _transfers.Where(t => t.SenderId == accountId && t.AssetId == assetId && t.Height < height).ToList().ForEach(t => quantity -= t.QuantityQnt);
+
+            return quantity > 0;
         }
 
         private void PrintDividendTransactions(IEnumerable<Transaction> dividendTransactionsEnumerable, IList<Asset> assetList)
