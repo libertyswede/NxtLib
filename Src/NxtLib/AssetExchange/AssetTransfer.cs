@@ -18,7 +18,7 @@ namespace NxtLib.AssetExchange
         public string Name { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong QuantityQnt { get; set; }
+        public long QuantityQnt { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = "recipient")]
@@ -26,7 +26,8 @@ namespace NxtLib.AssetExchange
         public string RecipientRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong Sender { get; set; }
+        [JsonProperty(PropertyName = "sender")]
+        public ulong SenderId { get; set; }
         public string SenderRs { get; set; }
 
         [JsonConverter(typeof(DateTimeConverter))]
