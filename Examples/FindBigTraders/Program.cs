@@ -67,13 +67,15 @@ namespace FindBigTraders
         private static void GetDividendPayments()
         {
             var accountService = new AccountService();
-            foreach (var asset in Assets)
+            var dividendPayingAccounts = Assets.Select(a => a.AccountId).Distinct().ToList();
+            foreach (var accountId in dividendPayingAccounts)
             {
-                var accountTransactionsReply = accountService.GetAccountTransactions(asset.AccountId.ToString(), null,
+                var accountTransactionsReply = accountService.GetAccountTransactions(accountId.ToString(), null,
                     TransactionSubType.ColoredCoinsDividendPayment).Result;
                 foreach (var transaction in accountTransactionsReply.Transactions)
                 {
-                    var owners = CalculateOwnership((ColoredCoinsDividendPaymentAttachment) transaction.Attachment);
+                    var attachment = (ColoredCoinsDividendPaymentAttachment) transaction.Attachment;
+                    var owners = CalculateOwnership(attachment);
                     owners.ToList().ForEach(o => DividendCount[o.AccountId] = GetValueOrDefault(DividendCount, o.AccountId) + 1);
                 }
             }
