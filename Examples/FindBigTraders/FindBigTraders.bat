@@ -1,0 +1,1 @@
+bin\debug\FindBigTraders.exe > output.txt
