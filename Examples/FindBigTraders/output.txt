@@ -1,21 +1,21 @@
-Account: NXT-LS4D-ZRUN-QBDN-8JGMG, Trades: 3419
-Account: NXT-CDZV-JZKZ-EYDD-4XUG3, Trades: 1905
-Account: NXT-76EQ-6P29-2SSL-A5MRM, Trades: 1741
+Account: NXT-LS4D-ZRUN-QBDN-8JGMG, Trades: 3434
+Account: NXT-CDZV-JZKZ-EYDD-4XUG3, Trades: 1911
+Account: NXT-76EQ-6P29-2SSL-A5MRM, Trades: 1764
 Account: NXT-F7S9-WRV4-CVUF-AWFV5, Trades: 1478
-Account: NXT-AAR6-7JRL-P9AR-ED4QD, Trades: 1454
+Account: NXT-AAR6-7JRL-P9AR-ED4QD, Trades: 1457
 Account: NXT-P6VW-3PKL-8YY3-6CL7E, Transfers: 23372
 Account: NXT-QP45-4LQ8-853H-7XF3N, Transfers: 11493
 Account: NXT-CQW9-URNA-G7PV-F8HE6, Transfers: 11366
 Account: NXT-5294-T9F6-WAWK-9V7WM, Transfers: 8665
-Account: NXT-G2G3-7D57-AE27-7LZLG, Transfers: 5800
+Account: NXT-G2G3-7D57-AE27-7LZLG, Transfers: 5804
 Account: NXT-P6VW-3PKL-8YY3-6CL7E, Trades & transfers: 23372
 Account: NXT-QP45-4LQ8-853H-7XF3N, Trades & transfers: 11494
 Account: NXT-CQW9-URNA-G7PV-F8HE6, Trades & transfers: 11366
 Account: NXT-5294-T9F6-WAWK-9V7WM, Trades & transfers: 8676
-Account: NXT-G2G3-7D57-AE27-7LZLG, Trades & transfers: 6406
-Account: NXT-UAPC-3T43-FFT6-HW5BZ, Dividend count: 105
-Account: NXT-TU23-XMYB-722V-5LWVC, Dividend count: 92
-Account: NXT-F87Z-VNC2-A28A-2ZHYW, Dividend count: 90
-Account: NXT-A3CC-YG8Z-HNFP-23QMS, Dividend count: 87
-Account: NXT-KXBT-62PV-ZEH8-ABFXF, Dividend count: 73
+Account: NXT-G2G3-7D57-AE27-7LZLG, Trades & transfers: 6416
+Account: NXT-UAPC-3T43-FFT6-HW5BZ, Dividend count: 79
+Account: NXT-TU23-XMYB-722V-5LWVC, Dividend count: 74
+Account: NXT-A3CC-YG8Z-HNFP-23QMS, Dividend count: 63
+Account: NXT-F87Z-VNC2-A28A-2ZHYW, Dividend count: 60
+Account: NXT-KTTD-E3CK-W4A6-FH3TP, Dividend count: 57
 Done and done!

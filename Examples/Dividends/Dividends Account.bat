@@ -1,1 +1,1 @@
-bin\debug\Dividends.exe -account NXT-2DRD-6HVM-C3XX-BDRBF > output.txt
+bin\debug\Dividends.exe -account 18420984776566317738 > output.txt
