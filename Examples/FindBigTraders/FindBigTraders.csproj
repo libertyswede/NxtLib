@@ -51,7 +51,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Src\NxtLib\NxtLib.csproj">
+    <ProjectReference Include="..\..\Src\NxtLib\NxtLib.csproj">
       <Project>{0af03b81-f676-41ce-b16d-dacab3d926d9}</Project>
       <Name>NxtLib</Name>
     </ProjectReference>
