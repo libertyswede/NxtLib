@@ -20,7 +20,7 @@ namespace NxtLib.ServerInfo
         {
         }
 
-        public async Task<EventRegisterReply> EventRegister(NxtEvent? nxtEvent, bool? add = null, bool? remove = null)
+        public async Task<EventRegisterReply> EventRegister(NxtEvent? nxtEvent = null, bool? add = null, bool? remove = null)
         {
             var queryParameters = new Dictionary<string, List<string>>();
             if (nxtEvent.HasValue)
