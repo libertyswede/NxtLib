@@ -535,6 +535,7 @@ namespace NxtLib
 
     public abstract class TaggedDataAttachment : Attachment
     {
+        public string Channel { get; set; }
         public string Data { get; set; }
         public string DataType { get; set; }
         public string Description { get; set; }
@@ -547,6 +548,7 @@ namespace NxtLib
         {
             if (jToken.SelectToken(DataKey) != null)
             {
+                Channel = GetAttachmentValue<string>(jToken, ChannelKey);
                 Data = GetAttachmentValue<string>(jToken, DataKey);
                 DataType = GetAttachmentValue<string>(jToken, TypeKey);
                 Description = GetAttachmentValue<string>(jToken, DescriptionKey);

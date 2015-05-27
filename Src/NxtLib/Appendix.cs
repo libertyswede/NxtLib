@@ -16,6 +16,7 @@ namespace NxtLib
         protected const string AmountPerUnitNqtKey = "amountPerUnitNQT";
         protected const string AssetIdKey = "asset";
         protected const string BuyRateNqtKey = "buyRateNQT";
+        protected const string ChannelKey = "channel";
         protected const string CodeKey = "code";
         protected const string CommentKey = "comment";
         protected const string CounterKey = "counter";
