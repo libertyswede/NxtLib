@@ -63,6 +63,7 @@
     <Compile Include="Accounts\AccountReply.cs" />
     <Compile Include="Accounts\AccountService.cs" />
     <Compile Include="Accounts\AccountTransactionIdsReply.cs" />
+    <Compile Include="Internal\TransactionSubTypesConverter.cs" />
     <Compile Include="Phasing\PhasingPoll.cs" />
     <Compile Include="Phasing\PhasingPollReply.cs" />
     <Compile Include="Phasing\PhasingPollsReply.cs" />
@@ -255,7 +256,7 @@
     <Compile Include="ServerInfo\GetTimeReply.cs" />
     <Compile Include="Networking\PeersLocator.cs" />
     <Compile Include="ServerInfo\ServerInfoService.cs" />
-    <Compile Include="ServerInfo\TransactionTypeBase.cs" />
+    <Compile Include="ServerInfo\TransactionType.cs" />
     <Compile Include="Tokens\TokenReply.cs" />
     <Compile Include="Tokens\TokenService.cs" />
     <Compile Include="Tokens\GenerateTokenReply.cs" />

@@ -19,6 +19,7 @@ namespace NxtLib.ServerInfo
         public Dictionary<string, sbyte> HashAlgorithms { get; set; }
         public int MaxArbitraryMessageLength { get; set; }
         public int MaxBlockPayloadLength { get; set; }
+        public int MaxTaggedDataDataLength { get; set; }
 
         [JsonConverter(typeof(DictionaryConverter))]
         public Dictionary<string, sbyte> MinBalanceModels { get; set; }
@@ -28,6 +29,9 @@ namespace NxtLib.ServerInfo
 
         [JsonConverter(typeof(TransactionTypesConverter))]
         public Dictionary<int, Dictionary<int, TransactionType>> TransactionTypes { get; set; }
+
+        [JsonConverter(typeof(TransactionSubTypesConverter))]
+        public Dictionary<string, TransactionType> TransactionSubTypes { get; set; }
 
         [JsonConverter(typeof(DictionaryConverter))]
         public Dictionary<string, sbyte> VotingModels { get; set; }

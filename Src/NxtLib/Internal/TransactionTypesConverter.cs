@@ -25,10 +25,12 @@ namespace NxtLib.Internal
                         var subTypeObject = subTypeProperty.Value;
                         transactionDictionary.Add(Convert.ToInt32(subTypeProperty.Name), new TransactionType
                         {
-                            CanHaveRecipient = Convert.ToBoolean(((JValue)subTypeObject.SelectToken("canHaveRecipient")).Value),
-                            IsPhasingSafe = Convert.ToBoolean(((JValue)subTypeObject.SelectToken("isPhasingSafe")).Value),
-                            MustHaveRecipient = Convert.ToBoolean(((JValue)subTypeObject.SelectToken("mustHaveRecipient")).Value),
-                            Name = ((JValue) subTypeObject.SelectToken("name")).Value.ToString()
+                            CanHaveRecipient = Convert.ToBoolean(((JValue) subTypeObject.SelectToken("canHaveRecipient")).Value),
+                            IsPhasingSafe = Convert.ToBoolean(((JValue) subTypeObject.SelectToken("isPhasingSafe")).Value),
+                            MustHaveRecipient = Convert.ToBoolean(((JValue) subTypeObject.SelectToken("mustHaveRecipient")).Value),
+                            Name = ((JValue) subTypeObject.SelectToken("name")).Value.ToString(),
+                            SubType = (int)(long) ((JValue) subTypeObject.SelectToken("subtype")).Value,
+                            Type = (int)(long)((JValue)subTypeObject.SelectToken("type")).Value
                         });
                     }
                 }
