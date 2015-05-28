@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Local;
 
@@ -22,15 +24,8 @@ namespace NxtLib.TaggedData
             string name, string data, string description = null, string tags = null, string type = null,
             bool? isText = null, string filename = null, string channel = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
-            AddToParametersIfHasValue("name", name, queryParameters);
-            AddToParametersIfHasValue("data", data, queryParameters);
-            AddToParametersIfHasValue("description", description, queryParameters);
-            AddToParametersIfHasValue("tags", tags, queryParameters);
-            AddToParametersIfHasValue("type", type, queryParameters);
-            AddToParametersIfHasValue("isText", isText, queryParameters);
-            AddToParametersIfHasValue("filename", filename, queryParameters);
-            AddToParametersIfHasValue("channel", channel, queryParameters);
+            var queryParameters = GetQueryParametersForTaggedData(name, data, description, tags, channel, type, isText, filename);
+            queryParameters.Add("transaction", transactionId.ToString());
             parameters.AppendToQueryParameters(queryParameters);
 
             throw new NotImplementedException();
@@ -107,35 +102,30 @@ namespace NxtLib.TaggedData
             string description = null, string tags = null, string channel = null, string type = null, 
             bool? isText = null, string filename = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"name", name}, {"data", data}};
-            AddToParametersIfHasValue("description", description, queryParameters);
-            AddToParametersIfHasValue("tags", tags, queryParameters);
-            AddToParametersIfHasValue("type", type, queryParameters);
-            AddToParametersIfHasValue("channel", channel, queryParameters);
-            AddToParametersIfHasValue("isText", isText, queryParameters);
-            AddToParametersIfHasValue("filename", filename, queryParameters);
+            var queryParameters = GetQueryParametersForTaggedData(name, data, description, tags, channel, type, isText, filename);
             parameters.AppendToQueryParameters(queryParameters);
-
             return await Post<TransactionCreatedReply>("uploadTaggedData", queryParameters);
         }
 
-        public async Task<object> VerifyTaggedData(ulong transactionId, string name, string data, string description = null,
+        public async Task<VerifyTaggedDataReply> VerifyTaggedData(ulong transactionId, string name, string data, string description = null,
             string tags = null, string channel = null, string type = null, bool? isText = null, string filename = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"transaction", transactionId.ToString()},
-                {"name", name},
-                {"data", data}
-            };
+            var queryParameters = GetQueryParametersForTaggedData(name, data, description, tags, channel, type, isText, filename);
+            queryParameters.Add("transaction", transactionId.ToString());
+            return await Post<VerifyTaggedDataReply>("verifyTaggedData", queryParameters);
+        }
+
+        private static Dictionary<string, string> GetQueryParametersForTaggedData(string name, string data, string description, string tags,
+            string channel, string type, bool? isText, string filename)
+        {
+            var queryParameters = new Dictionary<string, string> { { "name", name }, { "data", data } };
             AddToParametersIfHasValue("description", description, queryParameters);
             AddToParametersIfHasValue("tags", tags, queryParameters);
             AddToParametersIfHasValue("type", type, queryParameters);
             AddToParametersIfHasValue("channel", channel, queryParameters);
             AddToParametersIfHasValue("isText", isText, queryParameters);
             AddToParametersIfHasValue("filename", filename, queryParameters);
-
-            throw new NotImplementedException();
+            return queryParameters;
         }
     }
 }

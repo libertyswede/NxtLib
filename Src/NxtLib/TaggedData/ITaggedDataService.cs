@@ -7,5 +7,7 @@ namespace NxtLib.TaggedData
         Task<TransactionCreatedReply> UploadTaggedData(string name, string data, CreateTransactionParameters parameters,
             string description = null, string tags = null, string channel = null, string type = null, 
             bool? isText = null, string filename = null);
+        Task<VerifyTaggedDataReply> VerifyTaggedData(ulong transactionId, string name, string data, string description = null,
+            string tags = null, string channel = null, string type = null, bool? isText = null, string filename = null);
     }
 }

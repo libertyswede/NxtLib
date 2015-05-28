@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.VotingSystem;
@@ -537,12 +538,12 @@ namespace NxtLib
     {
         public string Channel { get; set; }
         public string Data { get; set; }
-        public string DataType { get; set; }
         public string Description { get; set; }
         public string Filename { get; set; }
         public bool IsText { get; set; }
         public string Name { get; set; }
         public string Tags { get; set; }
+        public string Type { get; set; }
 
         protected void ParseTaggedData(JToken jToken)
         {
@@ -550,12 +551,12 @@ namespace NxtLib
             {
                 Channel = GetAttachmentValue<string>(jToken, ChannelKey);
                 Data = GetAttachmentValue<string>(jToken, DataKey);
-                DataType = GetAttachmentValue<string>(jToken, TypeKey);
                 Description = GetAttachmentValue<string>(jToken, DescriptionKey);
                 Filename = GetAttachmentValue<string>(jToken, FilenameKey);
                 IsText = GetAttachmentValue<bool>(jToken, IsTextKey);
                 Name = GetAttachmentValue<string>(jToken, NameKey);
                 Tags = GetAttachmentValue<string>(jToken, TagsKey);
+                Type = GetAttachmentValue<string>(jToken, TypeKey);
             }
         }
     }
@@ -573,7 +574,12 @@ namespace NxtLib
 
     public class TaggedDataUploadAttachment : TaggedDataAttachment
     {
+        [JsonConverter(typeof(ByteToHexStringConverter))]
         public BinaryHexString Hash { get; set; }
+
+        internal TaggedDataUploadAttachment()
+        {
+        }
 
         internal TaggedDataUploadAttachment(JToken jToken)
         {
