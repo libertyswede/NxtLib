@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Local;
 
@@ -20,15 +18,14 @@ namespace NxtLib.TaggedData
         {
         }
 
-        public async Task<object> ExtendTaggedData(ulong transactionId, CreateTransactionParameters parameters,
-            string name, string data, string description = null, string tags = null, string type = null,
-            bool? isText = null, string filename = null, string channel = null)
+        public async Task<TransactionCreatedReply> ExtendTaggedData(ulong transactionId, CreateTransactionParameters parameters,
+            string name, string data, string description = null, string tags = null, string channel = null, 
+            string type = null, bool? isText = null, string filename = null)
         {
             var queryParameters = GetQueryParametersForTaggedData(name, data, description, tags, channel, type, isText, filename);
             queryParameters.Add("transaction", transactionId.ToString());
             parameters.AppendToQueryParameters(queryParameters);
-
-            throw new NotImplementedException();
+            return await Post<TransactionCreatedReply>("extendTaggedData", queryParameters);
         }
 
         public async Task<object> GetAccountTaggedData(string account, int? firstIndex = null, int? lastIndex = null)
