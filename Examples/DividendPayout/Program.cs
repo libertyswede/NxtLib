@@ -56,7 +56,7 @@ namespace DividendPayout
 
         private static ColoredCoinsDividendPaymentAttachment GetTransactionAttachment(ulong transactionId)
         {
-            var transaction = TransactionService.GetTransaction(new GetTransactionLocator(transactionId)).Result;
+            var transaction = TransactionService.GetTransaction(GetTransactionLocator.ByTransactionId(transactionId)).Result;
             return (ColoredCoinsDividendPaymentAttachment) transaction.Attachment;
         }
 
@@ -85,24 +85,24 @@ namespace DividendPayout
 
         private static IEnumerable<AssetOwner> CalculateOwnership(int height)
         {
-            var owners = new Dictionary<string, long> {{_asset.AccountRs, (long) _asset.QuantityQnt}};
+            var owners = new Dictionary<string, long> {{_asset.AccountRs,  _asset.QuantityQnt}};
             var index = 0;
             while (index < _asset.NumberOfTrades)
             {
-                var getTradesResult = AssetService.GetTrades(new AssetIdOrAccountId(_asset.AssetId), index, index + 100, false).Result;
+                var getTradesResult = AssetService.GetTrades(AssetIdOrAccountId.ByAssetId(_asset.AssetId), index, index + 100, includeAssetInfo: false).Result;
                 foreach (var trade in getTradesResult.Trades.Where(t => t.Height <= height))
                 {
-                    UpdateOwnership(owners, trade.BuyerRs, trade.SellerRs, (long)trade.QuantityQnt);
+                    UpdateOwnership(owners, trade.BuyerRs, trade.SellerRs, trade.QuantityQnt);
                 }
                 index += 100;
             }
             index = 0;
             while (index < _asset.NumberOfTransfers)
             {
-                var getTransfersResult = AssetService.GetAssetTransfers(new AssetIdOrAccountId(_asset.AssetId), index, index + 100, false).Result;
+                var getTransfersResult = AssetService.GetAssetTransfers(AssetIdOrAccountId.ByAssetId(_asset.AssetId), index, index + 100, false).Result;
                 foreach (var transfer in getTransfersResult.Transfers.Where(t => t.Height <= height))
                 {
-                    UpdateOwnership(owners, transfer.RecipientRs, transfer.SenderRs, (long)transfer.QuantityQnt);
+                    UpdateOwnership(owners, transfer.RecipientRs, transfer.SenderRs, transfer.QuantityQnt);
                 }
                 index += 100;
             }

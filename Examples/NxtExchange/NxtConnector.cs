@@ -9,6 +9,7 @@ using NxtLib.Blocks;
 using NxtLib.Messages;
 using NxtLib.ServerInfo;
 using NxtLib.Transactions;
+using BlockchainStatus = NxtExchange.DAL.BlockchainStatus;
 using TransactionSubType = NxtLib.TransactionSubType;
 
 namespace NxtExchange
@@ -46,7 +47,7 @@ namespace NxtExchange
         public async Task Init()
         {
             var accountIdReply = await _accountService.GetAccountId(AccountIdLocator.BySecretPhrase(_secretPhrase));
-            _accountId = accountIdReply.Account;
+            _accountId = accountIdReply.AccountId;
         }
 
         public async Task<BlockchainStatus> GetBlockchainStatus()
@@ -54,9 +55,9 @@ namespace NxtExchange
             var status = new BlockchainStatus();
 
             var blockchainStatusReply = await _serverInfoService.GetBlockchainStatus();
-            var lastBlock = await _blockService.GetBlock(BlockLocator.BlockId(blockchainStatusReply.LastBlockId));
-            var confirmedBlock = await _blockService.GetBlock(BlockLocator.Height(blockchainStatusReply.NumberOfBlocks - 11));
-            var secureBlock = await _blockService.GetBlock(BlockLocator.Height(blockchainStatusReply.NumberOfBlocks - 721));
+            var lastBlock = await _blockService.GetBlock(BlockLocator.ByBlockId(blockchainStatusReply.LastBlockId));
+            var confirmedBlock = await _blockService.GetBlock(BlockLocator.ByHeight(blockchainStatusReply.NumberOfBlocks - 11));
+            var secureBlock = await _blockService.GetBlock(BlockLocator.ByHeight(blockchainStatusReply.NumberOfBlocks - 721));
 
             status.LastKnownBlockId = blockchainStatusReply.LastBlockId.ToSigned();
             status.LastKnownBlockTimestamp = lastBlock.Timestamp;
@@ -94,15 +95,15 @@ namespace NxtExchange
             {
                 return string.Empty;
             }
-            var decryptedMessage = await _messageService.DecryptMessageFrom(transaction.SenderRs, transaction.EncryptedMessage, _secretPhrase);
-            return decryptedMessage.Message;
+            var decryptedMessage = await _messageService.ReadMessage(transaction.TransactionId.Value, _secretPhrase);
+            return decryptedMessage.DecryptedMessage.MessageText;
         }
 
         public async Task<Transaction> GetTransaction(ulong transactionId)
         {
             try
             {
-                var transactionReply = await _transactionService.GetTransaction(new GetTransactionLocator(transactionId));
+                var transactionReply = await _transactionService.GetTransaction(GetTransactionLocator.ByTransactionId(transactionId));
                 return (Transaction) transactionReply;
             }
             catch (NxtException)

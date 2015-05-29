@@ -32,7 +32,7 @@ namespace DividendTracker
             Console.WriteLine("Start scanning blockchain at height: {0}", blockHeight);
             for (; blockHeight < currentHeight; blockHeight++)
             {
-                block = blockService.GetBlockIncludeTransactions(BlockLocator.Height(blockHeight)).Result;
+                block = blockService.GetBlockIncludeTransactions(BlockLocator.ByHeight(blockHeight)).Result;
                 foreach (var transaction in block.Transactions.Where(transaction => transaction.SubType == TransactionSubType.ColoredCoinsDividendPayment))
                 {
                     var attachment = (ColoredCoinsDividendPaymentAttachment)transaction.Attachment;
