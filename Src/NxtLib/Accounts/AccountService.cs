@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NxtLib.Debug;
 using NxtLib.Internal;
 using NxtLib.Local;
 
@@ -87,6 +88,7 @@ namespace NxtLib.Accounts
             return await Get<AccountPublicKeyReply>("getAccountPublicKey", queryParameters);
         }
 
+        [Obsolete("This API is deprecated and will be removed in 1.6. It does not include the phased transactions that an account may have. To retrieve both phased and non-phased transactions, the new getBlockchainTransactions API must be used. Do not simply switch from getAccountTransactions to getBlockchainTransactions without a detailed understanding of how phased transactions work, and without being prepared to analyze them correctly.")]
         public async Task<AccountTransactionIdsReply> GetAccountTransactionIds(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null)
@@ -96,6 +98,7 @@ namespace NxtLib.Accounts
             return await Get<AccountTransactionIdsReply>("getAccountTransactionIds", queryParameters);
         }
 
+        [Obsolete(@"This API is deprecated and will be removed in 1.6. It does not include the phased transactions that an account may have. To retrieve both phased and non-phased transactions, the new getBlockchainTransactions API must be used. Do not simply switch from getAccountTransactions to getBlockchainTransactions without a detailed understanding of how phased transactions work, and without being prepared to analyze them correctly.")]
         public async Task<TransactionListReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null)
@@ -110,6 +113,18 @@ namespace NxtLib.Accounts
             var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("includeEffectiveBalance", includeEffectiveBalance, queryParameters);
             return await Get<BalanceReply>("getBalance", queryParameters);
+        }
+
+        public async Task<TransactionListReply> GetBlockchainTransactions(string accountId, DateTime? timeStamp = null,
+            TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
+            int? numberOfConfirmations = null, bool? withMessage = null, bool? phasedOnly = null,
+            bool? nonPhasedOnly = null)
+        {
+            var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, transactionType,
+                firstIndex, lastIndex, numberOfConfirmations, withMessage);
+            AddToParametersIfHasValue("phasedOnly", phasedOnly, queryParameters);
+            AddToParametersIfHasValue("nonPhasedOnly", nonPhasedOnly, queryParameters);
+            return await Get<TransactionListReply>("getBlockchainTransactions", queryParameters);
         }
 
         public async Task<GuaranteedBalanceReply> GetGuaranteedBalance(string accountId, int? numberOfConfirmations = null)
@@ -149,6 +164,16 @@ namespace NxtLib.Accounts
         private Dictionary<string, string> GenerateQueryParamsForAccountTransactions(string accountId, DateTime? timeStamp,
             TransactionSubType? transactionType, int? firstIndex, int? lastIndex, int? numberOfConfirmations, bool? withMessage, bool? phased)
         {
+
+            var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, transactionType,
+                firstIndex, lastIndex, numberOfConfirmations, withMessage);
+            AddToParametersIfHasValue("phased", phased, queryParameters);
+            return queryParameters;
+        }
+
+        private Dictionary<string, string> GenerateQueryParamsForAccountTransactions(string accountId, DateTime? timeStamp,
+            TransactionSubType? transactionType, int? firstIndex, int? lastIndex, int? numberOfConfirmations, bool? withMessage)
+        {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
             AddToParametersIfHasValue(timeStamp, queryParameters);
             if (transactionType.HasValue)
@@ -160,7 +185,6 @@ namespace NxtLib.Accounts
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("numberOfConfirmations", numberOfConfirmations, queryParameters);
             AddToParametersIfHasValue("withMessage", withMessage, queryParameters);
-            AddToParametersIfHasValue("phased", phased, queryParameters);
             return queryParameters;
         }
     }
