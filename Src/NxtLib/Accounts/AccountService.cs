@@ -105,9 +105,10 @@ namespace NxtLib.Accounts
             return await Get<TransactionListReply>("getAccountTransactions", queryParameters);
         }
 
-        public async Task<BalanceReply> GetBalance(string accountId)
+        public async Task<BalanceReply> GetBalance(string accountId, bool? includeEffectiveBalance = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
+            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
+            AddToParametersIfHasValue("includeEffectiveBalance", includeEffectiveBalance, queryParameters);
             return await Get<BalanceReply>("getBalance", queryParameters);
         }
 

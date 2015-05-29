@@ -20,7 +20,7 @@ namespace NxtLib.Accounts
         Task<TransactionListReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null);
-        Task<BalanceReply> GetBalance(string accountId);
+        Task<BalanceReply> GetBalance(string accountId, bool? includeEffectiveBalance = null);
         Task<GuaranteedBalanceReply> GetGuaranteedBalance(string accountId, int? numberOfConfirmations = null);
         Task<SearchAccountsReply> SearchAccounts(string query, int? firstIndex = null, int? lastIndex = null);
         Task<TransactionCreatedReply> SendMoney(CreateTransactionParameters parameters, string recipient, Amount amount);
