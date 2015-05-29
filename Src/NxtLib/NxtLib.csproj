@@ -75,6 +75,7 @@
     <Compile Include="ServerInfo\EventWaitReply.cs" />
     <Compile Include="ServerInfo\NxtEvent.cs" />
     <Compile Include="ServerInfo\WaitEvent.cs" />
+    <Compile Include="TaggedData\AccountTaggedData.cs" />
     <Compile Include="TaggedData\AccountTaggedDataReply.cs" />
     <Compile Include="ITaggedData.cs" />
     <Compile Include="TaggedData\TaggedData.cs" />
