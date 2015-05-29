@@ -6,7 +6,7 @@ namespace NxtLib.Accounts
     public interface IAccountService
     {
         Task<AccountReply> GetAccount(string accountId, bool? includeLessors = null, bool? includeAssets = null,
-            bool? includeCurrencies = null);
+            bool? includeCurrencies = null, bool? includeEffectiveBalance = null);
         Task<AccountBlockCountReply> GetAccountBlockCount(string accountId);
         Task<AccountBlockIdsReply> GetAccountBlockIds(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null);
         Task<AccountBlocksReply<ulong>> GetAccountBlocks(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null);

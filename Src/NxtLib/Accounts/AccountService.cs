@@ -19,12 +19,13 @@ namespace NxtLib.Accounts
         }
 
         public async Task<AccountReply> GetAccount(string accountId, bool? includeLessors = null, bool? includeAssets = null,
-            bool? includeCurrencies = null)
+            bool? includeCurrencies = null, bool? includeEffectiveBalance = null)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
             AddToParametersIfHasValue("includeLessors", includeLessors, queryParameters);
             AddToParametersIfHasValue("includeAssets", includeAssets, queryParameters);
             AddToParametersIfHasValue("includeCurrencies", includeCurrencies, queryParameters);
+            AddToParametersIfHasValue("includeEffectiveBalance", includeEffectiveBalance, queryParameters);
             return await Get<AccountReply>("getAccount", queryParameters);
         }
 
