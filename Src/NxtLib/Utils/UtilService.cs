@@ -17,6 +17,12 @@ namespace NxtLib.Utils
         {
         }
 
+        public async Task<HexConvertReply> HexConvert(string @string)
+        {
+            var queryParameters = new Dictionary<string, string> {{"string", @string}};
+            return await Get<HexConvertReply>("hexConvert", queryParameters);
+        }
+
         // This can be done in .NET by just "var signedId = (long)id", but let's support the full NXT API
         public async Task<LongConvertReply> LongConvert(ulong id)
         {
