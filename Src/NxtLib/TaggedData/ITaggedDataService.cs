@@ -19,6 +19,8 @@ namespace NxtLib.TaggedData
 
         Task<DataTagsReply> GetDataTags(int? firstIndex = null, int? lastIndex = null);
 
+        Task<DataTagsReply> GetDataTagsLike(string tagPrefix, int? firstIndex = null, int? lastIndex = null);
+
         Task<TransactionCreatedReply> UploadTaggedData(string name, string data, CreateTransactionParameters parameters,
             string description = null, string tags = null, string channel = null, string type = null, 
             bool? isText = null, string filename = null);
