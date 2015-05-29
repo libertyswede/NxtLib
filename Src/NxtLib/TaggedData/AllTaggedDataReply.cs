@@ -4,6 +4,6 @@ namespace NxtLib.TaggedData
 {
     public class AllTaggedDataReply : BaseReply
     {
-        public List<AccountTaggedData> TaggedData { get; set; }
+        public List<TaggedData> TaggedData { get; set; }
     }
 }

@@ -28,11 +28,11 @@ namespace NxtLib.TaggedData
             return await Post<TransactionCreatedReply>("extendTaggedData", queryParameters);
         }
 
-        public async Task<TaggedDataReply> GetAccountTaggedData(string account, int? firstIndex = null, int? lastIndex = null, bool? includeData = null)
+        public async Task<TaggedDataListReply> GetAccountTaggedData(string account, int? firstIndex = null, int? lastIndex = null, bool? includeData = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", account}};
             AddToParametersIfHasValue(firstIndex, lastIndex, includeData, queryParameters);
-            return await Get<TaggedDataReply>("getAccountTaggedData", queryParameters);
+            return await Get<TaggedDataListReply>("getAccountTaggedData", queryParameters);
         }
 
         public async Task<AllTaggedDataReply> GetAllTaggedData(int? firstIndex = null, int? lastIndex = null, bool? includeData = null)
@@ -42,13 +42,13 @@ namespace NxtLib.TaggedData
             return await Get<AllTaggedDataReply>("getAllTaggedData", queryParameters);
         }
 
-        public async Task<TaggedDataReply> GetChannelTaggedData(string channel, string account = null, int? firstIndex = null,
+        public async Task<TaggedDataListReply> GetChannelTaggedData(string channel, string account = null, int? firstIndex = null,
             int? lastIndex = null, bool? includeData = null)
         {
             var queryParameters = new Dictionary<string, string> {{"channel", channel}};
             AddToParametersIfHasValue(firstIndex, lastIndex, includeData, queryParameters);
             AddToParametersIfHasValue("includeData", includeData, queryParameters);
-            return await Get<TaggedDataReply>("getChannelTaggedData", queryParameters);
+            return await Get<TaggedDataListReply>("getChannelTaggedData", queryParameters);
         }
 
         public async Task<DataTagCountReply> GetDataTagCount()
@@ -72,11 +72,11 @@ namespace NxtLib.TaggedData
             return await Get<DataTagsReply>("getDataTagsLike", queryParameters);
         }
 
-        public async Task<object> GetTaggedData(ulong transactionId)
+        public async Task<TaggedDataReply> GetTaggedData(ulong transactionId, bool? includeData = null)
         {
             var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
-
-            throw new NotImplementedException();
+            AddToParametersIfHasValue("includeData", includeData, queryParameters);
+            return await Get<TaggedDataReply>("getTaggedData", queryParameters);
         }
 
         public async Task<object> SearchTaggedData(string query = null, string tag = null, string account = null, string channel = null, 

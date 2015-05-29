@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-
 namespace NxtLib.TaggedData
 {
-    public class TaggedDataReply : BaseReply
+    public class TaggedDataReply : TaggedData, IBaseReply
     {
-        public List<AccountTaggedData> Data { get; set; }
+        public string RawJsonReply { get; set; }
+        public int RequestProcessingTime { get; set; }
+        public string RequestUri { get; set; }
     }
 }

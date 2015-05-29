@@ -75,14 +75,14 @@
     <Compile Include="ServerInfo\EventWaitReply.cs" />
     <Compile Include="ServerInfo\NxtEvent.cs" />
     <Compile Include="ServerInfo\WaitEvent.cs" />
-    <Compile Include="TaggedData\AccountTaggedData.cs" />
+    <Compile Include="TaggedData\TaggedData.cs" />
     <Compile Include="TaggedData\DataTagCountReply.cs" />
     <Compile Include="TaggedData\DataTagsReply.cs" />
     <Compile Include="TaggedData\TagCount.cs" />
-    <Compile Include="TaggedData\TaggedDataReply.cs" />
+    <Compile Include="TaggedData\TaggedDataListReply.cs" />
     <Compile Include="ITaggedData.cs" />
     <Compile Include="TaggedData\AllTaggedDataReply.cs" />
-    <Compile Include="TaggedData\TaggedData.cs" />
+    <Compile Include="TaggedData\TaggedDataReply.cs" />
     <Compile Include="TaggedData\VerifyTaggedDataReply.cs" />
     <Compile Include="TransactionListReply.cs" />
     <Compile Include="Accounts\IAccountService.cs" />
