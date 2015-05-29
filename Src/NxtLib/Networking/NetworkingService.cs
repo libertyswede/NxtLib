@@ -29,6 +29,18 @@ namespace NxtLib.Networking
             return await Get<DoneReply>("blacklistPeer", queryParameters);
         }
 
+        public async Task<GetPeersReply> GetInboundPeers()
+        {
+            var queryParameters = new Dictionary<string, string> {{"includePeerInfo", false.ToString()}};
+            return await Get<GetPeersReply>("getInboundPeers", queryParameters);
+        }
+
+        public async Task<GetPeersIncludeInfoReply> GetInboundPeersIncludeInfo()
+        {
+            var queryParameters = new Dictionary<string, string> {{"includePeerInfo", true.ToString()}};
+            return await Get<GetPeersIncludeInfoReply>("getInboundPeers", queryParameters);
+        }
+
         public async Task<GetMyInfoReply> GetMyInfo()
         {
             return await Get<GetMyInfoReply>("getMyInfo");

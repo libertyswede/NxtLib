@@ -6,6 +6,8 @@ namespace NxtLib.Networking
     {
         Task<PeerReply> AddPeer(string peer);
         Task<DoneReply> BlacklistPeer(string peer);
+        Task<GetPeersReply> GetInboundPeers();
+        Task<GetPeersIncludeInfoReply> GetInboundPeersIncludeInfo();
         Task<GetMyInfoReply> GetMyInfo();
         Task<PeerReply> GetPeer(string peer);
         Task<GetPeersReply> GetPeers(PeersLocator locator = null);
