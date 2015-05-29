@@ -23,6 +23,9 @@ namespace NxtLib.TaggedData
 
         Task<TaggedDataReply> GetTaggedData(ulong transactionId, bool? includeData = null);
 
+        Task<TaggedDataListReply> SearchTaggedData(string query = null, string tag = null, string account = null, string channel = null,
+            int? firstIndex = null, int? lastIndex = null, bool? includeData = null);
+
         Task<TransactionCreatedReply> UploadTaggedData(string name, string data, CreateTransactionParameters parameters,
             string description = null, string tags = null, string channel = null, string type = null, 
             bool? isText = null, string filename = null);
