@@ -37,13 +37,13 @@ namespace NxtLib.TaggedData
             return await Get<AccountTaggedDataReply>("getAccountTaggedData", queryParameters);
         }
 
-        public async Task<object> GetAllTaggedData(int? firstIndex = null, int? lastIndex = null)
+        public async Task<AllTaggedDataReply> GetAllTaggedData(int? firstIndex = null, int? lastIndex = null, bool? includeData = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-
-            throw new NotImplementedException();
+            AddToParametersIfHasValue("includeData", includeData, queryParameters);
+            return await Get<AllTaggedDataReply>("getAllTaggedData", queryParameters);
         }
 
         public async Task<object> GetChannelTaggedData()

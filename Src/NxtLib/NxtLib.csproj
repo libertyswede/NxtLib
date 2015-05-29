@@ -78,6 +78,7 @@
     <Compile Include="TaggedData\AccountTaggedData.cs" />
     <Compile Include="TaggedData\AccountTaggedDataReply.cs" />
     <Compile Include="ITaggedData.cs" />
+    <Compile Include="TaggedData\AllTaggedDataReply.cs" />
     <Compile Include="TaggedData\TaggedData.cs" />
     <Compile Include="TaggedData\VerifyTaggedDataReply.cs" />
     <Compile Include="TransactionListReply.cs" />
