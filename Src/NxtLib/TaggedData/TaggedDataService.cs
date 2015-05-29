@@ -28,13 +28,13 @@ namespace NxtLib.TaggedData
             return await Post<TransactionCreatedReply>("extendTaggedData", queryParameters);
         }
 
-        public async Task<object> GetAccountTaggedData(string account, int? firstIndex = null, int? lastIndex = null)
+        public async Task<AccountTaggedDataReply> GetAccountTaggedData(string account, int? firstIndex = null, int? lastIndex = null, bool? includeData = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", account}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-
-            throw new NotImplementedException();
+            AddToParametersIfHasValue("includeData", includeData, queryParameters);
+            return await Get<AccountTaggedDataReply>("getAccountTaggedData", queryParameters);
         }
 
         public async Task<object> GetAllTaggedData(int? firstIndex = null, int? lastIndex = null)

@@ -534,7 +534,7 @@ namespace NxtLib
         }
     }
 
-    public abstract class TaggedDataAttachment : Attachment
+    public abstract class TaggedDataAttachment : Attachment, ITaggedData
     {
         public string Channel { get; set; }
         public string Data { get; set; }

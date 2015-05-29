@@ -7,9 +7,13 @@ namespace NxtLib.TaggedData
         Task<TransactionCreatedReply> ExtendTaggedData(ulong transactionId, CreateTransactionParameters parameters,
             string name, string data, string description = null, string tags = null, string channel = null, 
             string type = null, bool? isText = null, string filename = null);
+
+        Task<AccountTaggedDataReply> GetAccountTaggedData(string account, int? firstIndex = null, int? lastIndex = null, bool? includeData = null);
+
         Task<TransactionCreatedReply> UploadTaggedData(string name, string data, CreateTransactionParameters parameters,
             string description = null, string tags = null, string channel = null, string type = null, 
             bool? isText = null, string filename = null);
+
         Task<VerifyTaggedDataReply> VerifyTaggedData(ulong transactionId, string name, string data, string description = null,
             string tags = null, string channel = null, string type = null, bool? isText = null, string filename = null);
     }
