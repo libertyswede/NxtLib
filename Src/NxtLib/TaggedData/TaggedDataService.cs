@@ -56,13 +56,12 @@ namespace NxtLib.TaggedData
             return await Get<DataTagCountReply>("getDataTagCount");
         }
 
-        public async Task<object> GetDataTags(int? firstIndex = null, int? lastIndex = null)
+        public async Task<DataTagsReply> GetDataTags(int? firstIndex = null, int? lastIndex = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-
-            throw new NotImplementedException();
+            return await Get<DataTagsReply>("getDataTags", queryParameters);
         }
 
         public async Task<object> GetDataTagsLike(string tagPrefix, int? firstIndex = null, int? lastIndex = null)
