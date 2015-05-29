@@ -7,6 +7,7 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | Nxt api function | NxtLib service class | Note |
 | ---------------- | -------------------- | ---- |
 | addPeer | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) |  | 
+| approveTransaction | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
 | blacklistPeer | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) |  | 
 | broadcastTransaction | [TransactionService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Transactions/TransactionService.cs) |  | 
 | buyAlias | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Aliases/AliasService.cs) |  | 
@@ -22,7 +23,7 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | currencySell | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | decodeHallmark | [TokenService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Tokens/TokenService.cs) |  | 
 | decodeToken | [TokenService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Tokens/TokenService.cs) |  | 
-| decryptFrom | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Messages/MessageService.cs) | DecryptDataFrom and DecryptMessageFrom | 
+| decryptFrom | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Messages/MessageService.cs) |  | 
 | deleteAlias | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Aliases/AliasService.cs) |  | 
 | deleteCurrency | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | dgsDelisting | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
@@ -34,15 +35,20 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | dgsQuantityChange | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
 | dgsRefund | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
 | dividendPayment | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
+| downloadTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
+| dumpPeers | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
 | encryptTo | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Messages/MessageService.cs) |  | 
+| eventRegister | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
+| eventWait | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
+| extendTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
 | fullReset | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
 | generateToken | [TokenService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Tokens/TokenService.cs) |  | 
 | getAccount | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
-| getAccountAssetCount | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
-| getAccountAssets | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) | GetAccountAsset and GetAccountAssets | 
+| getAccountAssetCount | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) | GetAccountAsset and GetAccountAssets | 
+| getAccountAssets | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getAccountBlockCount | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
-| getAccountBlockIds | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
-| getAccountBlocks | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) | GetAccountBlocks and GetAccountBlocksIncludeTransactions | 
+| getAccountBlockIds | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) | GetAccountBlocks and GetAccountBlocksIncludeTransactions | 
+| getAccountBlocks | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
 | getAccountCurrencies | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getAccountCurrencyCount | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getAccountCurrentAskOrderIds | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
@@ -52,18 +58,26 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | getAccountExchangeRequests | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getAccountId | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
 | getAccountLessors | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
+| getAccountPhasedTransactionCount | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
+| getAccountPhasedTransactions | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
 | getAccountPublicKey | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
-| getAccountTransactionIds | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
-| getAccountTransactions | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
+| getAccountTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
+| getAccountTransactionIds | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) | Obsolete | 
+| getAccountTransactions | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) | Obsolete | 
 | getAlias | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Aliases/AliasService.cs) |  | 
 | getAliasCount | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Aliases/AliasService.cs) |  | 
 | getAliases | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Aliases/AliasService.cs) |  | 
+| getAliasesLike | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Aliases/AliasService.cs) |  | 
 | getAllAssets | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
+| getAllBroadcastedTransactions | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
 | getAllCurrencies | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getAllExchanges | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getAllOpenAskOrders | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getAllOpenBidOrders | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
+| getAllPrunableMessages | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Messages/MessageService.cs) |  | 
+| getAllTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
 | getAllTrades | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
+| getAllWaitingTransactions | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
 | getAskOrder | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getAskOrderIds | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getAskOrders | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
@@ -71,18 +85,21 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | getAssetAccountCount | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getAssetAccounts | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getAssetIds | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
+| getAssetPhasedTransactions | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
 | getAssets | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getAssetsByIssuer | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getAssetTransfers | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getBalance | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
-| getBidOrder | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
+| getBidOrder | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) | GetBlock and GetBlockIncludeTransactions | 
 | getBidOrderIds | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getBidOrders | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
-| getBlock | [BlockService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Blocks/BlockService.cs) | GetBlock and GetBlockIncludeTransactions | 
+| getBlock | [BlockService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Blocks/BlockService.cs) | GetBlocks and GetBlocksIncludeTransactions | 
 | getBlockchainStatus | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
+| getBlockchainTransactions | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
 | getBlockId | [BlockService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Blocks/BlockService.cs) |  | 
-| getBlocks | [BlockService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Blocks/BlockService.cs) | GetBlocks and GetBlocksIncludeTransactions | 
+| getBlocks | [BlockService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Blocks/BlockService.cs) |  | 
 | getBuyOffers | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
+| getChannelTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
 | getConstants | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
 | getCurrencies | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getCurrenciesByIssuer | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
@@ -91,7 +108,12 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | getCurrencyAccounts | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getCurrencyFounders | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getCurrencyIds | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
+| getCurrencyPhasedTransactions | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
 | getCurrencyTransfers | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
+| getDataTagCount | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
+| getDataTags | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
+| getDataTagsLike | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
+| getDGSExpiredPurchases | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
 | getDGSGood | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
 | getDGSGoods | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
 | getDGSGoodsCount | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
@@ -103,25 +125,39 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | getDGSPurchases | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
 | getDGSTagCount | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
 | getDGSTags | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
+| getDGSTagsLike | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
 | getECBlock | [BlockService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Blocks/BlockService.cs) |  | 
 | getExchanges | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getExchangesByExchangeRequest | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getExchangesByOffer | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
-| getForging | [ForgingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Forging/ForgingService.cs) |  | 
+| getForging | [ForgingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Forging/ForgingService.cs) | GetPeers and GetPeersIncludeInfo | 
 | getGuaranteedBalance | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
+| getInboundPeers | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) | GetInboundPeers and GetInboundPeersIncludeInfo | 
+| getLog | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
 | getMintingTarget | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getMyInfo | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) |  | 
 | getOffer | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getPeer | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) |  | 
-| getPeers | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) | GetPeers and GetPeersIncludeInfo | 
+| getPeers | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Networking/NetworkingService.cs) |  | 
+| getPhasingPoll | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
+| getPhasingPolls | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
+| getPhasingPollVote | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
+| getPhasingPollVotes | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
+| getPlugins | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
+| getPrunableMessage | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Messages/MessageService.cs) |  | 
+| getPrunableMessages | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Messages/MessageService.cs) |  | 
 | getSellOffers | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
+| getStackTraces | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
 | getState | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
+| getTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
 | getTime | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
 | getTrades | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getTransaction | [TransactionService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Transactions/TransactionService.cs) |  | 
 | getTransactionBytes | [TransactionService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Transactions/TransactionService.cs) |  | 
-| getUnconfirmedTransactionIds | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
-| getUnconfirmedTransactions | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
+| getUnconfirmedTransactionIds | [TransactionService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Transactions/TransactionService.cs) |  | 
+| getUnconfirmedTransactions | [TransactionService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Transactions/TransactionService.cs) |  | 
+| getVoterPhasedTransactions | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Phasing/PhasingService.cs) |  | 
+| hexConvert  | [UtilService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Utils/UtilService.cs) |  | 
 | issueAsset | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | issueCurrency | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | leaseBalance | [ForgingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Forging/ForgingService.cs) |  | 
@@ -134,18 +170,27 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | popOff | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
 | publishExchangeOffer | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | readMessage | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Messages/MessageService.cs) |  | 
+| rebroadcastUnconfirmedTransactions | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
 | rsConvert | [UtilService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Utils/UtilService.cs) |  | 
 | scan | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
+| searchAccounts | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
 | searchAssets | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | searchCurrencies | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | searchDGSGoods | [DigitalGoodsStoreService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/DigitalGoodsStore/DigitalGoodsStoreService.cs) |  | 
+| searchTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
 | sellAlias | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Aliases/AliasService.cs) |  | 
 | sendMessage | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Messages/MessageService.cs) |  | 
 | sendMoney | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
 | setAccountInfo | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Accounts/AccountService.cs) |  | 
 | setAlias | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Aliases/AliasService.cs) |  | 
+| setLogging | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
+| shutdown | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
 | signTransaction | [TransactionService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Transactions/TransactionService.cs) |  | 
 | startForging | [ForgingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Forging/ForgingService.cs) |  | 
 | stopForging | [ForgingService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Forging/ForgingService.cs) |  | 
 | transferAsset | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | transferCurrency | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
+| trimDerivedTables | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Debug/DebugService.cs) |  | 
+| uploadTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
+| verifyPrunableMessage | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/Messages/MessageService.cs) |  | 
+| verifyTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/NxtLib/TaggedData/TaggedDataService.cs) |  | 
