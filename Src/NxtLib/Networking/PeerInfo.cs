@@ -13,9 +13,12 @@ namespace NxtLib.Networking
         public string BlacklistingCause { get; set; }
         public long DownloadedVolume { get; set; }
         public string Hallmark { get; set; }
+        public bool Inbound { get; set; }
+        public bool InboundWebSocket { get; set; }
 
         [JsonConverter(typeof(DateTimeConverter))]
         public DateTime LastUpdated { get; set; }
+        public bool OutboundWebSocket { get; set; }
         public string Platform { get; set; }
 
         [JsonConverter(typeof(PeerStateConverter))]
