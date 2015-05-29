@@ -51,9 +51,9 @@ namespace NxtLib.TaggedData
             return await Get<TaggedDataReply>("getChannelTaggedData", queryParameters);
         }
 
-        public async Task<object> GetDataTagCount()
+        public async Task<DataTagCountReply> GetDataTagCount()
         {
-            throw new NotImplementedException();
+            return await Get<DataTagCountReply>("getDataTagCount");
         }
 
         public async Task<object> GetDataTags(int? firstIndex = null, int? lastIndex = null)
