@@ -4,6 +4,8 @@ namespace NxtLib.TaggedData
 {
     public interface ITaggedDataService
     {
+        Task<DownloadTaggedDataReply> DownloadTaggedData(ulong transactionId);
+
         Task<TransactionCreatedReply> ExtendTaggedData(ulong transactionId, CreateTransactionParameters parameters,
             string name, string data, string description = null, string tags = null, string channel = null, 
             string type = null, bool? isText = null, string filename = null);

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -16,6 +16,22 @@ namespace NxtLib.TaggedData
         public TaggedDataService(IDateTimeConverter dateTimeConverter)
             : base(dateTimeConverter)
         {
+        }
+
+        public async Task<DownloadTaggedDataReply> DownloadTaggedData(ulong transactionId)
+        {
+            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            var url = BuidUrl("downloadTaggedData", queryParameters);
+
+            using (var client = new HttpClient())
+            using (var response = await client.GetAsync(url))
+            using (var content = response.Content)
+            {
+                var reply = new DownloadTaggedDataReply();
+                reply.Content = await content.ReadAsStringAsync();
+                reply.FileName = content.Headers.ContentDisposition.FileName;
+                return reply;
+            }
         }
 
         public async Task<TransactionCreatedReply> ExtendTaggedData(ulong transactionId, CreateTransactionParameters parameters,

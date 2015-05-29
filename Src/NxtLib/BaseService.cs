@@ -116,7 +116,7 @@ namespace NxtLib
                 keyValuePair.Value.Aggregate(current1, (current, value) => current + ("&" + keyValuePair.Key + "=" + value)));
         }
 
-        private string BuidUrl(string requestType, Dictionary<string, string> queryParamsDictionary)
+        protected string BuidUrl(string requestType, Dictionary<string, string> queryParamsDictionary)
         {
             var url = _baseUrl + "?requestType=" + requestType;
             url = queryParamsDictionary.Aggregate(url, (current, queryParam) => current + ("&" + queryParam.Key + "=" + queryParam.Value));
