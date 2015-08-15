@@ -8,7 +8,9 @@ namespace NxtLib.ServerInfo
         public ulong LastBlock { get; set; }
         public bool NeedsAdminPassword { get; set; }
         public long MaxMemory { get; set; }
+        public int NumberOfAccountLeases { get; set; }
         public int NumberOfAccounts { get; set; }
+        public int NumberOfActiveAccountLeases { get; set; }
         public int NumberOfActivePeers { get; set; }
         public int NumberOfAliases { get; set; }
         public int NumberOfAskOrders { get; set; }
@@ -17,6 +19,7 @@ namespace NxtLib.ServerInfo
         public int NumberOfCurrencies { get; set; }
         public int NumberOfCurrencyTransfers { get; set; }
         public int NumberOfDataTags { get; set; }
+        public int NumberOfExchangeRequests { get; set; }
         public int NumberOfExchanges { get; set; }
         public int NumberOfGoods { get; set; }
         public int NumberOfOffers { get; set; }
