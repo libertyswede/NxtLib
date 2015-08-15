@@ -72,6 +72,7 @@
     <Compile Include="Phasing\PhasingPollVoteReply.cs" />
     <Compile Include="Phasing\PhasingPollVotesReply.cs" />
     <Compile Include="Phasing\PhasingPollWhiteList.cs" />
+    <Compile Include="PhasinHashAlgorithm.cs" />
     <Compile Include="ServerInfo\EventRegisterReply.cs" />
     <Compile Include="ServerInfo\EventWaitReply.cs" />
     <Compile Include="ServerInfo\NxtEvent.cs" />

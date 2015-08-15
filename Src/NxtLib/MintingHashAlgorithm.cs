@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace NxtLib
 {
+    [DebuggerDisplay("{ToString()} - {GetHashCode()}")]
     public enum MintingHashAlgorithm
     {
         [NxtApi("SHA256")]
