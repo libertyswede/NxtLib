@@ -12,6 +12,7 @@ namespace NxtLib.ServerInfo
         public ulong CumulativeDifficulty { get; set; }
         public int CurrentMinRollbackHeight { get; set; }
         public bool IncludeExpiredPrunable { get; set; }
+        public bool IsDownloading { get; set; }
         public bool IsScanning { get; set; }
         public bool IsTestnet { get; set; }
         public string LastBlockchainFeeder { get; set; }
