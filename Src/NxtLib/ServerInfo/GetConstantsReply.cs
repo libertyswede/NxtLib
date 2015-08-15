@@ -9,6 +9,8 @@ namespace NxtLib.ServerInfo
         [JsonConverter(typeof(DictionaryConverter))]
         public Dictionary<string, sbyte> CurrencyTypes { get; set; }
 
+        public long EpochBeginning { get; set; }
+
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong GenesisAccountId { get; set; }
 
