@@ -17,6 +17,9 @@ namespace NxtLib.ServerInfo
 
         [JsonConverter(typeof(DictionaryConverter))]
         public Dictionary<string, sbyte> HashAlgorithms { get; set; }
+
+        [JsonConverter(typeof(DictionaryConverter))]
+        public Dictionary<string, sbyte> MintingHashAlgorithms { get; set; }
         public int MaxArbitraryMessageLength { get; set; }
         public int MaxBlockPayloadLength { get; set; }
         public int MaxTaggedDataDataLength { get; set; }
