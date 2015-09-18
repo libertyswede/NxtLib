@@ -74,13 +74,11 @@ namespace NxtLib.ServerInfo
             return await Get<GetPluginsReply>("getPlugins");
         }
 
-        public async Task<GetStateReply> GetState(bool? includeCounts = null)
+        public async Task<GetStateReply> GetState(bool? includeCounts = null, string adminPassword = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            if (includeCounts.HasValue)
-            {
-                queryParameters = new Dictionary<string, string> {{"includeCounts", includeCounts.Value.ToString()}};
-            }
+            AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            AddToParametersIfHasValue("adminPassword", adminPassword, queryParameters);
             return await Get<GetStateReply>("getState", queryParameters);
         }
 

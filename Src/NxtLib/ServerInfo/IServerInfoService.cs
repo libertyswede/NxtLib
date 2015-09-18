@@ -9,7 +9,7 @@ namespace NxtLib.ServerInfo
         Task<GetBlockchainStatusReply> GetBlockchainStatus();
         Task<GetConstantsReply> GetConstants();
         Task<GetPluginsReply> GetPlugins();
-        Task<GetStateReply> GetState(bool? includeCounts = null);
+        Task<GetStateReply> GetState(bool? includeCounts = null, string adminPassword = null);
         Task<GetTimeReply> GetTime();
     }
 }
