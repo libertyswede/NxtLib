@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using NxtLib.Internal;
 
@@ -24,6 +25,7 @@ namespace NxtLib.ServerInfo
         public int MaxPrunableLifetime { get; set; }
         public int MaxRollback { get; set; }
         public int NumberOfBlocks { get; set; }
+        public IList<string> Services { get; set; }
 
         [JsonConverter(typeof(DateTimeConverter))]
         public DateTime Time { get; set; }
