@@ -35,6 +35,9 @@ namespace NxtLib.ServerInfo
         [JsonConverter(typeof(DictionaryConverter))]
         public Dictionary<string, sbyte> PhasingHashAlgorithms { get; set; }
 
+        [JsonConverter(typeof(RequestTypesConverter))]
+        public IList<RequestType> RequestTypes { get; set; }
+
         [JsonConverter(typeof(TransactionTypesConverter))]
         public Dictionary<int, Dictionary<int, TransactionType>> TransactionTypes { get; set; }
 
