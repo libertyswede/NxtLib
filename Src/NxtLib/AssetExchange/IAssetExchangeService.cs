@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NxtLib.MonetarySystem;
 
 namespace NxtLib.AssetExchange
 {
@@ -55,6 +56,8 @@ namespace NxtLib.AssetExchange
         Task<OrderReply> GetBidOrder(ulong orderId);
         Task<BidOrderIdsReply> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);
         Task<BidOrdersReply> GetBidOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null);
+
+        Task<ExchangesReply> GetLastExchanges(IList<ulong> currencyIds);
 
         Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null, 
             DateTime? timestamp = null, bool? includeAssetInfo = null);

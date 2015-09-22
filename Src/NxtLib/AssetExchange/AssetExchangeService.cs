@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
+using NxtLib.MonetarySystem;
 
 namespace NxtLib.AssetExchange
 {
@@ -279,6 +280,15 @@ namespace NxtLib.AssetExchange
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             return await Get<BidOrdersReply>("getBidOrders", queryParameters);
+        }
+
+        public async Task<ExchangesReply> GetLastExchanges(IList<ulong> currencyIds)
+        {
+            var queryParameters = new Dictionary<string, List<string>>
+            {
+                {"currencies", currencyIds.Select(id => id.ToString()).ToList()}
+            };
+            return await Get<ExchangesReply>("getLastExchanges", queryParameters);
         }
 
         public async Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null,
