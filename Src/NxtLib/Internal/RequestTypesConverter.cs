@@ -14,24 +14,30 @@ namespace NxtLib.Internal
             {
                 var reply = new List<RequestType>();
                 var jObject = JObject.Load(reader);
-                foreach (var transactionType in jObject.Children<JProperty>())
-                {
-                    //var transactionDictionary = new Dictionary<int, TransactionType>();
-                    //reply.Add(Convert.ToInt32(transactionType.Name), transactionDictionary);
 
-                    //foreach (var subTypeProperty in transactionType.Value.Children().First().Children().First().Children<JProperty>())
-                    //{
-                    //    var subTypeObject = subTypeProperty.Value;
-                    //    transactionDictionary.Add(Convert.ToInt32(subTypeProperty.Name), new TransactionType
-                    //    {
-                    //        CanHaveRecipient = Convert.ToBoolean(((JValue)subTypeObject.SelectToken("canHaveRecipient")).Value),
-                    //        IsPhasingSafe = Convert.ToBoolean(((JValue)subTypeObject.SelectToken("isPhasingSafe")).Value),
-                    //        MustHaveRecipient = Convert.ToBoolean(((JValue)subTypeObject.SelectToken("mustHaveRecipient")).Value),
-                    //        Name = ((JValue)subTypeObject.SelectToken("name")).Value.ToString(),
-                    //        SubType = (int)(long)((JValue)subTypeObject.SelectToken("subtype")).Value,
-                    //        Type = (int)(long)((JValue)subTypeObject.SelectToken("type")).Value
-                    //    });
-                    //}
+                foreach (var requestTypeJson in jObject.Children<JProperty>())
+                {
+                    var requestType = new RequestType {Name = requestTypeJson.Name};
+                    reply.Add(requestType);
+
+                    foreach (var jsonProperty in requestTypeJson.Value.Children<JProperty>())
+                    {
+                        switch (jsonProperty.Name)
+                        {
+                            case "allowRequiredBlockParameters":
+                                requestType.AllowRequiredBlockParameters = (bool) jsonProperty.Value;
+                                break;
+                            case "requirePassword":
+                                requestType.RequirePassword = (bool) jsonProperty.Value;
+                                break;
+                            case "requireBlockchain":
+                                requestType.RequireBlockchain = (bool) jsonProperty.Value;
+                                break;
+                            case "requirePost":
+                                requestType.RequirePost = (bool) jsonProperty.Value;
+                                break;
+                        }
+                    }
                 }
                 return reply;
             }
