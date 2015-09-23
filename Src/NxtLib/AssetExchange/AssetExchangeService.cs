@@ -290,6 +290,14 @@ namespace NxtLib.AssetExchange
             return await Get<ExpectedAskOrdersReply>("getExpectedAskOrders", queryParameters);
         }
 
+        public async Task<ExpectedAssetTransfersReply> GetExpectedAssetTransfers(ulong? assetId = null, string account = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("assetId", assetId, queryParameters);
+            AddToParametersIfHasValue("account", account, queryParameters);
+            return await Get<ExpectedAssetTransfersReply>("getExpectedAssetTransfers", queryParameters);
+        }
+
         public async Task<ExchangesReply> GetLastExchanges(IList<ulong> currencyIds)
         {
             var queryParameters = new Dictionary<string, List<string>>
