@@ -63,6 +63,8 @@
     <Compile Include="Accounts\AccountReply.cs" />
     <Compile Include="Accounts\AccountService.cs" />
     <Compile Include="Accounts\AccountTransactionIdsReply.cs" />
+    <Compile Include="AssetExchange\ExpectedAskOrdersReply.cs" />
+    <Compile Include="AssetExchange\ExpectedAssetOrder.cs" />
     <Compile Include="Internal\TransactionSubTypesConverter.cs" />
     <Compile Include="MintingHashAlgorithm.cs" />
     <Compile Include="Phasing\PhasingPoll.cs" />
