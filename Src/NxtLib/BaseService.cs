@@ -28,7 +28,7 @@ namespace NxtLib
 
         protected async Task<JObject> Get(string requestType, Dictionary<string, string> queryParameters)
         {
-            var url = BuidUrl(requestType, queryParameters);
+            var url = BuildUrl(requestType, queryParameters);
 
             using (var client = new HttpClient())
             using (var response = await client.GetAsync(url))
@@ -42,7 +42,7 @@ namespace NxtLib
 
         protected async Task<JObject> Post(string requestType, Dictionary<string, string> queryParameters)
         {
-            var url = BuidUrl(requestType, queryParameters);
+            var url = BuildUrl(requestType, queryParameters);
 
             using (var client = new HttpClient())
             using (var response = await client.PostAsync(url, new StringContent(string.Empty, Encoding.UTF8, "application/json")))
@@ -61,13 +61,13 @@ namespace NxtLib
 
         protected async Task<T> Get<T>(string requestType, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
-            var url = BuidUrl(requestType, queryParamsDictionary);
+            var url = BuildUrl(requestType, queryParamsDictionary);
             return await GetUrl<T>(url);
         }
 
         protected async Task<T> Get<T>(string requestType, Dictionary<string, List<string>> queryParamsDictionary) where T : IBaseReply
         {
-            var url = BuidUrl(requestType, queryParamsDictionary);
+            var url = BuildUrl(requestType, queryParamsDictionary);
             return await GetUrl<T>(url);
         }
 
@@ -88,14 +88,38 @@ namespace NxtLib
 
         protected async Task<T> Post<T>(string requestType, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
-            var url = BuidUrl(requestType, queryParamsDictionary);
+            var url = BuildUrl(requestType, queryParamsDictionary);
             return await PostUrl<T>(url);
         }
 
         protected async Task<T> Post<T>(string requestType, Dictionary<string, List<string>> queryParamsDictionary) where T : IBaseReply
         {
-            var url = BuidUrl(requestType, queryParamsDictionary);
+            var url = BuildUrl(requestType, queryParamsDictionary);
             return await PostUrl<T>(url);
+        }
+
+        protected async Task<T> PostAsContent<T>(string requestType, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
+        {
+            queryParamsDictionary.Add("requestType", requestType);
+            return await PostContentUrl<T>(_baseUrl, queryParamsDictionary);
+        }
+
+        private static async Task<T> PostContentUrl<T>(string url, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
+        {
+            using (var client = new HttpClient())
+            using (var formDataContent = new MultipartFormDataContent("---------------------------7da24f2e50046"))
+            {
+                foreach (var queryParameter in queryParamsDictionary)
+                {
+                    formDataContent.Add(new StringContent(queryParameter.Value), queryParameter.Key);
+                }
+
+                using (var response = await client.PostAsync(url, formDataContent))
+                using (var content = response.Content)
+                {
+                    return await ReadAndDeserializeResponse<T>(content, url);
+                }
+            }
         }
 
         private static async Task<T> PostUrl<T>(string url) where T : IBaseReply
@@ -108,7 +132,7 @@ namespace NxtLib
             }
         }
 
-        private string BuidUrl(string requestType, Dictionary<string, List<string>> queryParamsDictionary)
+        private string BuildUrl(string requestType, Dictionary<string, List<string>> queryParamsDictionary)
         {
             var url = _baseUrl + "?requestType=" + requestType;
 
@@ -116,7 +140,7 @@ namespace NxtLib
                 keyValuePair.Value.Aggregate(current1, (current, value) => current + ("&" + keyValuePair.Key + "=" + value)));
         }
 
-        protected string BuidUrl(string requestType, Dictionary<string, string> queryParamsDictionary)
+        protected string BuildUrl(string requestType, Dictionary<string, string> queryParamsDictionary)
         {
             var url = _baseUrl + "?requestType=" + requestType;
             url = queryParamsDictionary.Aggregate(url, (current, queryParam) => current + ("&" + queryParam.Key + "=" + queryParam.Value));

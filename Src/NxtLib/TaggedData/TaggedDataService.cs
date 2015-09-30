@@ -21,7 +21,7 @@ namespace NxtLib.TaggedData
         public async Task<DownloadTaggedDataReply> DownloadTaggedData(ulong transactionId)
         {
             var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
-            var url = BuidUrl("downloadTaggedData", queryParameters);
+            var url = BuildUrl("downloadTaggedData", queryParameters);
 
             using (var client = new HttpClient())
             using (var response = await client.GetAsync(url))

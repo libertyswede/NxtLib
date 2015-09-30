@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -18,6 +19,12 @@ namespace NxtLib.Tokens
         {
         }
 
+        public async Task<TokenReply> DecodeFileToken(string file, string token)
+        {
+            var queryParameters = new Dictionary<string, string> {{"token", token}, {"file", file}};
+            return await PostAsContent<TokenReply>("decodeFileToken", queryParameters);
+        }
+
         public async Task<DecodeHallmarkReply> DecodeHallmark(string hallmark)
         {
             var queryParameters = new Dictionary<string, string> { { "hallmark", hallmark } };
@@ -32,6 +39,16 @@ namespace NxtLib.Tokens
                 {"token", token}
             };
             return await Get<TokenReply>("decodeToken", queryParameters);
+        }
+
+        public async Task<GenerateTokenReply> GenerateFileToken(string secretPhrase, string file)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"secretPhrase", secretPhrase},
+                {"file", file}
+            };
+            return await PostAsContent<GenerateTokenReply>("generateFileToken", queryParameters);
         }
 
         public async Task<GenerateTokenReply> GenerateToken(string secretPhrase, string website)
