@@ -89,6 +89,7 @@
     <Compile Include="TaggedData\DataTagCountReply.cs" />
     <Compile Include="TaggedData\DataTagsReply.cs" />
     <Compile Include="TaggedData\TagCount.cs" />
+    <Compile Include="TaggedData\TaggedDataExtendTransactionsReply.cs" />
     <Compile Include="TaggedData\TaggedDataListReply.cs" />
     <Compile Include="ITaggedData.cs" />
     <Compile Include="TaggedData\AllTaggedDataReply.cs" />

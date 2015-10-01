@@ -95,6 +95,12 @@ namespace NxtLib.TaggedData
             return await Get<TaggedDataReply>("getTaggedData", queryParameters);
         }
 
+        public async Task<TaggedDataExtendTransactionsReply> GetTaggedDataExtendTransactions(ulong transactionId)
+        {
+            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            return await Get<TaggedDataExtendTransactionsReply>("getTaggedDataExtendTransactions", queryParameters);
+        }
+
         public async Task<TaggedDataListReply> SearchTaggedData(string query = null, string tag = null, string account = null, string channel = null,
             int? firstIndex = null, int? lastIndex = null, bool? includeData = null)
         {

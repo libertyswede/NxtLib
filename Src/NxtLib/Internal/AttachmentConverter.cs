@@ -63,6 +63,10 @@ namespace NxtLib.Internal
 
         internal Attachment GetAttachment(TransactionSubType transactionSubType)
         {
+            if (_attachments == null)
+            {
+                return null;
+            }
             var attachment = AttachmentFuncs[transactionSubType].Invoke(_attachments);
             return attachment;
         }
