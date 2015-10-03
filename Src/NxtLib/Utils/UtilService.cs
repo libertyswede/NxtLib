@@ -31,6 +31,12 @@ namespace NxtLib.Utils
             return await Post<EncodeQrCodeReply>("encodeQRCode", queryParameters);
         }
 
+        public async Task<FullHashToIdReply> FullHashToId(string fullHash)
+        {
+            var queryParameters = new Dictionary<string, string> {{"fullHash", fullHash}};
+            return await Get<FullHashToIdReply>("fullHashToId", queryParameters);
+        }
+
         public async Task<HexConvertReply> HexConvert(string @string)
         {
             var queryParameters = new Dictionary<string, string> {{"string", @string}};
