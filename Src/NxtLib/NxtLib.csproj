@@ -291,6 +291,7 @@
     <Compile Include="Transactions\TransactionReply.cs" />
     <Compile Include="Transactions\TransactionService.cs" />
     <Compile Include="TransactionTypeMapper.cs" />
+    <Compile Include="Utils\DecodeQrCodeReply.cs" />
     <Compile Include="Utils\HexConvertReply.cs" />
     <Compile Include="Utils\IUtilService.cs" />
     <Compile Include="Utils\LongConvertReply.cs" />

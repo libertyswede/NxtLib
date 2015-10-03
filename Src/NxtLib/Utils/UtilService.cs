@@ -17,6 +17,12 @@ namespace NxtLib.Utils
         {
         }
 
+        public async Task<DecodeQrCodeReply> DecodeQrCode(string qrCodeBase64)
+        {
+            var queryParameters = new Dictionary<string, string> {{"qrCodeBase64", qrCodeBase64}};
+            return await Post<DecodeQrCodeReply>("decodeQRCode", queryParameters);
+        }
+
         public async Task<HexConvertReply> HexConvert(string @string)
         {
             var queryParameters = new Dictionary<string, string> {{"string", @string}};
