@@ -87,26 +87,6 @@ namespace NxtLib.Accounts
             return await Get<AccountPublicKeyReply>("getAccountPublicKey", queryParameters);
         }
 
-        [Obsolete("This API is deprecated and will be removed in 1.6. It does not include the phased transactions that an account may have. To retrieve both phased and non-phased transactions, the new getBlockchainTransactions API must be used. Do not simply switch from getAccountTransactions to getBlockchainTransactions without a detailed understanding of how phased transactions work, and without being prepared to analyze them correctly.")]
-        public async Task<AccountTransactionIdsReply> GetAccountTransactionIds(string accountId, DateTime? timeStamp = null,
-            TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
-            int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null)
-        {
-            var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, transactionType,
-                firstIndex, lastIndex, numberOfConfirmations, withMessage, phased);
-            return await Get<AccountTransactionIdsReply>("getAccountTransactionIds", queryParameters);
-        }
-
-        [Obsolete(@"This API is deprecated and will be removed in 1.6. It does not include the phased transactions that an account may have. To retrieve both phased and non-phased transactions, the new getBlockchainTransactions API must be used. Do not simply switch from getAccountTransactions to getBlockchainTransactions without a detailed understanding of how phased transactions work, and without being prepared to analyze them correctly.")]
-        public async Task<TransactionListReply> GetAccountTransactions(string accountId, DateTime? timeStamp = null,
-            TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
-            int? numberOfConfirmations = null, bool? withMessage = null, bool? phased = null)
-        {
-            var queryParameters = GenerateQueryParamsForAccountTransactions(accountId, timeStamp, transactionType,
-                firstIndex, lastIndex, numberOfConfirmations, withMessage, phased);
-            return await Get<TransactionListReply>("getAccountTransactions", queryParameters);
-        }
-
         public async Task<BalanceReply> GetBalance(string accountId, bool? includeEffectiveBalance = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", accountId}};
