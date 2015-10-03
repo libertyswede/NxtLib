@@ -9,6 +9,7 @@ namespace NxtLib.AssetExchange
     {
         Task<TransactionCreatedReply> CancelAskOrder(ulong orderId, CreateTransactionParameters parameters);
         Task<TransactionCreatedReply> CancelBidOrder(ulong orderId, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> DeleteAssetShares(ulong assetId, long quantityQnt, CreateTransactionParameters parameters);
         Task<TransactionCreatedReply> DividendPayment(ulong assetId, int height, Amount amountPerQnt);
         Task<AccountAssetReply> GetAccountAsset(string accountId, ulong assetId, int? height = null);
         Task<AccountAssetCountReply> GetAccountAssetCount(string accountId, int? height = null);

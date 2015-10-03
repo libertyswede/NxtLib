@@ -34,6 +34,17 @@ namespace NxtLib.AssetExchange
             return await Post<TransactionCreatedReply>("cancelBidOrder", queryParameters);
         }
 
+        public async Task<TransactionCreatedReply> DeleteAssetShares(ulong assetId, long quantityQnt, CreateTransactionParameters parameters)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"asset", assetId.ToString()},
+                {"quantityQNT", quantityQnt.ToString()}
+            };
+            parameters.AppendToQueryParameters(queryParameters);
+            return await Post<TransactionCreatedReply>("deleteAssetShares", queryParameters);
+        }
+
         public async Task<TransactionCreatedReply> DividendPayment(ulong assetId, int height, Amount amountPerQnt)
         {
             var queryParameters = new Dictionary<string, string>
