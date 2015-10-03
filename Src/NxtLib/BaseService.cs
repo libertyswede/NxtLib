@@ -95,6 +95,7 @@ namespace NxtLib
                             from queryParameter in queryParameterList.Value
                             select new KeyValuePair<string, string>(queryParameterList.Key, queryParameter))
                             .ToList();
+            postData.Add(new KeyValuePair<string, string>("requestType", requestType));
             return await PostUrl<T>(_baseUrl, postData);
         }
 
