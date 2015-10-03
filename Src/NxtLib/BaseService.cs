@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -40,16 +39,14 @@ namespace NxtLib
             }
         }
 
-        protected async Task<JObject> Post(string requestType, Dictionary<string, string> queryParameters)
+        protected async Task<JObject> Post(string requestType, IEnumerable<KeyValuePair<string, string>> queryParameters)
         {
-            var url = BuildUrl(requestType, queryParameters);
-
             using (var client = new HttpClient())
-            using (var response = await client.PostAsync(url, new StringContent(string.Empty, Encoding.UTF8, "application/json")))
+            using (var response = await client.PostAsync(_baseUrl, new FormUrlEncodedContent(queryParameters)))
             using (var content = response.Content)
             {
                 var json = await content.ReadAsStringAsync();
-                CheckForErrorResponse(json, url);
+                CheckForErrorResponse(json, _baseUrl);
                 return JObject.Parse(json);
             }
         }
@@ -88,23 +85,26 @@ namespace NxtLib
 
         protected async Task<T> Post<T>(string requestType, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
-            var url = BuildUrl(requestType, queryParamsDictionary);
-            return await PostUrl<T>(url);
+            queryParamsDictionary.Add("requestType", requestType);
+            return await PostUrl<T>(_baseUrl, queryParamsDictionary);
         }
 
         protected async Task<T> Post<T>(string requestType, Dictionary<string, List<string>> queryParamsDictionary) where T : IBaseReply
         {
-            var url = BuildUrl(requestType, queryParamsDictionary);
-            return await PostUrl<T>(url);
+            var postData = (from queryParameterList in queryParamsDictionary
+                            from queryParameter in queryParameterList.Value
+                            select new KeyValuePair<string, string>(queryParameterList.Key, queryParameter))
+                            .ToList();
+            return await PostUrl<T>(_baseUrl, postData);
         }
 
         protected async Task<T> PostAsContent<T>(string requestType, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
             queryParamsDictionary.Add("requestType", requestType);
-            return await PostContentUrl<T>(_baseUrl, queryParamsDictionary);
+            return await PostAsMultipartFormData<T>(_baseUrl, queryParamsDictionary);
         }
 
-        private static async Task<T> PostContentUrl<T>(string url, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
+        private static async Task<T> PostAsMultipartFormData<T>(string url, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
             using (var client = new HttpClient())
             using (var formDataContent = new MultipartFormDataContent("---------------------------7da24f2e50046"))
@@ -122,10 +122,10 @@ namespace NxtLib
             }
         }
 
-        private static async Task<T> PostUrl<T>(string url) where T : IBaseReply
+        private static async Task<T> PostUrl<T>(string url, IEnumerable<KeyValuePair<string, string>> queryParameters) where T : IBaseReply
         {
             using (var client = new HttpClient())
-            using (var response = await client.PostAsync(url, new StringContent(string.Empty, Encoding.UTF8, "application/json")))
+            using (var response = await client.PostAsync(url, new FormUrlEncodedContent(queryParameters)))
             using (var content = response.Content)
             {
                 return await ReadAndDeserializeResponse<T>(content, url);
