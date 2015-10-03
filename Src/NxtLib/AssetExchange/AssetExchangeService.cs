@@ -309,6 +309,11 @@ namespace NxtLib.AssetExchange
             return await Get<ExpectedAssetTransfersReply>("getExpectedAssetTransfers", queryParameters);
         }
 
+        public async Task<ExpectedOrderCancellationReply> GetExpectedOrderCancellations()
+        {
+            return await Get<ExpectedOrderCancellationReply>("getExpectedOrderCancellations");
+        }
+
         public async Task<ExchangesReply> GetLastExchanges(IList<ulong> currencyIds)
         {
             var queryParameters = new Dictionary<string, List<string>>

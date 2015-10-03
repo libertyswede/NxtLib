@@ -68,6 +68,8 @@
     <Compile Include="AssetExchange\ExpectedAssetOrder.cs" />
     <Compile Include="AssetExchange\ExpectedAssetTransfer.cs" />
     <Compile Include="AssetExchange\ExpectedAssetTransfersReply.cs" />
+    <Compile Include="AssetExchange\ExpectedOrderCancellationReply.cs" />
+    <Compile Include="AssetExchange\OrderCancellation.cs" />
     <Compile Include="Internal\TransactionSubTypesConverter.cs" />
     <Compile Include="MintingHashAlgorithm.cs" />
     <Compile Include="Phasing\PhasingPoll.cs" />
