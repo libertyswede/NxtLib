@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -32,6 +33,19 @@ namespace NxtLib.Transactions
                 {"signatureHash", signatureHash.ToHexString()}
             };
             return await Get<CalculateFullHashReply>("calculateFullHash", queryParameters);
+        }
+
+        public async Task<ExpectedTransactionsReply> GetExpectedTransactions(IEnumerable<string> accountIds = null)
+        {
+            List<string> accountsList;
+            var queryParameters = new Dictionary<string, List<string>>();
+
+            if (accountIds != null && (accountsList = accountIds.ToList()).Any())
+            {
+                queryParameters.Add("account", accountsList);
+            }
+
+            return await Get<ExpectedTransactionsReply>("getExpectedTransactions", queryParameters);
         }
 
         public async Task<TransactionReply> GetTransaction(GetTransactionLocator locator)

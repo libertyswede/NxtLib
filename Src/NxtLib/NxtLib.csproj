@@ -118,6 +118,7 @@
     <Compile Include="Accounts\UnconfirmedAccountAssetBalance.cs" />
     <Compile Include="Local\Constants.cs" />
     <Compile Include="Phasing\AccountPhasedTransactionCountReply.cs" />
+    <Compile Include="Transactions\ExpectedTransactionsReply.cs" />
     <Compile Include="Transactions\UnconfirmedTransactionIdsResply.cs" />
     <Compile Include="Transactions\UnconfirmedTransactionsReply.cs" />
     <Compile Include="Aliases\Alias.cs" />

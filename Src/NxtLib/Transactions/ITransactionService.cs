@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NxtLib.Transactions
 {
@@ -8,7 +9,7 @@ namespace NxtLib.Transactions
 
         Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
             BinaryHexString signatureHash);
-
+        Task<ExpectedTransactionsReply> GetExpectedTransactions(IEnumerable<string> accountIds = null);
         Task<TransactionReply> GetTransaction(GetTransactionLocator locator);
         Task<TransactionBytesReply> GetTransactionBytes(ulong transactionId);
         Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(string accountId = null);
@@ -16,5 +17,6 @@ namespace NxtLib.Transactions
         Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter);
         Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase,
             bool? validate = null);
+
     }
 }
