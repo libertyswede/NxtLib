@@ -28,7 +28,7 @@ namespace NxtLib
             return await base.Get(requestType, queryParameters);
         }
 
-        public new async Task<JObject> Post(string requestType, Dictionary<string, string> queryParameters)
+        public async Task<JObject> Post(string requestType, Dictionary<string, string> queryParameters)
         {
             return await base.Post(requestType, queryParameters);
         }
