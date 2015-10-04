@@ -154,6 +154,14 @@ namespace NxtLib
         }
     }
 
+    public class ColoredCoinsDeleteAttachment : Attachment
+    {
+        internal ColoredCoinsDeleteAttachment(JToken attachments)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class DigitalGoodsFeedbackAttachment : Attachment
     {
         public ulong PurchaseId { get; set; }

@@ -56,7 +56,8 @@ namespace NxtLib
                         {3, TransactionSubType.ColoredCoinsBidOrderPlacement},
                         {4, TransactionSubType.ColoredCoinsAskOrderCancellation},
                         {5, TransactionSubType.ColoredCoinsBidOrderCancellation},
-                        {6, TransactionSubType.ColoredCoinsDividendPayment}
+                        {6, TransactionSubType.ColoredCoinsDividendPayment},
+                        {7, TransactionSubType.ColoredCoinsAssetDelete}
                     }
                 },
                 {

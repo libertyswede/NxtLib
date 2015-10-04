@@ -93,6 +93,8 @@ namespace NxtLib
         ColoredCoinsBidOrderCancellation,
         [NxtApi("DividendPayment")]
         ColoredCoinsDividendPayment,
+        [NxtApi("AssetDelete")]
+        ColoredCoinsAssetDelete,
 
         // DigitalGoods
         [NxtApi("DigitalGoodsListing")]
