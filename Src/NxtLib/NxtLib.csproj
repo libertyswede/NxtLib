@@ -50,10 +50,12 @@
     <Compile Include="AccountCurrency.cs" />
     <Compile Include="Accounts\AccountAssetBalance.cs" />
     <Compile Include="Accounts\AccountInfo.cs" />
+    <Compile Include="Accounts\AccountLedgerEntry.cs" />
     <Compile Include="Accounts\BalanceReply.cs" />
     <Compile Include="Accounts\AccountBlockCountReply.cs" />
     <Compile Include="Accounts\AccountBlockIdsReply.cs" />
     <Compile Include="Accounts\AccountBlocksReply.cs" />
+    <Compile Include="Accounts\GetAccountLedgerReply.cs" />
     <Compile Include="Accounts\GuaranteedBalanceReply.cs" />
     <Compile Include="Accounts\AccountIdReply.cs" />
     <Compile Include="Accounts\AccountIdLocator.cs" />

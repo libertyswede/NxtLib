@@ -71,6 +71,21 @@ namespace NxtLib.Accounts
             return await Post<AccountIdReply>("getAccountId", locator.QueryParameters);
         }
 
+        public async Task<GetAccountLedgerReply> GetAccountLedger(string accountId, int? firstIndex = null,
+            int? lastIndex = null, string eventType = null, ulong? @event = null, string holdingType = null,
+            ulong? holding = null, bool? includeTransactions = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("eventType", eventType, queryParameters);
+            AddToParametersIfHasValue("event", @event, queryParameters);
+            AddToParametersIfHasValue("holdingType", holdingType, queryParameters);
+            AddToParametersIfHasValue("holding", holding, queryParameters);
+            AddToParametersIfHasValue("includeTransactions", includeTransactions, queryParameters);
+            return await Get<GetAccountLedgerReply>("getAccountLedger", queryParameters);
+        }
+
         public async Task<AccountLessorsReply> GetAccountLessors(string accountId, int? height = null)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };

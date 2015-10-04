@@ -12,6 +12,9 @@ namespace NxtLib.Accounts
         Task<AccountBlocksReply<ulong>> GetAccountBlocks(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null);
         Task<AccountBlocksReply<Transaction>> GetAccountBlocksIncludeTransactions(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null);
         Task<AccountIdReply> GetAccountId(AccountIdLocator locator);
+        Task<GetAccountLedgerReply> GetAccountLedger(string accountId, int? firstIndex = null,
+            int? lastIndex = null, string eventType = null, ulong? @event = null, string holdingType = null,
+            ulong? holding = null, bool? includeTransactions = null);
         Task<AccountLessorsReply> GetAccountLessors(string accountId, int? height = null);
         Task<AccountPublicKeyReply> GetAccountPublicKey(string accountId);
         Task<BalanceReply> GetBalance(string accountId, bool? includeEffectiveBalance = null);
