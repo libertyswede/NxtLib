@@ -56,6 +56,12 @@ namespace NxtLib.MonetarySystem
         Task<ExchangesReply> GetExchangesByOffer(ulong offerId, int? firstindex = null,
             int? lastindex = null, bool? includeCurrencyInfo = null);
 
+        Task<GetExpectedOffersReply> GetExpectedBuyOffers(ulong? currencyId = null, string accountId = null,
+            bool? sortByRate = null);
+
+        Task<GetExpectedOffersReply> GetExpectedSellOffers(ulong? currencyId = null, string accountId = null,
+            bool? sortByRate = null);
+
         Task<GetMintingTargetReply> GetMintingTarget(ulong currencyId, string accountId, long units);
 
         Task<GetOfferReply> GetOffer(ulong offerId);

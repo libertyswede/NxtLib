@@ -258,6 +258,26 @@ namespace NxtLib.MonetarySystem
             return await Get<ExchangesReply>("getExchangesByOffer", queryParameters);
         }
 
+        public async Task<GetExpectedOffersReply> GetExpectedBuyOffers(ulong? currencyId = null, string accountId = null,
+            bool? sortByRate = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("currency", currencyId, queryParameters);
+            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("sortByRate", sortByRate, queryParameters);
+            return await Get<GetExpectedOffersReply>("getExpectedBuyOffers", queryParameters);
+        }
+
+        public async Task<GetExpectedOffersReply> GetExpectedSellOffers(ulong? currencyId = null, string accountId = null,
+            bool? sortByRate = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("currency", currencyId, queryParameters);
+            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("sortByRate", sortByRate, queryParameters);
+            return await Get<GetExpectedOffersReply>("getExpectedSellOffers", queryParameters);
+        }
+
         public async Task<GetMintingTargetReply> GetMintingTarget(ulong currencyId, string accountId, long units)
         {
             var queryParameters = new Dictionary<string, string>

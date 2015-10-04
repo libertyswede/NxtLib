@@ -76,6 +76,8 @@
     <Compile Include="AssetExchange\OrderCancellation.cs" />
     <Compile Include="Internal\TransactionSubTypesConverter.cs" />
     <Compile Include="MintingHashAlgorithm.cs" />
+    <Compile Include="MonetarySystem\ExpectedCurrencyExchangeOffer.cs" />
+    <Compile Include="MonetarySystem\GetExpectedOffersReply.cs" />
     <Compile Include="Phasing\PhasingPoll.cs" />
     <Compile Include="Phasing\PhasingPollReply.cs" />
     <Compile Include="Phasing\PhasingPollsReply.cs" />
