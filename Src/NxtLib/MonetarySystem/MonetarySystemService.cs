@@ -286,6 +286,15 @@ namespace NxtLib.MonetarySystem
             return await Get<GetExpectedExchangeRequestsReply>("getExpectedExchangeRequests", queryParameters);
         }
 
+        public async Task<ExchangesReply> GetLastExchanges(IList<ulong> currencyIds)
+        {
+            var queryParameters = new Dictionary<string, List<string>>
+            {
+                {"currencies", currencyIds.Select(id => id.ToString()).ToList()}
+            };
+            return await Get<ExchangesReply>("getLastExchanges", queryParameters);
+        }
+
         public async Task<GetExpectedOffersReply> GetExpectedSellOffers(ulong? currencyId = null, string accountId = null,
             bool? sortByRate = null)
         {
