@@ -61,6 +61,9 @@ namespace NxtLib.AssetExchange
         Task<ExpectedBidOrdersReply> GetExpectedBidOrders(ulong? assetId = null, bool? sortByPrice = null);
         Task<ExpectedOrderCancellationReply> GetExpectedOrderCancellations();
 
+        Task<TradesReply> GetOrderTrades(OrderIdLocator orderIdLocator, int? firstIndex = null,
+            int? lastIndex = null, bool? includeAssetInfo = null);
+
         Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null, 
             DateTime? timestamp = null, bool? includeAssetInfo = null);
 

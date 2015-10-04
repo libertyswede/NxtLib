@@ -6,10 +6,7 @@ namespace NxtLib
     {
         private readonly Dictionary<string, string> _queryParameters;
 
-        internal Dictionary<string, string> QueryParameters
-        {
-            get { return new Dictionary<string, string>(_queryParameters); }
-        }
+        internal Dictionary<string, string> QueryParameters => new Dictionary<string, string>(_queryParameters);
 
         protected LocatorBase(string key, string value)
         {

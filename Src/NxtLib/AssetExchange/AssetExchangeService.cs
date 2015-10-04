@@ -330,6 +330,16 @@ namespace NxtLib.AssetExchange
             return await Get<LastTradesReply>("getLastTrades", queryParameters);
         }
 
+        public async Task<TradesReply> GetOrderTrades(OrderIdLocator orderIdLocator, int? firstIndex = null,
+            int? lastIndex = null, bool? includeAssetInfo = null)
+        {
+            var queryParameters = orderIdLocator.QueryParameters;
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("includeAssetInfo", includeAssetInfo, queryParameters);
+            return await Get<TradesReply>("getOrderTrades", queryParameters);
+        }
+
         public async Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null,
             DateTime? timestamp = null, bool? includeAssetInfo = null)
         {
