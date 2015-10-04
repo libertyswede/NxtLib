@@ -55,6 +55,7 @@
     <Compile Include="Accounts\AccountBlockCountReply.cs" />
     <Compile Include="Accounts\AccountBlockIdsReply.cs" />
     <Compile Include="Accounts\AccountBlocksReply.cs" />
+    <Compile Include="Accounts\GetAccountLedgerEntryReply.cs" />
     <Compile Include="Accounts\GetAccountLedgerReply.cs" />
     <Compile Include="Accounts\GuaranteedBalanceReply.cs" />
     <Compile Include="Accounts\AccountIdReply.cs" />

@@ -86,6 +86,14 @@ namespace NxtLib.Accounts
             return await Get<GetAccountLedgerReply>("getAccountLedger", queryParameters);
         }
 
+        public async Task<GetAccountLedgerEntryReply> GetAccountLedgerEntry(int ledgerId,
+            bool? includeTransaction = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{"ledgerId", ledgerId.ToString()}};
+            AddToParametersIfHasValue("includeTransaction", includeTransaction, queryParameters);
+            return await Get<GetAccountLedgerEntryReply>("getAccountLedgerEntry", queryParameters);
+        }
+
         public async Task<AccountLessorsReply> GetAccountLessors(string accountId, int? height = null)
         {
             var queryParameters = new Dictionary<string, string> { { "account", accountId } };
