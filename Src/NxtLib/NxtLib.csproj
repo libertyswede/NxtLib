@@ -79,6 +79,8 @@
     <Compile Include="MonetarySystem\ExpectedCurrencyExchangeOffer.cs" />
     <Compile Include="MonetarySystem\ExpectedCurrencyTransfer.cs" />
     <Compile Include="MonetarySystem\ExpectedCurrencyTransfersReply.cs" />
+    <Compile Include="MonetarySystem\ExpectedExchangeRequest.cs" />
+    <Compile Include="MonetarySystem\GetExpectedExchangeRequestsReply.cs" />
     <Compile Include="MonetarySystem\GetExpectedOffersReply.cs" />
     <Compile Include="Phasing\PhasingPoll.cs" />
     <Compile Include="Phasing\PhasingPollReply.cs" />

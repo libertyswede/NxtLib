@@ -61,6 +61,9 @@ namespace NxtLib.MonetarySystem
 
         Task<ExpectedCurrencyTransfersReply> GetExpectedCurrencyTransfers(ulong? currencyId = null, string accountId = null);
 
+        Task<GetExpectedExchangeRequestsReply> GetExpectedExchangeRequests(string accountId = null,
+            ulong? currencyId = null, bool? includeCurrencyInfo = null);
+
         Task<GetExpectedOffersReply> GetExpectedSellOffers(ulong? currencyId = null, string accountId = null,
             bool? sortByRate = null);
 
