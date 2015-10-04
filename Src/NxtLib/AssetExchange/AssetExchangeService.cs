@@ -321,6 +321,15 @@ namespace NxtLib.AssetExchange
             return await Get<ExpectedOrderCancellationReply>("getExpectedOrderCancellations");
         }
 
+        public async Task<LastTradesReply> GetLastTrades(IEnumerable<ulong> assetIds)
+        {
+            var queryParameters = new Dictionary<string, List<string>>
+            {
+                {"assets", assetIds.Select(id => id.ToString()).ToList()}
+            };
+            return await Get<LastTradesReply>("getLastTrades", queryParameters);
+        }
+
         public async Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null,
             DateTime? timestamp = null, bool? includeAssetInfo = null)
         {
@@ -400,7 +409,7 @@ namespace NxtLib.AssetExchange
         private static Dictionary<string, string> BuildQueryParameters(string accountId, ulong? assetId, int? firstIndex,
             int? lastIndex)
         {
-            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
+            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("asset", assetId, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);

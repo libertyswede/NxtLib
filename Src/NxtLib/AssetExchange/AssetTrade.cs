@@ -25,9 +25,7 @@ namespace NxtLib.AssetExchange
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong Buyer { get; set; }
         public string BuyerRs { get; set; }
-        public int Decimals { get; set; }
         public int Height { get; set; }
-        public string Name { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
         [JsonProperty(PropertyName = "priceNQT")]

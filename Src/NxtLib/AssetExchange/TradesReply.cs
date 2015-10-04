@@ -4,6 +4,6 @@ namespace NxtLib.AssetExchange
 {
     public class TradesReply : BaseReply
     {
-        public List<AssetTrade> Trades { get; set; }
+        public List<AssetTradeInfo> Trades { get; set; }
     }
 }

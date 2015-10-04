@@ -66,6 +66,7 @@
     <Compile Include="Accounts\AccountReply.cs" />
     <Compile Include="Accounts\AccountService.cs" />
     <Compile Include="Accounts\AccountTransactionIdsReply.cs" />
+    <Compile Include="AssetExchange\AssetTrade.cs" />
     <Compile Include="AssetExchange\AssetTransferBase.cs" />
     <Compile Include="AssetExchange\ExpectedAskOrdersReply.cs" />
     <Compile Include="AssetExchange\ExpectedAssetOrder.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="AssetExchange\ExpectedAssetTransfersReply.cs" />
     <Compile Include="AssetExchange\ExpectedBidOrdersReply.cs" />
     <Compile Include="AssetExchange\ExpectedOrderCancellationReply.cs" />
+    <Compile Include="AssetExchange\LastTradesReply.cs" />
     <Compile Include="AssetExchange\OrderCancellation.cs" />
     <Compile Include="Internal\TransactionSubTypesConverter.cs" />
     <Compile Include="MintingHashAlgorithm.cs" />
@@ -212,7 +214,7 @@
     <Compile Include="AssetExchange\OpenOrdersReply.cs" />
     <Compile Include="AssetExchange\AssetsReply.cs" />
     <Compile Include="AssetExchange\AssetsByIssuerReply.cs" />
-    <Compile Include="AssetExchange\AssetTrade.cs" />
+    <Compile Include="AssetExchange\AssetTradeInfo.cs" />
     <Compile Include="AssetExchange\TradesReply.cs" />
     <Compile Include="AssetExchange\AssetTransfer.cs" />
     <Compile Include="AssetExchange\AssetTransfersReply.cs" />
