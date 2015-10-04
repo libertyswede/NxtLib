@@ -17,6 +17,7 @@ namespace NxtLib.Debug
         Task<BlocksReply<Transaction>> PopOff(HeightOrNumberOfBlocksLocator locator);
         Task<DoneReply> RebroadcastUnconfirmedTransactions();
         Task<DoneReply> RequeueUnconfirmedTransactions();
+        Task<RetrievePrunedDataReply> RetrievePrunedData();
         Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null);
         Task<SetLoggingReply> SetLogging(string logLevel, IEnumerable<string> communicationEvents);
         Task<ShutdownReply> Shutdown(bool? scan = null);

@@ -77,6 +77,11 @@ namespace NxtLib.Debug
             return await Post<DoneReply>("requeueUnconfirmedTransactions");
         }
 
+        public async Task<RetrievePrunedDataReply> RetrievePrunedData()
+        {
+            return await Post<RetrievePrunedDataReply>("retrievePrunedData");
+        }
+
         public async Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null)
         {
             var queryParameters = locator.QueryParameters;

@@ -77,6 +77,7 @@
     <Compile Include="AssetExchange\LastTradesReply.cs" />
     <Compile Include="AssetExchange\OrderCancellation.cs" />
     <Compile Include="AssetExchange\OrderIdLocator.cs" />
+    <Compile Include="Debug\RetrievePrunedDataReply.cs" />
     <Compile Include="Internal\TransactionSubTypesConverter.cs" />
     <Compile Include="MintingHashAlgorithm.cs" />
     <Compile Include="MonetarySystem\ExpectedCurrencyExchangeOffer.cs" />
