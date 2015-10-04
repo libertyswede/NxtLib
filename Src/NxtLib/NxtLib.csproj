@@ -71,6 +71,7 @@
     <Compile Include="AssetExchange\ExpectedAssetOrder.cs" />
     <Compile Include="AssetExchange\ExpectedAssetTransfer.cs" />
     <Compile Include="AssetExchange\ExpectedAssetTransfersReply.cs" />
+    <Compile Include="AssetExchange\ExpectedBidOrdersReply.cs" />
     <Compile Include="AssetExchange\ExpectedOrderCancellationReply.cs" />
     <Compile Include="AssetExchange\OrderCancellation.cs" />
     <Compile Include="Internal\TransactionSubTypesConverter.cs" />

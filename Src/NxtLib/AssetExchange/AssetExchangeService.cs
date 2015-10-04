@@ -301,6 +301,14 @@ namespace NxtLib.AssetExchange
             return await Get<ExpectedAskOrdersReply>("getExpectedAskOrders", queryParameters);
         }
 
+        public async Task<ExpectedBidOrdersReply> GetExpectedBidOrders(ulong? assetId = null, bool? sortByPrice = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("assetId", assetId, queryParameters);
+            AddToParametersIfHasValue("sortByPrice", sortByPrice, queryParameters);
+            return await Get<ExpectedBidOrdersReply>("getExpectedBidOrders", queryParameters);
+        }
+
         public async Task<ExpectedAssetTransfersReply> GetExpectedAssetTransfers(ulong? assetId = null, string account = null)
         {
             var queryParameters = new Dictionary<string, string>();
