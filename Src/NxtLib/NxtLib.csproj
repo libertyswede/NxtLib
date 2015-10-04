@@ -77,6 +77,8 @@
     <Compile Include="Internal\TransactionSubTypesConverter.cs" />
     <Compile Include="MintingHashAlgorithm.cs" />
     <Compile Include="MonetarySystem\ExpectedCurrencyExchangeOffer.cs" />
+    <Compile Include="MonetarySystem\ExpectedCurrencyTransfer.cs" />
+    <Compile Include="MonetarySystem\ExpectedCurrencyTransfersReply.cs" />
     <Compile Include="MonetarySystem\GetExpectedOffersReply.cs" />
     <Compile Include="Phasing\PhasingPoll.cs" />
     <Compile Include="Phasing\PhasingPollReply.cs" />

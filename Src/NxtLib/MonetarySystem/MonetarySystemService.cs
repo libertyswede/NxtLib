@@ -268,6 +268,14 @@ namespace NxtLib.MonetarySystem
             return await Get<GetExpectedOffersReply>("getExpectedBuyOffers", queryParameters);
         }
 
+        public async Task<ExpectedCurrencyTransfersReply> GetExpectedCurrencyTransfers(ulong? currencyId = null, string accountId = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("currency", currencyId, queryParameters);
+            AddToParametersIfHasValue("account", accountId, queryParameters);
+            return await Get<ExpectedCurrencyTransfersReply>("getExpectedCurrencyTransfers", queryParameters);
+        }
+
         public async Task<GetExpectedOffersReply> GetExpectedSellOffers(ulong? currencyId = null, string accountId = null,
             bool? sortByRate = null)
         {
