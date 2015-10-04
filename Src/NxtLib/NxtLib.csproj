@@ -309,6 +309,7 @@
     <Compile Include="Utils\DecodeQrCodeReply.cs" />
     <Compile Include="Utils\EncodeQrCodeReply.cs" />
     <Compile Include="Utils\FullHashToIdReply.cs" />
+    <Compile Include="Utils\HashReply.cs" />
     <Compile Include="Utils\HexConvertReply.cs" />
     <Compile Include="Utils\IUtilService.cs" />
     <Compile Include="Utils\LongConvertReply.cs" />

@@ -37,6 +37,17 @@ namespace NxtLib.Utils
             return await Get<FullHashToIdReply>("fullHashToId", queryParameters);
         }
 
+        public async Task<HashReply> Hash(HashAlgorithm hashAlgorithm, BinaryHexString secret, bool? secretIsText = null)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {"hashAlgorithm", ((int) hashAlgorithm).ToString()},
+                {"secret", secret.ToString()}
+            };
+            AddToParametersIfHasValue("secretIsText", secretIsText, queryParameters);
+            return await Get<HashReply>("hash", queryParameters);
+        }
+
         public async Task<HexConvertReply> HexConvert(string @string)
         {
             var queryParameters = new Dictionary<string, string> {{"string", @string}};
