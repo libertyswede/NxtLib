@@ -12,7 +12,7 @@ namespace NxtLib.Networking
         {
         }
 
-        public NetworkingService(IDateTimeConverter dateTimeConverter) 
+        public NetworkingService(IDateTimeConverter dateTimeConverter)
             : base(dateTimeConverter)
         {
         }
@@ -52,19 +52,19 @@ namespace NxtLib.Networking
             return await Get<PeerReply>("getPeer", queryParameters);
         }
 
-        public async Task<GetPeersReply> GetPeers(PeersLocator locator = null)
+        public async Task<GetPeersReply> GetPeers(PeersLocator locator = null, string service = null)
         {
-            if (locator != null)
-            {
-                return await Get<GetPeersReply>("getPeers", locator.QueryParameters);
-            }
-            return await Get<GetPeersReply>("getPeers");
+            var queryParameters = locator != null ? locator.QueryParameters : new Dictionary<string, string>();
+            AddToParametersIfHasValue("service", service, queryParameters);
+            return await Get<GetPeersReply>("getPeers", queryParameters);
         }
 
-        public async Task<GetPeersIncludeInfoReply> GetPeersIncludeInfo(PeersLocator locator = null)
+        public async Task<GetPeersIncludeInfoReply> GetPeersIncludeInfo(PeersLocator locator = null,
+            string service = null)
         {
             var queryParameters = locator != null ? locator.QueryParameters : new Dictionary<string, string>();
             queryParameters.Add("includePeerInfo", true.ToString());
+            AddToParametersIfHasValue("service", service, queryParameters);
             return await Get<GetPeersIncludeInfoReply>("getPeers", queryParameters);
         }
     }
