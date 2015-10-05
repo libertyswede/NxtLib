@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -58,11 +59,13 @@ namespace NxtLib.Messages
                 compressMessageToEncrypt, secretPhrase);
         }
 
-        public async Task<PrunableMessagesReply> GetAllPrunableMessages(int? firstIndex = null, int? lastIndex = null)
+        public async Task<PrunableMessagesReply> GetAllPrunableMessages(int? firstIndex = null, int? lastIndex = null,
+            DateTime? timestamp = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
             return await Get<PrunableMessagesReply>("getAllPrunableMessages", queryParameters);
         }
 
@@ -74,13 +77,14 @@ namespace NxtLib.Messages
         }
 
         public async Task<PrunableMessagesReply> GetPrunableMessages(string accountId, string otherAccountId = null, string secretPhrase = null,
-            int? firstIndex = null, int? lastIndex = null)
+            int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("otherAccount", otherAccountId, queryParameters);
             AddToParametersIfHasValue("secretPhrase", secretPhrase, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
             return await Get<PrunableMessagesReply>("getPrunableMessages", queryParameters);
         }
 

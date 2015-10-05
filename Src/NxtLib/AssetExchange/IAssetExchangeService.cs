@@ -51,7 +51,7 @@ namespace NxtLib.AssetExchange
             int? lastIndex = null, bool? includeCounts = null);
 
         Task<AssetTransfersReply> GetAssetTransfers(AssetIdOrAccountId assetIdOrAccountId,
-            int? firstIndex = null, int? lastIndex = null, bool? includeAssetInfo = null);
+            int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null);
 
         Task<OrderReply> GetBidOrder(ulong orderId);
         Task<BidOrderIdsReply> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null);

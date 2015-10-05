@@ -221,11 +221,12 @@ namespace NxtLib.MonetarySystem
         }
 
         public async Task<CurrencyTransfersReply> GetCurrencyTransfers(CurrencyOrAccountLocator locator, int? firstIndex = null,
-            int? lastIndex = null, bool? includeCurrencyInfo = null)
+            int? lastIndex = null, DateTime? timestamp = null, bool? includeCurrencyInfo = null)
         {
             var queryParameters = locator.QueryParameters;
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
             AddToParametersIfHasValue("includeCurrencyInfo", includeCurrencyInfo, queryParameters);
             return await Get<CurrencyTransfersReply>("getCurrencyTransfers", queryParameters);
         }

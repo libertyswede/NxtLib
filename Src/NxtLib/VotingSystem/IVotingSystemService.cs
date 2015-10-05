@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NxtLib.VotingSystem
@@ -14,7 +15,8 @@ namespace NxtLib.VotingSystem
         Task<GetPollResultReply> GetPollResult(ulong pollId, VotingModel? votingModel = null,
             ulong? holdingId = null, long? minBalance = null, MinBalanceModel? minBalanceModel = null);
 
-        Task<GetPollsReply> GetPolls(string accountId = null, int? firstIndex = null, int? lastIndex = null, bool? includeFinished = null);
+        Task<GetPollsReply> GetPolls(string accountId = null, int? firstIndex = null, int? lastIndex = null,
+            DateTime? timestamp = null, bool? includeFinished = null);
         Task<GetPollVoteReply> GetPollVote(ulong pollId, string accountId);
         Task<GetPollVotesReply> GetPollVotes(ulong pollId, int? firstIndex = null, int? lastIndex = null);
 

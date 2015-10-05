@@ -36,19 +36,23 @@ namespace NxtLib.Blocks
             return await Get<GetBlockReply<Transaction>>("getBlock", queryParameters);
         }
 
-        public async Task<BlocksReply<Transaction>> GetBlocksIncludeTransactions(int? firstindex = null, int? lastindex = null)
+        public async Task<BlocksReply<Transaction>> GetBlocksIncludeTransactions(int? firstindex = null,
+            int? lastindex = null, DateTime? timestamp = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "includeTransactions", "true" } };
+            var queryParameters = new Dictionary<string, string> {{"includeTransactions", "true"}};
             queryParameters.AddIfHasValue("firstIndex", firstindex);
             queryParameters.AddIfHasValue("lastIndex", lastindex);
+            AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
             return await Get<BlocksReply<Transaction>>("getBlocks", queryParameters);
         }
 
-        public async Task<BlocksReply<ulong>> GetBlocks(int? firstindex = null, int? lastindex = null)
+        public async Task<BlocksReply<ulong>> GetBlocks(int? firstindex = null, int? lastindex = null,
+            DateTime? timestamp = null)
         {
             var queryParameters = new Dictionary<string, string>();
             queryParameters.AddIfHasValue("firstIndex", firstindex);
             queryParameters.AddIfHasValue("lastIndex", lastindex);
+            AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
             return await Get<BlocksReply<ulong>>("getBlocks", queryParameters);
         }
 

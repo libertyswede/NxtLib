@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -101,12 +102,14 @@ namespace NxtLib.VotingSystem
             return await Get<GetPollResultReply>("getPollResult", queryParameters);
         }
 
-        public async Task<GetPollsReply> GetPolls(string accountId = null, int? firstIndex = null, int? lastIndex = null, bool? includeFinished = null)
+        public async Task<GetPollsReply> GetPolls(string accountId = null, int? firstIndex = null, int? lastIndex = null,
+            DateTime? timestamp = null, bool? includeFinished = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("account", accountId, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
             AddToParametersIfHasValue("includeFinished", includeFinished, queryParameters);
             return await Get<GetPollsReply>("getPolls", queryParameters);
         }

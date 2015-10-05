@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NxtLib.Messages
@@ -14,12 +15,13 @@ namespace NxtLib.Messages
 
         Task<EncryptedDataReply> EncryptTo(string recipientAccountId, IEnumerable<byte> data, bool compressMessageToEncrypt, string secretPhrase);
 
-        Task<PrunableMessagesReply> GetAllPrunableMessages(int? firstIndex = null, int? lastIndex = null);
+        Task<PrunableMessagesReply> GetAllPrunableMessages(int? firstIndex = null, int? lastIndex = null,
+            DateTime? timestamp = null);
 
         Task<PrunableMessageReply> GetPrunableMessage(ulong transactionId, string secretPhrase = null);
 
         Task<PrunableMessagesReply> GetPrunableMessages(string accountId, string otherAccountId = null,
-            string secretPhrase = null, int? firstIndex = null, int? lastIndex = null);
+            string secretPhrase = null, int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null);
 
         Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null);
 

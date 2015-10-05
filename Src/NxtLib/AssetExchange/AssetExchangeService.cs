@@ -250,13 +250,14 @@ namespace NxtLib.AssetExchange
         }
 
         public async Task<AssetTransfersReply> GetAssetTransfers(AssetIdOrAccountId assetIdOrAccountId,
-            int? firstIndex = null, int? lastIndex = null, bool? includeAssetInfo = null)
+            int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("asset", assetIdOrAccountId.AssetId, queryParameters);
             AddToParametersIfHasValue("account", assetIdOrAccountId.AccountId, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
             AddToParametersIfHasValue("includeAssetInfo", includeAssetInfo, queryParameters);
             return await Get<AssetTransfersReply>("getAssetTransfers", queryParameters);
         }
