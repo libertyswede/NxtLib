@@ -18,7 +18,8 @@ namespace NxtLib.Aliases
         {
         }
 
-        public async Task<TransactionCreatedReply> BuyAlias(AliasLocator query, Amount amount, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> BuyAlias(AliasLocator query, Amount amount,
+            CreateTransactionParameters parameters)
         {
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);
@@ -26,43 +27,57 @@ namespace NxtLib.Aliases
             return await Post<TransactionCreatedReply>("buyAlias", queryParameters);
         }
 
-        public async Task<TransactionCreatedReply> DeleteAlias(AliasLocator query, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> DeleteAlias(AliasLocator query,
+            CreateTransactionParameters parameters)
         {
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("deleteAlias", queryParameters);
         }
 
-        public async Task<AliasReply> GetAlias(AliasLocator query)
+        public async Task<AliasReply> GetAlias(AliasLocator query, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = query.QueryParameters;
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AliasReply>("getAlias", queryParameters);
         }
 
-        public async Task<AliasCountReply> GetAliasCount(string account)
+        public async Task<AliasCountReply> GetAliasCount(string account, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "account", account } };
+            var queryParameters = new Dictionary<string, string> {{"account", account}};
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AliasCountReply>("getAliasCount", queryParameters);
         }
 
-        public async Task<AliasesReply> GetAliases(string accountId, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null)
+        public async Task<AliasesReply> GetAliases(string accountId, DateTime? timeStamp = null, int? firstIndex = null,
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
+            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue(timeStamp, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AliasesReply>("getAliases", queryParameters);
         }
 
-        public async Task<AliasesReply> GetAliasesLike(string prefix, int? firstIndex = null, int? lastIndex = null)
+        public async Task<AliasesReply> GetAliasesLike(string prefix, int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"prefix", prefix}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AliasesReply>("getAliasesLike", queryParameters);
         }
 
-        public async Task<TransactionCreatedReply> SellAlias(AliasLocator query, Amount price, CreateTransactionParameters parameters, string recipient = null)
+        public async Task<TransactionCreatedReply> SellAlias(AliasLocator query, Amount price,
+            CreateTransactionParameters parameters, string recipient = null)
         {
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);
@@ -74,7 +89,7 @@ namespace NxtLib.Aliases
         public async Task<TransactionCreatedReply> SetAlias(string aliasName, string aliasUri,
             CreateTransactionParameters parameters)
         {
-            var queryParameters = new Dictionary<string, string> { { "aliasName", aliasName }, { "aliasURI", aliasUri } };
+            var queryParameters = new Dictionary<string, string> {{"aliasName", aliasName}, {"aliasURI", aliasUri}};
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("setAlias", queryParameters);
         }
