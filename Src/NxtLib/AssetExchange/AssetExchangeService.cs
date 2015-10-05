@@ -21,7 +21,7 @@ namespace NxtLib.AssetExchange
 
         public async Task<TransactionCreatedReply> CancelAskOrder(ulong orderId, CreateTransactionParameters parameters)
         {
-            var queryParameters = new Dictionary<string, string> { { "order", orderId.ToString() } };
+            var queryParameters = new Dictionary<string, string> {{"order", orderId.ToString()}};
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("cancelAskOrder", queryParameters);
         }
@@ -33,7 +33,8 @@ namespace NxtLib.AssetExchange
             return await Post<TransactionCreatedReply>("cancelBidOrder", queryParameters);
         }
 
-        public async Task<TransactionCreatedReply> DeleteAssetShares(ulong assetId, long quantityQnt, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> DeleteAssetShares(ulong assetId, long quantityQnt,
+            CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -57,14 +58,14 @@ namespace NxtLib.AssetExchange
 
         public async Task<AccountAssetCountReply> GetAccountAssetCount(string accountId, int? height = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
+            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("height", height, queryParameters);
             return await Get<AccountAssetCountReply>("getAccountAssetCount", queryParameters);
         }
 
         public async Task<AccountAssetReply> GetAccountAsset(string accountId, ulong assetId, int? height = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
+            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("height", height, queryParameters);
             AddToParametersIfHasValue("asset", assetId, queryParameters);
             return await Get<AccountAssetReply>("getAccountAssets", queryParameters);
@@ -72,7 +73,7 @@ namespace NxtLib.AssetExchange
 
         public async Task<AccountAssetsReply> GetAccountAssets(string accountId, int? height = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
+            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("height", height, queryParameters);
             return await Get<AccountAssetsReply>("getAccountAssets", queryParameters);
         }
@@ -131,7 +132,8 @@ namespace NxtLib.AssetExchange
             return await Get<OpenOrdersReply>("getAllOpenBidOrders", queryParameters);
         }
 
-        public async Task<TradesReply> GetAllTrades(DateTime? timestamp = null, int? firstIndex = null, int? lastIndex = null,
+        public async Task<TradesReply> GetAllTrades(DateTime? timestamp = null, int? firstIndex = null,
+            int? lastIndex = null,
             bool? includeAssetInfo = null)
         {
             var queryParameters = new Dictionary<string, string>();
@@ -222,7 +224,7 @@ namespace NxtLib.AssetExchange
             };
             if (includeCounts.HasValue)
             {
-                queryParameters.Add("includeCounts", new List<string> { includeCounts.Value.ToString() });
+                queryParameters.Add("includeCounts", new List<string> {includeCounts.Value.ToString()});
             }
             return await Get<AssetsReply>("getAssets", queryParameters);
         }
@@ -236,15 +238,15 @@ namespace NxtLib.AssetExchange
             };
             if (firstIndex.HasValue)
             {
-                queryParameters.Add("firstIndex", new List<string> { firstIndex.Value.ToString() });
+                queryParameters.Add("firstIndex", new List<string> {firstIndex.Value.ToString()});
             }
             if (lastIndex.HasValue)
             {
-                queryParameters.Add("lastIndex", new List<string> { lastIndex.Value.ToString() });
+                queryParameters.Add("lastIndex", new List<string> {lastIndex.Value.ToString()});
             }
             if (includeCounts.HasValue)
             {
-                queryParameters.Add("includeCounts", new List<string> { includeCounts.Value.ToString() });
+                queryParameters.Add("includeCounts", new List<string> {includeCounts.Value.ToString()});
             }
             return await Get<AssetsByIssuerReply>("getAssetsByIssuer", queryParameters);
         }
@@ -309,7 +311,8 @@ namespace NxtLib.AssetExchange
             return await Get<ExpectedBidOrdersReply>("getExpectedBidOrders", queryParameters);
         }
 
-        public async Task<ExpectedAssetTransfersReply> GetExpectedAssetTransfers(ulong? assetId = null, string account = null)
+        public async Task<ExpectedAssetTransfersReply> GetExpectedAssetTransfers(ulong? assetId = null,
+            string account = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("assetId", assetId, queryParameters);
@@ -341,7 +344,8 @@ namespace NxtLib.AssetExchange
             return await Get<TradesReply>("getOrderTrades", queryParameters);
         }
 
-        public async Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null, int? lastIndex = null,
+        public async Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null,
+            int? lastIndex = null,
             DateTime? timestamp = null, bool? includeAssetInfo = null)
         {
             var queryParameters = new Dictionary<string, string>();
@@ -397,7 +401,7 @@ namespace NxtLib.AssetExchange
         public async Task<AssetsReply> SearchAssets(string query, int? firstIndex = null, int? lastIndex = null,
             bool? includeCounts = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "query", query } };
+            var queryParameters = new Dictionary<string, string> {{"query", query}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
