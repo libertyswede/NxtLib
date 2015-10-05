@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NxtLib.DigitalGoodsStore
@@ -10,41 +9,51 @@ namespace NxtLib.DigitalGoodsStore
 
         Task<TransactionCreatedReply> Delivery(ulong purchaseId, CreateTransactionParameters parameters,
             Amount discount = null, string goodsToEncrypt = null, bool? goodsIsText = null, string goodsData = null,
-            IEnumerable<byte> goodsNonce = null);
+            BinaryHexString goodsNonce = null);
 
         Task<TransactionCreatedReply> Feedback(ulong purchaseId, CreateTransactionParameters parameters);
 
-        Task<PurchasesReply> GetExpiredPurchases(string sellerId, int? firstIndex = null, int? lastIndex = null);
+        Task<PurchasesReply> GetExpiredPurchases(string sellerId, int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<GoodReply> GetGood(ulong goodsId, bool? includeCounts = null);
+        Task<GoodReply> GetGood(ulong goodsId, bool? includeCounts = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
 
         Task<GoodsReply> GetGoods(ulong? sellerId = null, int? firstIndex = null, int? lastIndex = null,
-            bool? inStockOnly = null, bool? hideDelisted = null, bool? includeCounts = null);
+            bool? inStockOnly = null, bool? hideDelisted = null, bool? includeCounts = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
 
-        Task<GoodsCountReply> GetGoodsCount(ulong? sellerId = null, bool? inStockOnly = null);
+        Task<GoodsCountReply> GetGoodsCount(ulong? sellerId = null, bool? inStockOnly = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
 
         Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null,
-            bool? completed = null);
+            bool? completed = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, string buyerId = null, int? firstIndex = null, 
-            int? lastIndex = null, bool? withPublickKeedbacksOnly = null, bool? completed = null);
+        Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, string buyerId = null, int? firstIndex = null,
+            int? lastIndex = null, bool? withPublickKeedbacksOnly = null, bool? completed = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<PurchasesReply> GetPendingPurchases(string sellerId, int? firstIndex = null,
-            int? lastIndex = null);
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<PurchaseReply> GetPurchase(ulong purchaseId);
+        Task<PurchaseReply> GetPurchase(ulong purchaseId, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<PuchaseCountReply> GetPurchaseCount(ulong? sellerId = null, ulong? buyerId = null,
-            bool? withPublicFeedbacksOnly = null, bool? completed = null);
+            bool? withPublicFeedbacksOnly = null, bool? completed = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
 
         Task<PurchasesReply> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
-            int? firstIndex = null, int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null);
+            int? firstIndex = null, int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<TagCountReply> GetTagCount(bool? inStockOnly = null);
+        Task<TagCountReply> GetTagCount(bool? inStockOnly = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
 
-        Task<TagsReply> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null);
+        Task<TagsReply> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<TagsReply> GetTagsLike(string tagPrefix, bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null);
+        Task<TagsReply> GetTagsLike(string tagPrefix, bool? inStockOnly = null, int? firstIndex = null,
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<TransactionCreatedReply> Listing(string name, string description, int quantity, Amount price,
             CreateTransactionParameters parameters, string tags = null);
@@ -63,6 +72,6 @@ namespace NxtLib.DigitalGoodsStore
 
         Task<GoodsReply> SearchGoods(string query = null, string tag = null, ulong? sellerId = null,
             int? firstIndex = null, int? lastIndex = null, bool? inStockOnly = null, bool? hideDelisted = null,
-            bool? includeCounts = null);
+            bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
     }
 }

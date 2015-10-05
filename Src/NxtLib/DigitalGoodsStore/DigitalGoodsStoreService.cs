@@ -20,22 +20,16 @@ namespace NxtLib.DigitalGoodsStore
 
         public async Task<TransactionCreatedReply> Delisting(ulong goodsId, CreateTransactionParameters parameters)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"goods", goodsId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"goods", goodsId.ToString()}};
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dgsDelisting", queryParameters);
         }
 
         public async Task<TransactionCreatedReply> Delivery(ulong purchaseId, CreateTransactionParameters parameters,
             Amount discount = null, string goodsToEncrypt = null, bool? goodsIsText = null, string goodsData = null,
-            IEnumerable<byte> goodsNonce = null)
+            BinaryHexString goodsNonce = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"purchase", purchaseId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"purchase", purchaseId.ToString()}};
             parameters.AppendToQueryParameters(queryParameters);
             if (discount != null)
             {
@@ -46,7 +40,7 @@ namespace NxtLib.DigitalGoodsStore
             AddToParametersIfHasValue("goodsData", goodsData, queryParameters);
             if (goodsNonce != null)
             {
-                AddToParametersIfHasValue("goodsNonce", ByteToHexStringConverter.ToHexString(goodsNonce), queryParameters);
+                AddToParametersIfHasValue("goodsNonce", goodsNonce.ToHexString(), queryParameters);
             }
             return await Post<TransactionCreatedReply>("dgsDelivery", queryParameters);
         }
@@ -58,26 +52,30 @@ namespace NxtLib.DigitalGoodsStore
             return await Post<TransactionCreatedReply>("dgsFeedback", queryParameters);
         }
 
-        public async Task<PurchasesReply> GetExpiredPurchases(string sellerId, int? firstIndex = null, int? lastIndex = null)
+        public async Task<PurchasesReply> GetExpiredPurchases(string sellerId, int? firstIndex = null,
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"seller", sellerId}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Post<PurchasesReply>("getExpiredPurchases", queryParameters);
         }
 
-        public async Task<GoodReply> GetGood(ulong goodsId, bool? includeCounts = null)
+        public async Task<GoodReply> GetGood(ulong goodsId, bool? includeCounts = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"goods", goodsId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"goods", goodsId.ToString()}};
             AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<GoodReply>("getDGSGood", queryParameters);
         }
 
         public async Task<GoodsReply> GetGoods(ulong? sellerId = null, int? firstIndex = null, int? lastIndex = null,
-            bool? inStockOnly = null, bool? hideDelisted = null, bool? includeCounts = null)
+            bool? inStockOnly = null, bool? hideDelisted = null, bool? includeCounts = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("seller", sellerId, queryParameters);
@@ -86,65 +84,85 @@ namespace NxtLib.DigitalGoodsStore
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
             AddToParametersIfHasValue("hideDelisted", hideDelisted, queryParameters);
             AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<GoodsReply>("getDGSGoods", queryParameters);
         }
 
-        public async Task<GoodsCountReply> GetGoodsCount(ulong? sellerId = null, bool? inStockOnly = null)
+        public async Task<GoodsCountReply> GetGoodsCount(ulong? sellerId = null, bool? inStockOnly = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("seller", sellerId, queryParameters);
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<GoodsCountReply>("getDGSGoodsCount", queryParameters);
         }
 
-        public async Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null, bool? completed = null)
+        public async Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null,
+            bool? completed = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>{{"goods", goodsId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{"goods", goodsId.ToString()}};
             AddToParametersIfHasValue("withPublicFeedbacksOnly", withPublicFeedbacksOnly, queryParameters);
             AddToParametersIfHasValue("completed", completed, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<PuchaseCountReply>("getDGSGoodsPurchaseCount", queryParameters);
         }
 
-        public async Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, string buyerId = null, int? firstIndex = null, 
-            int? lastIndex = null, bool? withPublickKeedbacksOnly = null, bool? completed = null)
+        public async Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, string buyerId = null, int? firstIndex = null,
+            int? lastIndex = null, bool? withPublickKeedbacksOnly = null, bool? completed = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "goods", goodsId.ToString() } };
+            var queryParameters = new Dictionary<string, string> {{"goods", goodsId.ToString()}};
             AddToParametersIfHasValue("buyer", buyerId, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("withPublickKeedbacksOnly", withPublickKeedbacksOnly, queryParameters);
             AddToParametersIfHasValue("completed", completed, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<PurchasesReply>("getDGSGoodsPurchases", queryParameters);
         }
 
         public async Task<PurchasesReply> GetPendingPurchases(string sellerId, int? firstIndex = null,
-            int? lastIndex = null)
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"seller", sellerId}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<PurchasesReply>("getDGSPendingPurchases", queryParameters);
         }
 
-        public async Task<PurchaseReply> GetPurchase(ulong purchaseId)
+        public async Task<PurchaseReply> GetPurchase(ulong purchaseId, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "purchase", purchaseId.ToString() } };
+            var queryParameters = new Dictionary<string, string> {{"purchase", purchaseId.ToString()}};
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<PurchaseReply>("getDGSPurchase", queryParameters);
         }
 
         public async Task<PuchaseCountReply> GetPurchaseCount(ulong? sellerId = null, ulong? buyerId = null,
-            bool? withPublicFeedbacksOnly = null, bool? completed = null)
+            bool? withPublicFeedbacksOnly = null, bool? completed = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("seller", sellerId, queryParameters);
             AddToParametersIfHasValue("buyer", buyerId, queryParameters);
             AddToParametersIfHasValue("withPublicFeedbacksOnly", withPublicFeedbacksOnly, queryParameters);
             AddToParametersIfHasValue("completed", completed, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<PuchaseCountReply>("getDGSPurchaseCount", queryParameters);
         }
 
         public async Task<PurchasesReply> GetPurchases(ulong? sellerId = null, ulong? buyerId = null,
-            int? firstIndex = null, int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null)
+            int? firstIndex = null, int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("seller", sellerId, queryParameters);
@@ -153,31 +171,42 @@ namespace NxtLib.DigitalGoodsStore
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("withPublicFeedbacksOnly", withPublicFeedbacksOnly, queryParameters);
             AddToParametersIfHasValue("completed", completed, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<PurchasesReply>("getDGSPurchases", queryParameters);
         }
 
-        public async Task<TagCountReply> GetTagCount(bool? inStockOnly = null)
+        public async Task<TagCountReply> GetTagCount(bool? inStockOnly = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<TagCountReply>("getDGSTagCount", queryParameters);
         }
 
-        public async Task<TagsReply> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null)
+        public async Task<TagsReply> GetTags(bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<TagsReply>("getDGSTags", queryParameters);
         }
 
-        public async Task<TagsReply> GetTagsLike(string tagPrefix, bool? inStockOnly = null, int? firstIndex = null, int? lastIndex = null)
+        public async Task<TagsReply> GetTagsLike(string tagPrefix, bool? inStockOnly = null, int? firstIndex = null,
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"tagPrefix", tagPrefix}};
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<TagsReply>("getDGSTagsLike", queryParameters);
         }
 
@@ -248,7 +277,7 @@ namespace NxtLib.DigitalGoodsStore
 
         public async Task<GoodsReply> SearchGoods(string query = null, string tag = null, ulong? sellerId = null,
             int? firstIndex = null, int? lastIndex = null, bool? inStockOnly = null, bool? hideDelisted = null,
-            bool? includeCounts = null)
+            bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("query", query, queryParameters);
@@ -259,6 +288,8 @@ namespace NxtLib.DigitalGoodsStore
             AddToParametersIfHasValue("inStockOnly", inStockOnly, queryParameters);
             AddToParametersIfHasValue("hideDelisted", hideDelisted, queryParameters);
             AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<GoodsReply>("searchDGSGoods", queryParameters);
         }
     }
