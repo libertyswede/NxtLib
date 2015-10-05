@@ -45,7 +45,8 @@ namespace NxtLib.AssetExchange
             return await Post<TransactionCreatedReply>("deleteAssetShares", queryParameters);
         }
 
-        public async Task<TransactionCreatedReply> DividendPayment(ulong assetId, int height, Amount amountPerQnt)
+        public async Task<TransactionCreatedReply> DividendPayment(ulong assetId, int height, Amount amountPerQnt,
+            CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
             {
@@ -53,28 +54,38 @@ namespace NxtLib.AssetExchange
                 {"height", height.ToString()},
                 {"amountNQTPerQNT", amountPerQnt.Nqt.ToString()}
             };
+            parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dividendPayment", queryParameters);
         }
 
-        public async Task<AccountAssetCountReply> GetAccountAssetCount(string accountId, int? height = null)
+        public async Task<AccountAssetCountReply> GetAccountAssetCount(string accountId, int? height = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("height", height, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AccountAssetCountReply>("getAccountAssetCount", queryParameters);
         }
 
-        public async Task<AccountAssetReply> GetAccountAsset(string accountId, ulong assetId, int? height = null)
+        public async Task<AccountAssetReply> GetAccountAsset(string accountId, ulong assetId, int? height = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("height", height, queryParameters);
             AddToParametersIfHasValue("asset", assetId, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AccountAssetReply>("getAccountAssets", queryParameters);
         }
 
-        public async Task<AccountAssetsReply> GetAccountAssets(string accountId, int? height = null)
+        public async Task<AccountAssetsReply> GetAccountAssets(string accountId, int? height = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("height", height, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AccountAssetsReply>("getAccountAssets", queryParameters);
         }
 
@@ -86,137 +97,151 @@ namespace NxtLib.AssetExchange
         }
 
         public async Task<AskOrdersReply> GetAccountCurrentAskOrders(string accountId, ulong? assetId = null,
-            int? firstIndex = null, int? lastIndex = null)
+            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = BuildQueryParameters(accountId, assetId, firstIndex, lastIndex);
+            var queryParameters = BuildQueryParameters(accountId, assetId, firstIndex, lastIndex, requireBlock, requireLastBlock);
             return await Get<AskOrdersReply>("getAccountCurrentAskOrders", queryParameters);
         }
 
         public async Task<BidOrderIdsReply> GetAccountCurrentBidOrderIds(string accountId, ulong? assetId = null,
-            int? firstIndex = null, int? lastIndex = null)
+            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = BuildQueryParameters(accountId, assetId, firstIndex, lastIndex);
+            var queryParameters = BuildQueryParameters(accountId, assetId, firstIndex, lastIndex, requireBlock, requireLastBlock);
             return await Get<BidOrderIdsReply>("getAccountCurrentBidOrderIds", queryParameters);
         }
 
         public async Task<BidOrdersReply> GetAccountCurrentBidOrders(string accountId, ulong? assetId = null,
-            int? firstIndex = null, int? lastIndex = null)
+            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = BuildQueryParameters(accountId, assetId, firstIndex, lastIndex);
+            var queryParameters = BuildQueryParameters(accountId, assetId, firstIndex, lastIndex, requireBlock, requireLastBlock);
             return await Get<BidOrdersReply>("getAccountCurrentBidOrders", queryParameters);
         }
 
         public async Task<AssetsReply> GetAllAssets(int? firstIndex = null, int? lastIndex = null,
-            bool? includeCounts = null)
+            bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AssetsReply>("getAllAssets", queryParameters);
         }
 
-        public async Task<OpenOrdersReply> GetAllOpenAskOrders(int? firstIndex = null, int? lastIndex = null)
+        public async Task<OpenOrdersReply> GetAllOpenAskOrders(int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<OpenOrdersReply>("getAllOpenAskOrders", queryParameters);
         }
 
-        public async Task<OpenOrdersReply> GetAllOpenBidOrders(int? firstIndex = null, int? lastIndex = null)
+        public async Task<OpenOrdersReply> GetAllOpenBidOrders(int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<OpenOrdersReply>("getAllOpenBidOrders", queryParameters);
         }
 
         public async Task<TradesReply> GetAllTrades(DateTime? timestamp = null, int? firstIndex = null,
-            int? lastIndex = null,
-            bool? includeAssetInfo = null)
+            int? lastIndex = null, bool? includeAssetInfo = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue(timestamp, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("includeAssetInfo", includeAssetInfo, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<TradesReply>("getAllTrades", queryParameters);
         }
 
-        public async Task<OrderReply> GetAskOrder(ulong orderId)
+        public async Task<OrderReply> GetAskOrder(ulong orderId, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"order", orderId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"order", orderId.ToString()}};
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<OrderReply>("getAskOrder", queryParameters);
         }
 
-        public async Task<AskOrderIdsReply> GetAskOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null)
+        public async Task<AskOrderIdsReply> GetAskOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"asset", assetId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"asset", assetId.ToString()}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AskOrderIdsReply>("getAskOrderIds", queryParameters);
         }
 
-        public async Task<AskOrdersReply> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null)
+        public async Task<AskOrdersReply> GetAskOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null,
+            bool? showExpectedCancellations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"asset", assetId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"asset", assetId.ToString()}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("showExpectedCancellations", showExpectedCancellations, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AskOrdersReply>("getAskOrders", queryParameters);
         }
 
-        public async Task<AssetReply> GetAsset(ulong assetId, bool? includeCounts = null)
+        public async Task<AssetReply> GetAsset(ulong assetId, bool? includeCounts = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"asset", assetId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"asset", assetId.ToString()}};
             AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AssetReply>("getAsset", queryParameters);
         }
 
-        public async Task<CountReply> GetAssetAccountCount(ulong assetId, int? height = null)
+        public async Task<CountReply> GetAssetAccountCount(ulong assetId, int? height = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"asset", assetId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"asset", assetId.ToString()}};
             AddToParametersIfHasValue("height", height, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<CountReply>("getAssetAccountCount", queryParameters);
         }
 
-        public async Task<AssetAccountsReply> GetAssetAccounts(ulong assetId, int? height = null,
-            int? firstIndex = null, int? lastIndex = null)
+        public async Task<AssetAccountsReply> GetAssetAccounts(ulong assetId, int? height = null, int? firstIndex = null,
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"asset", assetId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"asset", assetId.ToString()}};
             AddToParametersIfHasValue("height", height, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AssetAccountsReply>("getAssetAccounts", queryParameters);
         }
 
-        public async Task<AssetIdsReply> GetAssetIds(int? firstIndex = null, int? lastIndex = null)
+        public async Task<AssetIdsReply> GetAssetIds(int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AssetIdsReply>("getAssetIds", queryParameters);
         }
 
-        public async Task<AssetsReply> GetAssets(IEnumerable<ulong> assetIds, bool? includeCounts = null)
+        public async Task<AssetsReply> GetAssets(IEnumerable<ulong> assetIds, bool? includeCounts = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, List<string>>
             {
@@ -226,11 +251,20 @@ namespace NxtLib.AssetExchange
             {
                 queryParameters.Add("includeCounts", new List<string> {includeCounts.Value.ToString()});
             }
+            if (requireBlock.HasValue)
+            {
+                queryParameters.Add("requireBlock", new List<string> {requireBlock.Value.ToString()});
+            }
+            if (requireLastBlock.HasValue)
+            {
+                queryParameters.Add("requireLastBlock", new List<string> {requireLastBlock.Value.ToString()});
+            }
             return await Get<AssetsReply>("getAssets", queryParameters);
         }
 
         public async Task<AssetsByIssuerReply> GetAssetsByIssuer(IEnumerable<ulong> accountIds, int? firstIndex = null,
-            int? lastIndex = null, bool? includeCounts = null)
+            int? lastIndex = null, bool? includeCounts = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, List<string>>
             {
@@ -248,11 +282,20 @@ namespace NxtLib.AssetExchange
             {
                 queryParameters.Add("includeCounts", new List<string> {includeCounts.Value.ToString()});
             }
+            if (requireBlock.HasValue)
+            {
+                queryParameters.Add("requireBlock", new List<string> {requireBlock.Value.ToString()});
+            }
+            if (requireLastBlock.HasValue)
+            {
+                queryParameters.Add("requireLastBlock", new List<string> {requireLastBlock.Value.ToString()});
+            }
             return await Get<AssetsByIssuerReply>("getAssetsByIssuer", queryParameters);
         }
 
         public async Task<AssetTransfersReply> GetAssetTransfers(AssetIdOrAccountId assetIdOrAccountId,
-            int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null)
+            int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("asset", assetIdOrAccountId.AssetId, queryParameters);
@@ -261,92 +304,119 @@ namespace NxtLib.AssetExchange
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
             AddToParametersIfHasValue("includeAssetInfo", includeAssetInfo, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AssetTransfersReply>("getAssetTransfers", queryParameters);
         }
 
-        public async Task<OrderReply> GetBidOrder(ulong orderId)
+        public async Task<OrderReply> GetBidOrder(ulong orderId, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"order", orderId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"order", orderId.ToString()}};
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<OrderReply>("getBidOrder", queryParameters);
         }
 
-        public async Task<BidOrderIdsReply> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null)
+        public async Task<BidOrderIdsReply> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"asset", assetId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"asset", assetId.ToString()}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<BidOrderIdsReply>("getBidOrderIds", queryParameters);
         }
 
-        public async Task<BidOrdersReply> GetBidOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null)
+        public async Task<BidOrdersReply> GetBidOrders(ulong assetId, int? firstIndex = null, int? lastIndex = null,
+            bool? showExpectedCancellations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {"asset", assetId.ToString()}
-            };
+            var queryParameters = new Dictionary<string, string> {{"asset", assetId.ToString()}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("showExpectedCancellations", showExpectedCancellations, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<BidOrdersReply>("getBidOrders", queryParameters);
         }
 
-        public async Task<ExpectedAskOrdersReply> GetExpectedAskOrders(ulong? assetId = null, bool? sortByPrice = null)
+        public async Task<ExpectedAskOrdersReply> GetExpectedAskOrders(ulong? assetId = null, bool? sortByPrice = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("assetId", assetId, queryParameters);
             AddToParametersIfHasValue("sortByPrice", sortByPrice, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<ExpectedAskOrdersReply>("getExpectedAskOrders", queryParameters);
         }
 
-        public async Task<ExpectedBidOrdersReply> GetExpectedBidOrders(ulong? assetId = null, bool? sortByPrice = null)
+        public async Task<ExpectedBidOrdersReply> GetExpectedBidOrders(ulong? assetId = null, bool? sortByPrice = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("assetId", assetId, queryParameters);
             AddToParametersIfHasValue("sortByPrice", sortByPrice, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<ExpectedBidOrdersReply>("getExpectedBidOrders", queryParameters);
         }
 
         public async Task<ExpectedAssetTransfersReply> GetExpectedAssetTransfers(ulong? assetId = null,
-            string account = null)
+            string account = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("assetId", assetId, queryParameters);
             AddToParametersIfHasValue("account", account, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<ExpectedAssetTransfersReply>("getExpectedAssetTransfers", queryParameters);
         }
 
-        public async Task<ExpectedOrderCancellationReply> GetExpectedOrderCancellations()
+        public async Task<ExpectedOrderCancellationReply> GetExpectedOrderCancellations(ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<ExpectedOrderCancellationReply>("getExpectedOrderCancellations");
         }
 
-        public async Task<LastTradesReply> GetLastTrades(IEnumerable<ulong> assetIds)
+        public async Task<LastTradesReply> GetLastTrades(IEnumerable<ulong> assetIds, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, List<string>>
             {
                 {"assets", assetIds.Select(id => id.ToString()).ToList()}
             };
+            if (requireBlock.HasValue)
+            {
+                queryParameters.Add("requireBlock", new List<string> {requireBlock.Value.ToString()});
+            }
+            if (requireLastBlock.HasValue)
+            {
+                queryParameters.Add("requireLastBlock", new List<string> {requireLastBlock.Value.ToString()});
+            }
             return await Get<LastTradesReply>("getLastTrades", queryParameters);
         }
 
         public async Task<TradesReply> GetOrderTrades(OrderIdLocator orderIdLocator, int? firstIndex = null,
-            int? lastIndex = null, bool? includeAssetInfo = null)
+            int? lastIndex = null, bool? includeAssetInfo = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = orderIdLocator.QueryParameters;
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("includeAssetInfo", includeAssetInfo, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<TradesReply>("getOrderTrades", queryParameters);
         }
 
         public async Task<TradesReply> GetTrades(AssetIdOrAccountId assetIdOrAccountId, int? firstIndex = null,
-            int? lastIndex = null,
-            DateTime? timestamp = null, bool? includeAssetInfo = null)
+            int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("asset", assetIdOrAccountId.AssetId, queryParameters);
@@ -355,6 +425,8 @@ namespace NxtLib.AssetExchange
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("includeAssetInfo", includeAssetInfo, queryParameters);
             AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<TradesReply>("getTrades", queryParameters);
         }
 
@@ -399,12 +471,14 @@ namespace NxtLib.AssetExchange
         }
 
         public async Task<AssetsReply> SearchAssets(string query, int? firstIndex = null, int? lastIndex = null,
-            bool? includeCounts = null)
+            bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"query", query}};
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AssetsReply>("searchAssets", queryParameters);
         }
 
@@ -422,12 +496,14 @@ namespace NxtLib.AssetExchange
         }
 
         private static Dictionary<string, string> BuildQueryParameters(string accountId, ulong? assetId, int? firstIndex,
-            int? lastIndex)
+            int? lastIndex, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue("asset", assetId, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return queryParameters;
         }
     }
