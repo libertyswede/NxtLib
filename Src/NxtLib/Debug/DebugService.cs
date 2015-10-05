@@ -40,14 +40,20 @@ namespace NxtLib.Debug
             return await Post<DoneReply>("fullReset");
         }
 
-        public async Task<TransactionsListReply> GetAllBroadcastedTransactions()
+        public async Task<TransactionsListReply> GetAllBroadcastedTransactions(ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            return await Get<TransactionsListReply>("getAllBroadcastedTransactions");
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            return await Get<TransactionsListReply>("getAllBroadcastedTransactions", queryParameters);
         }
 
-        public async Task<TransactionsListReply> GetAllWaitingTransactions()
+        public async Task<TransactionsListReply> GetAllWaitingTransactions(ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            return await Get<TransactionsListReply>("getAllWaitingTransactions");
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            return await Get<TransactionsListReply>("getAllWaitingTransactions", queryParameters);
         }
 
         public async Task<LogReply> GetLog(int count)
@@ -57,9 +63,11 @@ namespace NxtLib.Debug
         }
 
         // TODO: Implement with proper reply
-        public async Task<JObject> GetStackTraces()
+        public async Task<JObject> GetStackTraces(int? depth = null)
         {
-            return await Get("getStackTraces");
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("depth", depth, queryParameters);
+            return await Get("getStackTraces", queryParameters);
         }
 
         public async Task<DoneReply> LuceneReindex()
