@@ -7,7 +7,8 @@ namespace NxtLib.Debug
     public interface IDebugService
     {
         Task<DoneReply> ClearUnconfirmedTransactions();
-        Task<DumpPeersReply> DumpPeers(string version);
+        Task<DumpPeersReply> DumpPeers(string version = null, int? weight = null, bool? connect = null,
+            string adminPassword = null);
         Task<DoneReply> FullReset();
         Task<TransactionsListReply> GetAllBroadcastedTransactions();
         Task<TransactionsListReply> GetAllWaitingTransactions();

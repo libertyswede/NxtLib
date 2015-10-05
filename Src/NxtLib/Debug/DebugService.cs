@@ -24,9 +24,14 @@ namespace NxtLib.Debug
             return await Post<DoneReply>("clearUnconfirmedTransactions");
         }
 
-        public async Task<DumpPeersReply> DumpPeers(string version)
+        public async Task<DumpPeersReply> DumpPeers(string version = null, int? weight = null, bool? connect = null,
+            string adminPassword = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"version", version}};
+            var queryParameters = new Dictionary<string, string>();
+            AddToParametersIfHasValue("version", version, queryParameters);
+            AddToParametersIfHasValue("weight", weight, queryParameters);
+            AddToParametersIfHasValue("connect", connect, queryParameters);
+            AddToParametersIfHasValue("adminPassword", adminPassword, queryParameters);
             return await Get<DumpPeersReply>("dumpPeers", queryParameters);
         }
 
