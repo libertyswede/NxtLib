@@ -25,14 +25,8 @@ namespace NxtLib.Phasing
             {
                 {"transactionFullHash", transactionFullHashes.Select(hash => hash.ToString()).ToList()}
             };
-            if (!string.IsNullOrEmpty(revealedSecret))
-            {
-                queryParameters.Add("revealedSecret", new List<string> {revealedSecret});
-            }
-            if (revealedSecretIsText.HasValue)
-            {
-                queryParameters.Add("revealedSecretIsText", new List<string> {revealedSecretIsText.Value.ToString()});
-            }
+            AddToParametersIfHasValue("revealedSecret", revealedSecret, queryParameters);
+            AddToParametersIfHasValue("revealedSecretIsText", revealedSecretIsText, queryParameters);
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("approveTransaction", queryParameters);
         }
@@ -129,18 +123,9 @@ namespace NxtLib.Phasing
             {
                 {"transaction", transactionIds.Select(id => id.ToString()).ToList()}
             };
-            if (countVotes.HasValue)
-            {
-                queryParameters.Add("countVotes", new List<string> {countVotes.Value.ToString()});
-            }
-            if (requireBlock.HasValue)
-            {
-                queryParameters.Add("requireBlock", new List<string> {requireBlock.Value.ToString()});
-            }
-            if (requireLastBlock.HasValue)
-            {
-                queryParameters.Add("requireLastBlock", new List<string> {requireLastBlock.Value.ToString()});
-            }
+            AddToParametersIfHasValue("countVotes", countVotes, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<PhasingPollsReply>("getPhasingPolls", queryParameters);
         }
 

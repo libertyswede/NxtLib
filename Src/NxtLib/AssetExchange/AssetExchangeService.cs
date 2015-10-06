@@ -247,18 +247,9 @@ namespace NxtLib.AssetExchange
             {
                 {"assets", assetIds.Select(id => id.ToString()).ToList()}
             };
-            if (includeCounts.HasValue)
-            {
-                queryParameters.Add("includeCounts", new List<string> {includeCounts.Value.ToString()});
-            }
-            if (requireBlock.HasValue)
-            {
-                queryParameters.Add("requireBlock", new List<string> {requireBlock.Value.ToString()});
-            }
-            if (requireLastBlock.HasValue)
-            {
-                queryParameters.Add("requireLastBlock", new List<string> {requireLastBlock.Value.ToString()});
-            }
+            AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AssetsReply>("getAssets", queryParameters);
         }
 
@@ -270,26 +261,11 @@ namespace NxtLib.AssetExchange
             {
                 {"account", accountIds.Select(id => id.ToString()).ToList()}
             };
-            if (firstIndex.HasValue)
-            {
-                queryParameters.Add("firstIndex", new List<string> {firstIndex.Value.ToString()});
-            }
-            if (lastIndex.HasValue)
-            {
-                queryParameters.Add("lastIndex", new List<string> {lastIndex.Value.ToString()});
-            }
-            if (includeCounts.HasValue)
-            {
-                queryParameters.Add("includeCounts", new List<string> {includeCounts.Value.ToString()});
-            }
-            if (requireBlock.HasValue)
-            {
-                queryParameters.Add("requireBlock", new List<string> {requireBlock.Value.ToString()});
-            }
-            if (requireLastBlock.HasValue)
-            {
-                queryParameters.Add("requireLastBlock", new List<string> {requireLastBlock.Value.ToString()});
-            }
+            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
+            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
+            AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AssetsByIssuerReply>("getAssetsByIssuer", queryParameters);
         }
 
@@ -390,14 +366,8 @@ namespace NxtLib.AssetExchange
             {
                 {"assets", assetIds.Select(id => id.ToString()).ToList()}
             };
-            if (requireBlock.HasValue)
-            {
-                queryParameters.Add("requireBlock", new List<string> {requireBlock.Value.ToString()});
-            }
-            if (requireLastBlock.HasValue)
-            {
-                queryParameters.Add("requireLastBlock", new List<string> {requireLastBlock.Value.ToString()});
-            }
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<LastTradesReply>("getLastTrades", queryParameters);
         }
 

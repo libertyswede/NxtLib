@@ -255,5 +255,14 @@ namespace NxtLib
                 queryParameters.Add(keyName, new List<string> { value.Value.ToString() });
             }
         }
+
+        protected void AddToParametersIfHasValue(string keyName, string value,
+            Dictionary<string, List<string>> queryParameters)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                queryParameters.Add(keyName, new List<string> {value});
+            }
+        }
     }
 }
