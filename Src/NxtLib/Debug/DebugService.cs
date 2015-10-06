@@ -104,16 +104,13 @@ namespace NxtLib.Debug
 
         public async Task<SetLoggingReply> SetLogging(string logLevel, IEnumerable<string> communicationEvents)
         {
-            var communicationEventList = communicationEvents.ToList();
             var queryParameters = new Dictionary<string, List<string>>();
-            if (!string.IsNullOrEmpty(logLevel))
-            {
-                queryParameters.Add("logLevel", new List<string>{logLevel});
-            }
+            var communicationEventList = communicationEvents.ToList();
             if (communicationEventList.Any())
             {
                 queryParameters.Add("communicationEvent", communicationEventList);
             }
+            AddToParametersIfHasValue("logLevel", logLevel, queryParameters);
             return await Post<SetLoggingReply>("setLogging", queryParameters);
         }
 

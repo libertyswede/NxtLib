@@ -27,14 +27,8 @@ namespace NxtLib.ServerInfo
             {
                 queryParameters.Add("event", GetEventList(nxtEvent.Value));
             }
-            if (add.HasValue)
-            {
-                queryParameters.Add("add", new List<string>{add.ToString()});
-            }
-            if (remove.HasValue)
-            {
-                queryParameters.Add("remove", new List<string> {remove.ToString()});
-            }
+            AddToParametersIfHasValue("add", add, queryParameters);
+            AddToParametersIfHasValue("remove", remove, queryParameters);
             return await Post<EventRegisterReply>("eventRegister", queryParameters);
         }
 
