@@ -14,14 +14,16 @@ namespace NxtLib.Transactions
         {
         }
 
-        public TransactionService(IDateTimeConverter dateTimeConverter) 
+        public TransactionService(IDateTimeConverter dateTimeConverter)
             : base(dateTimeConverter)
         {
         }
 
-        public async Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameter parameter)
+        public async Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameter parameter,
+            string prunableAttachmentJson = null)
         {
             var queryParameters = CreateQueryParameters(parameter);
+            AddToParametersIfHasValue("prunableAttachmentJson", prunableAttachmentJson, queryParameters);
             return await Post<BroadcastTransactionReply>("broadcastTransaction", queryParameters);
         }
 
@@ -42,7 +44,7 @@ namespace NxtLib.Transactions
             bool? nonPhasedOnly = null, bool? includeExpiredPrunable = null, bool? includePhasingResult = null,
             bool? executedOnly = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> { { "account", accountId } };
+            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
             AddToParametersIfHasValue(timeStamp, queryParameters);
             if (transactionType.HasValue)
             {
@@ -63,7 +65,8 @@ namespace NxtLib.Transactions
             return await Get<TransactionListReply>("getBlockchainTransactions", queryParameters);
         }
 
-        public async Task<ExpectedTransactionsReply> GetExpectedTransactions(IEnumerable<string> accountIds = null)
+        public async Task<ExpectedTransactionsReply> GetExpectedTransactions(IEnumerable<string> accountIds = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             List<string> accountsList;
             var queryParameters = new Dictionary<string, List<string>>();
@@ -72,51 +75,81 @@ namespace NxtLib.Transactions
             {
                 queryParameters.Add("account", accountsList);
             }
-
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<ExpectedTransactionsReply>("getExpectedTransactions", queryParameters);
         }
 
-        public async Task<TransactionReply> GetTransaction(GetTransactionLocator locator)
+        public async Task<TransactionReply> GetTransaction(GetTransactionLocator locator,
+            bool? includePhasingResult = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            return await Get<TransactionReply>("getTransaction", locator.QueryParameters);
+            var queryParameters = locator.QueryParameters;
+            AddToParametersIfHasValue("includePhasingResult", includePhasingResult, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            return await Get<TransactionReply>("getTransaction", queryParameters);
         }
 
-        public async Task<TransactionBytesReply> GetTransactionBytes(ulong transactionId)
+        public async Task<TransactionBytesReply> GetTransactionBytes(ulong transactionId, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<TransactionBytesReply>("getTransactionBytes", queryParameters);
         }
 
-        public async Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(string accountId = null)
+        public async Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(
+            IEnumerable<string> accountIds = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("account", accountId, queryParameters);
+            var queryParameters = new Dictionary<string, List<string>>();
+            if (accountIds != null)
+            {
+                queryParameters.Add("account", accountIds.ToList());
+            }
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<UnconfirmedTransactionIdsResply>("getUnconfirmedTransactionIds", queryParameters);
         }
 
-        public async Task<UnconfirmedTransactionsReply> GetUnconfirmedTransactions(string accountId = null)
+        public async Task<UnconfirmedTransactionsReply> GetUnconfirmedTransactions(
+            IEnumerable<string> accountIds = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("account", accountId, queryParameters);
+            var queryParameters = new Dictionary<string, List<string>>();
+            if (accountIds != null)
+            {
+                queryParameters.Add("account", accountIds.ToList());
+            }
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<UnconfirmedTransactionsReply>("getUnconfirmedTransactions", queryParameters);
         }
 
-        public async Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter)
+        public async Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter,
+            string prunableAttachmentJson = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = CreateQueryParameters(parameter);
+            AddToParametersIfHasValue("prunableAttachmentJson", prunableAttachmentJson, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<ParseTransactionReply>("parseTransaction", queryParameters);
         }
 
         public async Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase,
-            bool? validate = null)
+            string prunableAttachmentJson = null, bool? validate = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = CreateQueryParameters(parameter, true);
+            AddToParametersIfHasValue("prunableAttachmentJson", prunableAttachmentJson, queryParameters);
             queryParameters.Add("secretPhrase", secretPhrase);
             AddToParametersIfHasValue("validate", validate, queryParameters);
+            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
+            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<SignTransactionReply>("signTransaction", queryParameters);
         }
 
-        private static Dictionary<string, string> CreateQueryParameters(TransactionParameter parameter, bool unsigned = false)
+        private static Dictionary<string, string> CreateQueryParameters(TransactionParameter parameter,
+            bool unsigned = false)
         {
             var queryParameters = new Dictionary<string, string>();
             if (parameter.TransactionBytes != null)
