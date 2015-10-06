@@ -12,7 +12,7 @@ namespace NxtLib.Utils
         {
         }
 
-        public UtilService(IDateTimeConverter dateTimeConverter) 
+        public UtilService(IDateTimeConverter dateTimeConverter)
             : base(dateTimeConverter)
         {
         }
