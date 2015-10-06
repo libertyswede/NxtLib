@@ -33,8 +33,7 @@ namespace NxtLib.MonetarySystem
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<GetAccountExchangeRequestsReply> GetAccountExchangeRequests(string accountId, ulong currencyId,
-            int? firstindex = null,
-            int? lastindex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+            int? firstindex = null, int? lastindex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<CurrenciesReply> GetAllCurrencies(int? firstindex = null, int? lastindex = null, bool? includeCounts = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
