@@ -41,12 +41,6 @@ namespace NxtLib.Accounts
         Task<BalanceReply> GetBalance(string accountId, bool? includeEffectiveBalance = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
-        Task<TransactionListReply> GetBlockchainTransactions(string accountId, DateTime? timeStamp = null,
-            TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
-            int? numberOfConfirmations = null, bool? withMessage = null, bool? phasedOnly = null,
-            bool? nonPhasedOnly = null, bool? includeExpiredPrunable = null, bool? includePhasingResult = null,
-            bool? executedOnly = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
-
         Task<GuaranteedBalanceReply> GetGuaranteedBalance(string accountId, int? numberOfConfirmations = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 

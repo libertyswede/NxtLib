@@ -130,33 +130,6 @@ namespace NxtLib.Accounts
             return await Get<BalanceReply>("getBalance", queryParameters);
         }
 
-        public async Task<TransactionListReply> GetBlockchainTransactions(string accountId, DateTime? timeStamp = null,
-            TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
-            int? numberOfConfirmations = null, bool? withMessage = null, bool? phasedOnly = null,
-            bool? nonPhasedOnly = null, bool? includeExpiredPrunable = null, bool? includePhasingResult = null,
-            bool? executedOnly = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
-        {
-            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
-            AddToParametersIfHasValue(timeStamp, queryParameters);
-            if (transactionType.HasValue)
-            {
-                queryParameters.Add("type", TransactionTypeMapper.GetMainTypeByte(transactionType.Value).ToString());
-                queryParameters.Add("subtype", TransactionTypeMapper.GetSubTypeByte(transactionType.Value).ToString());
-            }
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("numberOfConfirmations", numberOfConfirmations, queryParameters);
-            AddToParametersIfHasValue("withMessage", withMessage, queryParameters);
-            AddToParametersIfHasValue("phasedOnly", phasedOnly, queryParameters);
-            AddToParametersIfHasValue("nonPhasedOnly", nonPhasedOnly, queryParameters);
-            AddToParametersIfHasValue("includeExpiredPrunable", includeExpiredPrunable, queryParameters);
-            AddToParametersIfHasValue("includePhasingResult", includePhasingResult, queryParameters);
-            AddToParametersIfHasValue("executedOnly", executedOnly, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
-            return await Get<TransactionListReply>("getBlockchainTransactions", queryParameters);
-        }
-
         public async Task<GuaranteedBalanceReply> GetGuaranteedBalance(string accountId,
             int? numberOfConfirmations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
