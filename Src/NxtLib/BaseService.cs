@@ -228,5 +228,32 @@ namespace NxtLib
                 queryParameters.Add(keyName, convertedTimeStamp.ToString());
             }
         }
+
+        protected void AddToParametersIfHasValue(string keyName, int? value,
+            Dictionary<string, List<string>> queryParameters)
+        {
+            if (value.HasValue)
+            {
+                queryParameters.Add(keyName, new List<string> { value.Value.ToString() });
+            }
+        }
+
+        protected void AddToParametersIfHasValue(string keyName, ulong? value,
+            Dictionary<string, List<string>> queryParameters)
+        {
+            if (value.HasValue)
+            {
+                queryParameters.Add(keyName, new List<string> {value.Value.ToString()});
+            }
+        }
+
+        protected void AddToParametersIfHasValue(string keyName, bool? value,
+            Dictionary<string, List<string>> queryParameters)
+        {
+            if (value.HasValue)
+            {
+                queryParameters.Add(keyName, new List<string> { value.Value.ToString() });
+            }
+        }
     }
 }
