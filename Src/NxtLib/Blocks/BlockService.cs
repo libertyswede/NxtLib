@@ -18,10 +18,11 @@ namespace NxtLib.Blocks
         {
         }
 
-        public async Task<GetBlockReply<ulong>> GetBlock(BlockLocator query, ulong? requireBlock = null,
-            ulong? requireLastBlock = null)
+        public async Task<GetBlockReply<ulong>> GetBlock(BlockLocator query, bool? includeExecutedPhased = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = query.QueryParameters;
+            AddToParametersIfHasValue("includeExecutedPhased", includeExecutedPhased, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<GetBlockReply<ulong>>("getBlock", queryParameters);
@@ -62,12 +63,14 @@ namespace NxtLib.Blocks
         }
 
         public async Task<BlocksReply<ulong>> GetBlocks(int? firstindex = null, int? lastindex = null,
-            DateTime? timestamp = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+            DateTime? timestamp = null, bool? includeExecutedPhased = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             queryParameters.AddIfHasValue("firstIndex", firstindex);
             queryParameters.AddIfHasValue("lastIndex", lastindex);
             AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
+            AddToParametersIfHasValue("includeExecutedPhased", includeExecutedPhased, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<BlocksReply<ulong>>("getBlocks", queryParameters);
