@@ -25,14 +25,15 @@ namespace NxtLib.Transactions
             return await Post<BroadcastTransactionReply>("broadcastTransaction", queryParameters);
         }
 
-        public async Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
-            BinaryHexString signatureHash)
+        public async Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString signatureHash, 
+            BinaryHexString unsignedTransactionBytes = null, string unsignedTransactionJson = null)
         {
-            var queryParameters = new Dictionary<string, string>
+            var queryParameters = new Dictionary<string, string> {{"signatureHash", signatureHash.ToHexString()}};
+            if (unsignedTransactionBytes != null)
             {
-                {"unsignedTransactionBytes", unsignedTransactionBytes.ToHexString()},
-                {"signatureHash", signatureHash.ToHexString()}
-            };
+                queryParameters.Add("unsignedTransactionBytes", unsignedTransactionBytes.ToHexString());
+            }
+            AddToParametersIfHasValue("unsignedTransactionJson", unsignedTransactionJson, queryParameters);
             return await Get<CalculateFullHashReply>("calculateFullHash", queryParameters);
         }
 

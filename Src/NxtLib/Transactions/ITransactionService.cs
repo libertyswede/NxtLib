@@ -8,8 +8,8 @@ namespace NxtLib.Transactions
     {
         Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameter parameter);
 
-        Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
-            BinaryHexString signatureHash);
+        Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString signatureHash, 
+            BinaryHexString unsignedTransactionBytes = null, string unsignedTransactionJson = null);
 
         Task<TransactionListReply> GetBlockchainTransactions(string accountId, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
