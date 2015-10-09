@@ -17,10 +17,5 @@ namespace NxtLib.Transactions
         {
             TransactionJson = transactionJson;
         }
-
-        public TransactionParameter(JObject transactionJson)
-        {
-            TransactionJson = transactionJson.ToString();
-        }
     }
 }
