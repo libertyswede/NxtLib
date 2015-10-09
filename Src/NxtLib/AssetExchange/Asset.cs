@@ -15,6 +15,9 @@ namespace NxtLib.AssetExchange
         public ulong AssetId { get; set; }
         public int Decimals { get; set; }
         public string Description { get; set; }
+
+        [JsonConverter(typeof(StringToIntegralTypeConverter))]
+        public long InitialQuantityQnt { get; set; }
         public string Name { get; set; }
         public int NumberOfAccounts { get; set; }
         public int NumberOfTrades { get; set; }
