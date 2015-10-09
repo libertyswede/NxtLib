@@ -74,9 +74,7 @@ namespace NxtExchange
         public async Task<List<InboundTransaction>> CheckForTransactions(DateTime blockDateTime, int? numberOfConfirmations = null)
         {
             var recievedTransactions = new List<InboundTransaction>();
-            var accountTransactions = await _accountService.GetAccountTransactions(_accountId.ToString(),
-                blockDateTime, TransactionSubType.PaymentOrdinaryPayment, numberOfConfirmations: numberOfConfirmations);
-
+            var accountTransactions = await _transactionService.GetBlockchainTransactions(_accountId.ToString(), blockDateTime, TransactionSubType.PaymentOrdinaryPayment, numberOfConfirmations: numberOfConfirmations);
             foreach (var transaction in accountTransactions.Transactions.Where(t => t.Recipient == _accountId).OrderBy(t => t.BlockTimestamp).ThenBy(t => t.Timestamp))
             {
                 var inboundTransaction = new InboundTransaction(transaction)

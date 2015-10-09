@@ -27,7 +27,9 @@ namespace DividendTracker
             Block<Transaction> block = null;
 
             if (args.Length > 0 && args[0].Equals("-height", StringComparison.InvariantCultureIgnoreCase))
-                Int32.TryParse(args[1], out blockHeight);
+            {
+                int.TryParse(args[1], out blockHeight);
+            }
 
             Console.WriteLine("Start scanning blockchain at height: {0}", blockHeight);
             for (; blockHeight < currentHeight; blockHeight++)

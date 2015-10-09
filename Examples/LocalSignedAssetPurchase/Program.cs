@@ -31,7 +31,7 @@ namespace LocalSignedAssetPurchase
 
             // Step 4, Broadcast the signed bid order
             var transactionService = new TransactionService(NxtUri);
-            var broadcastResult = transactionService.BroadcastTransaction(new TransactionParameter(signedBidOrder)).Result;
+            var broadcastResult = transactionService.BroadcastTransaction(new TransactionParameter(signedBidOrder.ToString())).Result;
             Console.WriteLine("Transaction id: " + broadcastResult.TransactionId);
 
             Console.ReadLine();

@@ -35,7 +35,7 @@ namespace Dividends
                 ulong id;
                 if (args[0].Equals("-account"))
                 {
-                    if (UInt64.TryParse(args[1], out id))
+                    if (ulong.TryParse(args[1], out id))
                     {
                         return new ProgramOptions { Id = id, Mode = Mode.Account };
                     }
@@ -49,11 +49,11 @@ namespace Dividends
                         };
                     }
                 }
-                if (args[0].Equals("-transaction") && UInt64.TryParse(args[1], out id))
+                if (args[0].Equals("-transaction") && ulong.TryParse(args[1], out id))
                 {
                     return new ProgramOptions { Id = id, Mode = Mode.Transaction };
                 }
-                if (args[0].Equals("-asset") && UInt64.TryParse(args[1], out id))
+                if (args[0].Equals("-asset") && ulong.TryParse(args[1], out id))
                 {
                     return new ProgramOptions { Id = id, Mode = Mode.Asset };
                 }

@@ -85,7 +85,7 @@ namespace Dividends
             index = 0;
             while (index < _asset.NumberOfTransfers)
             {
-                var getTransfersResult = _assetService.GetAssetTransfers(AssetIdOrAccountId.ByAssetId(_asset.AssetId), index, index + 99, false).Result;
+                var getTransfersResult = _assetService.GetAssetTransfers(AssetIdOrAccountId.ByAssetId(_asset.AssetId), index, index + 99, includeAssetInfo: false).Result;
                 foreach (var transfer in getTransfersResult.Transfers.Where(t => t.Height <= height))
                 {
                     UpdateOwnership(owners, transfer.RecipientRs, transfer.SenderRs, transfer.QuantityQnt);

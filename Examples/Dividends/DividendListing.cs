@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NxtLib;
-using NxtLib.Accounts;
 using NxtLib.AssetExchange;
+using NxtLib.Transactions;
 
 namespace Dividends
 {
     public class DividendListing
     {
         private readonly IAssetExchangeService _assetService = new AssetExchangeService();
-        private readonly IAccountService _accountService = new AccountService();
-        private List<AssetTrade> _trades;
+        private readonly ITransactionService _transactionService = new TransactionService();
+        private List<AssetTradeInfo> _trades;
         private List<AssetTransfer> _transfers;
 
         public void List(ProgramOptions options)
@@ -52,7 +52,7 @@ namespace Dividends
             {
                 if (dividendTransactions.All(t => t.Sender != asset.AccountId))
                 {
-                    var transactionsReply = _accountService.GetAccountTransactions(asset.AccountRs, transactionType: TransactionSubType.ColoredCoinsDividendPayment).Result;
+                    var transactionsReply = _transactionService.GetBlockchainTransactions(asset.AccountRs, transactionType: TransactionSubType.ColoredCoinsDividendPayment).Result;
                     transactionsReply.Transactions
                         .Where(t => options.Mode != Mode.Account || OwnsAssetAtHeight(options.Id, t))
                         .ToList()

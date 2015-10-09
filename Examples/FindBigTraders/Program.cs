@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using NxtLib;
-using NxtLib.Accounts;
 using NxtLib.AssetExchange;
 using NxtLib.Local;
+using NxtLib.Transactions;
 
 namespace FindBigTraders
 {
@@ -66,12 +66,12 @@ namespace FindBigTraders
 
         private static void GetDividendPayments()
         {
-            var accountService = new AccountService();
+            var transactionService = new TransactionService();
             var dividendPayingAccounts = Assets.Select(a => a.AccountId).Distinct().ToList();
             foreach (var accountId in dividendPayingAccounts)
             {
-                var accountTransactionsReply = accountService.GetAccountTransactions(accountId.ToString(), null,
-                    TransactionSubType.ColoredCoinsDividendPayment).Result;
+                var accountTransactionsReply = transactionService.GetBlockchainTransactions(accountId.ToString(), 
+                    transactionType: TransactionSubType.ColoredCoinsDividendPayment).Result;
                 foreach (var transaction in accountTransactionsReply.Transactions)
                 {
                     var attachment = (ColoredCoinsDividendPaymentAttachment) transaction.Attachment;
@@ -126,7 +126,7 @@ namespace FindBigTraders
                 do
                 {
                     var transfersReply = AssetExchangeService.GetAssetTransfers(AssetIdOrAccountId.ByAssetId(asset.AssetId), index,
-                            index + increase - 1, false).Result;
+                            index + increase - 1, includeAssetInfo: false).Result;
                     transfers.AddRange(transfersReply.Transfers);
 
                     foreach (var assetTransfer in transfersReply.Transfers)
