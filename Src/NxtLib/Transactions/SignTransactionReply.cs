@@ -5,13 +5,18 @@ namespace NxtLib.Transactions
 {
     public class SignTransactionReply : BaseReply
     {
-        public string FullHash { get; set; }
-        public string SignatureHash { get; set; }
+        [JsonConverter(typeof(ByteToHexStringConverter))]
+        public BinaryHexString FullHash { get; set; }
+
+        [JsonConverter(typeof(ByteToHexStringConverter))]
+        public BinaryHexString SignatureHash { get; set; }
 
         [JsonProperty(PropertyName = "transactionJSON")]
         [JsonConverter(typeof(TransactionConverter))]
         public Transaction Transaction { get; set; }
-        public string TransactionBytes { get; set; }
+
+        [JsonConverter(typeof(ByteToHexStringConverter))]
+        public BinaryHexString TransactionBytes { get; set; }
 
         [JsonProperty(PropertyName = "transaction")]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
