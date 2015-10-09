@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-
-namespace NxtLib.Transactions
+﻿namespace NxtLib.Transactions
 {
     public class TransactionParameter
     {
