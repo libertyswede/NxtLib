@@ -89,7 +89,7 @@ namespace DividendPayout
             var index = 0;
             while (index < _asset.NumberOfTrades)
             {
-                var getTradesResult = AssetService.GetTrades(AssetIdOrAccountId.ByAssetId(_asset.AssetId), index, index + 100, includeAssetInfo: false).Result;
+                var getTradesResult = AssetService.GetTrades(AssetIdOrAccountId.ByAssetId(_asset.AssetId), index, index + 99, includeAssetInfo: false).Result;
                 foreach (var trade in getTradesResult.Trades.Where(t => t.Height <= height))
                 {
                     UpdateOwnership(owners, trade.BuyerRs, trade.SellerRs, trade.QuantityQnt);
@@ -99,7 +99,7 @@ namespace DividendPayout
             index = 0;
             while (index < _asset.NumberOfTransfers)
             {
-                var getTransfersResult = AssetService.GetAssetTransfers(AssetIdOrAccountId.ByAssetId(_asset.AssetId), index, index + 100, false).Result;
+                var getTransfersResult = AssetService.GetAssetTransfers(AssetIdOrAccountId.ByAssetId(_asset.AssetId), index, index + 99, includeAssetInfo: false).Result;
                 foreach (var transfer in getTransfersResult.Transfers.Where(t => t.Height <= height))
                 {
                     UpdateOwnership(owners, transfer.RecipientRs, transfer.SenderRs, transfer.QuantityQnt);
