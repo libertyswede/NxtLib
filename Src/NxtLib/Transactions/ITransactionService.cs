@@ -6,8 +6,7 @@ namespace NxtLib.Transactions
 {
     public interface ITransactionService
     {
-        Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameter parameter,
-            string prunableAttachmentJson = null);
+        Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameter parameter);
 
         Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString unsignedTransactionBytes,
             BinaryHexString signatureHash);
@@ -34,10 +33,9 @@ namespace NxtLib.Transactions
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter,
-            string prunableAttachmentJson = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase,
-            string prunableAttachmentJson = null, bool? validate = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null);
+            bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
     }
 }

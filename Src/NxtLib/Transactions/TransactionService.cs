@@ -19,11 +19,9 @@ namespace NxtLib.Transactions
         {
         }
 
-        public async Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameter parameter,
-            string prunableAttachmentJson = null)
+        public async Task<BroadcastTransactionReply> BroadcastTransaction(TransactionParameter parameter)
         {
             var queryParameters = CreateQueryParameters(parameter);
-            AddToParametersIfHasValue("prunableAttachmentJson", prunableAttachmentJson, queryParameters);
             return await Post<BroadcastTransactionReply>("broadcastTransaction", queryParameters);
         }
 
@@ -125,22 +123,17 @@ namespace NxtLib.Transactions
             return await Get<UnconfirmedTransactionsReply>("getUnconfirmedTransactions", queryParameters);
         }
 
-        public async Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter,
-            string prunableAttachmentJson = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = CreateQueryParameters(parameter);
-            AddToParametersIfHasValue("prunableAttachmentJson", prunableAttachmentJson, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<ParseTransactionReply>("parseTransaction", queryParameters);
         }
 
-        public async Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase,
-            string prunableAttachmentJson = null, bool? validate = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null)
+        public async Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase, bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = CreateQueryParameters(parameter, true);
-            AddToParametersIfHasValue("prunableAttachmentJson", prunableAttachmentJson, queryParameters);
             queryParameters.Add("secretPhrase", secretPhrase);
             AddToParametersIfHasValue("validate", validate, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
