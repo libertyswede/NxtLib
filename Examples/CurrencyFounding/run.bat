@@ -1,0 +1,1 @@
+bin\Debug\CurrencyFounding.exe > output.txt
