@@ -29,26 +29,25 @@ namespace ReservableCurrenciesDemo
             foreach (var currency in reservableCurrencies)
             {
                 var founders = await service.GetCurrencyFounders(currency.CurrencyId);
+                var goal = currency.ReserveSupply*currency.MinReservePerUnit.Nxt;
 
                 Console.WriteLine("----------------------------");
-                Console.WriteLine("Name: {0}", currency.Name);
-                Console.WriteLine("Founders: {0}", founders.Founders.Count);
+                Console.WriteLine($"Name: {currency.Name}");
+                Console.WriteLine($"Founders: {founders.Founders.Count}");
+                Console.WriteLine($"Reserve Goal: {goal:n} NXT");
                 if (founders.Founders.Count > 0)
                 {
-                    // Can't really get my head around how this really works, code below does not show correct values
                     var reserverdPerUnitNxt = founders.Founders.Sum(f => f.AmountPerUnit.Nxt);
-                    var reserveRatio = reserverdPerUnitNxt/currency.MinReservePerUnit.Nxt/(decimal)Math.Pow(10, currency.Decimals);
-                    var minimumReserveGoalNxt = currency.ReserveSupply*currency.MinReservePerUnit.Nxt;
-                    var reservedNxt = reserveRatio*minimumReserveGoalNxt;
+                    var reservedNxt = reserverdPerUnitNxt * currency.ReserveSupply;
 
                     total += reservedNxt;
-                    Console.WriteLine("Amount: {0} NXT", reservedNxt);
+                    Console.WriteLine($"Amount: {reservedNxt:n} NXT ({reservedNxt / goal:P})");
                 }
                 Console.WriteLine("");
             }
 
             Console.WriteLine("----------------------------");
-            Console.WriteLine("Total reserved: {0} NXT", total);
+            Console.WriteLine($"Total reserved: {total:n} NXT");
             Console.WriteLine("");
             Console.WriteLine("Press any key to quit");
             Console.ReadLine();
