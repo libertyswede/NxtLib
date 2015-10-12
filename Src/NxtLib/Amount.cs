@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace NxtLib
 {
     [DebuggerDisplay("Amount: Nxt = {Nxt}")]
-    public class Amount
+    public class Amount : IComparable<Amount>
     {
         private const long NqtMultiplier = 100000000;
         private const int MaximumNxt = 1000000000;
@@ -75,6 +75,11 @@ namespace NxtLib
             {
                 throw new ArgumentException("Amount must not have larger precision than " + (1m / NqtMultiplier), nameof(amountNxt));
             }
+        }
+        
+        public int CompareTo(Amount other)
+        {
+            return Nqt < other.Nqt ? -1 : (Nqt > other.Nqt ? 1 : 0);
         }
     }
 }
