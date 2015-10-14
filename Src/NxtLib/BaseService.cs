@@ -74,7 +74,7 @@ namespace NxtLib
             using (var response = await client.GetAsync(url))
             using (var content = response.Content)
             {
-                return await ReadAndDeserializeResponse<T>(content, url);
+                return await ReadAndDeserializeResponse<T>(content, url, null);
             }
         }
 
@@ -118,18 +118,19 @@ namespace NxtLib
                 using (var response = await client.PostAsync(url, formDataContent))
                 using (var content = response.Content)
                 {
-                    return await ReadAndDeserializeResponse<T>(content, url);
+                    return await ReadAndDeserializeResponse<T>(content, url, queryParamsDictionary);
                 }
             }
         }
 
         private static async Task<T> PostUrl<T>(string url, IEnumerable<KeyValuePair<string, string>> queryParameters) where T : IBaseReply
         {
+            var queryParametersList = queryParameters.ToList();
             using (var client = new HttpClient())
-            using (var response = await client.PostAsync(url, new FormUrlEncodedContent(queryParameters)))
+            using (var response = await client.PostAsync(url, new FormUrlEncodedContent(queryParametersList)))
             using (var content = response.Content)
             {
-                return await ReadAndDeserializeResponse<T>(content, url);
+                return await ReadAndDeserializeResponse<T>(content, url, queryParametersList);
             }
         }
 
@@ -148,13 +149,14 @@ namespace NxtLib
             return url;
         }
 
-        private static async Task<T> ReadAndDeserializeResponse<T>(HttpContent content, string url) where T : IBaseReply
+        private static async Task<T> ReadAndDeserializeResponse<T>(HttpContent content, string url, IEnumerable<KeyValuePair<string, string>> queryParameters) where T : IBaseReply
         {
             var json = await content.ReadAsStringAsync();
             CheckForErrorResponse(json, url);
             var response = JsonConvert.DeserializeObject<T>(json);
             response.RawJsonReply = json;
             response.RequestUri = url;
+            response.PostData = queryParameters;
             return response;
         }
 

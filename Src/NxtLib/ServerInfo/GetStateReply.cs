@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace NxtLib.ServerInfo
 {
     public class GetStateReply : BlockchainStatus, IBaseReply
@@ -37,6 +39,7 @@ namespace NxtLib.ServerInfo
         public int NumberOfUnlockedAccounts { get; set; }
         public int NumberOfVotes { get; set; }
         public int PeerPort { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> PostData { get; set; }
         public string RawJsonReply { get; set; }
         public int RequestProcessingTime { get; set; }
         public string RequestUri { get; set; }
