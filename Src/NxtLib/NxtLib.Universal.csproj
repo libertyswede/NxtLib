@@ -109,10 +109,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AccountCurrency.cs" />
     <Compile Include="Accounts\AccountAssetBalance.cs" />
     <Compile Include="Accounts\AccountInfo.cs" />
@@ -399,6 +395,9 @@
     <Compile Include="VotingSystem\PollVote.cs" />
     <Compile Include="VotingSystem\VotingModel.cs" />
     <Compile Include="VotingSystem\VotingSystemService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="project.json" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
