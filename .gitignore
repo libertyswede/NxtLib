@@ -160,6 +160,7 @@ node_modules/
 output.txt
 project.lock.json
 *.nuget.targets
+applicationhost.config
 
 # RIA/Silverlight projects
 Generated_Code/
