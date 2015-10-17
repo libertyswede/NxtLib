@@ -158,6 +158,8 @@ ClientBin/
 *.publishsettings
 node_modules/
 output.txt
+project.lock.json
+*.nuget.targets
 
 # RIA/Silverlight projects
 Generated_Code/
