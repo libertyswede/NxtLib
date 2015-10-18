@@ -1,94 +1,4 @@
-﻿
-#if WINDOWS_UWP
-
-using System.Linq;
-using System.Numerics;
-using Windows.Security.Cryptography;
-using Windows.Security.Cryptography.Core;
-using Windows.Storage.Streams;
-
-namespace NxtLib.Internal.LocalSign
-{
-    internal class Crypto
-    {
-        private readonly HashAlgorithmProvider _sha256Provider;
-
-        public Crypto()
-        {
-            _sha256Provider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
-        }
-
-        public byte[] Sign(byte[] message, string secretPhrase)
-        {
-            var p = new byte[32];
-            var s = new byte[32];
-
-            Curve25519.Keygen(p, s, ComputeHash(secretPhrase));
-
-            var m = ComputeHash(message);
-            var hasher = _sha256Provider.CreateHash();
-            hasher.Append(CryptographicBuffer.CreateFromByteArray(m));
-            hasher.Append(CryptographicBuffer.CreateFromByteArray(s));
-            var x = BufferToArray(hasher.GetValueAndReset());
-
-            var y = new byte[32];
-            Curve25519.Keygen(y, null, x);
-
-            hasher.Append(CryptographicBuffer.CreateFromByteArray(m));
-            hasher.Append(CryptographicBuffer.CreateFromByteArray(y));
-            var h = BufferToArray(hasher.GetValueAndReset());
-
-            var v = new byte[32];
-            Curve25519.Sign(v, h, x, s);
-
-            var signature = v.Concat(h).ToArray();
-            return signature;
-        }
-
-        public BinaryHexString GetPublicKey(string secretPhrase)
-        {
-            var publicKey = new byte[32];
-            var hashedSecretPhrase = ComputeHash(secretPhrase);
-            Curve25519.Keygen(publicKey, null, hashedSecretPhrase);
-            var binaryHexString = new BinaryHexString(publicKey);
-            return binaryHexString;
-        }
-
-        public ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
-        {
-            var publicKeyHash = ComputeHash(publicKey.ToBytes().ToArray());
-            var bigInteger = new BigInteger(publicKeyHash.Take(8).ToArray());
-            return (ulong)(long)bigInteger;
-        }
-
-        private byte[] ComputeHash(string value)
-        {
-            var byteValue = CryptographicBuffer.ConvertStringToBinary(value, BinaryStringEncoding.Utf8);
-            return ComputeHash(byteValue);
-        }
-
-        private byte[] ComputeHash(byte[] value)
-        {
-            return ComputeHash(CryptographicBuffer.CreateFromByteArray(value));
-        }
-
-        private byte[] ComputeHash(IBuffer value)
-        {
-            var binaryHashValue = _sha256Provider.HashData(value);
-            return BufferToArray(binaryHashValue);
-        }
-
-        private static byte[] BufferToArray(IBuffer binaryHashValue)
-        {
-            var dataReader = DataReader.FromBuffer(binaryHashValue);
-            var hash = new byte[binaryHashValue.Length];
-            dataReader.ReadBytes(hash);
-            return hash;
-        }
-    }
-}
-
-#else
+﻿#if DOTNET
 
 using System.Linq;
 using System.Numerics;
@@ -157,4 +67,76 @@ namespace NxtLib.Internal.LocalSign
         }
     }
 }
+
+#else
+
+using System.Linq;
+using System.Numerics;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace NxtLib.Internal.LocalSign
+{
+    internal class Crypto
+    {
+        private readonly SHA256 _sha256;
+
+        public Crypto()
+        {
+            _sha256 = SHA256.Create();
+        }
+
+        private byte[] ComputeHash(byte[] value)
+        {
+            return _sha256.ComputeHash(value);
+        }
+
+        public byte[] Sign(byte[] message, string secretPhrase)
+        {
+            var p = new byte[32];
+            var s = new byte[32];
+
+            var sha256 = SHA256.Create();
+            Curve25519.Keygen(p, s, sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase)));
+
+            var m = sha256.ComputeHash(message);
+            sha256.
+            sha256.TransformBlock(m, 0, m.Length, m, 0);
+            sha256.TransformFinalBlock(s, 0, s.Length);
+            var x = sha256.Hash;
+
+            var y = new byte[32];
+            Curve25519.Keygen(y, null, x);
+
+            sha256 = SHA256.Create();
+            sha256.TransformBlock(m, 0, m.Length, m, 0);
+            sha256.TransformFinalBlock(y, 0, y.Length);
+            var h = sha256.Hash;
+
+            var v = new byte[32];
+            Curve25519.Sign(v, h, x, s);
+
+            var signature = v.Concat(h).ToArray();
+            return signature;
+        }
+
+        public BinaryHexString GetPublicKey(string secretPhrase)
+        {
+            var publicKey = new byte[32];
+            var encodedSecretPhrase = Encoding.UTF8.GetBytes(secretPhrase);
+            var hashedSecretPhrase = ComputeHash(encodedSecretPhrase);
+            Curve25519.Keygen(publicKey, null, hashedSecretPhrase);
+            var binaryHexString = new BinaryHexString(publicKey);
+            return binaryHexString;
+        }
+
+        public ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
+        {
+            var publicKeyHash = ComputeHash(publicKey.ToBytes().ToArray());
+            var bigInteger = new BigInteger(publicKeyHash.Take(8).ToArray());
+            return (ulong)(long)bigInteger;
+        }
+    }
+}
+
 #endif

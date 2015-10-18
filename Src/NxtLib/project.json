@@ -1,23 +1,27 @@
 ﻿{
+  "version": "1.0.0-beta8",
+  "description": "NxtLib Class Library",
+  "authors": [ "Liberty Swede" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
   "dependencies": {
     "Newtonsoft.Json": "7.0.1"
   },
+
   "frameworks": {
-    "net45": {
-      "dependencies": {}
-    },
-    "uap10.0": {
+    "dotnet": {
       "dependencies": {
-        "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0"
+        "System.Collections": "4.0.11-beta-23409",
+        "System.Linq": "4.0.1-beta-23409",
+        "System.Threading": "4.0.11-beta-23409",
+        "System.Runtime": "4.0.20-beta-23019",
+        "Microsoft.CSharp": "4.0.0-beta-23019",
+        "System.Net.Http": "4.0.1-beta-23409",
+        "System.Runtime.Numerics": "4.0.1-beta-23409",
+        "System.Security.Cryptography.Algorithms": "4.0.0-beta-23409"
       }
     }
-  },
-  "runtimes": {
-    "win10-arm": {},
-    "win10-arm-aot": {},
-    "win10-x86": {},
-    "win10-x86-aot": {},
-    "win10-x64": {},
-    "win10-x64-aot": {}
   }
 }
