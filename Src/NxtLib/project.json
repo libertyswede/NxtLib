@@ -28,6 +28,38 @@
         "System.Net.Http": "4.0.0.0",
         "System.Numerics": "4.0.0.0"
       }
+    },
+    "netcore45": {
+      "frameworkAssemblies": {
+        "System": "",
+        "System.Core": "",
+        "System.Xml.Linq": "",
+        "Microsoft.CSharp": "",
+        "System.Xml": "",
+        "System.Collections": "",
+        "System.Runtime": "",
+        "System.Threading": "",
+        "System.Threading.Tasks": "",
+
+        "mscorlib": "",
+        "System.Diagnostics.Debug": "",
+        "System.Dynamic.Runtime": "",
+        "System.Globalization": "",
+        "System.IO": "",
+        "System.Linq": "",
+        "System.Linq.Expressions": "",
+        "System.ObjectModel": "",
+        "System.Reflection": "",
+        "System.Reflection.Extensions": "",
+        "System.Runtime.Extensions": "",
+        "System.Runtime.Serialization": "",
+        "System.Runtime.Serialization.Primitives": "",
+        "System.Text.Encoding": "",
+        "System.Text.Encoding.Extensions": "",
+        "System.Text.RegularExpressions": "",
+        "System.Xml.ReaderWriter": "",
+        "System.Xml.XDocument": ""
+      }
     }
   }
 }
