@@ -68,7 +68,7 @@ namespace NxtLib.Internal.LocalSign
     }
 }
 
-#else
+#elif NET45
 
 using System.Linq;
 using System.Numerics;
@@ -100,7 +100,6 @@ namespace NxtLib.Internal.LocalSign
             Curve25519.Keygen(p, s, sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase)));
 
             var m = sha256.ComputeHash(message);
-            sha256.
             sha256.TransformBlock(m, 0, m.Length, m, 0);
             sha256.TransformFinalBlock(s, 0, s.Length);
             var x = sha256.Hash;
