@@ -13,14 +13,20 @@
   "frameworks": {
     "dotnet": {
       "dependencies": {
-        "System.Collections": "4.0.11-beta-23409",
-        "System.Linq": "4.0.1-beta-23409",
-        "System.Threading": "4.0.11-beta-23409",
-        "System.Runtime": "4.0.20-beta-23019",
-        "Microsoft.CSharp": "4.0.0-beta-23019",
-        "System.Net.Http": "4.0.1-beta-23409",
-        "System.Runtime.Numerics": "4.0.1-beta-23409",
+        "System.Collections": "4.0.10",
+        "System.Linq": "4.0.0",
+        "System.Threading": "4.0.10",
+        "System.Runtime": "4.0.20",
+        "Microsoft.CSharp": "4.0.0",
+        "System.Net.Http": "4.0.0",
+        "System.Runtime.Numerics": "4.0.0",
         "System.Security.Cryptography.Algorithms": "4.0.0-beta-23409"
+      }
+    },
+    "net45": {
+      "frameworkAssemblies": {
+        "System.Net.Http": "4.0.0.0",
+        "System.Numerics": "4.0.0.0"
       }
     }
   }
