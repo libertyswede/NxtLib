@@ -1,4 +1,4 @@
-﻿#if DOTNET
+﻿#if NET45
 
 using System.Linq;
 using System.Numerics;
@@ -68,7 +68,7 @@ namespace NxtLib.Internal.LocalSign
     }
 }
 
-#elif NET45
+#elif DISABLED //should be DOTNET
 
 using System.Linq;
 using System.Numerics;
