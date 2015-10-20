@@ -1,1 +1,1 @@
-bin\Debug\AssetActivity.exe 12982485703607823902 daily 2015-10-01 > output.txt
+bin\Debug\AssetActivity.exe 12982485703607823902 daily > output.txt
