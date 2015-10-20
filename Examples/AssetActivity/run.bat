@@ -1,0 +1,1 @@
+bin\Debug\AssetActivity.exe 12982485703607823902 monthly > output.txt
