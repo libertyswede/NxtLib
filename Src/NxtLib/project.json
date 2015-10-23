@@ -1,10 +1,13 @@
 ﻿{
-  "version": "1.1.4",
+  "version": "1.1.4.0",
   "description": "NxtLib Class Library",
   "authors": [ "Liberty Swede" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+  "title": "NxtLib",
+  "copyright": "Copyright © 2015",
+  "summary": "NET Framework API for the NXT platform",
+  "tags": [ "nxt", "bitcoin", "cryptocurrency" ],
+  "projectUrl": "https://github.com/libertyswede/NxtLib",
+  "releaseNotes": "NxtLib is a typed wrapper for the Json API in the Nxt platform ( http://nxt.org/ ) It currently supports NXT version 1.6.1e.",
 
   "dependencies": {
     "Newtonsoft.Json": "7.0.1"
@@ -20,7 +23,7 @@
         "Microsoft.CSharp": "4.0.0",
         "System.Net.Http": "4.0.0",
         "System.Runtime.Numerics": "4.0.0",
-        "System.Security.Cryptography.Algorithms": "4.0.0-beta-*"
+        "System.Security.Cryptography.Algorithms": "4.0.0-beta-23409"
       }
     },
     "net45": {
