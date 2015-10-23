@@ -4,31 +4,20 @@ param(
 )
 
 #Step 1, Update files with new versions
-$Nuspec = "NxtLib.nuspec"
-$AssemblyInfo = "..\Src\NxtLib\Properties\AssemblyInfo.cs"
+$ProjectJson = "..\Src\NxtLib\project.json"
 $ReadMe = "..\README.md"
 
-(Get-Content $AssemblyInfo) -replace "\[assembly: AssemblyVersion\("".*""\)\]", "[assembly: AssemblyVersion(""$Version"")]" `
-    -replace "\[assembly: AssemblyFileVersion\("".*""\)\]", "[assembly: AssemblyFileVersion(""$Version"")]" | `
-    Out-File $AssemblyInfo -Encoding utf8
-
-(Get-Content $Nuspec) -replace "<version>.*</version>", "<version>$Version</version>" `
-    -replace "NXT version [^ ]+", "NXT version $NxtVersion" | `
-    Out-File $Nuspec -Encoding ascii
+(Get-Content $ProjectJson) -replace """version"": "".*""", """version"": ""$Version""" `
+    -replace "It currently supports NXT version .*""", "It currently supports NXT version $NxtVersion""" | `
+    Out-File $ProjectJson -Encoding utf8
 
 (Get-Content $ReadMe) -replace "NXT version [^ ]+", "NXT version $NxtVersion" | `
     Out-File $ReadMe -Encoding ascii
 
-#Step 2, build all solutions
-$Devenv = "devenv"
+#Step 2, build & pack all solutions
+&dnu pack "..\Src\NxtLib" --configuration Release --out "..\Src\artifacts\bin\NxtLib"
 
-&$Devenv "..\Src\NxtLib\NxtLib.csproj" /rebuild Release
-
-#Step 3, Create nuget package
-$Nuget = "NuGet.exe"
-&$Nuget pack "NxtLib.nuspec"
-
-#Step 4, Commit new version
+#Step 3, Commit new version
 $Commit = Read-Host 'Commit locally?'
 if ($Commit -eq 'y' -or $Commit -eq 'yes')
 {
@@ -37,15 +26,15 @@ if ($Commit -eq 'y' -or $Commit -eq 'yes')
     &$Git tag v$Version
 }
 
-#Step 5, Push nuget package to nuget server
+#Step 4, Push nuget package to nuget server
 $Push = Read-Host 'Push to nuget?'
 if ($Push -ne 'y' -and $Push -ne 'yes')
 {
     Exit
 }
-&$Nuget push NxtLib.$Version.nupkg
+&$Nuget push "..\Src\artifacts\bin\NxtLib\Release\NxtLib.$Version.nupkg"
 
-#Step 6, Update Example programs with new nuget version
+#Step 5, Update Example programs with new nuget version
 $Upgrade = Read-Host 'Upgrade Example projects?'
 if ($Upgrade -ne 'y' -and $Upgrade -ne 'yes')
 {
