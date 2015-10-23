@@ -14,7 +14,10 @@ $ReadMe = "..\README.md"
 (Get-Content $ReadMe) -replace "NXT version [^ ]+", "NXT version $NxtVersion" | `
     Out-File $ReadMe -Encoding ascii
 
-#Step 2, build & pack all solutions
+#Step 2, restore packages
+&dnu restore "..\Src\NxtLib"
+
+#Step 3, build and package
 &dnu pack "..\Src\NxtLib" --configuration Release --out "..\Src\artifacts\bin\NxtLib"
 
 #Step 3, Commit new version
