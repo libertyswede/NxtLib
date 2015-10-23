@@ -6,9 +6,9 @@ namespace NxtLib
 {
     public abstract class CreateTransactionParameters
     {
-        public bool Broadcast { get; private set; }
-        public short Deadline { get; private set; }
-        public Amount Fee { get; private set; }
+        public bool Broadcast { get; }
+        public short Deadline { get; }
+        public Amount Fee { get; }
         public string RecipientPublicKey { get; set; }
         public BinaryHexString ReferencedTransactionFullHash { get; set; }
         public UnencryptedMessage Message { get; set; }
@@ -93,8 +93,8 @@ namespace NxtLib
 
         public class UnencryptedMessage
         {
-            public bool MessageIsText { get; private set; }
-            public string Message { get; private set; }
+            public bool MessageIsText { get; }
+            public string Message { get; }
 
             public UnencryptedMessage(string message)
             {
@@ -112,7 +112,7 @@ namespace NxtLib
         public abstract class AbstractEncryptedMessage
         {
             public bool MessageIsText { get; internal set; }
-            public string Message { get; private set; }
+            public string Message { get; }
 
             internal AbstractEncryptedMessage(string message, bool messageIsText)
             {
@@ -123,7 +123,7 @@ namespace NxtLib
 
         public sealed class AlreadyEncryptedMessage : AbstractEncryptedMessage
         {
-            public IEnumerable<byte> Nonce { get; private set; }
+            public IEnumerable<byte> Nonce { get; }
 
             public AlreadyEncryptedMessage(IEnumerable<byte> messageBytes, IEnumerable<byte> encryptedMessageNonce, bool messageIsText)
                 : this(ByteToHexStringConverter.ToHexString(messageBytes), encryptedMessageNonce, messageIsText)
