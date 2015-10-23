@@ -2,7 +2,7 @@
 
 NxtLib is a .NET library that wraps around Json API in the Nxt platform (http://nxt.org/).
 NxtLib simplifies the development process when integrating to Nxt as it translates all json data into typed .NET code.<br />
-Target framework version: .NET 4.5
+Target framework version: .NETFramework4.5 and .NETPlatform5.0
 
 It currently supports NXT version 1.6.1e 
 
