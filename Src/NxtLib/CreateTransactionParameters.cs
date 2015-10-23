@@ -33,10 +33,7 @@ namespace NxtLib
             AddUnencryptedMessage(queryParameters);
             AddEncryptedMessage(queryParameters);
             AddToSelfMessage(queryParameters);
-            if (Phasing != null)
-            {
-                Phasing.AppendToQueryParameters(queryParameters);
-            }
+            Phasing?.AppendToQueryParameters(queryParameters);
         }
 
         internal virtual void AppendToQueryParameters(Dictionary<string, List<string>> queryParameters)

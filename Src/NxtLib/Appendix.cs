@@ -228,7 +228,7 @@ namespace NxtLib
 
         internal static TransactionPhasing ParseJson(JObject jObject)
         {
-            if (jObject == null || jObject.SelectToken(PhasingFinishHeightKey) == null)
+            if (jObject?.SelectToken(PhasingFinishHeightKey) == null)
             {
                 return null;
             }
