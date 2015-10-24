@@ -35,6 +35,7 @@ if ($Push -ne 'y' -and $Push -ne 'yes')
 {
     Exit
 }
+$Nuget = "nuget"
 &$Nuget push "..\Src\artifacts\bin\NxtLib\Release\NxtLib.$Version.nupkg"
 
 #Step 5, Update Example programs with new nuget version
