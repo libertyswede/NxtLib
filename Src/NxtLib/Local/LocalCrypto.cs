@@ -1,6 +1,4 @@
-﻿#if NET45
-
-using System.Linq;
+﻿using System.Linq;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
@@ -74,5 +72,3 @@ namespace NxtLib.Local
         }
     }
 }
-
-#endif

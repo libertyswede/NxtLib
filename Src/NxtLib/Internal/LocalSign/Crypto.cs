@@ -68,7 +68,7 @@ namespace NxtLib.Internal.LocalSign
     }
 }
 
-#elif DISABLED //should be DOTNET
+#elif DOTNET
 
 using System.Linq;
 using System.Numerics;
@@ -96,27 +96,29 @@ namespace NxtLib.Internal.LocalSign
             var p = new byte[32];
             var s = new byte[32];
 
-            var sha256 = SHA256.Create();
-            Curve25519.Keygen(p, s, sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase)));
+            using (var incrementalHash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))
+            using (var sha256 = SHA256.Create())
+            {
+                Curve25519.Keygen(p, s, sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase)));
 
-            var m = sha256.ComputeHash(message);
-            sha256.TransformBlock(m, 0, m.Length, m, 0);
-            sha256.TransformFinalBlock(s, 0, s.Length);
-            var x = sha256.Hash;
+                var m = sha256.ComputeHash(message);
+                incrementalHash.AppendData(m);
+                incrementalHash.AppendData(s);
+                var x = incrementalHash.GetHashAndReset();
 
-            var y = new byte[32];
-            Curve25519.Keygen(y, null, x);
+                var y = new byte[32];
+                Curve25519.Keygen(y, null, x);
 
-            sha256 = SHA256.Create();
-            sha256.TransformBlock(m, 0, m.Length, m, 0);
-            sha256.TransformFinalBlock(y, 0, y.Length);
-            var h = sha256.Hash;
+                incrementalHash.AppendData(m);
+                incrementalHash.AppendData(y);
+                var h = incrementalHash.GetHashAndReset();
 
-            var v = new byte[32];
-            Curve25519.Sign(v, h, x, s);
+                var v = new byte[32];
+                Curve25519.Sign(v, h, x, s);
 
-            var signature = v.Concat(h).ToArray();
-            return signature;
+                var signature = v.Concat(h).ToArray();
+                return signature;
+            }
         }
 
         public BinaryHexString GetPublicKey(string secretPhrase)
