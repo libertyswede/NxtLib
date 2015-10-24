@@ -1,6 +1,4 @@
-﻿#if NET45
-
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
@@ -20,6 +18,8 @@ namespace NxtLib.Internal.LocalSign
         {
             return _sha256.ComputeHash(value);
         }
+
+#if NET45
 
         public byte[] Sign(byte[] message, string secretPhrase)
         {
@@ -49,47 +49,7 @@ namespace NxtLib.Internal.LocalSign
             return signature;
         }
 
-        public BinaryHexString GetPublicKey(string secretPhrase)
-        {
-            var publicKey = new byte[32];
-            var encodedSecretPhrase = Encoding.UTF8.GetBytes(secretPhrase);
-            var hashedSecretPhrase = ComputeHash(encodedSecretPhrase);
-            Curve25519.Keygen(publicKey, null, hashedSecretPhrase);
-            var binaryHexString = new BinaryHexString(publicKey);
-            return binaryHexString;
-        }
-
-        public ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
-        {
-            var publicKeyHash = ComputeHash(publicKey.ToBytes().ToArray());
-            var bigInteger = new BigInteger(publicKeyHash.Take(8).ToArray());
-            return (ulong)(long)bigInteger;
-        }
-    }
-}
-
 #elif DOTNET
-
-using System.Linq;
-using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace NxtLib.Internal.LocalSign
-{
-    internal class Crypto
-    {
-        private readonly SHA256 _sha256;
-
-        public Crypto()
-        {
-            _sha256 = SHA256.Create();
-        }
-
-        private byte[] ComputeHash(byte[] value)
-        {
-            return _sha256.ComputeHash(value);
-        }
 
         public byte[] Sign(byte[] message, string secretPhrase)
         {
@@ -121,6 +81,8 @@ namespace NxtLib.Internal.LocalSign
             }
         }
 
+#endif
+
         public BinaryHexString GetPublicKey(string secretPhrase)
         {
             var publicKey = new byte[32];
@@ -139,5 +101,3 @@ namespace NxtLib.Internal.LocalSign
         }
     }
 }
-
-#endif
