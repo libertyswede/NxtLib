@@ -9,12 +9,7 @@ namespace NxtLib.Blocks
     public class BlockService : BaseService, IBlockService
     {
         public BlockService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public BlockService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

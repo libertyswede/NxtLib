@@ -9,12 +9,7 @@ namespace NxtLib.TaggedData
     public class TaggedDataService : BaseService, ITaggedDataService
     {
         public TaggedDataService(string baseUrl = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseUrl)
-        {
-        }
-
-        public TaggedDataService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseUrl)
         {
         }
 

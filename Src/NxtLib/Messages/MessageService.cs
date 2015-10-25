@@ -9,12 +9,7 @@ namespace NxtLib.Messages
     public class MessageService : BaseService, IMessageService
     {
         public MessageService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public MessageService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

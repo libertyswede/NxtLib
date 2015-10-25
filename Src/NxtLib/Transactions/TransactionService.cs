@@ -10,12 +10,7 @@ namespace NxtLib.Transactions
     public class TransactionService : BaseService, ITransactionService
     {
         public TransactionService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public TransactionService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

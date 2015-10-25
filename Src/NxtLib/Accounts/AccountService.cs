@@ -9,12 +9,7 @@ namespace NxtLib.Accounts
     public class AccountService : BaseService, IAccountService
     {
         public AccountService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public AccountService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

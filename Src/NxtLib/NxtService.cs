@@ -13,13 +13,12 @@ namespace NxtLib
 
     public class NxtService : BaseService, INxtService
     {
-        public NxtService(IDateTimeConverter dateTimeConverter, string baseUrl = Constants.DefaultNxtUrl)
-            : base(dateTimeConverter, baseUrl)
+        public NxtService(string baseUrl = Constants.DefaultNxtUrl)
+            : base(baseUrl)
         {
         }
 
-        public NxtService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+        public NxtService()
         {
         }
 

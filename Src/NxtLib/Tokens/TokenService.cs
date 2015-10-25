@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NxtLib.Internal;
 using NxtLib.Local;
 
 namespace NxtLib.Tokens
@@ -9,12 +8,7 @@ namespace NxtLib.Tokens
     public class TokenService : BaseService, ITokenService
     {
         public TokenService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public TokenService(IDateTimeConverter dateTimeConverter) 
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

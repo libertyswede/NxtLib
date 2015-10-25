@@ -9,12 +9,7 @@ namespace NxtLib.Aliases
     public class AliasService : BaseService, IAliasService
     {
         public AliasService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public AliasService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

@@ -11,12 +11,10 @@ namespace NxtLib
 {
     public abstract class BaseService
     {
-        private readonly IDateTimeConverter _dateTimeConverter;
         private readonly string _baseUrl;
 
-        protected BaseService(IDateTimeConverter dateTimeConverter, string baseUrl = Constants.DefaultNxtUrl)
+        protected BaseService(string baseUrl = Constants.DefaultNxtUrl)
         {
-            _dateTimeConverter = dateTimeConverter;
             _baseUrl = baseUrl;
         }
 

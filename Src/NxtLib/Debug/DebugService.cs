@@ -10,12 +10,7 @@ namespace NxtLib.Debug
     public class DebugService : BaseService, IDebugService
     {
         public DebugService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public DebugService(IDateTimeConverter dateTimeConverter) 
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

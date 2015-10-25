@@ -9,12 +9,7 @@ namespace NxtLib.VotingSystem
     public class VotingSystemService : BaseService, IVotingSystemService
     {
         public VotingSystemService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public VotingSystemService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

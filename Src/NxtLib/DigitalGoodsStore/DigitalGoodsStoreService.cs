@@ -9,12 +9,7 @@ namespace NxtLib.DigitalGoodsStore
     public class DigitalGoodsStoreService : BaseService, IDigitalGoodsStoreService
     {
         public DigitalGoodsStoreService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public DigitalGoodsStoreService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

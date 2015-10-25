@@ -9,11 +9,7 @@ namespace NxtLib.Phasing
     public class PhasingService : BaseService, IPhasingService
     {
         public PhasingService(string baseUrl = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseUrl)
-        {
-        }
-
-        public PhasingService(IDateTimeConverter dateTimeConverter) : base(dateTimeConverter)
+            : base(baseUrl)
         {
         }
 

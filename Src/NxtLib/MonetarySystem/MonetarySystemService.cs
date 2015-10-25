@@ -10,12 +10,7 @@ namespace NxtLib.MonetarySystem
     public class MonetarySystemService : BaseService, IMonetarySystemService
     {
         public MonetarySystemService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public MonetarySystemService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

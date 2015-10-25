@@ -8,12 +8,7 @@ namespace NxtLib.Networking
     public class NetworkingService : BaseService, INetworkingService
     {
         public NetworkingService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public NetworkingService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

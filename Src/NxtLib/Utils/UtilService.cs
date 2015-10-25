@@ -8,12 +8,7 @@ namespace NxtLib.Utils
     public class UtilService : BaseService, IUtilService
     {
         public UtilService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public UtilService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

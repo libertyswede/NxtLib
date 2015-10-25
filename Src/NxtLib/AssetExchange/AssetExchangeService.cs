@@ -10,12 +10,7 @@ namespace NxtLib.AssetExchange
     public class AssetExchangeService : BaseService, IAssetExchangeService
     {
         public AssetExchangeService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public AssetExchangeService(IDateTimeConverter dateTimeConverter)
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 

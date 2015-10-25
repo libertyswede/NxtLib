@@ -11,12 +11,7 @@ namespace NxtLib.ServerInfo
     public class ServerInfoService : BaseService, IServerInfoService
     {
         public ServerInfoService(string baseAddress = Constants.DefaultNxtUrl)
-            : base(new DateTimeConverter(), baseAddress)
-        {
-        }
-
-        public ServerInfoService(IDateTimeConverter dateTimeConverter) 
-            : base(dateTimeConverter)
+            : base(baseAddress)
         {
         }
 
