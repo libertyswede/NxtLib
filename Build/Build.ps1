@@ -38,6 +38,9 @@ if ($Push -ne 'y' -and $Push -ne 'yes')
 $Nuget = "nuget"
 &$Nuget push "..\Src\artifacts\bin\NxtLib\Release\NxtLib.$Version.nupkg"
 
+#Script does not work beyond here, fix! Until then, exit.
+Exit
+
 #Step 5, Update Example programs with new nuget version
 $Upgrade = Read-Host 'Upgrade Example projects?'
 if ($Upgrade -ne 'y' -and $Upgrade -ne 'yes')
