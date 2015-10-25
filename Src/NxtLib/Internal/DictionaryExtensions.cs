@@ -61,6 +61,14 @@ namespace NxtLib.Internal
             }
         }
 
+        internal static void AddIfHasValue(this Dictionary<string, string> me, string key, byte? value)
+        {
+            if (value.HasValue)
+            {
+                me.Add(key, value.Value.ToString());
+            }
+        }
+
         internal static void AddIfHasValue(this Dictionary<string, string> me, string key, long? value)
         {
             if (value.HasValue)
