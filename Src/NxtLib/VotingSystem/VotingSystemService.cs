@@ -117,7 +117,7 @@ namespace NxtLib.VotingSystem
         public async Task<GetPollsReply> SearchPolls(string query, int? firstIndex = null, int? lastIndex = null,
             bool? includeFinished = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"query", query}};
+            var queryParameters = new Dictionary<string, string> {{nameof(query), query}};
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
             queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
             queryParameters.AddIfHasValue(nameof(includeFinished), includeFinished);
@@ -133,21 +133,21 @@ namespace NxtLib.VotingSystem
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"name", name},
-                {"description", description},
-                {"finishHeight", finishHeight.ToString()},
-                {"votingModel", ((int) votingModel).ToString()},
-                {"minNumberOfOptions", minNumberOfOptions.ToString()},
-                {"maxNumberOfOptions", maxNumberOfOptions.ToString()},
-                {"minRangeValue", minRangeValue.ToString()},
-                {"maxRangeValue", maxRangeValue.ToString()}
+                {nameof(name), name},
+                {nameof(description), description},
+                {nameof(finishHeight), finishHeight.ToString()},
+                {nameof(votingModel), ((int) votingModel).ToString()},
+                {nameof(minNumberOfOptions), minNumberOfOptions.ToString()},
+                {nameof(maxNumberOfOptions), maxNumberOfOptions.ToString()},
+                {nameof(minRangeValue), minRangeValue.ToString()},
+                {nameof(maxRangeValue), maxRangeValue.ToString()}
             };
             for (var i = 0; i < options.Count; i++)
             {
                 queryParameters.Add("option" + i.ToString().PadLeft(2, '0'), options[i]);
             }
             queryParameters.AddIfHasValue(nameof(minBalance), minBalance);
-            queryParameters.AddIfHasValue("minBalanceModel", minBalanceModel);
+            queryParameters.AddIfHasValue(nameof(minBalanceModel), minBalanceModel);
             queryParameters.AddIfHasValue("holding", holdingId);
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("createPoll", queryParameters);

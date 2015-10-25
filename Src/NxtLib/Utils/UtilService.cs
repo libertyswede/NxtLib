@@ -19,13 +19,13 @@ namespace NxtLib.Utils
 
         public async Task<DecodeQrCodeReply> DecodeQrCode(string qrCodeBase64)
         {
-            var queryParameters = new Dictionary<string, string> {{"qrCodeBase64", qrCodeBase64}};
+            var queryParameters = new Dictionary<string, string> {{nameof(qrCodeBase64), qrCodeBase64}};
             return await Post<DecodeQrCodeReply>("decodeQRCode", queryParameters);
         }
 
         public async Task<EncodeQrCodeReply> EncodeQrCode(string qrCodeData, int? width = null, int? height = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"qrCodeData", qrCodeData}};
+            var queryParameters = new Dictionary<string, string> {{nameof(qrCodeData), qrCodeData}};
             queryParameters.AddIfHasValue(nameof(width), width);
             queryParameters.AddIfHasValue(nameof(height), height);
             return await Post<EncodeQrCodeReply>("encodeQRCode", queryParameters);
@@ -33,7 +33,7 @@ namespace NxtLib.Utils
 
         public async Task<FullHashToIdReply> FullHashToId(string fullHash)
         {
-            var queryParameters = new Dictionary<string, string> {{"fullHash", fullHash}};
+            var queryParameters = new Dictionary<string, string> {{nameof(fullHash), fullHash}};
             return await Get<FullHashToIdReply>("fullHashToId", queryParameters);
         }
 
@@ -41,8 +41,8 @@ namespace NxtLib.Utils
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"hashAlgorithm", ((int) hashAlgorithm).ToString()},
-                {"secret", secret.ToString()}
+                {nameof(hashAlgorithm), ((int) hashAlgorithm).ToString()},
+                {nameof(secret), secret.ToString()}
             };
             queryParameters.AddIfHasValue(nameof(secretIsText), secretIsText);
             return await Get<HashReply>("hash", queryParameters);
@@ -50,14 +50,14 @@ namespace NxtLib.Utils
 
         public async Task<HexConvertReply> HexConvert(string @string)
         {
-            var queryParameters = new Dictionary<string, string> {{"string", @string}};
+            var queryParameters = new Dictionary<string, string> {{nameof(@string), @string}};
             return await Get<HexConvertReply>("hexConvert", queryParameters);
         }
 
         // This can be done in .NET by just "var signedId = (long)unsignedId", but let's support the full NXT API
         public async Task<LongConvertReply> LongConvert(ulong id)
         {
-            var queryParameters = new Dictionary<string, string> {{"id", id.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(id), id.ToString()}};
             return await Get<LongConvertReply>("longConvert", queryParameters);
         }
 

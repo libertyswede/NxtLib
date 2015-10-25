@@ -27,8 +27,8 @@ namespace NxtLib.Forging
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"period", period.ToString()},
-                {"recipient", recipient.AccountId.ToString()}
+                {nameof(period), period.ToString()},
+                {nameof(recipient), recipient.AccountId.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("leaseBalance", queryParameters);
@@ -36,7 +36,7 @@ namespace NxtLib.Forging
 
         public async Task<StartForgingReply> StartForging(string secretPhrase)
         {
-            var queryParameters = new Dictionary<string, string> {{"secretPhrase", secretPhrase}};
+            var queryParameters = new Dictionary<string, string> {{nameof(secretPhrase), secretPhrase}};
             return await Post<StartForgingReply>("startForging", queryParameters);
         }
 

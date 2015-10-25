@@ -22,7 +22,7 @@ namespace NxtLib.Accounts
             bool? includeAssets = null, bool? includeCurrencies = null, bool? includeEffectiveBalance = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(nameof(includeLessors), includeLessors);
             queryParameters.AddIfHasValue(nameof(includeAssets), includeAssets);
             queryParameters.AddIfHasValue(nameof(includeCurrencies), includeCurrencies);
@@ -35,7 +35,7 @@ namespace NxtLib.Accounts
         public async Task<AccountBlockCountReply> GetAccountBlockCount(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<AccountBlockCountReply>("getAccountBlockCount", queryParameters);
@@ -80,7 +80,7 @@ namespace NxtLib.Accounts
             ulong? holding = null, bool? includeTransactions = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
             queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
             queryParameters.AddIfHasValue(nameof(eventType), eventType);
@@ -96,7 +96,7 @@ namespace NxtLib.Accounts
         public async Task<GetAccountLedgerEntryReply> GetAccountLedgerEntry(int ledgerId,
             bool? includeTransaction = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"ledgerId", ledgerId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(ledgerId), ledgerId.ToString()}};
             queryParameters.AddIfHasValue(nameof(includeTransaction), includeTransaction);
             return await Get<GetAccountLedgerEntryReply>("getAccountLedgerEntry", queryParameters);
         }
@@ -104,7 +104,7 @@ namespace NxtLib.Accounts
         public async Task<AccountLessorsReply> GetAccountLessors(Account account, int? height = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(nameof(height), height);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -114,7 +114,7 @@ namespace NxtLib.Accounts
         public async Task<AccountPublicKeyReply> GetAccountPublicKey(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<AccountPublicKeyReply>("getAccountPublicKey", queryParameters);
@@ -123,7 +123,7 @@ namespace NxtLib.Accounts
         public async Task<BalanceReply> GetBalance(Account account, bool? includeEffectiveBalance = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(nameof(includeEffectiveBalance), includeEffectiveBalance);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -133,7 +133,7 @@ namespace NxtLib.Accounts
         public async Task<GuaranteedBalanceReply> GetGuaranteedBalance(Account account,
             int? numberOfConfirmations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(nameof(numberOfConfirmations), numberOfConfirmations);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -143,7 +143,7 @@ namespace NxtLib.Accounts
         public Task<SearchAccountsReply> SearchAccounts(string query, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"query", query}};
+            var queryParameters = new Dictionary<string, string> {{nameof(query), query}};
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
             queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
@@ -156,7 +156,7 @@ namespace NxtLib.Accounts
         {
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
-            queryParameters.Add("recipient", recipient.AccountId.ToString());
+            queryParameters.Add(nameof(recipient), recipient.AccountId.ToString());
             queryParameters.Add("amountNQT", amount.Nqt.ToString());
             return await Post<TransactionCreatedReply>("sendMoney", queryParameters);
         }
@@ -166,8 +166,8 @@ namespace NxtLib.Accounts
         {
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
-            queryParameters.Add("name", name);
-            queryParameters.Add("description", description);
+            queryParameters.Add(nameof(name), name);
+            queryParameters.Add(nameof(description), description);
             return await Post<TransactionCreatedReply>("setAccountInfo", queryParameters);
         }
 
@@ -177,8 +177,8 @@ namespace NxtLib.Accounts
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"account", account.AccountId.ToString()},
-                {"includeTransactions", includeTransactions.ToString()}
+                {nameof(account), account.AccountId.ToString()},
+                {nameof(includeTransactions), includeTransactions.ToString()}
             };
             queryParameters.AddIfHasValue(timeStamp);
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);

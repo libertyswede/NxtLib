@@ -58,7 +58,7 @@ namespace NxtLib.Debug
 
         public async Task<LogReply> GetLog(int count)
         {
-            var queryParameters = new Dictionary<string, string> {{"count", count.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(count), count.ToString()}};
             return await Get<LogReply>("logReply", queryParameters);
         }
 

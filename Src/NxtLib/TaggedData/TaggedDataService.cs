@@ -72,7 +72,7 @@ namespace NxtLib.TaggedData
             int? firstIndex = null, int? lastIndex = null, bool? includeData = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"channel", channel}};
+            var queryParameters = new Dictionary<string, string> {{nameof(channel), channel}};
             AddToParametersIfHasValue(firstIndex, lastIndex, includeData, queryParameters);
             queryParameters.AddIfHasValue(nameof(includeData), includeData);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
@@ -102,7 +102,7 @@ namespace NxtLib.TaggedData
         public async Task<DataTagsReply> GetDataTagsLike(string tagPrefix, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"tagPrefix", tagPrefix}};
+            var queryParameters = new Dictionary<string, string> {{nameof(tagPrefix), tagPrefix}};
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
             queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
@@ -179,7 +179,7 @@ namespace NxtLib.TaggedData
         private static Dictionary<string, string> GetQueryParametersForTaggedData(string name, string data, string file,
             string description, string tags, string channel, string type, bool? isText, string filename)
         {
-            var queryParameters = new Dictionary<string, string> {{"name", name}};
+            var queryParameters = new Dictionary<string, string> {{nameof(name), name}};
             queryParameters.AddIfHasValue(nameof(data), data);
             queryParameters.AddIfHasValue(nameof(file), file);
             queryParameters.AddIfHasValue(nameof(description), description);

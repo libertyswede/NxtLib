@@ -19,13 +19,13 @@ namespace NxtLib.Networking
 
         public async Task<PeerReply> AddPeer(string peer)
         {
-            var queryParameters = new Dictionary<string, string> {{"peer", peer}};
+            var queryParameters = new Dictionary<string, string> {{nameof(peer), peer}};
             return await Get<PeerReply>("addPeer", queryParameters);
         }
 
         public async Task<DoneReply> BlacklistPeer(string peer)
         {
-            var queryParameters = new Dictionary<string, string> {{"peer", peer}};
+            var queryParameters = new Dictionary<string, string> {{nameof(peer), peer}};
             return await Get<DoneReply>("blacklistPeer", queryParameters);
         }
 
@@ -48,7 +48,7 @@ namespace NxtLib.Networking
 
         public async Task<PeerReply> GetPeer(string peer)
         {
-            var queryParameters = new Dictionary<string, string> {{"peer", peer}};
+            var queryParameters = new Dictionary<string, string> {{nameof(peer), peer}};
             return await Get<PeerReply>("getPeer", queryParameters);
         }
 

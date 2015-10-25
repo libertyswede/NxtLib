@@ -28,10 +28,10 @@ namespace NxtLib.Transactions
         public async Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString signatureHash, 
             BinaryHexString unsignedTransactionBytes = null, string unsignedTransactionJson = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"signatureHash", signatureHash.ToHexString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(signatureHash), signatureHash.ToHexString()}};
             if (unsignedTransactionBytes != null)
             {
-                queryParameters.Add("unsignedTransactionBytes", unsignedTransactionBytes.ToHexString());
+                queryParameters.Add(nameof(unsignedTransactionBytes), unsignedTransactionBytes.ToHexString());
             }
             queryParameters.AddIfHasValue(nameof(unsignedTransactionJson), unsignedTransactionJson);
             return await Get<CalculateFullHashReply>("calculateFullHash", queryParameters);
@@ -137,7 +137,7 @@ namespace NxtLib.Transactions
             string secretPhrase, bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = CreateQueryParameters(parameter, true);
-            queryParameters.Add("secretPhrase", secretPhrase);
+            queryParameters.Add(nameof(secretPhrase), secretPhrase);
             queryParameters.AddIfHasValue(nameof(validate), validate);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);

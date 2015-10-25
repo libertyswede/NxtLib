@@ -4,7 +4,7 @@ namespace NxtLib.ServerInfo
 {
     public interface IServerInfoService
     {
-        Task<EventRegisterReply> EventRegister(NxtEvent? nxtEvent = null, bool? add = null, bool? remove = null);
+        Task<EventRegisterReply> EventRegister(NxtEvent? @event = null, bool? add = null, bool? remove = null);
 
         Task<EventWaitReply> EventWait(long timeout);
 

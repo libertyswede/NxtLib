@@ -47,7 +47,7 @@ namespace NxtLib.Aliases
         public async Task<AliasCountReply> GetAliasCount(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<AliasCountReply>("getAliasCount", queryParameters);
@@ -56,7 +56,7 @@ namespace NxtLib.Aliases
         public async Task<AliasesReply> GetAliases(Account account, DateTime? timeStamp = null, int? firstIndex = null,
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(timeStamp);
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
             queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
@@ -68,7 +68,7 @@ namespace NxtLib.Aliases
         public async Task<AliasesReply> GetAliasesLike(string prefix, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"prefix", prefix}};
+            var queryParameters = new Dictionary<string, string> {{nameof(prefix), prefix}};
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
             queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
@@ -82,14 +82,14 @@ namespace NxtLib.Aliases
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);
             queryParameters.Add("priceNQT", price.Nqt.ToString());
-            queryParameters.AddIfHasValue("recipient", recipient);
+            queryParameters.AddIfHasValue(nameof(recipient), recipient);
             return await Post<TransactionCreatedReply>("sellAlias", queryParameters);
         }
 
         public async Task<TransactionCreatedReply> SetAlias(string aliasName, string aliasUri,
             CreateTransactionParameters parameters)
         {
-            var queryParameters = new Dictionary<string, string> {{"aliasName", aliasName}, {"aliasURI", aliasUri}};
+            var queryParameters = new Dictionary<string, string> {{nameof(aliasName), aliasName}, {"aliasURI", aliasUri}};
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("setAlias", queryParameters);
         }
