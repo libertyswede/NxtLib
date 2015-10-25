@@ -16,6 +16,6 @@ namespace NxtLib.Utils
 
         Task<LongConvertReply> LongConvert(ulong id);
 
-        Task<RsConvertReply> RsConvert(string accountId);
+        Task<RsConvertReply> RsConvert(string account);
     }
 }

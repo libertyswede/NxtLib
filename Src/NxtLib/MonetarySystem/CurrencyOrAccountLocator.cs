@@ -4,7 +4,7 @@ namespace NxtLib.MonetarySystem
 {
     public class CurrencyOrAccountLocator : LocatorBase
     {
-        public readonly string AccountId;
+        public readonly Account Account;
         public readonly ulong? CurrencyId;
 
         private CurrencyOrAccountLocator(ulong currencyId)
@@ -13,16 +13,16 @@ namespace NxtLib.MonetarySystem
             CurrencyId = currencyId;
         }
 
-        private CurrencyOrAccountLocator(string accountId)
-            : base("account", accountId)
+        private CurrencyOrAccountLocator(Account account)
+            : base("account", account.AccountId.ToString())
         {
-            AccountId = accountId;
+            Account = account;
         }
 
-        private CurrencyOrAccountLocator(ulong currencyId, string accountId, Dictionary<string, string> parameters)
+        private CurrencyOrAccountLocator(ulong currencyId, Account account, Dictionary<string, string> parameters)
             : base(parameters)
         {
-            AccountId = accountId;
+            Account = account;
             CurrencyId = currencyId;
         }
 
@@ -31,19 +31,19 @@ namespace NxtLib.MonetarySystem
             return new CurrencyOrAccountLocator(currencyId);
         }
 
-        public static CurrencyOrAccountLocator ByAccountId(string accountId)
+        public static CurrencyOrAccountLocator ByAccountId(Account account)
         {
-            return new CurrencyOrAccountLocator(accountId);
+            return new CurrencyOrAccountLocator(account);
         }
 
-        public static CurrencyOrAccountLocator ByCurrencyAndAccount(ulong currencyId, string accountId)
+        public static CurrencyOrAccountLocator ByCurrencyAndAccount(ulong currencyId, Account account)
         {
             var dictionary = new Dictionary<string, string>
             {
                 {"currency", currencyId.ToString()},
-                {"account", accountId}
+                {"account", account.AccountId.ToString()}
             };
-            return new CurrencyOrAccountLocator(currencyId, accountId, dictionary);
+            return new CurrencyOrAccountLocator(currencyId, account.AccountId.ToString(), dictionary);
         }
     }
 }

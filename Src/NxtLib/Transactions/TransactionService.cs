@@ -37,13 +37,13 @@ namespace NxtLib.Transactions
             return await Get<CalculateFullHashReply>("calculateFullHash", queryParameters);
         }
 
-        public async Task<TransactionListReply> GetBlockchainTransactions(string accountId, DateTime? timeStamp = null,
+        public async Task<TransactionListReply> GetBlockchainTransactions(Account account, DateTime? timeStamp = null,
             TransactionSubType? transactionType = null, int? firstIndex = null, int? lastIndex = null,
             int? numberOfConfirmations = null, bool? withMessage = null, bool? phasedOnly = null,
             bool? nonPhasedOnly = null, bool? includeExpiredPrunable = null, bool? includePhasingResult = null,
             bool? executedOnly = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
+            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
             AddToParametersIfHasValue(timeStamp, queryParameters);
             if (transactionType.HasValue)
             {
@@ -64,15 +64,15 @@ namespace NxtLib.Transactions
             return await Get<TransactionListReply>("getBlockchainTransactions", queryParameters);
         }
 
-        public async Task<ExpectedTransactionsReply> GetExpectedTransactions(IEnumerable<string> accountIds = null,
+        public async Task<ExpectedTransactionsReply> GetExpectedTransactions(IEnumerable<Account> accounts = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            List<string> accountsList;
+            List<Account> accountsList;
             var queryParameters = new Dictionary<string, List<string>>();
 
-            if (accountIds != null && (accountsList = accountIds.ToList()).Any())
+            if (accounts != null && (accountsList = accounts.ToList()).Any())
             {
-                queryParameters.Add("account", accountsList);
+                queryParameters.Add("account", accountsList.Select(a => a.AccountId.ToString()).ToList());
             }
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
@@ -99,12 +99,12 @@ namespace NxtLib.Transactions
         }
 
         public async Task<UnconfirmedTransactionIdsResply> GetUnconfirmedTransactionIds(
-            IEnumerable<string> accountIds = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+            IEnumerable<Account> accounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, List<string>>();
-            if (accountIds != null)
+            if (accounts != null)
             {
-                queryParameters.Add("account", accountIds.ToList());
+                queryParameters.Add("account", accounts.Select(a => a.AccountId.ToString()).ToList());
             }
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
@@ -112,19 +112,20 @@ namespace NxtLib.Transactions
         }
 
         public async Task<UnconfirmedTransactionsReply> GetUnconfirmedTransactions(
-            IEnumerable<string> accountIds = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+            IEnumerable<Account> accounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, List<string>>();
-            if (accountIds != null)
+            if (accounts != null)
             {
-                queryParameters.Add("account", accountIds.ToList());
+                queryParameters.Add("account", accounts.Select(a => a.AccountId.ToString()).ToList());
             }
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<UnconfirmedTransactionsReply>("getUnconfirmedTransactions", queryParameters);
         }
 
-        public async Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter, 
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = CreateQueryParameters(parameter);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
@@ -132,7 +133,8 @@ namespace NxtLib.Transactions
             return await Get<ParseTransactionReply>("parseTransaction", queryParameters);
         }
 
-        public async Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase, bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, 
+            string secretPhrase, bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = CreateQueryParameters(parameter, true);
             queryParameters.Add("secretPhrase", secretPhrase);

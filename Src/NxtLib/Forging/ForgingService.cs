@@ -22,12 +22,13 @@ namespace NxtLib.Forging
             return await Post<GetForgingReply>("getForging", queryParameters);
         }
 
-        public async Task<TransactionCreatedReply> LeaseBalance(int period, string recipient, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> LeaseBalance(int period, Account recipient,
+            CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {"period", period.ToString()},
-                {"recipient", recipient}
+                {"recipient", recipient.AccountId.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("leaseBalance", queryParameters);

@@ -18,12 +18,9 @@ namespace NxtLib.VotingSystem
             ulong? holdingId = null, long? minBalance = null, MinBalanceModel? minBalanceModel = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<GetPollsReply> GetPolls(string accountId = null, int? firstIndex = null, int? lastIndex = null,
-            DateTime? timestamp = null, bool? includeFinished = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null);
+        Task<GetPollsReply> GetPolls(Account account = null, int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null, bool? includeFinished = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<GetPollVoteReply> GetPollVote(ulong pollId, string accountId, bool? includeWeights = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<GetPollVoteReply> GetPollVote(ulong pollId, Account account, bool? includeWeights = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<GetPollVotesReply> GetPollVotes(ulong pollId, int? firstIndex = null, int? lastIndex = null,
             bool? includeWeights = null, ulong? requireBlock = null, ulong? requireLastBlock = null);

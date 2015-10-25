@@ -19,12 +19,12 @@ namespace NxtLib.MonetarySystem
         {
         }
 
-        public async Task<CanDeleteCurrencyReply> CanDeleteCurrency(string accountId, ulong currencyId,
+        public async Task<CanDeleteCurrencyReply> CanDeleteCurrency(Account account, ulong currencyId,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"account", accountId},
+                {"account", account.AccountId.ToString()},
                 {"currency", currencyId.ToString()}
             };
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
@@ -90,10 +90,10 @@ namespace NxtLib.MonetarySystem
             return await Post<TransactionCreatedReply>("deleteCurrency", queryParameters);
         }
 
-        public async Task<GetAccountCurrenciesReply> GetAccountCurrencies(string accountId, ulong? currencyId = null,
+        public async Task<GetAccountCurrenciesReply> GetAccountCurrencies(Account account, ulong? currencyId = null,
             int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
+            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
             AddToParametersIfHasValue("currency", currencyId, queryParameters);
             AddToParametersIfHasValue("height", height, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
@@ -103,22 +103,22 @@ namespace NxtLib.MonetarySystem
             return await Get<GetAccountCurrenciesReply>("getAccountCurrencies", queryParameters);
         }
 
-        public async Task<GetAccountCurrencyCountReply> GetAccountCurrencyCount(string accountId, int? height = null,
+        public async Task<GetAccountCurrencyCountReply> GetAccountCurrencyCount(Account account, int? height = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
+            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
             AddToParametersIfHasValue("height", height, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<GetAccountCurrencyCountReply>("getAccountCurrencyCount", queryParameters);
         }
 
-        public async Task<GetAccountExchangeRequestsReply> GetAccountExchangeRequests(string accountId, ulong currencyId,
+        public async Task<GetAccountExchangeRequestsReply> GetAccountExchangeRequests(Account account, ulong currencyId,
             int? firstindex = null, int? lastindex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"account", accountId},
+                {"account", account.AccountId.ToString()},
                 {"currency", currencyId.ToString()}
             };
             AddToParametersIfHasValue("firstIndex", firstindex, queryParameters);
@@ -179,13 +179,13 @@ namespace NxtLib.MonetarySystem
             return await Get<CurrenciesReply>("getCurrencies", queryParameters);
         }
 
-        public async Task<CurrenciesReply> GetCurrenciesByIssuer(IEnumerable<string> accountIds, int? firstIndex = null,
+        public async Task<CurrenciesReply> GetCurrenciesByIssuer(IEnumerable<Account> accounts, int? firstIndex = null,
             int? lastIndex = null, bool? includeCounts = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, List<string>>
             {
-                {"account", accountIds.ToList()}
+                {"account", accounts.Select(a => a.AccountId.ToString()).ToList()}
             };
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
@@ -227,11 +227,11 @@ namespace NxtLib.MonetarySystem
             return await Get<CurrencyAccountsReply>("getCurrencyAccounts", queryParameters);
         }
 
-        public async Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId, string accountId = null,
+        public async Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId, Account account = null,
             int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"currency", currencyId.ToString()}};
-            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("account", account, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
@@ -301,12 +301,12 @@ namespace NxtLib.MonetarySystem
             return await Get<ExchangesReply>("getExchangesByOffer", queryParameters);
         }
 
-        public async Task<GetExpectedOffersReply> GetExpectedBuyOffers(ulong? currencyId = null, string accountId = null,
+        public async Task<GetExpectedOffersReply> GetExpectedBuyOffers(ulong? currencyId = null, Account account = null,
             bool? sortByRate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("currency", currencyId, queryParameters);
-            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("account", account, queryParameters);
             AddToParametersIfHasValue("sortByRate", sortByRate, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
@@ -314,22 +314,22 @@ namespace NxtLib.MonetarySystem
         }
 
         public async Task<ExpectedCurrencyTransfersReply> GetExpectedCurrencyTransfers(ulong? currencyId = null,
-            string accountId = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+            Account account = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("currency", currencyId, queryParameters);
-            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("account", account, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<ExpectedCurrencyTransfersReply>("getExpectedCurrencyTransfers", queryParameters);
         }
 
-        public async Task<GetExpectedExchangeRequestsReply> GetExpectedExchangeRequests(string accountId = null,
+        public async Task<GetExpectedExchangeRequestsReply> GetExpectedExchangeRequests(Account account = null,
             ulong? currencyId = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("account", account, queryParameters);
             AddToParametersIfHasValue("currency", currencyId, queryParameters);
             AddToParametersIfHasValue("includeCurrencyInfo", includeCurrencyInfo, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
@@ -350,24 +350,24 @@ namespace NxtLib.MonetarySystem
         }
 
         public async Task<GetExpectedOffersReply> GetExpectedSellOffers(ulong? currencyId = null,
-            string accountId = null, bool? sortByRate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+            Account account = null, bool? sortByRate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("currency", currencyId, queryParameters);
-            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("account", account, queryParameters);
             AddToParametersIfHasValue("sortByRate", sortByRate, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<GetExpectedOffersReply>("getExpectedSellOffers", queryParameters);
         }
 
-        public async Task<GetMintingTargetReply> GetMintingTarget(ulong currencyId, string accountId, long units,
+        public async Task<GetMintingTargetReply> GetMintingTarget(ulong currencyId, Account account, long units,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {"currency", currencyId.ToString()},
-                {"account", accountId},
+                {"account", account.AccountId.ToString()},
                 {"units", units.ToString()}
             };
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
@@ -426,12 +426,12 @@ namespace NxtLib.MonetarySystem
             return await Get<CurrenciesReply>("searchCurrencies", queryParameters);
         }
 
-        public async Task<TransactionCreatedReply> TransferCurrency(string recipientId, ulong currencyId, long units,
+        public async Task<TransactionCreatedReply> TransferCurrency(Account recipient, ulong currencyId, long units,
             CreateTransactionParameters parameters)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"recipient", recipientId},
+                {"recipient", recipient.AccountId.ToString()},
                 {"currency", currencyId.ToString()},
                 {"units", units.ToString()}
             };

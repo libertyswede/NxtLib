@@ -11,14 +11,12 @@ namespace NxtLib.TaggedData
             string name, string data, string file = null, string description = null, string tags = null,
             string channel = null, string type = null, bool? isText = null, string filename = null);
 
-        Task<TaggedDataListReply> GetAccountTaggedData(string account, int? firstIndex = null, int? lastIndex = null,
-            bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<TaggedDataListReply> GetAccountTaggedData(Account account, int? firstIndex = null, int? lastIndex = null, bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<AllTaggedDataReply> GetAllTaggedData(int? firstIndex = null, int? lastIndex = null,
             bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<TaggedDataListReply> GetChannelTaggedData(string channel, string account = null, int? firstIndex = null,
-            int? lastIndex = null, bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<TaggedDataListReply> GetChannelTaggedData(string channel, Account account = null, int? firstIndex = null, int? lastIndex = null, bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<DataTagCountReply> GetDataTagCount(ulong? requireBlock = null, ulong? requireLastBlock = null);
 
@@ -34,9 +32,7 @@ namespace NxtLib.TaggedData
         Task<TaggedDataExtendTransactionsReply> GetTaggedDataExtendTransactions(ulong transactionId,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<TaggedDataListReply> SearchTaggedData(string query = null, string tag = null, string account = null,
-            string channel = null, int? firstIndex = null, int? lastIndex = null, bool? includeData = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<TaggedDataListReply> SearchTaggedData(string query = null, string tag = null, Account account = null, string channel = null, int? firstIndex = null, int? lastIndex = null, bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<TransactionCreatedReply> UploadTaggedData(string name, string data, CreateTransactionParameters parameters,
             string file = null, string description = null, string tags = null, string channel = null, string type = null,

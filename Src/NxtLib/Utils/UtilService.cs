@@ -54,16 +54,16 @@ namespace NxtLib.Utils
             return await Get<HexConvertReply>("hexConvert", queryParameters);
         }
 
-        // This can be done in .NET by just "var signedId = (long)id", but let's support the full NXT API
+        // This can be done in .NET by just "var signedId = (long)unsignedId", but let's support the full NXT API
         public async Task<LongConvertReply> LongConvert(ulong id)
         {
             var queryParameters = new Dictionary<string, string> {{"id", id.ToString()}};
             return await Get<LongConvertReply>("longConvert", queryParameters);
         }
 
-        public async Task<RsConvertReply> RsConvert(string accountId)
+        public async Task<RsConvertReply> RsConvert(string account)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
+            var queryParameters = new Dictionary<string, string> {{"account", account}};
             return await Get<RsConvertReply>("rsConvert", queryParameters);
         }
     }

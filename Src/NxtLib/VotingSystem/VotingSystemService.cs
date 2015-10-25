@@ -79,12 +79,12 @@ namespace NxtLib.VotingSystem
             return await Get<GetPollResultReply>("getPollResult", queryParameters);
         }
 
-        public async Task<GetPollsReply> GetPolls(string accountId = null, int? firstIndex = null, int? lastIndex = null,
+        public async Task<GetPollsReply> GetPolls(Account account = null, int? firstIndex = null, int? lastIndex = null,
             DateTime? timestamp = null, bool? includeFinished = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("account", accountId, queryParameters);
+            AddToParametersIfHasValue("account", account, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
             AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
@@ -94,10 +94,10 @@ namespace NxtLib.VotingSystem
             return await Get<GetPollsReply>("getPolls", queryParameters);
         }
 
-        public async Task<GetPollVoteReply> GetPollVote(ulong pollId, string accountId, bool? includeWeights = null,
+        public async Task<GetPollVoteReply> GetPollVote(ulong pollId, Account account, bool? includeWeights = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}, {"account", accountId}};
+            var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}, {"account", account.AccountId.ToString()}};
             AddToParametersIfHasValue("includeWeights", includeWeights, queryParameters);
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);

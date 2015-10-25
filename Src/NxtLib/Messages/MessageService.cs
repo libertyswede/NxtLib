@@ -18,31 +18,31 @@ namespace NxtLib.Messages
         {
         }
 
-        public async Task<DecryptedReply> DecryptFrom(string accountId, BinaryHexString data,
+        public async Task<DecryptedReply> DecryptFrom(Account account, BinaryHexString data,
             bool decryptedMessageIsText, BinaryHexString nonce,
             bool uncompressDecryptedMessage, string secretPhrase)
         {
-            return await DecryptFrom(accountId, data.ToHexString(), decryptedMessageIsText, nonce.ToHexString(),
+            return await DecryptFrom(account, data.ToHexString(), decryptedMessageIsText, nonce.ToHexString(),
                 uncompressDecryptedMessage, secretPhrase);
         }
 
-        public async Task<DecryptedReply> DecryptFrom(string accountId, EncryptedMessage encryptedMessage,
+        public async Task<DecryptedReply> DecryptFrom(Account account, EncryptedMessage encryptedMessage,
             string secretPhrase)
         {
-            return await DecryptFrom(accountId, encryptedMessage.Data.ToHexString(), encryptedMessage.IsText,
+            return await DecryptFrom(account, encryptedMessage.Data.ToHexString(), encryptedMessage.IsText,
                 encryptedMessage.Nonce.ToHexString(), encryptedMessage.IsCompressed, secretPhrase);
         }
 
-        public async Task<EncryptedDataReply> EncryptTo(string recipientAccountId, string messageToEncrypt,
+        public async Task<EncryptedDataReply> EncryptTo(Account recipient, string messageToEncrypt,
             bool compressMessageToEncrypt, string secretPhrase)
         {
-            return await EncryptTo(recipientAccountId, messageToEncrypt, true, compressMessageToEncrypt, secretPhrase);
+            return await EncryptTo(recipient, messageToEncrypt, true, compressMessageToEncrypt, secretPhrase);
         }
 
-        public async Task<EncryptedDataReply> EncryptTo(string recipientAccountId, IEnumerable<byte> messageToEncrypt,
+        public async Task<EncryptedDataReply> EncryptTo(Account recipient, IEnumerable<byte> messageToEncrypt,
             bool compressMessageToEncrypt, string secretPhrase)
         {
-            return await EncryptTo(recipientAccountId, ByteToHexStringConverter.ToHexString(messageToEncrypt), false,
+            return await EncryptTo(recipient, ByteToHexStringConverter.ToHexString(messageToEncrypt), false,
                 compressMessageToEncrypt, secretPhrase);
         }
 
@@ -68,12 +68,12 @@ namespace NxtLib.Messages
             return await Get<PrunableMessageReply>("getPrunableMessage", queryParameters);
         }
 
-        public async Task<PrunableMessagesReply> GetPrunableMessages(string accountId, string otherAccountId = null,
+        public async Task<PrunableMessagesReply> GetPrunableMessages(Account account, Account otherAccount = null,
             string secretPhrase = null, int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
-            AddToParametersIfHasValue("otherAccount", otherAccountId, queryParameters);
+            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
+            AddToParametersIfHasValue("otherAccount", otherAccount, queryParameters);
             AddToParametersIfHasValue("secretPhrase", secretPhrase, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
@@ -94,7 +94,7 @@ namespace NxtLib.Messages
         }
 
         public async Task<TransactionCreatedReply> SendMessage(CreateTransactionParameters parameters,
-            string recipient = null)
+            Account recipient = null)
         {
             var queryParameters = new Dictionary<string, string>();
             AddToParametersIfHasValue("recipient", recipient, queryParameters);
@@ -111,7 +111,7 @@ namespace NxtLib.Messages
         public async Task<VerifyPrunableMessageReply> VerifyPrunableMessage(ulong transactionId,
             IEnumerable<byte> message, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            return await VerifyPrunableMessage(transactionId, ByteToHexStringConverter.ToHexString(message), 
+            return await VerifyPrunableMessage(transactionId, ByteToHexStringConverter.ToHexString(message),
                 false, requireBlock, requireLastBlock);
         }
 
@@ -133,13 +133,13 @@ namespace NxtLib.Messages
             return await Get<VerifyPrunableEncryptedMessageReply>("verifyPrunableMessage", queryParameters);
         }
 
-        private async Task<DecryptedReply> DecryptFrom(string accountId, string data, bool decryptedMessageIsText,
+        private async Task<DecryptedReply> DecryptFrom(Account account, string data, bool decryptedMessageIsText,
             string nonce,
             bool uncompressDecryptedMessage, string secretPhrase)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"account", accountId},
+                {"account", account.AccountId.ToString()},
                 {"data", data},
                 {"nonce", nonce},
                 {"secretPhrase", secretPhrase},
@@ -149,13 +149,12 @@ namespace NxtLib.Messages
             return await Get<DecryptedReply>("decryptFrom", queryParameters);
         }
 
-        private async Task<EncryptedDataReply> EncryptTo(string recipientAccountId, string messageToEncrypt,
-            bool messageToEncryptIsText,
-            bool compressMessageToEncrypt, string secretPhrase)
+        private async Task<EncryptedDataReply> EncryptTo(Account recipient, string messageToEncrypt,
+            bool messageToEncryptIsText, bool compressMessageToEncrypt, string secretPhrase)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"recipient", recipientAccountId},
+                {"recipient", recipient.AccountId.ToString()},
                 {"messageToEncrypt", messageToEncrypt},
                 {"secretPhrase", secretPhrase},
                 {"compressMessageToEncrypt", compressMessageToEncrypt.ToString()},

@@ -48,10 +48,10 @@ namespace NxtLib.TaggedData
             return await Post<TransactionCreatedReply>("extendTaggedData", queryParameters);
         }
 
-        public async Task<TaggedDataListReply> GetAccountTaggedData(string account, int? firstIndex = null,
+        public async Task<TaggedDataListReply> GetAccountTaggedData(Account account, int? firstIndex = null,
             int? lastIndex = null, bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account}};
+            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             AddToParametersIfHasValue(firstIndex, lastIndex, includeData, queryParameters);
@@ -68,7 +68,7 @@ namespace NxtLib.TaggedData
             return await Get<AllTaggedDataReply>("getAllTaggedData", queryParameters);
         }
 
-        public async Task<TaggedDataListReply> GetChannelTaggedData(string channel, string account = null,
+        public async Task<TaggedDataListReply> GetChannelTaggedData(string channel, Account account = null,
             int? firstIndex = null, int? lastIndex = null, bool? includeData = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
@@ -130,7 +130,7 @@ namespace NxtLib.TaggedData
         }
 
         public async Task<TaggedDataListReply> SearchTaggedData(string query = null, string tag = null,
-            string account = null, string channel = null, int? firstIndex = null, int? lastIndex = null,
+            Account account = null, string channel = null, int? firstIndex = null, int? lastIndex = null,
             bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
