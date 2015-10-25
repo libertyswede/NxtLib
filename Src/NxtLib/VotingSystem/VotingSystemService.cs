@@ -48,11 +48,9 @@ namespace NxtLib.VotingSystem
             {
                 queryParameters.Add("option" + i.ToString().PadLeft(2, '0'), createPollParameters.Options[i]);
             }
-            AddToParametersIfHasValue("minBalance", createPollParameters.MinBalance, queryParameters);
-            AddToParametersIfHasValue("minBalanceModel",
-                createPollParameters.MinBalanceModel.HasValue ? (int?) createPollParameters.MinBalanceModel.Value : null,
-                queryParameters);
-            AddToParametersIfHasValue("holding", createPollParameters.HoldingId, queryParameters);
+            queryParameters.AddIfHasValue("minBalance", createPollParameters.MinBalance);
+            queryParameters.AddIfHasValue("minBalanceModel", createPollParameters.MinBalanceModel);
+            queryParameters.AddIfHasValue("holding", createPollParameters.HoldingId);
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("createPoll", queryParameters);
         }
@@ -60,8 +58,8 @@ namespace NxtLib.VotingSystem
         public async Task<GetPollReply> GetPoll(ulong pollId, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}};
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<GetPollReply>("getPoll", queryParameters);
         }
 
@@ -70,12 +68,12 @@ namespace NxtLib.VotingSystem
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}};
-            AddToParametersIfHasValue("votingModel", votingModel.HasValue ? (int?) votingModel.Value : null, queryParameters);
-            AddToParametersIfHasValue("holding", holdingId, queryParameters);
-            AddToParametersIfHasValue("minBalance", minBalance, queryParameters);
-            AddToParametersIfHasValue("minBalanceModel", minBalanceModel.HasValue ? (int?) minBalanceModel.Value : null, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue("votingModel", votingModel.HasValue ? (int?)votingModel.Value : null);
+            queryParameters.AddIfHasValue("holding", holdingId);
+            queryParameters.AddIfHasValue(nameof(minBalance), minBalance);
+            queryParameters.AddIfHasValue(nameof(minBalanceModel), minBalanceModel);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<GetPollResultReply>("getPollResult", queryParameters);
         }
 
@@ -84,23 +82,23 @@ namespace NxtLib.VotingSystem
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("account", account, queryParameters);
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("timestamp", timestamp, queryParameters);
-            AddToParametersIfHasValue("includeFinished", includeFinished, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(account), account);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(timestamp), timestamp);
+            queryParameters.AddIfHasValue(nameof(includeFinished), includeFinished);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<GetPollsReply>("getPolls", queryParameters);
         }
 
         public async Task<GetPollVoteReply> GetPollVote(ulong pollId, Account account, bool? includeWeights = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}, {"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("includeWeights", includeWeights, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}, {nameof(account), account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(nameof(includeWeights), includeWeights);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<GetPollVoteReply>("getPollVote", queryParameters);
         }
 
@@ -108,11 +106,11 @@ namespace NxtLib.VotingSystem
             bool? includeWeights = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"poll", pollId.ToString()}};
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("includeWeights", includeWeights, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(includeWeights), includeWeights);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<GetPollVotesReply>("getPollVotes", queryParameters);
         }
 
@@ -120,11 +118,11 @@ namespace NxtLib.VotingSystem
             bool? includeFinished = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"query", query}};
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("includeFinished", includeFinished, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(includeFinished), includeFinished);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<GetPollsReply>("searchPolls", queryParameters);
         }
 
@@ -148,9 +146,9 @@ namespace NxtLib.VotingSystem
             {
                 queryParameters.Add("option" + i.ToString().PadLeft(2, '0'), options[i]);
             }
-            AddToParametersIfHasValue("minBalance", minBalance, queryParameters);
-            AddToParametersIfHasValue("minBalanceModel", minBalanceModel.HasValue ? (int?) minBalanceModel.Value : null, queryParameters);
-            AddToParametersIfHasValue("holding", holdingId, queryParameters);
+            queryParameters.AddIfHasValue(nameof(minBalance), minBalance);
+            queryParameters.AddIfHasValue("minBalanceModel", minBalanceModel);
+            queryParameters.AddIfHasValue("holding", holdingId);
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("createPoll", queryParameters);
         }

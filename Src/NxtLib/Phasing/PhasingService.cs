@@ -25,8 +25,8 @@ namespace NxtLib.Phasing
             {
                 {"transactionFullHash", transactionFullHashes.Select(hash => hash.ToString()).ToList()}
             };
-            AddToParametersIfHasValue("revealedSecret", revealedSecret, queryParameters);
-            AddToParametersIfHasValue("revealedSecretIsText", revealedSecretIsText, queryParameters);
+            queryParameters.AddIfHasValue(nameof(revealedSecret), revealedSecret);
+            queryParameters.AddIfHasValue(nameof(revealedSecretIsText), revealedSecretIsText);
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("approveTransaction", queryParameters);
         }
@@ -34,20 +34,20 @@ namespace NxtLib.Phasing
         public async Task<AccountPhasedTransactionCountReply> GetAccountPhasedTransactionCount(Account account,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<AccountPhasedTransactionCountReply>("getAccountPhasedTransactionCount", queryParameters);
         }
 
         public async Task<TransactionListReply> GetAccountPhasedTransactions(Account account, int? firstIndex = null,
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TransactionListReply>("getAccountPhasedTransactions", queryParameters);
         }
 
@@ -56,12 +56,12 @@ namespace NxtLib.Phasing
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"asset", assetId.ToString()}};
-            AddToParametersIfHasValue("account", account, queryParameters);
-            AddToParametersIfHasValue("withoutWhitelist", withoutWhitelist, queryParameters);
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(account), account);
+            queryParameters.AddIfHasValue(nameof(withoutWhitelist), withoutWhitelist);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TransactionListReply>("getAssetPhasedTransactions", queryParameters);
         }
 
@@ -70,12 +70,12 @@ namespace NxtLib.Phasing
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"currency", currencyId.ToString()}};
-            AddToParametersIfHasValue("account", account, queryParameters);
-            AddToParametersIfHasValue("withoutWhitelist", withoutWhitelist, queryParameters);
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(account), account);
+            queryParameters.AddIfHasValue(nameof(withoutWhitelist), withoutWhitelist);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TransactionListReply>("getCurrencyPhasedTransactions", queryParameters);
         }
 
@@ -83,9 +83,9 @@ namespace NxtLib.Phasing
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
-            AddToParametersIfHasValue("countVotes", countVotes, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(countVotes), countVotes);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<PhasingPollReply>("getPhasingPoll", queryParameters);
         }
 
@@ -95,10 +95,10 @@ namespace NxtLib.Phasing
             var queryParameters = new Dictionary<string, string>
             {
                 {"transaction", transactionId.ToString()},
-                {"account", account.AccountId.ToString()}
+                {nameof(account), account.AccountId.ToString()}
             };
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<PhasingPollVoteReply>("getPhasingPollVote", queryParameters);
         }
 
@@ -109,10 +109,10 @@ namespace NxtLib.Phasing
             {
                 {"transaction", transactionId.ToString()}
             };
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<PhasingPollVotesReply>("getPhasingPollVotes", queryParameters);
         }
 
@@ -123,20 +123,20 @@ namespace NxtLib.Phasing
             {
                 {"transaction", transactionIds.Select(id => id.ToString()).ToList()}
             };
-            AddToParametersIfHasValue("countVotes", countVotes, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(countVotes), countVotes);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<PhasingPollsReply>("getPhasingPolls", queryParameters);
         }
 
         public async Task<TransactionListReply> GetVoterPhasedTransactions(Account account, int? firstIndex = null,
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TransactionListReply>("getVoterPhasedTransactions", queryParameters);
         }
     }

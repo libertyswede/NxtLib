@@ -23,12 +23,12 @@ namespace NxtLib.Accounts
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("includeLessors", includeLessors, queryParameters);
-            AddToParametersIfHasValue("includeAssets", includeAssets, queryParameters);
-            AddToParametersIfHasValue("includeCurrencies", includeCurrencies, queryParameters);
-            AddToParametersIfHasValue("includeEffectiveBalance", includeEffectiveBalance, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(includeLessors), includeLessors);
+            queryParameters.AddIfHasValue(nameof(includeAssets), includeAssets);
+            queryParameters.AddIfHasValue(nameof(includeCurrencies), includeCurrencies);
+            queryParameters.AddIfHasValue(nameof(includeEffectiveBalance), includeEffectiveBalance);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<AccountReply>("getAccount", queryParameters);
         }
 
@@ -36,20 +36,20 @@ namespace NxtLib.Accounts
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<AccountBlockCountReply>("getAccountBlockCount", queryParameters);
         }
 
         public async Task<AccountBlockIdsReply> GetAccountBlockIds(Account account, DateTime? timeStamp = null,
             int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue(timeStamp, queryParameters);
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(timeStamp);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<AccountBlockIdsReply>("getAccountBlockIds", queryParameters);
         }
 
@@ -81,15 +81,15 @@ namespace NxtLib.Accounts
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("eventType", eventType, queryParameters);
-            AddToParametersIfHasValue("event", @event, queryParameters);
-            AddToParametersIfHasValue("holdingType", holdingType, queryParameters);
-            AddToParametersIfHasValue("holding", holding, queryParameters);
-            AddToParametersIfHasValue("includeTransactions", includeTransactions, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(eventType), eventType);
+            queryParameters.AddIfHasValue(nameof(@event), @event);
+            queryParameters.AddIfHasValue(nameof(holdingType), holdingType);
+            queryParameters.AddIfHasValue(nameof(holding), holding);
+            queryParameters.AddIfHasValue(nameof(includeTransactions), includeTransactions);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<GetAccountLedgerReply>("getAccountLedger", queryParameters);
         }
 
@@ -97,7 +97,7 @@ namespace NxtLib.Accounts
             bool? includeTransaction = null)
         {
             var queryParameters = new Dictionary<string, string> {{"ledgerId", ledgerId.ToString()}};
-            AddToParametersIfHasValue("includeTransaction", includeTransaction, queryParameters);
+            queryParameters.AddIfHasValue(nameof(includeTransaction), includeTransaction);
             return await Get<GetAccountLedgerEntryReply>("getAccountLedgerEntry", queryParameters);
         }
 
@@ -105,9 +105,9 @@ namespace NxtLib.Accounts
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("height", height, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(height), height);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<AccountLessorsReply>("getAccountLessors", queryParameters);
         }
 
@@ -115,8 +115,8 @@ namespace NxtLib.Accounts
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<AccountPublicKeyReply>("getAccountPublicKey", queryParameters);
         }
 
@@ -124,9 +124,9 @@ namespace NxtLib.Accounts
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("includeEffectiveBalance", includeEffectiveBalance, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(includeEffectiveBalance), includeEffectiveBalance);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<BalanceReply>("getBalance", queryParameters);
         }
 
@@ -134,9 +134,9 @@ namespace NxtLib.Accounts
             int? numberOfConfirmations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("numberOfConfirmations", numberOfConfirmations, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(numberOfConfirmations), numberOfConfirmations);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<GuaranteedBalanceReply>("getGuaranteedBalance", queryParameters);
         }
 
@@ -144,10 +144,10 @@ namespace NxtLib.Accounts
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"query", query}};
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return Get<SearchAccountsReply>("searchAccounts", queryParameters);
         }
 
@@ -180,11 +180,11 @@ namespace NxtLib.Accounts
                 {"account", account.AccountId.ToString()},
                 {"includeTransactions", includeTransactions.ToString()}
             };
-            AddToParametersIfHasValue(timeStamp, queryParameters);
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(timeStamp);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return queryParameters;
         }
     }

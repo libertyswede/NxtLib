@@ -13,10 +13,10 @@ namespace NxtLib.Blocks
         Task<GetBlockReply<Transaction>> GetBlockIncludeTransactions(BlockLocator query,
             bool? includeExecutedPhased = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<BlocksReply<ulong>> GetBlocks(int? firstindex = null, int? lastindex = null, DateTime? timestamp = null,
+        Task<BlocksReply<ulong>> GetBlocks(int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null,
             bool? includeExecutedPhased = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<BlocksReply<Transaction>> GetBlocksIncludeTransactions(int? firstindex = null, int? lastindex = null,
+        Task<BlocksReply<Transaction>> GetBlocksIncludeTransactions(int? firstIndex = null, int? lastIndex = null,
             DateTime? timestamp = null, bool? includeExecutedPhased = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 

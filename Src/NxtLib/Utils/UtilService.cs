@@ -26,8 +26,8 @@ namespace NxtLib.Utils
         public async Task<EncodeQrCodeReply> EncodeQrCode(string qrCodeData, int? width = null, int? height = null)
         {
             var queryParameters = new Dictionary<string, string> {{"qrCodeData", qrCodeData}};
-            AddToParametersIfHasValue("width", width, queryParameters);
-            AddToParametersIfHasValue("height", height, queryParameters);
+            queryParameters.AddIfHasValue(nameof(width), width);
+            queryParameters.AddIfHasValue(nameof(height), height);
             return await Post<EncodeQrCodeReply>("encodeQRCode", queryParameters);
         }
 
@@ -44,7 +44,7 @@ namespace NxtLib.Utils
                 {"hashAlgorithm", ((int) hashAlgorithm).ToString()},
                 {"secret", secret.ToString()}
             };
-            AddToParametersIfHasValue("secretIsText", secretIsText, queryParameters);
+            queryParameters.AddIfHasValue(nameof(secretIsText), secretIsText);
             return await Get<HashReply>("hash", queryParameters);
         }
 
@@ -63,7 +63,7 @@ namespace NxtLib.Utils
 
         public async Task<RsConvertReply> RsConvert(string account)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account}};
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account}};
             return await Get<RsConvertReply>("rsConvert", queryParameters);
         }
     }

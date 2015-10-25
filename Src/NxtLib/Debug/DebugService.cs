@@ -28,10 +28,10 @@ namespace NxtLib.Debug
             string adminPassword = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("version", version, queryParameters);
-            AddToParametersIfHasValue("weight", weight, queryParameters);
-            AddToParametersIfHasValue("connect", connect, queryParameters);
-            AddToParametersIfHasValue("adminPassword", adminPassword, queryParameters);
+            queryParameters.AddIfHasValue(nameof(version), version);
+            queryParameters.AddIfHasValue(nameof(weight), weight);
+            queryParameters.AddIfHasValue(nameof(connect), connect);
+            queryParameters.AddIfHasValue(nameof(adminPassword), adminPassword);
             return await Get<DumpPeersReply>("dumpPeers", queryParameters);
         }
 
@@ -43,16 +43,16 @@ namespace NxtLib.Debug
         public async Task<TransactionsListReply> GetAllBroadcastedTransactions(ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TransactionsListReply>("getAllBroadcastedTransactions", queryParameters);
         }
 
         public async Task<TransactionsListReply> GetAllWaitingTransactions(ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TransactionsListReply>("getAllWaitingTransactions", queryParameters);
         }
 
@@ -66,7 +66,7 @@ namespace NxtLib.Debug
         public async Task<JObject> GetStackTraces(int? depth = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("depth", depth, queryParameters);
+            queryParameters.AddIfHasValue(nameof(depth), depth);
             return await Get("getStackTraces", queryParameters);
         }
 
@@ -98,7 +98,7 @@ namespace NxtLib.Debug
         public async Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null)
         {
             var queryParameters = locator.QueryParameters;
-            AddToParametersIfHasValue("validate", validate, queryParameters);
+            queryParameters.AddIfHasValue(nameof(validate), validate);
             return await Post<ScanReply>("scan", queryParameters);
         }
 
@@ -110,14 +110,14 @@ namespace NxtLib.Debug
             {
                 queryParameters.Add("communicationEvent", communicationEventList);
             }
-            AddToParametersIfHasValue("logLevel", logLevel, queryParameters);
+            queryParameters.AddIfHasValue(nameof(logLevel), logLevel);
             return await Post<SetLoggingReply>("setLogging", queryParameters);
         }
 
         public async Task<ShutdownReply> Shutdown(bool? scan = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("scan", scan, queryParameters);
+            queryParameters.AddIfHasValue(nameof(scan), scan);
             return await Post<ShutdownReply>("shutdown", queryParameters);
         }
 

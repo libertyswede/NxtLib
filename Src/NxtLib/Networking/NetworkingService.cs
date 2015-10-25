@@ -55,7 +55,7 @@ namespace NxtLib.Networking
         public async Task<GetPeersReply> GetPeers(PeersLocator locator = null, string service = null)
         {
             var queryParameters = locator != null ? locator.QueryParameters : new Dictionary<string, string>();
-            AddToParametersIfHasValue("service", service, queryParameters);
+            queryParameters.AddIfHasValue(nameof(service), service);
             return await Get<GetPeersReply>("getPeers", queryParameters);
         }
 
@@ -64,7 +64,7 @@ namespace NxtLib.Networking
         {
             var queryParameters = locator != null ? locator.QueryParameters : new Dictionary<string, string>();
             queryParameters.Add("includePeerInfo", true.ToString());
-            AddToParametersIfHasValue("service", service, queryParameters);
+            queryParameters.AddIfHasValue(nameof(service), service);
             return await Get<GetPeersIncludeInfoReply>("getPeers", queryParameters);
         }
     }

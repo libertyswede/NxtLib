@@ -27,8 +27,8 @@ namespace NxtLib.ServerInfo
             {
                 queryParameters.Add("event", GetEventList(nxtEvent.Value));
             }
-            AddToParametersIfHasValue("add", add, queryParameters);
-            AddToParametersIfHasValue("remove", remove, queryParameters);
+            queryParameters.AddIfHasValue(nameof(add), add);
+            queryParameters.AddIfHasValue(nameof(remove), remove);
             return await Post<EventRegisterReply>("eventRegister", queryParameters);
         }
 
@@ -71,8 +71,8 @@ namespace NxtLib.ServerInfo
         public async Task<GetStateReply> GetState(bool? includeCounts = null, string adminPassword = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("includeCounts", includeCounts, queryParameters);
-            AddToParametersIfHasValue("adminPassword", adminPassword, queryParameters);
+            queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
+            queryParameters.AddIfHasValue(nameof(adminPassword), adminPassword);
             return await Get<GetStateReply>("getState", queryParameters);
         }
 

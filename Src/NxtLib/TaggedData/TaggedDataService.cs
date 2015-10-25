@@ -22,8 +22,8 @@ namespace NxtLib.TaggedData
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             var url = BuildUrl("downloadTaggedData", queryParameters);
 
             using (var client = new HttpClient())
@@ -51,9 +51,9 @@ namespace NxtLib.TaggedData
         public async Task<TaggedDataListReply> GetAccountTaggedData(Account account, int? firstIndex = null,
             int? lastIndex = null, bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             AddToParametersIfHasValue(firstIndex, lastIndex, includeData, queryParameters);
             return await Get<TaggedDataListReply>("getAccountTaggedData", queryParameters);
         }
@@ -62,8 +62,8 @@ namespace NxtLib.TaggedData
             bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             AddToParametersIfHasValue(firstIndex, lastIndex, includeData, queryParameters);
             return await Get<AllTaggedDataReply>("getAllTaggedData", queryParameters);
         }
@@ -74,17 +74,17 @@ namespace NxtLib.TaggedData
         {
             var queryParameters = new Dictionary<string, string> {{"channel", channel}};
             AddToParametersIfHasValue(firstIndex, lastIndex, includeData, queryParameters);
-            AddToParametersIfHasValue("includeData", includeData, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(includeData), includeData);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TaggedDataListReply>("getChannelTaggedData", queryParameters);
         }
 
         public async Task<DataTagCountReply> GetDataTagCount(ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<DataTagCountReply>("getDataTagCount", queryParameters);
         }
 
@@ -92,10 +92,10 @@ namespace NxtLib.TaggedData
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<DataTagsReply>("getDataTags", queryParameters);
         }
 
@@ -103,10 +103,10 @@ namespace NxtLib.TaggedData
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"tagPrefix", tagPrefix}};
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<DataTagsReply>("getDataTagsLike", queryParameters);
         }
 
@@ -114,9 +114,9 @@ namespace NxtLib.TaggedData
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
-            AddToParametersIfHasValue("includeData", includeData, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(includeData), includeData);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TaggedDataReply>("getTaggedData", queryParameters);
         }
 
@@ -124,8 +124,8 @@ namespace NxtLib.TaggedData
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TaggedDataExtendTransactionsReply>("getTaggedDataExtendTransactions", queryParameters);
         }
 
@@ -134,15 +134,15 @@ namespace NxtLib.TaggedData
             bool? includeData = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            AddToParametersIfHasValue("query", query, queryParameters);
-            AddToParametersIfHasValue("tag", tag, queryParameters);
-            AddToParametersIfHasValue("account", account, queryParameters);
-            AddToParametersIfHasValue("channel", channel, queryParameters);
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("includeData", includeData, queryParameters);
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(query), query);
+            queryParameters.AddIfHasValue(nameof(tag), tag);
+            queryParameters.AddIfHasValue(nameof(account), account);
+            queryParameters.AddIfHasValue(nameof(channel), channel);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(includeData), includeData);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TaggedDataListReply>("searchTaggedData", queryParameters);
         }
 
@@ -163,31 +163,31 @@ namespace NxtLib.TaggedData
             var queryParameters = GetQueryParametersForTaggedData(name, data, file, description, tags, channel, type,
                 isText, filename);
             queryParameters.Add("transaction", transactionId.ToString());
-            AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
-            AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
+            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
+            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Post<VerifyTaggedDataReply>("verifyTaggedData", queryParameters);
         }
 
         private static void AddToParametersIfHasValue(int? firstIndex, int? lastIndex, bool? includeData,
             Dictionary<string, string> queryParameters)
         {
-            AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
-            AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);
-            AddToParametersIfHasValue("includeData", includeData, queryParameters);
+            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
+            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
+            queryParameters.AddIfHasValue(nameof(includeData), includeData);
         }
 
         private static Dictionary<string, string> GetQueryParametersForTaggedData(string name, string data, string file,
             string description, string tags, string channel, string type, bool? isText, string filename)
         {
             var queryParameters = new Dictionary<string, string> {{"name", name}};
-            AddToParametersIfHasValue("data", data, queryParameters);
-            AddToParametersIfHasValue("file", file, queryParameters);
-            AddToParametersIfHasValue("description", description, queryParameters);
-            AddToParametersIfHasValue("tags", tags, queryParameters);
-            AddToParametersIfHasValue("type", type, queryParameters);
-            AddToParametersIfHasValue("channel", channel, queryParameters);
-            AddToParametersIfHasValue("isText", isText, queryParameters);
-            AddToParametersIfHasValue("filename", filename, queryParameters);
+            queryParameters.AddIfHasValue(nameof(data), data);
+            queryParameters.AddIfHasValue(nameof(file), file);
+            queryParameters.AddIfHasValue(nameof(description), description);
+            queryParameters.AddIfHasValue(nameof(tags), tags);
+            queryParameters.AddIfHasValue(nameof(type), type);
+            queryParameters.AddIfHasValue(nameof(channel), channel);
+            queryParameters.AddIfHasValue(nameof(isText), isText);
+            queryParameters.AddIfHasValue(nameof(filename), filename);
             return queryParameters;
         }
     }
