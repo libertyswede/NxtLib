@@ -13,6 +13,16 @@ namespace NxtLib
             _hexData = hexData;
         }
 
+        public static implicit operator BinaryHexString(string stringValue)
+        {
+            return new BinaryHexString(stringValue);
+        }
+
+        public static implicit operator BinaryHexString(byte[] data)
+        {
+            return new BinaryHexString(data);
+        }
+
         public BinaryHexString(IEnumerable<byte> data)
         {
             _hexData = ByteToHexStringConverter.ToHexString(data);
