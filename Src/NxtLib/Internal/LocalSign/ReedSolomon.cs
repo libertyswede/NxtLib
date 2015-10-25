@@ -17,9 +17,9 @@ namespace NxtLib.Internal.LocalSign
         private const int Base32Length = 13;
         private const int Base10Length = 20;
 
-        public static ulong Decode(string addressRs)
+        public static ulong Decode(string accountRs)
         {
-            var cypherString = RemovePrefix(addressRs);
+            var cypherString = RemovePrefix(accountRs);
             var codeword = new int[InitialCodeword.Length];
             Array.Copy(InitialCodeword, 0, codeword, 0, InitialCodeword.Length);
 
@@ -33,7 +33,7 @@ namespace NxtLib.Internal.LocalSign
                     continue;
 
                 if (codewordLength > 16)
-                    throw new InvalidReedSolomonAddressException(addressRs, nameof(addressRs));
+                    throw new InvalidReedSolomonAddressException(accountRs, nameof(accountRs));
 
                 var codeworkIndex = CodewordMap[codewordLength];
                 codeword[codeworkIndex] = positionInAlphabet;
@@ -42,7 +42,7 @@ namespace NxtLib.Internal.LocalSign
 
             if (codewordLength == 17 && !IsCodewordValid(codeword) || codewordLength != 17)
             {
-                throw new InvalidReedSolomonAddressException(addressRs, nameof(addressRs));
+                throw new InvalidReedSolomonAddressException(accountRs, nameof(accountRs));
             }
 
             var length = Base32Length;
