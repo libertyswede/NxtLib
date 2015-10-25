@@ -318,7 +318,7 @@ namespace NxtLib
         {
             Description = GetAttachmentValue<string>(attachments, DescriptionKey);
             FinishHeight = GetAttachmentValue<int>(attachments, FinishHeightKey);
-            HoldingId = UInt64.Parse(GetAttachmentValue<string>(attachments, HoldingKey));
+            HoldingId = ulong.Parse(GetAttachmentValue<string>(attachments, HoldingKey));
             MaxNumberOfOptions = GetAttachmentValue<int>(attachments, MaxNumberOfOptionsKey);
             MaxRangeValue = GetAttachmentValue<int>(attachments, MaxRangeValueKey);
             MinBalance = GetAttachmentValue<long>(attachments, MinBalanceKey);
@@ -360,11 +360,11 @@ namespace NxtLib
 
         internal MessagingVoteCastingAttachment(JToken attachments)
         {
-            PollId = UInt64.Parse(GetAttachmentValue<string>(attachments, PollKey));
+            PollId = ulong.Parse(GetAttachmentValue<string>(attachments, PollKey));
             Votes = ParseVotes(attachments.SelectToken(VoteKey)).ToList();
         }
 
-        private IEnumerable<int> ParseVotes(JToken votesToken)
+        private static IEnumerable<int> ParseVotes(JToken votesToken)
         {
             return votesToken.Children<JValue>().Select(optionToken => (int)(long)optionToken.Value);
         }

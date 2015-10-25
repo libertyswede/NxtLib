@@ -236,8 +236,8 @@ namespace NxtLib
             var phasing = new TransactionPhasing
             {
                 FinishHeight = GetAttachmentValue<int>(jObject, PhasingFinishHeightKey),
-                HoldingId = UInt64.Parse(GetAttachmentValue<string>(jObject, PhasingHoldingKey)),
-                MinBalance = Int64.Parse(GetAttachmentValue<string>(jObject, PhasingMinBalanceKey)),
+                HoldingId = ulong.Parse(GetAttachmentValue<string>(jObject, PhasingHoldingKey)),
+                MinBalance = long.Parse(GetAttachmentValue<string>(jObject, PhasingMinBalanceKey)),
                 MinBalanceModel = (MinBalanceModel)GetAttachmentValue<int>(jObject, PhasingMinBalanceModelKey),
                 Quorum = GetAttachmentValue<long>(jObject, PhasingQuorumKey),
                 VotingModel = (VotingModel)GetAttachmentValue<int>(jObject, PhasingVotingModelKey)

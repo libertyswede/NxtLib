@@ -9,7 +9,7 @@ namespace NxtLib
         public bool Broadcast { get; }
         public short Deadline { get; }
         public Amount Fee { get; }
-        public string RecipientPublicKey { get; set; }
+        public BinaryHexString RecipientPublicKey { get; set; }
         public BinaryHexString ReferencedTransactionFullHash { get; set; }
         public UnencryptedMessage Message { get; set; }
         public AbstractEncryptedMessage EncryptedMessage { get; set; }

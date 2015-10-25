@@ -6,11 +6,6 @@ namespace NxtLib.Internal
 {
     internal class StringToIntegralTypeConverter : JsonConverter
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
-
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.StartArray)
@@ -59,6 +54,11 @@ namespace NxtLib.Internal
             }
 
             return reader.Value;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
         }
 
         public override bool CanConvert(Type objectType)
