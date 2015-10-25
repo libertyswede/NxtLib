@@ -189,9 +189,9 @@ namespace NxtLib
 
     public class PublicKeyAnnouncement : Appendix
     {
-        public string RecipientPublicKey { get; set; }
+        public BinaryHexString RecipientPublicKey { get; set; }
 
-        private PublicKeyAnnouncement(string recipientPublicKey)
+        private PublicKeyAnnouncement(BinaryHexString recipientPublicKey)
         {
             RecipientPublicKey = recipientPublicKey;
         }
