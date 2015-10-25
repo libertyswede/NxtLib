@@ -151,12 +151,12 @@ namespace NxtLib.Accounts
             return Get<SearchAccountsReply>("searchAccounts", queryParameters);
         }
 
-        public async Task<TransactionCreatedReply> SendMoney(CreateTransactionParameters parameters, string recipient,
+        public async Task<TransactionCreatedReply> SendMoney(CreateTransactionParameters parameters, Account recipient,
             Amount amount)
         {
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
-            queryParameters.Add("recipient", recipient);
+            queryParameters.Add("recipient", recipient.AccountId.ToString());
             queryParameters.Add("amountNQT", amount.Nqt.ToString());
             return await Post<TransactionCreatedReply>("sendMoney", queryParameters);
         }

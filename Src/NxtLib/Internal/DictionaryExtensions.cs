@@ -11,6 +11,15 @@ namespace NxtLib.Internal
                 me.Add(key, value);
             }
         }
+
+        internal static void AddIfHasValue(this Dictionary<string, string> me, string key, Account value)
+        {
+            if (value != null)
+            {
+                me.Add(key, value.AccountId.ToString());
+            }
+        }
+
         internal static void AddIfHasValue(this Dictionary<string, string> me, string key, BinaryHexString value)
         {
             if (value != null)

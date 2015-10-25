@@ -18,8 +18,7 @@ namespace NxtLib.Aliases
         Task<AliasesReply> GetAliasesLike(string prefix, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<TransactionCreatedReply> SellAlias(AliasLocator query, Amount price, CreateTransactionParameters parameters,
-            string recipient = null);
+        Task<TransactionCreatedReply> SellAlias(AliasLocator query, Amount price, CreateTransactionParameters parameters, Account recipient = null);
 
         Task<TransactionCreatedReply> SetAlias(string aliasName, string aliasUri, CreateTransactionParameters parameters);
     }

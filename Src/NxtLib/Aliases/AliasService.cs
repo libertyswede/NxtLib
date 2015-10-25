@@ -77,7 +77,7 @@ namespace NxtLib.Aliases
         }
 
         public async Task<TransactionCreatedReply> SellAlias(AliasLocator query, Amount price,
-            CreateTransactionParameters parameters, string recipient = null)
+            CreateTransactionParameters parameters, Account recipient = null)
         {
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);

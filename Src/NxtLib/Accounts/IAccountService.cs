@@ -33,7 +33,7 @@ namespace NxtLib.Accounts
         Task<SearchAccountsReply> SearchAccounts(string query, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<TransactionCreatedReply> SendMoney(CreateTransactionParameters parameters, string recipient, Amount amount);
+        Task<TransactionCreatedReply> SendMoney(CreateTransactionParameters parameters, Account recipient, Amount amount);
 
         Task<TransactionCreatedReply> SetAccountInfo(CreateTransactionParameters parameters, string name,
             string description);
