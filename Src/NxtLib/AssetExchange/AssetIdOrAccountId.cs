@@ -2,18 +2,18 @@ namespace NxtLib.AssetExchange
 {
     public class AssetIdOrAccountId
     {
-        public string AccountId { get; private set; }
+        public ulong? AccountId { get; private set; }
         public ulong? AssetId { get; private set; }
 
-        private AssetIdOrAccountId(string accountId, ulong assetId)
+        private AssetIdOrAccountId(Account account, ulong assetId)
         {
-            AccountId = accountId;
+            AccountId = account.AccountId;
             AssetId = assetId;
         }
 
-        private AssetIdOrAccountId(string accountId)
+        private AssetIdOrAccountId(Account account)
         {
-            AccountId = accountId;
+            AccountId = account.AccountId;
         }
 
         private AssetIdOrAccountId(ulong assetId)
@@ -26,14 +26,14 @@ namespace NxtLib.AssetExchange
             return new AssetIdOrAccountId(assetId);
         }
 
-        public static AssetIdOrAccountId ByAccountId(string accountId)
+        public static AssetIdOrAccountId ByAccountId(Account account)
         {
-            return new AssetIdOrAccountId(accountId);
+            return new AssetIdOrAccountId(account);
         }
 
-        public static AssetIdOrAccountId ByAssetIdAndAccountId(ulong assetId, string accountId)
+        public static AssetIdOrAccountId ByAssetIdAndAccountId(ulong assetId, Account account)
         {
-            return new AssetIdOrAccountId(accountId, assetId);
+            return new AssetIdOrAccountId(account, assetId);
         }
     }
 }

@@ -16,26 +16,19 @@ namespace NxtLib.AssetExchange
         Task<TransactionCreatedReply> DividendPayment(ulong assetId, int height, Amount amountPerQnt,
             CreateTransactionParameters parameters);
 
-        Task<AccountAssetReply> GetAccountAsset(string accountId, ulong assetId, int? height = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<AccountAssetReply> GetAccountAsset(Account account, ulong assetId, int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<AccountAssetCountReply> GetAccountAssetCount(string accountId, int? height = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<AccountAssetCountReply> GetAccountAssetCount(Account account, int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<AccountAssetsReply> GetAccountAssets(string accountId, int? height = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null);
+        Task<AccountAssetsReply> GetAccountAssets(Account account, int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<AskOrderIdsReply> GetAccountCurrentAskOrderIds(string accountId, ulong? assetId = null,
-            int? firstIndex = null, int? lastIndex = null);
+        Task<AskOrderIdsReply> GetAccountCurrentAskOrderIds(Account account, ulong? assetId = null, int? firstIndex = null, int? lastIndex = null);
 
-        Task<AskOrdersReply> GetAccountCurrentAskOrders(string accountId, ulong? assetId = null,
-            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<AskOrdersReply> GetAccountCurrentAskOrders(Account account, ulong? assetId = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<BidOrderIdsReply> GetAccountCurrentBidOrderIds(string accountId, ulong? assetId = null,
-            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<BidOrderIdsReply> GetAccountCurrentBidOrderIds(Account account, ulong? assetId = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<BidOrdersReply> GetAccountCurrentBidOrders(string accountId, ulong? assetId = null,
-            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<BidOrdersReply> GetAccountCurrentBidOrders(Account account, ulong? assetId = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<AssetsReply> GetAllAssets(int? firstIndex = null, int? lastIndex = null,
             bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
@@ -72,9 +65,7 @@ namespace NxtLib.AssetExchange
         Task<AssetsReply> GetAssets(IEnumerable<ulong> assetIds, bool? includeCounts = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
-        Task<AssetsByIssuerReply> GetAssetsByIssuer(IEnumerable<ulong> accountIds, int? firstIndex = null,
-            int? lastIndex = null, bool? includeCounts = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null);
+        Task<AssetsByIssuerReply> GetAssetsByIssuer(IEnumerable<Account> accounts, int? firstIndex = null, int? lastIndex = null, bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<AssetTransfersReply> GetAssetTransfers(AssetIdOrAccountId assetIdOrAccountId,
             int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null,
@@ -91,8 +82,7 @@ namespace NxtLib.AssetExchange
         Task<ExpectedAskOrdersReply> GetExpectedAskOrders(ulong? assetId = null, bool? sortByPrice = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<ExpectedAssetTransfersReply> GetExpectedAssetTransfers(ulong? assetId = null, string account = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<ExpectedAssetTransfersReply> GetExpectedAssetTransfers(ulong? assetId = null, Account account = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<ExpectedBidOrdersReply> GetExpectedBidOrders(ulong? assetId = null, bool? sortByPrice = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
@@ -123,7 +113,6 @@ namespace NxtLib.AssetExchange
         Task<AssetsReply> SearchAssets(string query, int? firstIndex = null, int? lastIndex = null,
             bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<TransactionCreatedReply> TransferAsset(string recipientId, ulong assetId, long quantityQnt,
-            CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> TransferAsset(Account recipient, ulong assetId, long quantityQnt, CreateTransactionParameters parameters);
     }
 }

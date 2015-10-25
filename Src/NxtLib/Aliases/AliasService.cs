@@ -44,19 +44,19 @@ namespace NxtLib.Aliases
             return await Get<AliasReply>("getAlias", queryParameters);
         }
 
-        public async Task<AliasCountReply> GetAliasCount(string account, ulong? requireBlock = null,
+        public async Task<AliasCountReply> GetAliasCount(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", account}};
+            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
             AddToParametersIfHasValue("requireBlock", requireBlock, queryParameters);
             AddToParametersIfHasValue("requireLastBlock", requireLastBlock, queryParameters);
             return await Get<AliasCountReply>("getAliasCount", queryParameters);
         }
 
-        public async Task<AliasesReply> GetAliases(string accountId, DateTime? timeStamp = null, int? firstIndex = null,
+        public async Task<AliasesReply> GetAliases(Account account, DateTime? timeStamp = null, int? firstIndex = null,
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"account", accountId}};
+            var queryParameters = new Dictionary<string, string> {{"account", account.AccountId.ToString()}};
             AddToParametersIfHasValue(timeStamp, queryParameters);
             AddToParametersIfHasValue("firstIndex", firstIndex, queryParameters);
             AddToParametersIfHasValue("lastIndex", lastIndex, queryParameters);

@@ -11,10 +11,9 @@ namespace NxtLib.Aliases
 
         Task<AliasReply> GetAlias(AliasLocator query, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<AliasCountReply> GetAliasCount(string account, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<AliasCountReply> GetAliasCount(Account account, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<AliasesReply> GetAliases(string accountId, DateTime? timeStamp = null, int? firstIndex = null,
-            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<AliasesReply> GetAliases(Account account, DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<AliasesReply> GetAliasesLike(string prefix, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);

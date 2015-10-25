@@ -217,6 +217,14 @@ namespace NxtLib
             }
         }
 
+        protected static void AddToParametersIfHasValue(string keyName, Account value, Dictionary<string, string> queryParameters)
+        {
+            if (value != null)
+            {
+                queryParameters.Add(keyName, value.AccountId.ToString());
+            }
+        }
+
         protected void AddToParametersIfHasValue(DateTime? timeStamp, Dictionary<string, string> queryParameters)
         {
             AddToParametersIfHasValue("timestamp", timeStamp, queryParameters);
