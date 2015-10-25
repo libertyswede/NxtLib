@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Numerics;
 using System.Text;
@@ -11,7 +12,7 @@ namespace NxtLib.Internal.LocalSign
         private static readonly int[] Gexp = { 1, 2, 4, 8, 16, 5, 10, 20, 13, 26, 17, 7, 14, 28, 29, 31, 27, 19, 3, 6, 12, 24, 21, 15, 30, 25, 23, 11, 22, 9, 18, 1 };
         private static readonly int[] Glog = { 0, 0, 1, 18, 2, 5, 19, 11, 3, 29, 6, 27, 20, 8, 12, 23, 4, 10, 30, 17, 7, 22, 28, 26, 21, 25, 9, 16, 13, 14, 24, 15 };
         private static readonly int[] CodewordMap = { 3, 2, 1, 0, 7, 6, 5, 4, 13, 14, 15, 16, 12, 8, 9, 10, 11 };
-        private const String Alphabet = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+        private const string Alphabet = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
         private const int Base32Length = 13;
         private const int Base10Length = 20;
@@ -46,7 +47,7 @@ namespace NxtLib.Internal.LocalSign
 
             var length = Base32Length;
             var cypherString32 = new int[length];
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 cypherString32[i] = codeword[length - i - 1];
             }
@@ -57,7 +58,7 @@ namespace NxtLib.Internal.LocalSign
                 var newLength = 0;
                 var digit10 = 0;
 
-                for (int i = 0; i < length; i++)
+                for (var i = 0; i < length; i++)
                 {
                     digit10 = digit10 * 32 + cypherString32[i];
 
@@ -100,7 +101,7 @@ namespace NxtLib.Internal.LocalSign
             return new string(chars);
         }
 
-        private static bool IsCodewordValid(int[] codeword)
+        private static bool IsCodewordValid(IReadOnlyList<int> codeword)
         {
             var sum = 0;
 
