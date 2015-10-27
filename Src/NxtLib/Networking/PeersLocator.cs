@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using NxtLib.Internal;
 
 namespace NxtLib.Networking
 {
@@ -8,13 +9,13 @@ namespace NxtLib.Networking
         public readonly PeerInfo.PeerState? State;
 
         private PeersLocator()
-            :base("active", true.ToString())
+            :base(Parameters.Active, true.ToString())
         {
             Active = true;
         }
 
         private PeersLocator(PeerInfo.PeerState state, string value)
-            : base("state", value)
+            : base(Parameters.State, value)
         {
             State = state;
         }

@@ -4,6 +4,7 @@ namespace NxtLib.Internal
     {
         internal const string Account = "account";
         internal const string AccountAssets = "accountAssets";
+        internal const string Active = "active";
         internal const string AdminPassword = "adminPassword";
         internal const string Algorithm = "algorithm";
         internal const string Alias = "alias";
@@ -78,6 +79,7 @@ namespace NxtLib.Internal
         internal const string Offer = "offer";
         internal const string Option = "option";
         internal const string Order = "order";
+        internal const string Peers = "peers";
         internal const string Poll = "poll";
         internal const string PriceNqt = "priceNQT";
         internal const string PrunableAttachmentJson = "prunableAttachmentJSON";
@@ -102,6 +104,7 @@ namespace NxtLib.Internal
         internal const string SenderRs = "senderRS";
         internal const string Signature = "signature";
         internal const string SignatureHash = "signatureHash";
+        internal const string State = Parameters.State;
         internal const string SubType = "subtype";
         internal const string Tag = "tag";
         internal const string Timestamp = "timestamp";
