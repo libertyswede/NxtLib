@@ -13,7 +13,7 @@ namespace NxtLib.Forging
             {
                 SecretPhrase = value;
             }
-            else if (key.Equals("adminPassword"))
+            else if (key.Equals(Parameters.AdminPassword))
             {
                 AdminPassword = value;
             }
@@ -26,7 +26,7 @@ namespace NxtLib.Forging
 
         public static SecretPhraseOrAdminPassword ByAdminPassword(string adminPassword)
         {
-            return new SecretPhraseOrAdminPassword("adminPassword", adminPassword);
+            return new SecretPhraseOrAdminPassword(Parameters.AdminPassword, adminPassword);
         }
     }
 }
