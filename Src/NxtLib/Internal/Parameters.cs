@@ -47,6 +47,7 @@ namespace NxtLib.Internal
         internal const string MinRangeValue = "minRangeValue";
         internal const string Name = "name";
         internal const string NextLessee = "nextLessee";
+        internal const string NumBlocks = "numBlocks";
         internal const string Offer = "offer";
         internal const string Option = "option";
         internal const string Order = "order";

@@ -14,7 +14,7 @@ namespace NxtLib.Debug
             {
                 Height = value;
             }
-            else if (key.Equals("numBlocks"))
+            else if (key.Equals(Parameters.NumBlocks))
             {
                 NumBlocks = value;
             }
@@ -27,7 +27,7 @@ namespace NxtLib.Debug
 
         public static HeightOrNumberOfBlocksLocator ByNumBlocks(int numBlocks)
         {
-            return new HeightOrNumberOfBlocksLocator("numBlocks", numBlocks);
+            return new HeightOrNumberOfBlocksLocator(Parameters.NumBlocks, numBlocks);
         }
     }
 }
