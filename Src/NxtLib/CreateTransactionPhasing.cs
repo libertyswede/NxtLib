@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NxtLib.Internal;
 using NxtLib.VotingSystem;
 
 namespace NxtLib
@@ -31,32 +32,32 @@ namespace NxtLib
         {
             if (Phased)
             {
-                queryParameters.Add("phased", Phased.ToString());
-                queryParameters.Add("phasingFinishHeight", FinishHeight.ToString());
-                queryParameters.Add("phasingVotingModel", ((int)VotingModel).ToString());
-                queryParameters.Add("phasingQuorum", Quorum.ToString());
+                queryParameters.Add(Parameters.Phased, Phased.ToString());
+                queryParameters.Add(Parameters.PhasingFinishHeight, FinishHeight.ToString());
+                queryParameters.Add(Parameters.PhasingVotingModel, ((int)VotingModel).ToString());
+                queryParameters.Add(Parameters.PhasingQuorum, Quorum.ToString());
 
                 if (MinBalance.HasValue)
                 {
-                    queryParameters.Add("phasingMinBalance", MinBalance.ToString());
+                    queryParameters.Add(Parameters.PhasingMinBalance, MinBalance.ToString());
                 }
                 if (HoldingId.HasValue)
                 {
-                    queryParameters.Add("phasingHolding", HoldingId.ToString());
+                    queryParameters.Add(Parameters.PhasingHolding, HoldingId.ToString());
                 }
                 if (MinBalanceModel.HasValue)
                 {
-                    queryParameters.Add("phasingMinBalanceModel", ((int)MinBalanceModel.Value).ToString());
+                    queryParameters.Add(Parameters.PhasingMinBalanceModel, ((int)MinBalanceModel.Value).ToString());
                 }
-                WhiteListed.ForEach(w => queryParameters.Add("phasingWhitelisted", w));
-                LinkedFullHash.ForEach(h => queryParameters.Add("phasingLinkedFullHash", h.ToHexString()));
+                WhiteListed.ForEach(w => queryParameters.Add(Parameters.PhasingWhitelisted, w));
+                LinkedFullHash.ForEach(h => queryParameters.Add(Parameters.PhasingLinkedFullHash, h.ToHexString()));
                 if (HashedSecret != null)
                 {
-                    queryParameters.Add("phasingHashedSecret", HashedSecret.ToHexString());
+                    queryParameters.Add(Parameters.PhasingHashedSecret, HashedSecret.ToHexString());
                 }
                 if (!string.IsNullOrEmpty(HashedSecretAlgorithm))
                 {
-                    queryParameters.Add("phasingHashedSecretAlgorithm", HashedSecretAlgorithm);
+                    queryParameters.Add(Parameters.PhasingHashedSecretAlgorithm, HashedSecretAlgorithm);
                 }
             }
         }

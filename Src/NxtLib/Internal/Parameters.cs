@@ -68,6 +68,7 @@ namespace NxtLib.Internal
         internal const string InitialSupply = "initialSupply";
         internal const string IsPhasingSafe = "isPhasingSafe";
         internal const string IssuanceHeight = "issuanceHeight";
+        internal const string IssuerAccount = "issuerAccount";
         internal const string LastBlock = "lastBlock";
         internal const string Lessor = "lessor";
         internal const string MaxDifficulty = "maxDifficulty";
@@ -95,6 +96,17 @@ namespace NxtLib.Internal
         internal const string Option = "option";
         internal const string Order = "order";
         internal const string Peers = "peers";
+        internal const string Phased = "phased";
+        internal const string PhasingFinishHeight = "phasingFinishHeight";
+        internal const string PhasingHashedSecret = "phasingHashedSecret";
+        internal const string PhasingHashedSecretAlgorithm = "phasingHashedSecretAlgorithm";
+        internal const string PhasingHolding = "phasingHolding";
+        internal const string PhasingLinkedFullHash = "phasingLinkedFullHash";
+        internal const string PhasingMinBalance = "phasingMinBalance";
+        internal const string PhasingMinBalanceModel = "phasingMinBalanceModel";
+        internal const string PhasingQuorum = "phasingQuorum";
+        internal const string PhasingWhitelisted = "phasingWhitelisted";
+        internal const string PhasingVotingModel = "phasingVotingModel";
         internal const string Poll = "poll";
         internal const string PriceNqt = "priceNQT";
         internal const string PrunableAttachmentJson = "prunableAttachmentJSON";

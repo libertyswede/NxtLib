@@ -11,7 +11,7 @@ namespace NxtLib
         public int IssuanceHeight { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "issuerAccount")]
+        [JsonProperty(PropertyName = Parameters.IssuerAccount)]
         public ulong IssuerAccountId { get; set; }
         public string IssuerAccountRs { get; set; }
         public string Name { get; set; }
