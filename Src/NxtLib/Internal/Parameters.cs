@@ -31,6 +31,7 @@ namespace NxtLib.Internal
         internal const string CurrentLessee = "currentLessee";
         internal const string Currency = "currency";
         internal const string Deadline = "deadline";
+        internal const string DecryptedMessage = "decryptedMessage";
         internal const string Description = "description";
         internal const string DiscountNqt = "discountNQT";
         internal const string EcBlockHeight = "ecBlockHeight";

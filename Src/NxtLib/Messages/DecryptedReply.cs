@@ -6,7 +6,7 @@ namespace NxtLib.Messages
 {
     public class DecryptedReply : BaseReply
     {
-        [JsonProperty(PropertyName = "decryptedMessage")]
+        [JsonProperty(PropertyName = Parameters.DecryptedMessage)]
         [JsonConverter(typeof(ByteToHexStringConverter))]
         public IEnumerable<byte> Data { get; set; }
     }
