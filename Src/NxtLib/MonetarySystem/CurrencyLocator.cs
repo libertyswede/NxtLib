@@ -14,7 +14,7 @@ namespace NxtLib.MonetarySystem
         }
 
         private CurrencyLocator(string code)
-            : base("code", code)
+            : base(Parameters.Code, code)
         {
             Code = code;
         }

@@ -16,14 +16,14 @@ namespace NxtLib.MonetarySystem
 
         internal void AppendToQueryParameters(Dictionary<string, string> queryParameters)
         {
-            queryParameters.Add("buyRateNQT", BuyRate.Nqt.ToString());
+            queryParameters.Add(Parameters.BuyRateNqt, BuyRate.Nqt.ToString());
             queryParameters.Add(Parameters.Currency, CurrencyId.ToString());
-            queryParameters.Add("expirationHeight", ExpirationHeight.ToString());
-            queryParameters.Add("initialBuySupply", InitialBuySupply.ToString());
-            queryParameters.Add("initialSellSupply", InitialSellSupply.ToString());
-            queryParameters.Add("sellRateNQT", SellRate.Nqt.ToString());
-            queryParameters.Add("totalBuyLimit", TotalBuyLimit.ToString());
-            queryParameters.Add("totalSellLimit", TotalSellLimit.ToString());
+            queryParameters.Add(Parameters.ExpirationHeight, ExpirationHeight.ToString());
+            queryParameters.Add(Parameters.InitialBuySupply, InitialBuySupply.ToString());
+            queryParameters.Add(Parameters.InitialSellSupply, InitialSellSupply.ToString());
+            queryParameters.Add(Parameters.SellRateNqt, SellRate.Nqt.ToString());
+            queryParameters.Add(Parameters.TotalBuyLimit, TotalBuyLimit.ToString());
+            queryParameters.Add(Parameters.TotalSellLimit, TotalSellLimit.ToString());
 
         }
     }

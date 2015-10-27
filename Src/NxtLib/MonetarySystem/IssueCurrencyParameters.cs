@@ -30,24 +30,24 @@ namespace NxtLib.MonetarySystem
         {
             if (Algorithm.HasValue)
             {
-                queryParameters.Add("algorithm", ((int)Algorithm.Value).ToString());
+                queryParameters.Add(Parameters.Algorithm, ((int)Algorithm.Value).ToString());
             }
-            queryParameters.AddIfHasValue("code", Code);
-            queryParameters.AddIfHasValue("decimals", Decimals);
+            queryParameters.AddIfHasValue(Parameters.Code, Code);
+            queryParameters.AddIfHasValue(Parameters.Decimals, Decimals);
             queryParameters.AddIfHasValue(Parameters.Description, Description);
-            queryParameters.AddIfHasValue("initialSupply", InitialSupply);
-            queryParameters.AddIfHasValue("issuanceHeight", IssuanceHeight);
-            queryParameters.AddIfHasValue("maxDifficulty", MaxDifficulty);
-            queryParameters.AddIfHasValue("maxSupply", MaxSupply);
-            queryParameters.AddIfHasValue("minDifficulty", MinDifficulty);
+            queryParameters.AddIfHasValue(Parameters.InitialSupply, InitialSupply);
+            queryParameters.AddIfHasValue(Parameters.IssuanceHeight, IssuanceHeight);
+            queryParameters.AddIfHasValue(Parameters.MaxDifficulty, MaxDifficulty);
+            queryParameters.AddIfHasValue(Parameters.MaxSupply, MaxSupply);
+            queryParameters.AddIfHasValue(Parameters.MinDifficulty, MinDifficulty);
             if (MinReservePerUnit != null)
             {
-                queryParameters.AddIfHasValue("minReservePerUnitNQT", MinReservePerUnit.Nqt.ToString());
+                queryParameters.AddIfHasValue(Parameters.MinReservePerUnitNqt, MinReservePerUnit.Nqt.ToString());
             }
 
             queryParameters.AddIfHasValue(Parameters.Name, Name);
-            queryParameters.AddIfHasValue("reserveSupply", ReserveSupply);
-            queryParameters.AddIfHasValue("ruleset", Ruleset);
+            queryParameters.AddIfHasValue(Parameters.ReserveSupply, ReserveSupply);
+            queryParameters.AddIfHasValue(Parameters.Ruleset, Ruleset);
             queryParameters.AddIfHasValue(Parameters.Type, AggregateTypes());
         }
 

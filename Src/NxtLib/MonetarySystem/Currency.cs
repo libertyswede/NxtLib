@@ -36,7 +36,7 @@ namespace NxtLib.MonetarySystem
         public int MinDifficulty { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "minReservePerUnitNQT")]
+        [JsonProperty(PropertyName = Parameters.MinReservePerUnitNqt)]
         public Amount MinReservePerUnit { get; set; }
         public string Name { get; set; }
         public int NumberOfExchanges { get; set; }

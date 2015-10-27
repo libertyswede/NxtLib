@@ -24,7 +24,7 @@ namespace NxtLib.MonetarySystem
         [JsonConverter(typeof(DateTimeConverter))]
         public DateTime Timestamp { get; set; }
 
-        [JsonProperty(PropertyName = "transfer")]
+        [JsonProperty(PropertyName = Parameters.Transfer)]
         public ulong TransferId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

@@ -6,7 +6,8 @@ namespace NxtLib.MonetarySystem
 {
     public interface IMonetarySystemService
     {
-        Task<CanDeleteCurrencyReply> CanDeleteCurrency(Account account, ulong currencyId, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<CanDeleteCurrencyReply> CanDeleteCurrency(Account account, ulong currencyId, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
 
         Task<TransactionCreatedReply> CurrencyBuy(ulong currencyId, Amount rate, long units,
             CreateTransactionParameters parameters);
@@ -25,11 +26,14 @@ namespace NxtLib.MonetarySystem
 
         Task<TransactionCreatedReply> DeleteCurrency(ulong currencyId, CreateTransactionParameters parameters);
 
-        Task<GetAccountCurrenciesReply> GetAccountCurrencies(Account account, ulong? currencyId = null, int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<GetAccountCurrenciesReply> GetAccountCurrencies(Account account, ulong? currencyId = null,
+            int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<GetAccountCurrencyCountReply> GetAccountCurrencyCount(Account account, int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<GetAccountCurrencyCountReply> GetAccountCurrencyCount(Account account, int? height = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<GetAccountExchangeRequestsReply> GetAccountExchangeRequests(Account account, ulong currencyId, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<GetAccountExchangeRequestsReply> GetAccountExchangeRequests(Account account, ulong currencyId,
+            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<CurrenciesReply> GetAllCurrencies(int? firstIndex = null, int? lastIndex = null, bool? includeCounts = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
@@ -45,7 +49,9 @@ namespace NxtLib.MonetarySystem
         Task<CurrenciesReply> GetCurrencies(IEnumerable<ulong> currencyIds, bool? includeCounts = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<CurrenciesReply> GetCurrenciesByIssuer(IEnumerable<Account> accounts, int? firstIndex = null, int? lastIndex = null, bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<CurrenciesReply> GetCurrenciesByIssuer(IEnumerable<Account> accounts, int? firstIndex = null,
+            int? lastIndex = null, bool? includeCounts = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
 
         Task<CurrencyReply> GetCurrency(CurrencyLocator locator, bool? includeCounts = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
@@ -56,7 +62,8 @@ namespace NxtLib.MonetarySystem
         Task<CurrencyAccountsReply> GetCurrencyAccounts(ulong currencyId, int? height = null, int? firstIndex = null,
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId, Account account = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<CurrencyFoundersReply> GetCurrencyFounders(ulong currencyId, Account account = null, int? firstIndex = null,
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<CurrencyIdsReply> GetCurrencyIds(int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
@@ -76,18 +83,24 @@ namespace NxtLib.MonetarySystem
             int? lastIndex = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
-        Task<GetExpectedOffersReply> GetExpectedBuyOffers(ulong? currencyId = null, Account account = null, bool? sortByRate = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<GetExpectedOffersReply> GetExpectedBuyOffers(ulong? currencyId = null, Account account = null,
+            bool? sortByRate = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<ExpectedCurrencyTransfersReply> GetExpectedCurrencyTransfers(ulong? currencyId = null, Account account = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<ExpectedCurrencyTransfersReply> GetExpectedCurrencyTransfers(ulong? currencyId = null,
+            Account account = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<GetExpectedExchangeRequestsReply> GetExpectedExchangeRequests(Account account = null, ulong? currencyId = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<GetExpectedExchangeRequestsReply> GetExpectedExchangeRequests(Account account = null,
+            ulong? currencyId = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
 
-        Task<GetExpectedOffersReply> GetExpectedSellOffers(ulong? currencyId = null, Account account = null, bool? sortByRate = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<GetExpectedOffersReply> GetExpectedSellOffers(ulong? currencyId = null, Account account = null,
+            bool? sortByRate = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<ExchangesReply> GetLastExchanges(IEnumerable<ulong> currencyIds, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
-        Task<GetMintingTargetReply> GetMintingTarget(ulong currencyId, Account account, long units, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<GetMintingTargetReply> GetMintingTarget(ulong currencyId, Account account, long units,
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<GetOfferReply> GetOffer(ulong offerId, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
@@ -104,6 +117,7 @@ namespace NxtLib.MonetarySystem
         Task<CurrenciesReply> SearchCurrencies(string query, int? firstIndex = null, int? lastIndex = null,
             bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<TransactionCreatedReply> TransferCurrency(Account recipient, ulong currencyId, long units, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> TransferCurrency(Account recipient, ulong currencyId, long units,
+            CreateTransactionParameters parameters);
     }
 }
