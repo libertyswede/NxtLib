@@ -45,7 +45,7 @@ namespace NxtLib.DigitalGoodsStore
         public Amount Price { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "seller")]
+        [JsonProperty(PropertyName = Parameters.Seller)]
         public ulong SellerId { get; set; }
         public string SellerRs { get; set; }
 

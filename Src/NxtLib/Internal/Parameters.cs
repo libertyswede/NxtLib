@@ -61,8 +61,10 @@ namespace NxtLib.Internal
         internal const string RefundNqt = "refundNQT";
         internal const string Recipient = "recipient";
         internal const string SecretPhrase = "secretPhrase";
+        internal const string Seller = "seller";
         internal const string Sender = "sender";
         internal const string SubType = "subtype";
+        internal const string Tag = "tag";
         internal const string Timestamp = "timestamp";
         internal const string Transaction = "transaction";
         internal const string TransactionBytes = "transactionBytes";

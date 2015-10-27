@@ -30,7 +30,7 @@ namespace NxtLib.MonetarySystem
         public string SellerRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "seller")]
+        [JsonProperty(PropertyName = Parameters.Seller)]
         public ulong SellerId { get; set; }
 
         [JsonConverter(typeof(DateTimeConverter))]

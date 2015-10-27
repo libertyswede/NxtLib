@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using NxtLib.Internal;
 
 namespace NxtLib.DigitalGoodsStore
 {
@@ -6,7 +7,7 @@ namespace NxtLib.DigitalGoodsStore
     {
         public int InStockCount { get; set; }
 
-        [JsonProperty(PropertyName = "tag")]
+        [JsonProperty(PropertyName = Parameters.Tag)]
         public string TagName { get; set; }
         public int TotalCount { get; set; }
     }
