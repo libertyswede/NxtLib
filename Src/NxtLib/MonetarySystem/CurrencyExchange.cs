@@ -11,7 +11,7 @@ namespace NxtLib.MonetarySystem
         public ulong BlockId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "buyer")]
+        [JsonProperty(PropertyName = Parameters.Buyer)]
         public ulong BuyerId { get; set; }
         public string BuyerRs { get; set; }
 

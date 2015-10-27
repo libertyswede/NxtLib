@@ -3,6 +3,9 @@ namespace NxtLib.Internal
     internal class Parameters
     {
         internal const string Account = "account";
+        internal const string Alias = "alias";
+        internal const string Aliases = "aliases";
+        internal const string AliasName = "aliasName";
         internal const string AliasUri = "aliasURI";
         internal const string AmountNqt = "amountNQT";
         internal const string AmountNqtPerQnt = "amountNQTPerQNT";
@@ -11,6 +14,7 @@ namespace NxtLib.Internal
         internal const string Assets = "assets";
         internal const string BalanceNqt = "balanceNQT";
         internal const string Block = "block";
+        internal const string Buyer = "buyer";
         internal const string CommunicationEvent = "communicationEvent";
         internal const string Currencies = "currencies";
         internal const string CurrentLessee = "currentLessee";

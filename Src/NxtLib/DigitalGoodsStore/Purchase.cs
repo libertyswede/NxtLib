@@ -8,7 +8,7 @@ namespace NxtLib.DigitalGoodsStore
     public class Purchase
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "buyer")]
+        [JsonProperty(PropertyName = Parameters.Buyer)]
         public ulong BuyerId { get; set; }
         public string BuyerRs { get; set; }
 

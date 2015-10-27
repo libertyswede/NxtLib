@@ -12,13 +12,13 @@ namespace NxtLib.Aliases
         public string AccountRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "alias")]
+        [JsonProperty(PropertyName = Parameters.Alias)]
         public ulong AliasId { get; set; }
         public string AliasName { get; set; }
         public string AliasUri { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "buyer")]
+        [JsonProperty(PropertyName = Parameters.Buyer)]
         public ulong? BuyerId { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]

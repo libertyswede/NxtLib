@@ -1,4 +1,6 @@
-﻿namespace NxtLib.Aliases
+﻿using NxtLib.Internal;
+
+namespace NxtLib.Aliases
 {
     public class AliasLocator : LocatorBase
     {
@@ -6,13 +8,13 @@
         public readonly ulong? Id;
 
         private AliasLocator(string name)
-            : base("aliasName", name)
+            : base(Parameters.AliasName, name)
         {
             Name = name;
         }
 
         private AliasLocator(ulong id)
-            : base("alias", id.ToString())
+            : base(Parameters.Alias, id.ToString())
         {
             Id = id;
         }
