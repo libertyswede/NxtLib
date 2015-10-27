@@ -41,8 +41,8 @@ namespace NxtLib.Transactions
             var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
             if (transactionType.HasValue)
             {
-                queryParameters.Add("type", TransactionTypeMapper.GetMainTypeByte(transactionType.Value).ToString());
-                queryParameters.Add("subtype", TransactionTypeMapper.GetSubTypeByte(transactionType.Value).ToString());
+                queryParameters.Add(Parameters.Type, TransactionTypeMapper.GetMainTypeByte(transactionType.Value).ToString());
+                queryParameters.Add(Parameters.SubType, TransactionTypeMapper.GetSubTypeByte(transactionType.Value).ToString());
             }
             queryParameters.AddIfHasValue(timeStamp);
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
@@ -67,7 +67,7 @@ namespace NxtLib.Transactions
 
             if (accounts != null && (accountsList = accounts.ToList()).Any())
             {
-                queryParameters.Add("account", accountsList.Select(a => a.AccountId.ToString()).ToList());
+                queryParameters.Add(Parameters.Account, accountsList.Select(a => a.AccountId.ToString()).ToList());
             }
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -87,7 +87,7 @@ namespace NxtLib.Transactions
         public async Task<TransactionBytesReply> GetTransactionBytes(ulong transactionId, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TransactionBytesReply>("getTransactionBytes", queryParameters);
@@ -99,7 +99,7 @@ namespace NxtLib.Transactions
             var queryParameters = new Dictionary<string, List<string>>();
             if (accounts != null)
             {
-                queryParameters.Add("account", accounts.Select(a => a.AccountId.ToString()).ToList());
+                queryParameters.Add(Parameters.Account, accounts.Select(a => a.AccountId.ToString()).ToList());
             }
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -112,7 +112,7 @@ namespace NxtLib.Transactions
             var queryParameters = new Dictionary<string, List<string>>();
             if (accounts != null)
             {
-                queryParameters.Add("account", accounts.Select(a => a.AccountId.ToString()).ToList());
+                queryParameters.Add(Parameters.Account, accounts.Select(a => a.AccountId.ToString()).ToList());
             }
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -145,17 +145,17 @@ namespace NxtLib.Transactions
             var queryParameters = new Dictionary<string, string>();
             if (parameter.TransactionBytes != null)
             {
-                queryParameters.Add(!unsigned ? "transactionBytes" : "unsignedTransactionBytes",
+                queryParameters.Add(!unsigned ? Parameters.TransactionBytes : Parameters.UnsignedTransactionBytes,
                     parameter.TransactionBytes.ToHexString());
             }
             if (parameter.TransactionJson != null)
             {
-                queryParameters.Add(!unsigned ? "transactionJSON" : "unsignedTransactionJSON",
+                queryParameters.Add(!unsigned ? Parameters.TransactionJson : Parameters.UnsignedTransactionJson,
                     parameter.TransactionJson);
             }
             if (!string.IsNullOrEmpty(parameter.PrunableAttachmentJson))
             {
-                queryParameters.Add("prunableAttachmentJSON", parameter.PrunableAttachmentJson);
+                queryParameters.Add(Parameters.PrunableAttachmentJson, parameter.PrunableAttachmentJson);
             }
             return queryParameters;
         }

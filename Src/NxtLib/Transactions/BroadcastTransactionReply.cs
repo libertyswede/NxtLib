@@ -8,7 +8,7 @@ namespace NxtLib.Transactions
         [JsonConverter(typeof(ByteToHexStringConverter))]
         public BinaryHexString FullHash { get; set; }
 
-        [JsonProperty(PropertyName = "transaction")]
+        [JsonProperty(PropertyName = Parameters.Transaction)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong TransactionId { get; set; }
     }

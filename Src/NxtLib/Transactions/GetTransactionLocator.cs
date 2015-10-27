@@ -1,3 +1,5 @@
+using NxtLib.Internal;
+
 namespace NxtLib.Transactions
 {
     public class GetTransactionLocator : LocatorBase
@@ -6,7 +8,7 @@ namespace NxtLib.Transactions
         public readonly BinaryHexString FullHash;
 
         private GetTransactionLocator(ulong transactionId) 
-            : base("transaction", transactionId.ToString())
+            : base(Parameters.Transaction, transactionId.ToString())
         {
             TransactionId = transactionId;
         }

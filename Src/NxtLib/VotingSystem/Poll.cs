@@ -7,14 +7,14 @@ namespace NxtLib.VotingSystem
 {
     public class Poll
     {
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AcountId { get; set; }
         public string AccountRs { get; set; }
         public string Description { get; set; }
         public bool Finished { get; set; }
         public int FinishHeight { get; set; }
 
-        [JsonProperty(PropertyName = "holding")]
+        [JsonProperty(PropertyName = Parameters.Holding)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong HoldingId { get; set; }
         public int MaxNumberOfOptions { get; set; }
@@ -26,7 +26,7 @@ namespace NxtLib.VotingSystem
         public string Name { get; set; }
         public List<string> Options { get; set; }
 
-        [JsonProperty(PropertyName = "poll")]
+        [JsonProperty(PropertyName = Parameters.Poll)]
         public ulong PollId { get; set; }
 
         [JsonConverter(typeof(DateTimeConverter))]

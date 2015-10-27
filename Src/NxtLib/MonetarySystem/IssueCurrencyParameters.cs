@@ -34,7 +34,7 @@ namespace NxtLib.MonetarySystem
             }
             queryParameters.AddIfHasValue("code", Code);
             queryParameters.AddIfHasValue("decimals", Decimals);
-            queryParameters.AddIfHasValue("description", Description);
+            queryParameters.AddIfHasValue(Parameters.Description, Description);
             queryParameters.AddIfHasValue("initialSupply", InitialSupply);
             queryParameters.AddIfHasValue("issuanceHeight", IssuanceHeight);
             queryParameters.AddIfHasValue("maxDifficulty", MaxDifficulty);
@@ -45,10 +45,10 @@ namespace NxtLib.MonetarySystem
                 queryParameters.AddIfHasValue("minReservePerUnitNQT", MinReservePerUnit.Nqt.ToString());
             }
 
-            queryParameters.AddIfHasValue("name", Name);
+            queryParameters.AddIfHasValue(Parameters.Name, Name);
             queryParameters.AddIfHasValue("reserveSupply", ReserveSupply);
             queryParameters.AddIfHasValue("ruleset", Ruleset);
-            queryParameters.AddIfHasValue("type", AggregateTypes());
+            queryParameters.AddIfHasValue(Parameters.Type, AggregateTypes());
         }
 
         private int? AggregateTypes()

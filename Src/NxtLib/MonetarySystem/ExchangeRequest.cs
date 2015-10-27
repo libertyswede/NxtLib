@@ -7,7 +7,7 @@ namespace NxtLib.MonetarySystem
     public class ExchangeRequest : CurrencyInfo
     {
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "rateNQT")]
+        [JsonProperty(PropertyName = Parameters.RateNqt)]
         public Amount Rate { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
@@ -17,7 +17,7 @@ namespace NxtLib.MonetarySystem
         public DateTime Timestamp { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "transaction")]
+        [JsonProperty(PropertyName = Parameters.Transaction)]
         public ulong TransactionId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

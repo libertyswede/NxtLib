@@ -9,7 +9,7 @@ namespace NxtLib.MonetarySystem
         public long Counter { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "currency")]
+        [JsonProperty(PropertyName = Parameters.Currency)]
         public ulong CurrencyId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

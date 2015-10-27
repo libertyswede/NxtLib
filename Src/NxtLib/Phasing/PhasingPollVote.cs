@@ -6,7 +6,7 @@ namespace NxtLib.Phasing
     public class PhasingPollVote
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "transaction")]
+        [JsonProperty(PropertyName = Parameters.Transaction)]
         public ulong TransactionId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

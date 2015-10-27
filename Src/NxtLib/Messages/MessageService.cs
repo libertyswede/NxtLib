@@ -56,7 +56,7 @@ namespace NxtLib.Messages
         public async Task<PrunableMessageReply> GetPrunableMessage(ulong transactionId, string secretPhrase = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
             queryParameters.AddIfHasValue(nameof(secretPhrase), secretPhrase);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -81,7 +81,7 @@ namespace NxtLib.Messages
         public async Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
             queryParameters.AddIfHasValue(nameof(secretPhrase), secretPhrase);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -117,7 +117,7 @@ namespace NxtLib.Messages
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"transaction", transactionId.ToString()},
+                {Parameters.Transaction, transactionId.ToString()},
                 {nameof(encryptedMessageData), encryptedMessageData.ToHexString()},
                 {nameof(encryptedMessageNonce), encryptedMessageNonce.ToHexString()}
             };
@@ -163,10 +163,10 @@ namespace NxtLib.Messages
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"transaction", transactionId.ToString()},
+                {Parameters.Transaction, transactionId.ToString()},
                 {nameof(message), message},
                 {nameof(messageIsText), messageIsText.ToString()},
-                {"messageIsPrunable", true.ToString()}
+                {Parameters.MessageIsPrunable, true.ToString()}
             };
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);

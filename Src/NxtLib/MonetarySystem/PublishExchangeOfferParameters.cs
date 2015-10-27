@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NxtLib.Internal;
 
 namespace NxtLib.MonetarySystem
 {
@@ -16,7 +17,7 @@ namespace NxtLib.MonetarySystem
         internal void AppendToQueryParameters(Dictionary<string, string> queryParameters)
         {
             queryParameters.Add("buyRateNQT", BuyRate.Nqt.ToString());
-            queryParameters.Add("currency", CurrencyId.ToString());
+            queryParameters.Add(Parameters.Currency, CurrencyId.ToString());
             queryParameters.Add("expirationHeight", ExpirationHeight.ToString());
             queryParameters.Add("initialBuySupply", InitialBuySupply.ToString());
             queryParameters.Add("initialSellSupply", InitialSellSupply.ToString());

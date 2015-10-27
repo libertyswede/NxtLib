@@ -17,7 +17,7 @@ namespace NxtLib
         public string Name { get; set; }
 
         [JsonConverter(typeof(CurrencyTypeConverter))]
-        [JsonProperty(PropertyName = "type")]
+        [JsonProperty(PropertyName = Parameters.Type)]
         public HashSet<CurrencyType> Types { get; set; }
     }
 }

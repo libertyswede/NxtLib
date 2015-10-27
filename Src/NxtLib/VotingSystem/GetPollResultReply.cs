@@ -9,7 +9,7 @@ namespace NxtLib.VotingSystem
         public int? Decimals { get; set; }
         public bool Finished { get; set; }
 
-        [JsonProperty(PropertyName = "holding")]
+        [JsonProperty(PropertyName = Parameters.Holding)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong HoldingId { get; set; }
         public MinBalanceModel MinBalanceModel { get; set; }
@@ -18,7 +18,7 @@ namespace NxtLib.VotingSystem
         public long MinBalance { get; set; }
         public List<string> Options { get; set; }
 
-        [JsonProperty(PropertyName = "poll")]
+        [JsonProperty(PropertyName = Parameters.Poll)]
         public ulong PollId { get; set; }
         public List<PollResult> Results { get; set; }
         public VotingModel? VotingModel { get; set; }

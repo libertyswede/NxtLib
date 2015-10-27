@@ -11,7 +11,7 @@ namespace NxtLib.AssetExchange
         public int AskOrderHeight { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "asset")]
+        [JsonProperty(PropertyName = Parameters.Asset)]
         public ulong AssetId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
@@ -28,7 +28,7 @@ namespace NxtLib.AssetExchange
         public int Height { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "priceNQT")]
+        [JsonProperty(PropertyName = Parameters.PriceNqt)]
         public Amount Price { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

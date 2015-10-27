@@ -11,7 +11,7 @@ namespace NxtLib.DigitalGoodsStore
         public string Description { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "goods")]
+        [JsonProperty(PropertyName = Parameters.Goods)]
         public ulong GoodsId { get; set; }
         public string Name { get; set; }
         public int NumberOfPublicFeedbacks { get; set; }
@@ -19,7 +19,7 @@ namespace NxtLib.DigitalGoodsStore
         public List<string> ParsedTags { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "priceNQT")]
+        [JsonProperty(PropertyName = Parameters.PriceNqt)]
         public Amount Price { get; set; }
         public int Quantity { get; set; }
 

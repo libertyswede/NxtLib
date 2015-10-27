@@ -6,7 +6,7 @@ namespace NxtLib.AssetExchange
     public class OrderCancellation
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
 
@@ -17,7 +17,7 @@ namespace NxtLib.AssetExchange
         public int Height { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "order")]
+        [JsonProperty(PropertyName = Parameters.Order)]
         public ulong OrderId { get; set; }
         public bool Phased { get; set; }
 

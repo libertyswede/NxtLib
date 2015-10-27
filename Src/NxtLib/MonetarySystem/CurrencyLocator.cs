@@ -1,4 +1,6 @@
-﻿namespace NxtLib.MonetarySystem
+﻿using NxtLib.Internal;
+
+namespace NxtLib.MonetarySystem
 {
     public class CurrencyLocator : LocatorBase
     {
@@ -6,7 +8,7 @@
         public readonly string Code;
 
         private CurrencyLocator(ulong currencyId)
-            : base("currency", currencyId.ToString())
+            : base(Parameters.Currency, currencyId.ToString())
         {
             CurrencyId = currencyId;
         }

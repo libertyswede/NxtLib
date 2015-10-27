@@ -6,7 +6,7 @@ namespace NxtLib.Accounts
 {
     public class AccountLedgerEntry
     { 
-        [JsonProperty("account")]
+        [JsonProperty(Parameters.Account)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
@@ -29,7 +29,7 @@ namespace NxtLib.Accounts
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public int Height { get; set; }
 
-        [JsonProperty("holding")]
+        [JsonProperty(Parameters.Holding)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong HoldingId { get; set; }
         public string HoldingType { get; set; }

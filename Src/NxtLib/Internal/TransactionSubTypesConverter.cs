@@ -23,9 +23,9 @@ namespace NxtLib.Internal
                         CanHaveRecipient = Convert.ToBoolean(((JValue)jtoken.SelectToken("canHaveRecipient")).Value),
                         IsPhasingSafe = Convert.ToBoolean(((JValue)jtoken.SelectToken("isPhasingSafe")).Value),
                         MustHaveRecipient = Convert.ToBoolean(((JValue)jtoken.SelectToken("mustHaveRecipient")).Value),
-                        Name = ((JValue)jtoken.SelectToken("name")).Value.ToString(),
-                        SubType = (int)(long)((JValue)jtoken.SelectToken("subtype")).Value,
-                        Type = (int)(long)((JValue)jtoken.SelectToken("type")).Value
+                        Name = ((JValue)jtoken.SelectToken(Parameters.Name)).Value.ToString(),
+                        SubType = (int)(long)((JValue)jtoken.SelectToken(Parameters.SubType)).Value,
+                        Type = (int)(long)((JValue)jtoken.SelectToken(Parameters.Type)).Value
                     };
                     reply.Add(transactionType.Name, subtype);
                 }

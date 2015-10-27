@@ -6,7 +6,7 @@ namespace NxtLib.Tokens
 {
     public class DecodeHallmarkReply : BaseReply
     {
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }

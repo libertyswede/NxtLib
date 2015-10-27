@@ -6,16 +6,16 @@ namespace NxtLib.MonetarySystem
     public class CurrencyFounder
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "amountPerUnitNQT")]
+        [JsonProperty(PropertyName = Parameters.AmountPerUnitNqt)]
         public Amount AmountPerUnit { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "currency")]
+        [JsonProperty(PropertyName = Parameters.Currency)]
         public ulong CurrencyId { get; set; }
     }
 }

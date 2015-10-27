@@ -24,12 +24,12 @@ namespace NxtLib.Internal
             var attachmentJobject = jObject.SelectToken("attachment") as JObject;
             var attachmentConverter = new AttachmentConverter(attachmentJobject);
 
-            var typeByte = GetValueOrDefault(jObject, "type", Convert.ToByte);
-            var subTypeByte = GetValueOrDefault(jObject, "subtype", Convert.ToByte);
+            var typeByte = GetValueOrDefault(jObject, Parameters.Type, Convert.ToByte);
+            var subTypeByte = GetValueOrDefault(jObject, Parameters.SubType, Convert.ToByte);
             var type = TransactionTypeMapper.GetMainType(typeByte);
             var subType = TransactionTypeMapper.GetSubType(typeByte, subTypeByte);
 
-            transaction.Amount = GetValueOrDefault(jObject, "amountNQT", obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
+            transaction.Amount = GetValueOrDefault(jObject, Parameters.AmountNqt, obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
             transaction.Attachment = attachmentConverter.GetAttachment(subType);
             transaction.BlockId = GetValueOrNull(jObject, "block", Convert.ToUInt64);
             transaction.BlockTimestamp = GetDateTimeOrNull(jObject, "blockTimestamp");
@@ -55,7 +55,7 @@ namespace NxtLib.Internal
             transaction.SignatureHash = GetValueOrDefault(jObject, "signatureHash", obj => obj.ToString());
             transaction.SubType = subType;
             transaction.Timestamp = GetDateTimeOrDefault(jObject, "timestamp");
-            transaction.TransactionId = GetValueOrNull(jObject, "transaction", Convert.ToUInt64);
+            transaction.TransactionId = GetValueOrNull(jObject, Parameters.Transaction, Convert.ToUInt64);
             transaction.TransactionIndex = GetValueOrDefault(jObject, "transactionIndex", Convert.ToInt32);
             transaction.Type = type;
             transaction.Version = GetValueOrDefault(jObject, "version", Convert.ToInt32);

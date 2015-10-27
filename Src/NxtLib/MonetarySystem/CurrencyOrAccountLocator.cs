@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NxtLib.Internal;
 
 namespace NxtLib.MonetarySystem
 {
@@ -8,7 +9,7 @@ namespace NxtLib.MonetarySystem
         public readonly ulong? CurrencyId;
 
         private CurrencyOrAccountLocator(ulong currencyId)
-            : base("currency", currencyId.ToString())
+            : base(Parameters.Currency, currencyId.ToString())
         {
             CurrencyId = currencyId;
         }
@@ -40,7 +41,7 @@ namespace NxtLib.MonetarySystem
         {
             var dictionary = new Dictionary<string, string>
             {
-                {"currency", currencyId.ToString()},
+                {Parameters.Currency, currencyId.ToString()},
                 {nameof(account), account.AccountId.ToString()}
             };
             return new CurrencyOrAccountLocator(currencyId, account.AccountId.ToString(), dictionary);

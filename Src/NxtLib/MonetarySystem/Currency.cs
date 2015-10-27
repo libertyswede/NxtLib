@@ -7,7 +7,7 @@ namespace NxtLib.MonetarySystem
     public class Currency
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
         public byte Algorithm { get; set; }
@@ -15,7 +15,7 @@ namespace NxtLib.MonetarySystem
         public int CreationHeight { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "currency")]
+        [JsonProperty(PropertyName = Parameters.Currency)]
         public ulong CurrencyId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

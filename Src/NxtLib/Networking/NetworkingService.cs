@@ -26,13 +26,13 @@ namespace NxtLib.Networking
 
         public async Task<GetPeersReply> GetInboundPeers()
         {
-            var queryParameters = new Dictionary<string, string> {{"includePeerInfo", false.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.IncludePeerInfo, false.ToString()}};
             return await Get<GetPeersReply>("getInboundPeers", queryParameters);
         }
 
         public async Task<GetPeersIncludeInfoReply> GetInboundPeersIncludeInfo()
         {
-            var queryParameters = new Dictionary<string, string> {{"includePeerInfo", true.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.IncludePeerInfo, true.ToString()}};
             return await Get<GetPeersIncludeInfoReply>("getInboundPeers", queryParameters);
         }
 
@@ -58,7 +58,7 @@ namespace NxtLib.Networking
             string service = null)
         {
             var queryParameters = locator != null ? locator.QueryParameters : new Dictionary<string, string>();
-            queryParameters.Add("includePeerInfo", true.ToString());
+            queryParameters.Add(Parameters.IncludePeerInfo, true.ToString());
             queryParameters.AddIfHasValue(nameof(service), service);
             return await Get<GetPeersIncludeInfoReply>("getPeers", queryParameters);
         }

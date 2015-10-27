@@ -9,12 +9,12 @@ namespace NxtLib
         public string FullHash { get; set; }
         public string SignatureHash { get; set; }
 
-        [JsonProperty(PropertyName = "transactionJSON")]
+        [JsonProperty(PropertyName = Parameters.TransactionJson)]
         public Transaction Transaction { get; set; }
         public string TransactionBytes { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "transaction")]
+        [JsonProperty(PropertyName = Parameters.Transaction)]
         public ulong? TransactionId { get; set; }
 
         [JsonConverter(typeof(ByteToHexStringConverter))]

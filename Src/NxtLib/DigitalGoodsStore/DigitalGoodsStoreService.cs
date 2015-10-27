@@ -15,7 +15,7 @@ namespace NxtLib.DigitalGoodsStore
 
         public async Task<TransactionCreatedReply> Delisting(ulong goodsId, CreateTransactionParameters parameters)
         {
-            var queryParameters = new Dictionary<string, string> {{"goods", goodsId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Goods, goodsId.ToString()}};
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dgsDelisting", queryParameters);
         }
@@ -24,11 +24,11 @@ namespace NxtLib.DigitalGoodsStore
             Amount discount = null, string goodsToEncrypt = null, bool? goodsIsText = null, string goodsData = null,
             BinaryHexString goodsNonce = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"purchase", purchaseId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Purchase, purchaseId.ToString()}};
             parameters.AppendToQueryParameters(queryParameters);
             if (discount != null)
             {
-                queryParameters.AddIfHasValue("discountNQT", discount.Nqt);
+                queryParameters.AddIfHasValue(Parameters.DiscountNqt, discount.Nqt);
             }
             queryParameters.AddIfHasValue(nameof(goodsToEncrypt), goodsToEncrypt);
             queryParameters.AddIfHasValue(nameof(goodsIsText), goodsIsText);
@@ -42,7 +42,7 @@ namespace NxtLib.DigitalGoodsStore
 
         public async Task<TransactionCreatedReply> Feedback(ulong purchaseId, CreateTransactionParameters parameters)
         {
-            var queryParameters = new Dictionary<string, string> {{"purchase", purchaseId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Purchase, purchaseId.ToString()}};
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dgsFeedback", queryParameters);
         }
@@ -61,7 +61,7 @@ namespace NxtLib.DigitalGoodsStore
         public async Task<GoodReply> GetGood(ulong goodsId, bool? includeCounts = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"goods", goodsId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Goods, goodsId.ToString()}};
             queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -98,7 +98,7 @@ namespace NxtLib.DigitalGoodsStore
         public async Task<PuchaseCountReply> GetGoodsPurchaseCount(ulong goodsId, bool? withPublicFeedbacksOnly = null,
             bool? completed = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"goods", goodsId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Goods, goodsId.ToString()}};
             queryParameters.AddIfHasValue(nameof(withPublicFeedbacksOnly), withPublicFeedbacksOnly);
             queryParameters.AddIfHasValue(nameof(completed), completed);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
@@ -110,7 +110,7 @@ namespace NxtLib.DigitalGoodsStore
             int? lastIndex = null, bool? withPublickKeedbacksOnly = null, bool? completed = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"goods", goodsId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Goods, goodsId.ToString()}};
             queryParameters.AddIfHasValue(nameof(buyer), buyer);
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
             queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
@@ -135,7 +135,7 @@ namespace NxtLib.DigitalGoodsStore
         public async Task<PurchaseReply> GetPurchase(ulong purchaseId, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"purchase", purchaseId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Purchase, purchaseId.ToString()}};
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<PurchaseReply>("getDGSPurchase", queryParameters);
@@ -213,7 +213,7 @@ namespace NxtLib.DigitalGoodsStore
                 {nameof(name), name},
                 {nameof(description), description},
                 {nameof(quantity), quantity.ToString()},
-                {"priceNQT", price.Nqt.ToString()}
+                {Parameters.PriceNqt, price.Nqt.ToString()}
             };
             queryParameters.AddIfHasValue(nameof(tags), tags);
             parameters.AppendToQueryParameters(queryParameters);
@@ -225,8 +225,8 @@ namespace NxtLib.DigitalGoodsStore
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"goods", goodsId.ToString()},
-                {"priceNQT", price.Nqt.ToString()}
+                {Parameters.Goods, goodsId.ToString()},
+                {Parameters.PriceNqt, price.Nqt.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dgsPriceChange", queryParameters);
@@ -237,8 +237,8 @@ namespace NxtLib.DigitalGoodsStore
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"goods", goodsId.ToString()},
-                {"priceNQT", price.Nqt.ToString()},
+                {Parameters.Goods, goodsId.ToString()},
+                {Parameters.PriceNqt, price.Nqt.ToString()},
                 {nameof(quantity), quantity.ToString()}
             };
             queryParameters.AddIfHasValue(nameof(deliveryDeadlineTimestamp), deliveryDeadlineTimestamp);
@@ -251,7 +251,7 @@ namespace NxtLib.DigitalGoodsStore
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"goods", goodsId.ToString()},
+                {Parameters.Goods, goodsId.ToString()},
                 {nameof(deltaQuantity), deltaQuantity.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
@@ -263,8 +263,8 @@ namespace NxtLib.DigitalGoodsStore
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"purchase", purchaseId.ToString()},
-                {"refundNQT", refund.Nqt.ToString()}
+                {Parameters.Purchase, purchaseId.ToString()},
+                {Parameters.RefundNqt, refund.Nqt.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dgsRefund", queryParameters);

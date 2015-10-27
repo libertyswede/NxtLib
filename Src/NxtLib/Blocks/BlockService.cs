@@ -36,7 +36,7 @@ namespace NxtLib.Blocks
             bool? includeExecutedPhased = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = query.QueryParameters;
-            queryParameters.Add("includeTransactions", "true");
+            queryParameters.Add(Parameters.IncludeTransactions, true.ToString());
             queryParameters.AddIfHasValue(nameof(includeExecutedPhased), includeExecutedPhased);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -47,7 +47,7 @@ namespace NxtLib.Blocks
             int? lastIndex = null, DateTime? timestamp = null, bool? includeExecutedPhased = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"includeTransactions", "true"}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.IncludeTransactions, true.ToString()}};
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
             queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
             queryParameters.AddIfHasValue(nameof(timestamp), timestamp);

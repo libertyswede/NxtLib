@@ -16,7 +16,7 @@ namespace NxtLib.TaggedData
         public async Task<DownloadTaggedDataReply> DownloadTaggedData(ulong transactionId, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             var url = BuildUrl("downloadTaggedData", queryParameters);
@@ -38,7 +38,7 @@ namespace NxtLib.TaggedData
             bool? isText = null, string filename = null)
         {
             var queryParameters = GetQueryParametersForTaggedData(name, data, file, description, tags, channel, type, isText, filename);
-            queryParameters.Add("transaction", transactionId.ToString());
+            queryParameters.Add(Parameters.Transaction, transactionId.ToString());
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("extendTaggedData", queryParameters);
         }
@@ -108,7 +108,7 @@ namespace NxtLib.TaggedData
         public async Task<TaggedDataReply> GetTaggedData(ulong transactionId, bool? includeData = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
             queryParameters.AddIfHasValue(nameof(includeData), includeData);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -118,7 +118,7 @@ namespace NxtLib.TaggedData
         public async Task<TaggedDataExtendTransactionsReply> GetTaggedDataExtendTransactions(ulong transactionId,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Get<TaggedDataExtendTransactionsReply>("getTaggedDataExtendTransactions", queryParameters);
@@ -157,7 +157,7 @@ namespace NxtLib.TaggedData
         {
             var queryParameters = GetQueryParametersForTaggedData(name, data, file, description, tags, channel, type,
                 isText, filename);
-            queryParameters.Add("transaction", transactionId.ToString());
+            queryParameters.Add(Parameters.Transaction, transactionId.ToString());
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
             return await Post<VerifyTaggedDataReply>("verifyTaggedData", queryParameters);

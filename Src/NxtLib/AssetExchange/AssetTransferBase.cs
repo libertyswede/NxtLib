@@ -6,7 +6,7 @@ namespace NxtLib.AssetExchange
     public abstract class AssetTransferBase
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "asset")]
+        [JsonProperty(PropertyName = Parameters.Asset)]
         public ulong AssetId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

@@ -9,7 +9,7 @@ namespace NxtLib.Accounts
         public List<AccountCurrency> AccountCurrencies { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
         public List<AccountAssetBalance> AssetBalances { get; set; }

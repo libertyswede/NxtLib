@@ -103,7 +103,7 @@ namespace NxtLib.Debug
             var communicationEventList = communicationEvents.ToList();
             if (communicationEventList.Any())
             {
-                queryParameters.Add("communicationEvent", communicationEventList);
+                queryParameters.Add(Parameters.CommunicationEvent, communicationEventList);
             }
             queryParameters.AddIfHasValue(nameof(logLevel), logLevel);
             return await Post<SetLoggingReply>("setLogging", queryParameters);

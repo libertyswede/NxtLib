@@ -7,7 +7,7 @@ namespace NxtLib.Tokens
     public class TokenReply : BaseReply
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong Account { get; set; }
         public string AccountRs { get; set; }
 

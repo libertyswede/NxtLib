@@ -16,13 +16,13 @@ namespace NxtLib.DigitalGoodsStore
         public DateTime DeliveryDeadlineTimestamp { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "discountNQT")]
+        [JsonProperty(PropertyName = Parameters.DiscountNqt)]
         public Amount Discount { get; set; }
         public List<EncryptedDataReply> FeedbackNotes { get; set; }
         public EncryptedDataReply GoodsData { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "goods")]
+        [JsonProperty(PropertyName = Parameters.Goods)]
         public ulong GoodsId { get; set; }
         public bool GoodsIsText { get; set; }
         public string Name { get; set; }
@@ -31,17 +31,17 @@ namespace NxtLib.DigitalGoodsStore
         public List<string> PublicFeedbacks { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "purchase")]
+        [JsonProperty(PropertyName = Parameters.Purchase)]
         public ulong PurchaseId { get; set; }
         public int Quantity { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "refundNQT")]
+        [JsonProperty(PropertyName = Parameters.RefundNqt)]
         public Amount Refund { get; set; }
         public EncryptedDataReply RefundNote { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "priceNQT")]
+        [JsonProperty(PropertyName = Parameters.PriceNqt)]
         public Amount Price { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

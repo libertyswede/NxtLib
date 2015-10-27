@@ -45,12 +45,12 @@ namespace NxtLib.Local
             BinaryHexString signature, JToken attachment)
         {
             var resultJson = new JObject();
-            resultJson.Add("type", (int)TransactionTypeMapper.GetMainTypeByte(transaction.Type));
-            resultJson.Add("subtype", (int)TransactionTypeMapper.GetSubTypeByte(transaction.SubType));
+            resultJson.Add(Parameters.Type, (int)TransactionTypeMapper.GetMainTypeByte(transaction.Type));
+            resultJson.Add(Parameters.SubType, (int)TransactionTypeMapper.GetSubTypeByte(transaction.SubType));
             resultJson.Add("timestamp", DateTimeConverter.GetNxtTime(transaction.Timestamp));
             resultJson.Add("deadline", transaction.Deadline);
             resultJson.Add("senderPublicKey", transaction.SenderPublicKey.ToHexString());
-            resultJson.Add("amountNQT", transaction.Amount.Nqt.ToString());
+            resultJson.Add(Parameters.AmountNqt, transaction.Amount.Nqt.ToString());
             resultJson.Add("feeNQT", transaction.Fee.Nqt.ToString());
             if (!string.IsNullOrEmpty(referencedTransactionFullHash))
             {

@@ -18,7 +18,7 @@ namespace NxtLib.Aliases
         {
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);
-            queryParameters.Add("amountNQT", amount.Nqt.ToString());
+            queryParameters.Add(Parameters.AmountNqt, amount.Nqt.ToString());
             return await Post<TransactionCreatedReply>("buyAlias", queryParameters);
         }
 
@@ -76,7 +76,7 @@ namespace NxtLib.Aliases
         {
             var queryParameters = query.QueryParameters;
             parameters.AppendToQueryParameters(queryParameters);
-            queryParameters.Add("priceNQT", price.Nqt.ToString());
+            queryParameters.Add(Parameters.PriceNqt, price.Nqt.ToString());
             queryParameters.AddIfHasValue(nameof(recipient), recipient);
             return await Post<TransactionCreatedReply>("sellAlias", queryParameters);
         }
@@ -84,7 +84,11 @@ namespace NxtLib.Aliases
         public async Task<TransactionCreatedReply> SetAlias(string aliasName, string aliasUri,
             CreateTransactionParameters parameters)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(aliasName), aliasName}, {"aliasURI", aliasUri}};
+            var queryParameters = new Dictionary<string, string>
+            {
+                {nameof(aliasName), aliasName},
+                {Parameters.AliasUri, aliasUri}
+            };
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("setAlias", queryParameters);
         }

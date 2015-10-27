@@ -7,7 +7,7 @@ namespace NxtLib.Phasing
 {
     public class PhasingPoll
     {
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AcountId { get; set; }
         public string AccountRs { get; set; }
         public bool Finished { get; set; }
@@ -15,7 +15,7 @@ namespace NxtLib.Phasing
         public string HashedSecret { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "holding")]
+        [JsonProperty(PropertyName = Parameters.Holding)]
         public ulong HoldingId { get; set; }
         public long Quorum { get; set; }
         public long MinBalance { get; set; }
@@ -25,7 +25,7 @@ namespace NxtLib.Phasing
         public long Result { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "transaction")]
+        [JsonProperty(PropertyName = Parameters.Transaction)]
         public ulong TransactionId { get; set; }
 
         [JsonConverter(typeof(ByteToHexStringConverter))]

@@ -6,12 +6,12 @@ namespace NxtLib.AssetExchange
     public class AssetOrder
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "asset")]
+        [JsonProperty(PropertyName = Parameters.Asset)]
         public ulong AssetId { get; set; }
         public int Height { get; set; }
 
@@ -19,12 +19,12 @@ namespace NxtLib.AssetExchange
         public ulong QuantityQnt { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "priceNQT")]
+        [JsonProperty(PropertyName = Parameters.PriceNqt)]
         public Amount Price { get; set; }
         public string Type { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "order")]
+        [JsonProperty(PropertyName = Parameters.Order)]
         public ulong OrderId { get; set; }
     }
 }

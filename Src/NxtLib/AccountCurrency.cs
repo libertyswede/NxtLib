@@ -6,7 +6,7 @@ namespace NxtLib
     public class AccountCurrency : CurrencyInfo
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "currency")]
+        [JsonProperty(PropertyName = Parameters.Currency)]
         public ulong CurrencyId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

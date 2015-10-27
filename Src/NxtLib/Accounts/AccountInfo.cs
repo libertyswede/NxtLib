@@ -6,7 +6,7 @@ namespace NxtLib.Accounts
     public class AccountInfo
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
         public string Description { get; set; }

@@ -16,16 +16,16 @@ namespace NxtLib.MonetarySystem
         public string BuyerRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "currency")]
+        [JsonProperty(PropertyName = Parameters.Currency)]
         public ulong CurrencyId { get; set; }
         public int Height { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "offer")]
+        [JsonProperty(PropertyName = Parameters.Offer)]
         public ulong OfferId { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "rateNQT")]
+        [JsonProperty(PropertyName = Parameters.RateNqt)]
         public Amount Rate { get; set; }
         public string SellerRs { get; set; }
 
@@ -37,7 +37,7 @@ namespace NxtLib.MonetarySystem
         public DateTime Timestamp { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "transaction")]
+        [JsonProperty(PropertyName = Parameters.Transaction)]
         public ulong TransactionId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

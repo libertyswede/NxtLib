@@ -6,12 +6,12 @@ namespace NxtLib.AssetExchange
     public class AssetAccount
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "asset")]
+        [JsonProperty(PropertyName = Parameters.Asset)]
         public ulong AssetId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

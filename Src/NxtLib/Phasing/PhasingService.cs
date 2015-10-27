@@ -19,7 +19,7 @@ namespace NxtLib.Phasing
         {
             var queryParameters = new Dictionary<string, List<string>>
             {
-                {"transactionFullHash", transactionFullHashes.Select(hash => hash.ToString()).ToList()}
+                {Parameters.TransactionFullHash, transactionFullHashes.Select(hash => hash.ToString()).ToList()}
             };
             queryParameters.AddIfHasValue(nameof(revealedSecret), revealedSecret);
             queryParameters.AddIfHasValue(nameof(revealedSecretIsText), revealedSecretIsText);
@@ -51,7 +51,7 @@ namespace NxtLib.Phasing
             bool? withoutWhitelist = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"asset", assetId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Asset, assetId.ToString()}};
             queryParameters.AddIfHasValue(nameof(account), account);
             queryParameters.AddIfHasValue(nameof(withoutWhitelist), withoutWhitelist);
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
@@ -65,7 +65,7 @@ namespace NxtLib.Phasing
             bool? withoutWhitelist = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"currency", currencyId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Currency, currencyId.ToString()}};
             queryParameters.AddIfHasValue(nameof(account), account);
             queryParameters.AddIfHasValue(nameof(withoutWhitelist), withoutWhitelist);
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
@@ -78,7 +78,7 @@ namespace NxtLib.Phasing
         public async Task<PhasingPollReply> GetPhasingPoll(ulong transactionId, bool? countVotes = false,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{"transaction", transactionId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
             queryParameters.AddIfHasValue(nameof(countVotes), countVotes);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
             queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
@@ -90,7 +90,7 @@ namespace NxtLib.Phasing
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"transaction", transactionId.ToString()},
+                {Parameters.Transaction, transactionId.ToString()},
                 {nameof(account), account.AccountId.ToString()}
             };
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
@@ -103,7 +103,7 @@ namespace NxtLib.Phasing
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {"transaction", transactionId.ToString()}
+                {Parameters.Transaction, transactionId.ToString()}
             };
             queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
             queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
@@ -117,7 +117,7 @@ namespace NxtLib.Phasing
         {
             var queryParameters = new Dictionary<string, List<string>>
             {
-                {"transaction", transactionIds.Select(id => id.ToString()).ToList()}
+                {Parameters.Transaction, transactionIds.Select(id => id.ToString()).ToList()}
             };
             queryParameters.AddIfHasValue(nameof(countVotes), countVotes);
             queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);

@@ -152,7 +152,7 @@ namespace NxtLib.Accounts
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
             queryParameters.Add(nameof(recipient), recipient.AccountId.ToString());
-            queryParameters.Add("amountNQT", amount.Nqt.ToString());
+            queryParameters.Add(Parameters.AmountNqt, amount.Nqt.ToString());
             return await Post<TransactionCreatedReply>("sendMoney", queryParameters);
         }
 

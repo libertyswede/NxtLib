@@ -8,7 +8,7 @@ namespace NxtLib.TaggedData
     public class TaggedData : ITaggedData
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "account")]
+        [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
 
@@ -24,7 +24,7 @@ namespace NxtLib.TaggedData
         public string Tags { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "transaction")]
+        [JsonProperty(PropertyName = Parameters.Transaction)]
         public ulong TransactionId { get; set; }
 
         [JsonConverter(typeof(DateTimeConverter))]
