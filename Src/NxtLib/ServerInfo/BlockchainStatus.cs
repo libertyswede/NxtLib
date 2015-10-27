@@ -19,7 +19,7 @@ namespace NxtLib.ServerInfo
         public string LastBlockchainFeeder { get; set; }
         public int LastBlockchainFeederHeight { get; set; }
 
-        [JsonProperty(PropertyName = "lastBlock")]
+        [JsonProperty(PropertyName = Parameters.LastBlock)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong LastBlockId { get; set; }
         public int MaxPrunableLifetime { get; set; }

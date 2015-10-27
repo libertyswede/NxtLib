@@ -10,7 +10,7 @@ namespace NxtLib.AssetExchange
         public ulong AssetId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "assetTransfer")]
+        [JsonProperty(PropertyName = Parameters.AssetTransfer)]
         public ulong AssetTransferId { get; set; }
         public int Decimals { get; set; }
         public int Height { get; set; }
@@ -20,12 +20,12 @@ namespace NxtLib.AssetExchange
         public long QuantityQnt { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "recipient")]
+        [JsonProperty(PropertyName = Parameters.Recipient)]
         public ulong RecipientId { get; set; }
         public string RecipientRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "sender")]
+        [JsonProperty(PropertyName = Parameters.Sender)]
         public ulong SenderId { get; set; }
         public string SenderRs { get; set; }
     }

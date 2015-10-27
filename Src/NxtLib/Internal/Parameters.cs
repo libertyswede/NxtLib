@@ -3,6 +3,7 @@ namespace NxtLib.Internal
     internal class Parameters
     {
         internal const string Account = "account";
+        internal const string AccountAssets = "accountAssets";
         internal const string Alias = "alias";
         internal const string Aliases = "aliases";
         internal const string AliasName = "aliasName";
@@ -10,9 +11,13 @@ namespace NxtLib.Internal
         internal const string AmountNqt = "amountNQT";
         internal const string AmountNqtPerQnt = "amountNQTPerQNT";
         internal const string AmountPerUnitNqt = "amountPerUnitNQT";
+        internal const string AskOrder = "askOrder";
         internal const string Asset = "asset";
+        internal const string AssetIds = "assetIds";
         internal const string Assets = "assets";
+        internal const string AssetTransfer = "assetTransfer";
         internal const string BalanceNqt = "balanceNQT";
+        internal const string BidOrder = "bidOrder";
         internal const string Block = "block";
         internal const string Buyer = "buyer";
         internal const string CommunicationEvent = "communicationEvent";
@@ -30,6 +35,7 @@ namespace NxtLib.Internal
         internal const string Holding = "holding";
         internal const string IncludePeerInfo = "includePeerInfo";
         internal const string IncludeTransactions = "includeTransactions";
+        internal const string LastBlock = "lastBlock";
         internal const string Lessor = "lessor";
         internal const string MaxRangeValue = "maxRangeValue";
         internal const string MaxNumberOfOptions = "maxNumberOfOptions";
@@ -51,7 +57,9 @@ namespace NxtLib.Internal
         internal const string QuantityQnt = "quantityQNT";
         internal const string RateNqt = "rateNQT";
         internal const string RefundNqt = "refundNQT";
+        internal const string Recipient = "recipient";
         internal const string SecretPhrase = "secretPhrase";
+        internal const string Sender = "sender";
         internal const string SubType = "subtype";
         internal const string Transaction = "transaction";
         internal const string TransactionBytes = "transactionBytes";

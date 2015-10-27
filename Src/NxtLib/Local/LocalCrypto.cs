@@ -66,7 +66,7 @@ namespace NxtLib.Local
             resultJson.Add("ecBlockId", transaction.EcBlockId.ToString());
             if (transaction.Recipient.HasValue)
             {
-                resultJson.Add("recipient", transaction.Recipient.ToString());
+                resultJson.Add(Parameters.Recipient, transaction.Recipient.ToString());
             }
             return resultJson;
         }

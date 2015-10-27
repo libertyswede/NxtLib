@@ -1,3 +1,5 @@
+using NxtLib.Internal;
+
 namespace NxtLib.AssetExchange
 {
     public class OrderIdLocator : LocatorBase
@@ -11,12 +13,12 @@ namespace NxtLib.AssetExchange
 
         public static OrderIdLocator ByAskOrderId(ulong askOrderId)
         {
-            return new OrderIdLocator("askOrder", askOrderId.ToString()) {AskOrderId = askOrderId};
+            return new OrderIdLocator(Parameters.AskOrder, askOrderId.ToString()) {AskOrderId = askOrderId};
         }
 
         public static OrderIdLocator ByBidOrderId(ulong bidOrderId)
         {
-            return new OrderIdLocator("bidOrder", bidOrderId.ToString()) { BidOrderId = bidOrderId };
+            return new OrderIdLocator(Parameters.BidOrder, bidOrderId.ToString()) { BidOrderId = bidOrderId };
         }
     }
 }

@@ -43,12 +43,12 @@ namespace NxtLib.Internal
             transaction.FullHash = GetValueOrDefault(jObject, "fullHash", obj => obj.ToString());
             transaction.Height = GetValueOrDefault(jObject, "height", Convert.ToInt32);
             transaction.Message = Message.ParseJson(attachmentJobject);
-            transaction.Recipient = GetValueOrNull(jObject, "recipient", Convert.ToUInt64);
+            transaction.Recipient = GetValueOrNull(jObject, Parameters.Recipient, Convert.ToUInt64);
             transaction.RecipientRs = GetValueOrDefault(jObject, "recipientRS", obj => obj.ToString());
             transaction.ReferencedTransactionFullHash = GetValueOrDefault(jObject, "referencedTransactionFullHash", obj => new BinaryHexString(obj.ToString()));
             transaction.Phasing = TransactionPhasing.ParseJson(attachmentJobject);
             transaction.PublicKeyAnnouncement = PublicKeyAnnouncement.ParseJson(attachmentJobject);
-            transaction.Sender = GetValueOrDefault(jObject, "sender", Convert.ToUInt64);
+            transaction.Sender = GetValueOrDefault(jObject, Parameters.Sender, Convert.ToUInt64);
             transaction.SenderRs = GetValueOrDefault(jObject, "senderRS", obj => obj.ToString());
             transaction.SenderPublicKey = GetValueOrDefault(jObject, "senderPublicKey", obj => new BinaryHexString(obj.ToString()));
             transaction.Signature = GetValueOrDefault(jObject, "signature", obj => new BinaryHexString(obj.ToString()));

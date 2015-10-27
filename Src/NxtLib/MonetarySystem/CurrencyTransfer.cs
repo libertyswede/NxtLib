@@ -12,12 +12,12 @@ namespace NxtLib.MonetarySystem
         public int Height { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "recipient")]
+        [JsonProperty(PropertyName = Parameters.Recipient)]
         public ulong RecipientId { get; set; }
         public string RecipientRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "sender")]
+        [JsonProperty(PropertyName = Parameters.Sender)]
         public ulong SenderId { get; set; }
         public string SenderRs { get; set; }
 
