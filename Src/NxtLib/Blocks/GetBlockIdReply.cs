@@ -6,7 +6,7 @@ namespace NxtLib.Blocks
     public class GetBlockIdReply : BaseReply
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "block")]
+        [JsonProperty(PropertyName = Parameters.Block)]
         public ulong BlockId { get; set; }
     }
 }

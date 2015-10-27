@@ -31,7 +31,7 @@ namespace NxtLib.Internal
 
             transaction.Amount = GetValueOrDefault(jObject, Parameters.AmountNqt, obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
             transaction.Attachment = attachmentConverter.GetAttachment(subType);
-            transaction.BlockId = GetValueOrNull(jObject, "block", Convert.ToUInt64);
+            transaction.BlockId = GetValueOrNull(jObject, Parameters.Block, Convert.ToUInt64);
             transaction.BlockTimestamp = GetDateTimeOrNull(jObject, "blockTimestamp");
             transaction.Confirmations = GetValueOrNull(jObject, "confirmations", Convert.ToInt32);
             transaction.Deadline = GetValueOrDefault(jObject, "deadline", Convert.ToInt16);

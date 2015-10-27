@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NxtLib.Internal;
 
 namespace NxtLib
 {
@@ -15,7 +16,7 @@ namespace NxtLib
         internal override void AppendToQueryParameters(Dictionary<string, string> queryParameters)
         {
             base.AppendToQueryParameters(queryParameters);
-            queryParameters.Add("secretPhrase", SecretPhrase);
+            queryParameters.Add(Parameters.SecretPhrase, SecretPhrase);
         }
     }
 }

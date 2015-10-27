@@ -1,3 +1,5 @@
+using NxtLib.Internal;
+
 namespace NxtLib.Accounts
 {
     public class AccountIdLocator : LocatorBase
@@ -7,11 +9,11 @@ namespace NxtLib.Accounts
 
         private AccountIdLocator(string key, string value) : base(key, value)
         {
-            if (key.Equals("publicKey"))
+            if (key.Equals(Parameters.PublicKey))
             {
                 PublicKey = value;
             }
-            else if (key.Equals("secretPhrase"))
+            else if (key.Equals(Parameters.SecretPhrase))
             {
                 SecretPhrase = value;
             }
@@ -19,12 +21,12 @@ namespace NxtLib.Accounts
 
         public static AccountIdLocator ByPublicKey(string publicKey)
         {
-            return new AccountIdLocator("publicKey", publicKey);
+            return new AccountIdLocator(Parameters.PublicKey, publicKey);
         }
 
         public static AccountIdLocator BySecretPhrase(string secretPhrase)
         {
-            return new AccountIdLocator("secretPhrase", secretPhrase);
+            return new AccountIdLocator(Parameters.SecretPhrase, secretPhrase);
         }
     }
 }

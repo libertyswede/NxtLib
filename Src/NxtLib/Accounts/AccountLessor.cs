@@ -6,11 +6,11 @@ namespace NxtLib.Accounts
     public class AccountLessor
     {
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "guaranteedBalanceNqt")]
+        [JsonProperty(PropertyName = Parameters.GuaranteedBalanceNqt)]
         public Amount GuaranteedBalance { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "Lessor")]
+        [JsonProperty(PropertyName = Parameters.Lessor)]
         public ulong LessorAccount { get; set; }
         public string LessorRs { get; set; }
     }

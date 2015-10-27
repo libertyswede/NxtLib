@@ -10,7 +10,7 @@ namespace NxtLib
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong BaseTarget { get; set; }
 
-        [JsonProperty(PropertyName = "block")]
+        [JsonProperty(PropertyName = Parameters.Block)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong BlockId { get; set; }
         public string BlockSignature { get; set; }

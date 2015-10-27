@@ -10,7 +10,7 @@ namespace NxtLib.Blocks
         public DateTime? Timestamp { get; private set; }
 
         private BlockLocator(ulong blockId)
-            : base("block", blockId.ToString())
+            : base(Parameters.Block, blockId.ToString())
         {
             BlockId = blockId;
         }

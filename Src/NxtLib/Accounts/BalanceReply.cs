@@ -6,23 +6,23 @@ namespace NxtLib.Accounts
     public class BalanceReply : BaseReply
     {
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "unconfirmedBalanceNqt")]
+        [JsonProperty(PropertyName = Parameters.UnconfirmedBalanceNqt)]
         public Amount UnconfirmedBalance { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "guaranteedBalanceNqt")]
+        [JsonProperty(PropertyName = Parameters.GuaranteedBalanceNqt)]
         public Amount GuaranteedBalance { get; set; }
 
         [JsonConverter(typeof(NxtAmountConverter))]
-        [JsonProperty(PropertyName = "effectiveBalanceNxt")]
+        [JsonProperty(PropertyName = Parameters.EffectiveBalanceNxt)]
         public Amount EffectiveBalance { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "forgedBalanceNqt")]
+        [JsonProperty(PropertyName = Parameters.ForgedBalanceNqt)]
         public Amount ForgedBalance { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "balanceNqt")]
+        [JsonProperty(PropertyName = Parameters.BalanceNqt)]
         public Amount Balance { get; set; }
     }
 }

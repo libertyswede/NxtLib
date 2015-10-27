@@ -15,27 +15,27 @@ namespace NxtLib.Accounts
         public List<AccountAssetBalance> AssetBalances { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "balanceNQT")]
+        [JsonProperty(PropertyName = Parameters.BalanceNqt)]
         public Amount Balance { get; set; }
         public int CurrentLeasingHeightFrom { get; set; }
         public int CurrentLeasingHeightTo { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "currentLessee")]
+        [JsonProperty(PropertyName = Parameters.CurrentLessee)]
         public ulong CurrentLesseeId { get; set; }
         public string CurrentLesseeRs { get; set; }
         public string Description { get; set; }
 
         [JsonConverter(typeof(NxtAmountConverter))]
-        [JsonProperty(PropertyName = "effectiveBalanceNxt")]
+        [JsonProperty(PropertyName = Parameters.EffectiveBalanceNxt)]
         public Amount EffectiveBalance { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "forgedBalanceNqt")]
+        [JsonProperty(PropertyName = Parameters.ForgedBalanceNqt)]
         public Amount ForgedBalance { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "guaranteedBalanceNqt")]
+        [JsonProperty(PropertyName = Parameters.GuaranteedBalanceNqt)]
         public Amount GuaranteedBalance { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
@@ -48,7 +48,7 @@ namespace NxtLib.Accounts
         public string Name { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "nextLessee")]
+        [JsonProperty(PropertyName = Parameters.NextLessee)]
         public ulong NextLesseeId { get; set; }
         public string NextLesseeRs { get; set; }
         public int NextLeasingHeightFrom { get; set; }
@@ -57,7 +57,7 @@ namespace NxtLib.Accounts
         public List<UnconfirmedAccountAssetBalance> UnconfirmedAssetBalances { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "unconfirmedBalanceNqt")]
+        [JsonProperty(PropertyName = Parameters.UnconfirmedBalanceNqt)]
         public Amount UnconfirmedBalance { get; set; }
     }
 }

@@ -14,14 +14,14 @@ namespace NxtLib.Accounts
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong Balance { get; set; }
 
-        [JsonProperty("block")]
+        [JsonProperty(Parameters.Block)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong BlockId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public long Change { get; set; }
 
-        [JsonProperty("event")]
+        [JsonProperty(Parameters.Event)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong EventId { get; set; }
         public string EventType { get; set; }

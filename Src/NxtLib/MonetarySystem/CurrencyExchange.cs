@@ -7,7 +7,7 @@ namespace NxtLib.MonetarySystem
     public class CurrencyExchange : CurrencyInfo
     {
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        [JsonProperty(PropertyName = "block")]
+        [JsonProperty(PropertyName = Parameters.Block)]
         public ulong BlockId { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]

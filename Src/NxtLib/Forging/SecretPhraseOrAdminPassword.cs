@@ -1,4 +1,6 @@
-﻿namespace NxtLib.Forging
+﻿using NxtLib.Internal;
+
+namespace NxtLib.Forging
 {
     public class SecretPhraseOrAdminPassword : LocatorBase
     {
@@ -7,7 +9,7 @@
 
         private SecretPhraseOrAdminPassword(string key, string value) : base(key, value)
         {
-            if (key.Equals("secretPhrase"))
+            if (key.Equals(Parameters.SecretPhrase))
             {
                 SecretPhrase = value;
             }
@@ -19,7 +21,7 @@
 
         public static SecretPhraseOrAdminPassword BySecretPhrase(string secretPhrase)
         {
-            return new SecretPhraseOrAdminPassword("secretPhrase", secretPhrase);
+            return new SecretPhraseOrAdminPassword(Parameters.SecretPhrase, secretPhrase);
         }
 
         public static SecretPhraseOrAdminPassword ByAdminPassword(string adminPassword)
