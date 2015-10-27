@@ -45,11 +45,11 @@ namespace NxtLib.Messages
             DateTime? timestamp = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(timestamp), timestamp);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timestamp);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PrunableMessagesReply>("getAllPrunableMessages", queryParameters);
         }
 
@@ -57,9 +57,9 @@ namespace NxtLib.Messages
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(secretPhrase), secretPhrase);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PrunableMessageReply>("getPrunableMessage", queryParameters);
         }
 
@@ -67,14 +67,14 @@ namespace NxtLib.Messages
             string secretPhrase = null, int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(nameof(otherAccount), otherAccount);
-            queryParameters.AddIfHasValue(nameof(secretPhrase), secretPhrase);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(timestamp), timestamp);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timestamp);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PrunableMessagesReply>("getPrunableMessages", queryParameters);
         }
 
@@ -82,9 +82,9 @@ namespace NxtLib.Messages
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(secretPhrase), secretPhrase);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<ReadMessageReply>("readMessage", queryParameters);
         }
 
@@ -92,7 +92,7 @@ namespace NxtLib.Messages
             Account recipient = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(recipient), recipient);
+            queryParameters.AddIfHasValue(Parameters.Recipient, recipient);
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("sendMessage", queryParameters);
         }
@@ -123,8 +123,8 @@ namespace NxtLib.Messages
             };
             queryParameters.AddIfHasValue(nameof(messageToEncryptIsText), messageToEncryptIsText);
             queryParameters.AddIfHasValue(nameof(compressMessageToEncrypt), compressMessageToEncrypt);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<VerifyPrunableEncryptedMessageReply>("verifyPrunableMessage", queryParameters);
         }
 
@@ -134,10 +134,10 @@ namespace NxtLib.Messages
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(account), account.AccountId.ToString()},
+                {Parameters.Account, account.AccountId.ToString()},
                 {nameof(data), data},
                 {nameof(nonce), nonce},
-                {nameof(secretPhrase), secretPhrase},
+                {Parameters.SecretPhrase, secretPhrase},
                 {nameof(uncompressDecryptedMessage), uncompressDecryptedMessage.ToString()},
                 {nameof(decryptedMessageIsText), decryptedMessageIsText.ToString()}
             };
@@ -149,9 +149,9 @@ namespace NxtLib.Messages
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(recipient), recipient.AccountId.ToString()},
+                {Parameters.Recipient, recipient.AccountId.ToString()},
                 {nameof(messageToEncrypt), messageToEncrypt},
-                {nameof(secretPhrase), secretPhrase},
+                {Parameters.SecretPhrase, secretPhrase},
                 {nameof(compressMessageToEncrypt), compressMessageToEncrypt.ToString()},
                 {nameof(messageToEncryptIsText), messageToEncryptIsText.ToString()}
             };
@@ -168,8 +168,8 @@ namespace NxtLib.Messages
                 {nameof(messageIsText), messageIsText.ToString()},
                 {Parameters.MessageIsPrunable, true.ToString()}
             };
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<VerifyPrunableMessageReply>("verifyPrunableMessage", queryParameters);
         }
     }

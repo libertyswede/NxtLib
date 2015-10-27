@@ -17,18 +17,18 @@ namespace NxtLib.Blocks
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = query.QueryParameters;
-            queryParameters.AddIfHasValue(nameof(includeExecutedPhased), includeExecutedPhased);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.IncludeExecutedPhased, includeExecutedPhased);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GetBlockReply<ulong>>("getBlock", queryParameters);
         }
 
         public async Task<GetBlockIdReply> GetBlockId(int height, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(height), height.ToString()}};
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Height, height.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GetBlockIdReply>("getBlockId", queryParameters);
         }
 
@@ -37,9 +37,9 @@ namespace NxtLib.Blocks
         {
             var queryParameters = query.QueryParameters;
             queryParameters.Add(Parameters.IncludeTransactions, true.ToString());
-            queryParameters.AddIfHasValue(nameof(includeExecutedPhased), includeExecutedPhased);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.IncludeExecutedPhased, includeExecutedPhased);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GetBlockReply<Transaction>>("getBlock", queryParameters);
         }
 
@@ -48,12 +48,12 @@ namespace NxtLib.Blocks
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.IncludeTransactions, true.ToString()}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(timestamp), timestamp);
-            queryParameters.AddIfHasValue(nameof(includeExecutedPhased), includeExecutedPhased);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timestamp);
+            queryParameters.AddIfHasValue(Parameters.IncludeExecutedPhased, includeExecutedPhased);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<BlocksReply<Transaction>>("getBlocks", queryParameters);
         }
 
@@ -62,22 +62,22 @@ namespace NxtLib.Blocks
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(timestamp), timestamp);
-            queryParameters.AddIfHasValue(nameof(includeExecutedPhased), includeExecutedPhased);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timestamp);
+            queryParameters.AddIfHasValue(Parameters.IncludeExecutedPhased, includeExecutedPhased);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<BlocksReply<ulong>>("getBlocks", queryParameters);
         }
 
-        public async Task<GetEcBlockReply> GetEcBlock(DateTime? timestamp = null, ulong? requireBlock = null,
+        public async Task<GetEcBlockReply> GetEcBlock(DateTime? timeStamp = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(timestamp);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timeStamp);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GetEcBlockReply>("getECBlock", queryParameters);
         }
     }

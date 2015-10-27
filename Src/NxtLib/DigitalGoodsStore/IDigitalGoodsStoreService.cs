@@ -30,7 +30,7 @@ namespace NxtLib.DigitalGoodsStore
             bool? completed = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, Account buyer = null, int? firstIndex = null,
-            int? lastIndex = null, bool? withPublickKeedbacksOnly = null, bool? completed = null,
+            int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<PurchasesReply> GetPendingPurchases(Account seller, int? firstIndex = null, int? lastIndex = null,

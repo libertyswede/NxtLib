@@ -46,7 +46,7 @@ namespace NxtLib.AssetExchange
             var queryParameters = new Dictionary<string, string>
             {
                 {Parameters.Asset, assetId.ToString()},
-                {nameof(height), height.ToString()},
+                {Parameters.Height, height.ToString()},
                 {Parameters.AmountNqtPerQnt, amountPerQnt.Nqt.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
@@ -56,31 +56,31 @@ namespace NxtLib.AssetExchange
         public async Task<AccountAssetCountReply> GetAccountAssetCount(Account account, int? height = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(height), height);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.Height, height);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AccountAssetCountReply>("getAccountAssetCount", queryParameters);
         }
 
         public async Task<AccountAssetReply> GetAccountAsset(Account account, ulong assetId, int? height = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(height), height);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.Height, height);
             queryParameters.AddIfHasValue(Parameters.Asset, assetId);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AccountAssetReply>("getAccountAssets", queryParameters);
         }
 
         public async Task<AccountAssetsReply> GetAccountAssets(Account account, int? height = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(height), height);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.Height, height);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AccountAssetsReply>("getAccountAssets", queryParameters);
         }
 
@@ -116,11 +116,11 @@ namespace NxtLib.AssetExchange
             bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.IncludeCounts, includeCounts);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AssetsReply>("getAllAssets", queryParameters);
         }
 
@@ -128,10 +128,10 @@ namespace NxtLib.AssetExchange
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<OpenOrdersReply>("getAllOpenAskOrders", queryParameters);
         }
 
@@ -139,24 +139,24 @@ namespace NxtLib.AssetExchange
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<OpenOrdersReply>("getAllOpenBidOrders", queryParameters);
         }
 
-        public async Task<TradesReply> GetAllTrades(DateTime? timestamp = null, int? firstIndex = null,
+        public async Task<TradesReply> GetAllTrades(DateTime? timeStamp = null, int? firstIndex = null,
             int? lastIndex = null, bool? includeAssetInfo = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(timestamp);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(includeAssetInfo), includeAssetInfo);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timeStamp);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.IncludeAssetInfo, includeAssetInfo);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TradesReply>("getAllTrades", queryParameters);
         }
 
@@ -164,8 +164,8 @@ namespace NxtLib.AssetExchange
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Order, orderId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<OrderReply>("getAskOrder", queryParameters);
         }
 
@@ -173,10 +173,10 @@ namespace NxtLib.AssetExchange
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Asset, assetId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AskOrderIdsReply>("getAskOrderIds", queryParameters);
         }
 
@@ -184,11 +184,11 @@ namespace NxtLib.AssetExchange
             bool? showExpectedCancellations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Asset, assetId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(showExpectedCancellations), showExpectedCancellations);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.ShowExpectedCancellations, showExpectedCancellations);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AskOrdersReply>("getAskOrders", queryParameters);
         }
 
@@ -196,9 +196,9 @@ namespace NxtLib.AssetExchange
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Asset, assetId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.IncludeCounts, includeCounts);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AssetReply>("getAsset", queryParameters);
         }
 
@@ -206,9 +206,9 @@ namespace NxtLib.AssetExchange
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Asset, assetId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(height), height);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Height, height);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<CountReply>("getAssetAccountCount", queryParameters);
         }
 
@@ -216,11 +216,11 @@ namespace NxtLib.AssetExchange
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Asset, assetId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(height), height);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Height, height);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AssetAccountsReply>("getAssetAccounts", queryParameters);
         }
 
@@ -228,10 +228,10 @@ namespace NxtLib.AssetExchange
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AssetIdsReply>("getAssetIds", queryParameters);
         }
 
@@ -242,9 +242,9 @@ namespace NxtLib.AssetExchange
             {
                 {Parameters.Assets, assetIds.Select(id => id.ToString()).ToList()}
             };
-            queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.IncludeCounts, includeCounts);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AssetsReply>("getAssets", queryParameters);
         }
 
@@ -256,11 +256,11 @@ namespace NxtLib.AssetExchange
             {
                 {Parameters.Account, accounts.Select(account => account.AccountId.ToString()).ToList()}
             };
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.IncludeCounts, includeCounts);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AssetsByIssuerReply>("getAssetsByIssuer", queryParameters);
         }
 
@@ -271,12 +271,12 @@ namespace NxtLib.AssetExchange
             var queryParameters = new Dictionary<string, string>();
             queryParameters.AddIfHasValue(Parameters.Asset, assetIdOrAccountId.AssetId);
             queryParameters.AddIfHasValue(Parameters.Account, assetIdOrAccountId.AccountId);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(timestamp), timestamp);
-            queryParameters.AddIfHasValue(nameof(includeAssetInfo), includeAssetInfo);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timestamp);
+            queryParameters.AddIfHasValue(Parameters.IncludeAssetInfo, includeAssetInfo);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AssetTransfersReply>("getAssetTransfers", queryParameters);
         }
 
@@ -284,8 +284,8 @@ namespace NxtLib.AssetExchange
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Order, orderId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<OrderReply>("getBidOrder", queryParameters);
         }
 
@@ -293,10 +293,10 @@ namespace NxtLib.AssetExchange
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Asset, assetId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<BidOrderIdsReply>("getBidOrderIds", queryParameters);
         }
 
@@ -304,11 +304,11 @@ namespace NxtLib.AssetExchange
             bool? showExpectedCancellations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Asset, assetId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(showExpectedCancellations), showExpectedCancellations);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.ShowExpectedCancellations, showExpectedCancellations);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<BidOrdersReply>("getBidOrders", queryParameters);
         }
 
@@ -316,10 +316,10 @@ namespace NxtLib.AssetExchange
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(assetId), assetId);
-            queryParameters.AddIfHasValue(nameof(sortByPrice), sortByPrice);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Asset, assetId);
+            queryParameters.AddIfHasValue(Parameters.SortByPrice, sortByPrice);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<ExpectedAskOrdersReply>("getExpectedAskOrders", queryParameters);
         }
 
@@ -327,10 +327,10 @@ namespace NxtLib.AssetExchange
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(assetId), assetId);
-            queryParameters.AddIfHasValue(nameof(sortByPrice), sortByPrice);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Asset, assetId);
+            queryParameters.AddIfHasValue(Parameters.SortByPrice, sortByPrice);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<ExpectedBidOrdersReply>("getExpectedBidOrders", queryParameters);
         }
 
@@ -338,10 +338,10 @@ namespace NxtLib.AssetExchange
             Account account = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(assetId), assetId);
-            queryParameters.AddIfHasValue(nameof(account), account);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Asset, assetId);
+            queryParameters.AddIfHasValue(Parameters.Account, account);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<ExpectedAssetTransfersReply>("getExpectedAssetTransfers", queryParameters);
         }
 
@@ -349,8 +349,8 @@ namespace NxtLib.AssetExchange
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<ExpectedOrderCancellationReply>("getExpectedOrderCancellations");
         }
 
@@ -361,8 +361,8 @@ namespace NxtLib.AssetExchange
             {
                 {Parameters.Assets, assetIds.Select(id => id.ToString()).ToList()}
             };
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<LastTradesReply>("getLastTrades", queryParameters);
         }
 
@@ -371,11 +371,11 @@ namespace NxtLib.AssetExchange
             ulong? requireLastBlock = null)
         {
             var queryParameters = orderIdLocator.QueryParameters;
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(includeAssetInfo), includeAssetInfo);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.IncludeAssetInfo, includeAssetInfo);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TradesReply>("getOrderTrades", queryParameters);
         }
 
@@ -386,12 +386,12 @@ namespace NxtLib.AssetExchange
             var queryParameters = new Dictionary<string, string>();
             queryParameters.AddIfHasValue(Parameters.Asset, assetIdOrAccountId.AssetId);
             queryParameters.AddIfHasValue(Parameters.Account, assetIdOrAccountId.AccountId);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(includeAssetInfo), includeAssetInfo);
-            queryParameters.AddIfHasValue(nameof(timestamp), timestamp);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.IncludeAssetInfo, includeAssetInfo);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timestamp);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TradesReply>("getTrades", queryParameters);
         }
 
@@ -400,12 +400,12 @@ namespace NxtLib.AssetExchange
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(name), name},
-                {nameof(description), description},
+                {Parameters.Name, name},
+                {Parameters.Description, description},
                 {Parameters.QuantityQnt, quantityQnt.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
-            queryParameters.AddIfHasValue(nameof(decimals), decimals);
+            queryParameters.AddIfHasValue(Parameters.Decimals, decimals);
             return await Post<TransactionCreatedReply>("issueAsset", queryParameters);
         }
 
@@ -438,12 +438,12 @@ namespace NxtLib.AssetExchange
         public async Task<AssetsReply> SearchAssets(string query, int? firstIndex = null, int? lastIndex = null,
             bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(query), query}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Query, query}};
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.IncludeCounts, includeCounts);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AssetsReply>("searchAssets", queryParameters);
         }
 
@@ -454,7 +454,7 @@ namespace NxtLib.AssetExchange
             {
                 {Parameters.Asset, assetId.ToString()},
                 {Parameters.QuantityQnt, quantityQnt.ToString()},
-                {nameof(recipient), recipient.AccountId.ToString()}
+                {Parameters.Recipient, recipient.AccountId.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("transferAsset", queryParameters);
@@ -463,12 +463,12 @@ namespace NxtLib.AssetExchange
         private static Dictionary<string, string> BuildQueryParameters(Account account, ulong? assetId, int? firstIndex,
             int? lastIndex, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(Parameters.Asset, assetId);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return queryParameters;
         }
     }

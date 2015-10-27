@@ -15,7 +15,7 @@ namespace NxtLib.MonetarySystem
         }
 
         private CurrencyOrAccountLocator(Account account)
-            : base(nameof(account), account.AccountId.ToString())
+            : base(Parameters.Account, account.AccountId.ToString())
         {
             Account = account;
         }
@@ -42,7 +42,7 @@ namespace NxtLib.MonetarySystem
             var dictionary = new Dictionary<string, string>
             {
                 {Parameters.Currency, currencyId.ToString()},
-                {nameof(account), account.AccountId.ToString()}
+                {Parameters.Account, account.AccountId.ToString()}
             };
             return new CurrencyOrAccountLocator(currencyId, account.AccountId.ToString(), dictionary);
         }

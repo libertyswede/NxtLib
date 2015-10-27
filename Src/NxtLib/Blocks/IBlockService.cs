@@ -20,7 +20,7 @@ namespace NxtLib.Blocks
             DateTime? timestamp = null, bool? includeExecutedPhased = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
-        Task<GetEcBlockReply> GetEcBlock(DateTime? timestamp = null, ulong? requireBlock = null,
+        Task<GetEcBlockReply> GetEcBlock(DateTime? timeStamp = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
     }
 }

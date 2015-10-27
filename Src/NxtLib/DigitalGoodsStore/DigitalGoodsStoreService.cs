@@ -30,12 +30,12 @@ namespace NxtLib.DigitalGoodsStore
             {
                 queryParameters.AddIfHasValue(Parameters.DiscountNqt, discount.Nqt);
             }
-            queryParameters.AddIfHasValue(nameof(goodsToEncrypt), goodsToEncrypt);
-            queryParameters.AddIfHasValue(nameof(goodsIsText), goodsIsText);
-            queryParameters.AddIfHasValue(nameof(goodsData), goodsData);
+            queryParameters.AddIfHasValue(Parameters.GoodsToEncrypt, goodsToEncrypt);
+            queryParameters.AddIfHasValue(Parameters.GoodsIsText, goodsIsText);
+            queryParameters.AddIfHasValue(Parameters.GoodsData, goodsData);
             if (goodsNonce != null)
             {
-                queryParameters.AddIfHasValue(nameof(goodsNonce), goodsNonce.ToHexString());
+                queryParameters.AddIfHasValue(Parameters.GoodsNonce, goodsNonce.ToHexString());
             }
             return await Post<TransactionCreatedReply>("dgsDelivery", queryParameters);
         }
@@ -50,11 +50,11 @@ namespace NxtLib.DigitalGoodsStore
         public async Task<PurchasesReply> GetExpiredPurchases(Account seller, int? firstIndex = null,
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(seller), seller.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Seller, seller.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Post<PurchasesReply>("getExpiredPurchases", queryParameters);
         }
 
@@ -62,9 +62,9 @@ namespace NxtLib.DigitalGoodsStore
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Goods, goodsId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.IncludeCounts, includeCounts);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GoodReply>("getDGSGood", queryParameters);
         }
 
@@ -73,14 +73,14 @@ namespace NxtLib.DigitalGoodsStore
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(seller), seller);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(inStockOnly), inStockOnly);
-            queryParameters.AddIfHasValue(nameof(hideDelisted), hideDelisted);
-            queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Seller, seller);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.InStockOnly, inStockOnly);
+            queryParameters.AddIfHasValue(Parameters.HideDelisted, hideDelisted);
+            queryParameters.AddIfHasValue(Parameters.IncludeCounts, includeCounts);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GoodsReply>("getDGSGoods", queryParameters);
         }
 
@@ -88,10 +88,10 @@ namespace NxtLib.DigitalGoodsStore
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(seller), seller);
-            queryParameters.AddIfHasValue(nameof(inStockOnly), inStockOnly);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Seller, seller);
+            queryParameters.AddIfHasValue(Parameters.InStockOnly, inStockOnly);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GoodsCountReply>("getDGSGoodsCount", queryParameters);
         }
 
@@ -99,36 +99,36 @@ namespace NxtLib.DigitalGoodsStore
             bool? completed = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Goods, goodsId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(withPublicFeedbacksOnly), withPublicFeedbacksOnly);
-            queryParameters.AddIfHasValue(nameof(completed), completed);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.WithPublicFeedbacksOnly, withPublicFeedbacksOnly);
+            queryParameters.AddIfHasValue(Parameters.Completed, completed);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PuchaseCountReply>("getDGSGoodsPurchaseCount", queryParameters);
         }
 
         public async Task<PurchasesReply> GetGoodsPurchases(ulong goodsId, Account buyer = null, int? firstIndex = null,
-            int? lastIndex = null, bool? withPublickKeedbacksOnly = null, bool? completed = null,
+            int? lastIndex = null, bool? withPublicFeedbacksOnly = null, bool? completed = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Goods, goodsId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(buyer), buyer);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(withPublickKeedbacksOnly), withPublickKeedbacksOnly);
-            queryParameters.AddIfHasValue(nameof(completed), completed);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Buyer, buyer);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.WithPublicFeedbacksOnly, withPublicFeedbacksOnly);
+            queryParameters.AddIfHasValue(Parameters.Completed, completed);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PurchasesReply>("getDGSGoodsPurchases", queryParameters);
         }
 
         public async Task<PurchasesReply> GetPendingPurchases(Account seller, int? firstIndex = null,
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(seller), seller.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Seller, seller.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PurchasesReply>("getDGSPendingPurchases", queryParameters);
         }
 
@@ -136,8 +136,8 @@ namespace NxtLib.DigitalGoodsStore
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Purchase, purchaseId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PurchaseReply>("getDGSPurchase", queryParameters);
         }
 
@@ -146,12 +146,12 @@ namespace NxtLib.DigitalGoodsStore
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(seller), seller);
-            queryParameters.AddIfHasValue(nameof(buyer), buyer);
-            queryParameters.AddIfHasValue(nameof(withPublicFeedbacksOnly), withPublicFeedbacksOnly);
-            queryParameters.AddIfHasValue(nameof(completed), completed);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Seller, seller);
+            queryParameters.AddIfHasValue(Parameters.Buyer, buyer);
+            queryParameters.AddIfHasValue(Parameters.WithPublicFeedbacksOnly, withPublicFeedbacksOnly);
+            queryParameters.AddIfHasValue(Parameters.Completed, completed);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PuchaseCountReply>("getDGSPurchaseCount", queryParameters);
         }
 
@@ -160,14 +160,14 @@ namespace NxtLib.DigitalGoodsStore
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(seller), seller);
-            queryParameters.AddIfHasValue(nameof(buyer), buyer);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(withPublicFeedbacksOnly), withPublicFeedbacksOnly);
-            queryParameters.AddIfHasValue(nameof(completed), completed);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Seller, seller);
+            queryParameters.AddIfHasValue(Parameters.Buyer, buyer);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.WithPublicFeedbacksOnly, withPublicFeedbacksOnly);
+            queryParameters.AddIfHasValue(Parameters.Completed, completed);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PurchasesReply>("getDGSPurchases", queryParameters);
         }
 
@@ -175,9 +175,9 @@ namespace NxtLib.DigitalGoodsStore
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(inStockOnly), inStockOnly);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.InStockOnly, inStockOnly);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TagCountReply>("getDGSTagCount", queryParameters);
         }
 
@@ -185,23 +185,23 @@ namespace NxtLib.DigitalGoodsStore
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(inStockOnly), inStockOnly);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.InStockOnly, inStockOnly);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TagsReply>("getDGSTags", queryParameters);
         }
 
         public async Task<TagsReply> GetTagsLike(string tagPrefix, bool? inStockOnly = null, int? firstIndex = null,
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(tagPrefix), tagPrefix}};
-            queryParameters.AddIfHasValue(nameof(inStockOnly), inStockOnly);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.TagPrefix, tagPrefix}};
+            queryParameters.AddIfHasValue(Parameters.InStockOnly, inStockOnly);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TagsReply>("getDGSTagsLike", queryParameters);
         }
 
@@ -210,12 +210,12 @@ namespace NxtLib.DigitalGoodsStore
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(name), name},
-                {nameof(description), description},
-                {nameof(quantity), quantity.ToString()},
+                {Parameters.Name, name},
+                {Parameters.Description, description},
+                {Parameters.Quantity, quantity.ToString()},
                 {Parameters.PriceNqt, price.Nqt.ToString()}
             };
-            queryParameters.AddIfHasValue(nameof(tags), tags);
+            queryParameters.AddIfHasValue(Parameters.Tags, tags);
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dgsListing", queryParameters);
         }
@@ -239,9 +239,9 @@ namespace NxtLib.DigitalGoodsStore
             {
                 {Parameters.Goods, goodsId.ToString()},
                 {Parameters.PriceNqt, price.Nqt.ToString()},
-                {nameof(quantity), quantity.ToString()}
+                {Parameters.Quantity, quantity.ToString()}
             };
-            queryParameters.AddIfHasValue(nameof(deliveryDeadlineTimestamp), deliveryDeadlineTimestamp);
+            queryParameters.AddIfHasValue(Parameters.DeliveryDeadlineTimestamp, deliveryDeadlineTimestamp);
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dgsPurchase", queryParameters);
         }
@@ -252,7 +252,7 @@ namespace NxtLib.DigitalGoodsStore
             var queryParameters = new Dictionary<string, string>
             {
                 {Parameters.Goods, goodsId.ToString()},
-                {nameof(deltaQuantity), deltaQuantity.ToString()}
+                {Parameters.DeltaQuantity, deltaQuantity.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("dgsQuantityChange", queryParameters);
@@ -275,16 +275,16 @@ namespace NxtLib.DigitalGoodsStore
             bool? includeCounts = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(query), query);
-            queryParameters.AddIfHasValue(nameof(tag), tag);
-            queryParameters.AddIfHasValue(nameof(seller), seller);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(inStockOnly), inStockOnly);
-            queryParameters.AddIfHasValue(nameof(hideDelisted), hideDelisted);
-            queryParameters.AddIfHasValue(nameof(includeCounts), includeCounts);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Query, query);
+            queryParameters.AddIfHasValue(Parameters.Tag, tag);
+            queryParameters.AddIfHasValue(Parameters.Seller, seller);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.InStockOnly, inStockOnly);
+            queryParameters.AddIfHasValue(Parameters.HideDelisted, hideDelisted);
+            queryParameters.AddIfHasValue(Parameters.IncludeCounts, includeCounts);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GoodsReply>("searchDGSGoods", queryParameters);
         }
     }

@@ -23,10 +23,10 @@ namespace NxtLib.Debug
             string adminPassword = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(version), version);
-            queryParameters.AddIfHasValue(nameof(weight), weight);
-            queryParameters.AddIfHasValue(nameof(connect), connect);
-            queryParameters.AddIfHasValue(nameof(adminPassword), adminPassword);
+            queryParameters.AddIfHasValue(Parameters.Version, version);
+            queryParameters.AddIfHasValue(Parameters.Weight, weight);
+            queryParameters.AddIfHasValue(Parameters.Connect, connect);
+            queryParameters.AddIfHasValue(Parameters.AdminPassword, adminPassword);
             return await Get<DumpPeersReply>("dumpPeers", queryParameters);
         }
 
@@ -38,22 +38,22 @@ namespace NxtLib.Debug
         public async Task<TransactionsListReply> GetAllBroadcastedTransactions(ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TransactionsListReply>("getAllBroadcastedTransactions", queryParameters);
         }
 
         public async Task<TransactionsListReply> GetAllWaitingTransactions(ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TransactionsListReply>("getAllWaitingTransactions", queryParameters);
         }
 
         public async Task<LogReply> GetLog(int count)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(count), count.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Count, count.ToString()}};
             return await Get<LogReply>("logReply", queryParameters);
         }
 
@@ -61,7 +61,7 @@ namespace NxtLib.Debug
         public async Task<JObject> GetStackTraces(int? depth = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(depth), depth);
+            queryParameters.AddIfHasValue(Parameters.Depth, depth);
             return await Get("getStackTraces", queryParameters);
         }
 
@@ -93,7 +93,7 @@ namespace NxtLib.Debug
         public async Task<ScanReply> Scan(HeightOrNumberOfBlocksLocator locator, bool? validate = null)
         {
             var queryParameters = locator.QueryParameters;
-            queryParameters.AddIfHasValue(nameof(validate), validate);
+            queryParameters.AddIfHasValue(Parameters.Validate, validate);
             return await Post<ScanReply>("scan", queryParameters);
         }
 
@@ -105,14 +105,14 @@ namespace NxtLib.Debug
             {
                 queryParameters.Add(Parameters.CommunicationEvent, communicationEventList);
             }
-            queryParameters.AddIfHasValue(nameof(logLevel), logLevel);
+            queryParameters.AddIfHasValue(Parameters.LogLevel, logLevel);
             return await Post<SetLoggingReply>("setLogging", queryParameters);
         }
 
         public async Task<ShutdownReply> Shutdown(bool? scan = null)
         {
             var queryParameters = new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(scan), scan);
+            queryParameters.AddIfHasValue(Parameters.Scan, scan);
             return await Post<ShutdownReply>("shutdown", queryParameters);
         }
 

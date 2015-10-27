@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using NxtLib.Internal;
 using NxtLib.Local;
 
 namespace NxtLib.Forging
@@ -22,8 +23,8 @@ namespace NxtLib.Forging
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(period), period.ToString()},
-                {nameof(recipient), recipient.AccountId.ToString()}
+                {Parameters.Period, period.ToString()},
+                {Parameters.Recipient, recipient.AccountId.ToString()}
             };
             parameters.AppendToQueryParameters(queryParameters);
             return await Post<TransactionCreatedReply>("leaseBalance", queryParameters);
@@ -31,7 +32,7 @@ namespace NxtLib.Forging
 
         public async Task<StartForgingReply> StartForging(string secretPhrase)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(secretPhrase), secretPhrase}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.SecretPhrase, secretPhrase}};
             return await Post<StartForgingReply>("startForging", queryParameters);
         }
 

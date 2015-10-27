@@ -33,7 +33,7 @@ namespace NxtLib.Internal.LocalSign
                     continue;
 
                 if (codewordLength > 16)
-                    throw new InvalidReedSolomonAddressException(accountRs, nameof(accountRs));
+                    throw new InvalidReedSolomonAddressException(accountRs, Parameters.AccountRs);
 
                 var codeworkIndex = CodewordMap[codewordLength];
                 codeword[codeworkIndex] = positionInAlphabet;
@@ -42,7 +42,7 @@ namespace NxtLib.Internal.LocalSign
 
             if (codewordLength == 17 && !IsCodewordValid(codeword) || codewordLength != 17)
             {
-                throw new InvalidReedSolomonAddressException(accountRs, nameof(accountRs));
+                throw new InvalidReedSolomonAddressException(accountRs, Parameters.AccountRs);
             }
 
             var length = Base32Length;

@@ -17,34 +17,34 @@ namespace NxtLib.Accounts
             bool? includeAssets = null, bool? includeCurrencies = null, bool? includeEffectiveBalance = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(includeLessors), includeLessors);
-            queryParameters.AddIfHasValue(nameof(includeAssets), includeAssets);
-            queryParameters.AddIfHasValue(nameof(includeCurrencies), includeCurrencies);
-            queryParameters.AddIfHasValue(nameof(includeEffectiveBalance), includeEffectiveBalance);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.IncludeLessors, includeLessors);
+            queryParameters.AddIfHasValue(Parameters.IncludeAssets, includeAssets);
+            queryParameters.AddIfHasValue(Parameters.IncludeCurrencies, includeCurrencies);
+            queryParameters.AddIfHasValue(Parameters.IncludeEffectiveBalance, includeEffectiveBalance);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AccountReply>("getAccount", queryParameters);
         }
 
         public async Task<AccountBlockCountReply> GetAccountBlockCount(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AccountBlockCountReply>("getAccountBlockCount", queryParameters);
         }
 
         public async Task<AccountBlockIdsReply> GetAccountBlockIds(Account account, DateTime? timeStamp = null,
             int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(timeStamp);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timeStamp);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AccountBlockIdsReply>("getAccountBlockIds", queryParameters);
         }
 
@@ -75,74 +75,74 @@ namespace NxtLib.Accounts
             ulong? holding = null, bool? includeTransactions = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(eventType), eventType);
-            queryParameters.AddIfHasValue(nameof(@event), @event);
-            queryParameters.AddIfHasValue(nameof(holdingType), holdingType);
-            queryParameters.AddIfHasValue(nameof(holding), holding);
-            queryParameters.AddIfHasValue(nameof(includeTransactions), includeTransactions);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.EventType, eventType);
+            queryParameters.AddIfHasValue(Parameters.Event, @event);
+            queryParameters.AddIfHasValue(Parameters.HoldingType, holdingType);
+            queryParameters.AddIfHasValue(Parameters.Holding, holding);
+            queryParameters.AddIfHasValue(Parameters.IncludeTransactions, includeTransactions);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GetAccountLedgerReply>("getAccountLedger", queryParameters);
         }
 
         public async Task<GetAccountLedgerEntryReply> GetAccountLedgerEntry(int ledgerId,
             bool? includeTransaction = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(ledgerId), ledgerId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(includeTransaction), includeTransaction);
+            var queryParameters = new Dictionary<string, string> {{Parameters.LedgerId, ledgerId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.IncludeTransaction, includeTransaction);
             return await Get<GetAccountLedgerEntryReply>("getAccountLedgerEntry", queryParameters);
         }
 
         public async Task<AccountLessorsReply> GetAccountLessors(Account account, int? height = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(height), height);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.Height, height);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AccountLessorsReply>("getAccountLessors", queryParameters);
         }
 
         public async Task<AccountPublicKeyReply> GetAccountPublicKey(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<AccountPublicKeyReply>("getAccountPublicKey", queryParameters);
         }
 
         public async Task<BalanceReply> GetBalance(Account account, bool? includeEffectiveBalance = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(includeEffectiveBalance), includeEffectiveBalance);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.IncludeEffectiveBalance, includeEffectiveBalance);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<BalanceReply>("getBalance", queryParameters);
         }
 
         public async Task<GuaranteedBalanceReply> GetGuaranteedBalance(Account account,
             int? numberOfConfirmations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(numberOfConfirmations), numberOfConfirmations);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.NumberOfConfirmations, numberOfConfirmations);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GuaranteedBalanceReply>("getGuaranteedBalance", queryParameters);
         }
 
         public Task<SearchAccountsReply> SearchAccounts(string query, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(query), query}};
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            var queryParameters = new Dictionary<string, string> {{Parameters.Query, query}};
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return Get<SearchAccountsReply>("searchAccounts", queryParameters);
         }
 
@@ -151,7 +151,7 @@ namespace NxtLib.Accounts
         {
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
-            queryParameters.Add(nameof(recipient), recipient.AccountId.ToString());
+            queryParameters.Add(Parameters.Recipient, recipient.AccountId.ToString());
             queryParameters.Add(Parameters.AmountNqt, amount.Nqt.ToString());
             return await Post<TransactionCreatedReply>("sendMoney", queryParameters);
         }
@@ -161,25 +161,25 @@ namespace NxtLib.Accounts
         {
             var queryParameters = new Dictionary<string, string>();
             parameters.AppendToQueryParameters(queryParameters);
-            queryParameters.Add(nameof(name), name);
-            queryParameters.Add(nameof(description), description);
+            queryParameters.Add(Parameters.Name, name);
+            queryParameters.Add(Parameters.Description, description);
             return await Post<TransactionCreatedReply>("setAccountInfo", queryParameters);
         }
 
-        private Dictionary<string, string> BuildQueryParametersForGetAccountBlocks(Account account,
+        private static Dictionary<string, string> BuildQueryParametersForGetAccountBlocks(Account account,
             bool includeTransactions, DateTime? timeStamp, int? firstIndex,
             int? lastIndex, ulong? requireBlock, ulong? requireLastBlock)
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(account), account.AccountId.ToString()},
-                {nameof(includeTransactions), includeTransactions.ToString()}
+                {Parameters.Account, account.AccountId.ToString()},
+                {Parameters.IncludeTransactions, includeTransactions.ToString()}
             };
-            queryParameters.AddIfHasValue(timeStamp);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timeStamp);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return queryParameters;
         }
     }

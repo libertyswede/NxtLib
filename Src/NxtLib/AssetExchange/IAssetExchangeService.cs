@@ -45,7 +45,7 @@ namespace NxtLib.AssetExchange
         Task<OpenOrdersReply> GetAllOpenBidOrders(int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<TradesReply> GetAllTrades(DateTime? timestamp = null, int? firstIndex = null, int? lastIndex = null,
+        Task<TradesReply> GetAllTrades(DateTime? timeStamp = null, int? firstIndex = null, int? lastIndex = null,
             bool? includeAssetInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<OrderReply> GetAskOrder(ulong orderId, ulong? requireBlock = null, ulong? requireLastBlock = null);

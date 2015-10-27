@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NxtLib.Internal;
 using NxtLib.Local;
 
 namespace NxtLib.Tokens
@@ -14,13 +15,13 @@ namespace NxtLib.Tokens
 
         public async Task<TokenReply> DecodeFileToken(string file, string token)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(token), token}, {nameof(file), file}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Token, token}, {Parameters.File, file}};
             return await PostAsContent<TokenReply>("decodeFileToken", queryParameters);
         }
 
         public async Task<DecodeHallmarkReply> DecodeHallmark(string hallmark)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(hallmark), hallmark}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Hallmark, hallmark}};
             return await Get<DecodeHallmarkReply>("decodeHallmark", queryParameters);
         }
 
@@ -28,8 +29,8 @@ namespace NxtLib.Tokens
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(website), website},
-                {nameof(token), token}
+                {Parameters.Website, website},
+                {Parameters.Token, token}
             };
             return await Get<TokenReply>("decodeToken", queryParameters);
         }
@@ -38,8 +39,8 @@ namespace NxtLib.Tokens
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(secretPhrase), secretPhrase},
-                {nameof(file), file}
+                {Parameters.SecretPhrase, secretPhrase},
+                {Parameters.File, file}
             };
             return await PostAsContent<GenerateTokenReply>("generateFileToken", queryParameters);
         }
@@ -48,8 +49,8 @@ namespace NxtLib.Tokens
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(secretPhrase), secretPhrase},
-                {nameof(website), website}
+                {Parameters.SecretPhrase, secretPhrase},
+                {Parameters.Website, website}
             };
             return await Post<GenerateTokenReply>("generateToken", queryParameters);
         }
@@ -58,10 +59,10 @@ namespace NxtLib.Tokens
         {
             var queryParameters = new Dictionary<string, string>
             {
-                {nameof(secretPhrase), secretPhrase},
-                {nameof(host), host},
-                {nameof(weight), weight.ToString()},
-                {nameof(date), date.ToString("yyyy-MM-dd")}
+                {Parameters.SecretPhrase, secretPhrase},
+                {Parameters.Host, host},
+                {Parameters.Weight, weight.ToString()},
+                {Parameters.Date, date.ToString("yyyy-MM-dd")}
             };
             return await Post<MarkHostReply>("markHost", queryParameters);
         }

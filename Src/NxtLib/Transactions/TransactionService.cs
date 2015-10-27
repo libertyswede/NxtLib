@@ -23,12 +23,12 @@ namespace NxtLib.Transactions
         public async Task<CalculateFullHashReply> CalculateFullHash(BinaryHexString signatureHash, 
             BinaryHexString unsignedTransactionBytes = null, string unsignedTransactionJson = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(signatureHash), signatureHash.ToHexString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.SignatureHash, signatureHash.ToHexString()}};
             if (unsignedTransactionBytes != null)
             {
-                queryParameters.Add(nameof(unsignedTransactionBytes), unsignedTransactionBytes.ToHexString());
+                queryParameters.Add(Parameters.UnsignedTransactionBytes, unsignedTransactionBytes.ToHexString());
             }
-            queryParameters.AddIfHasValue(nameof(unsignedTransactionJson), unsignedTransactionJson);
+            queryParameters.AddIfHasValue(Parameters.UnsignedTransactionJson, unsignedTransactionJson);
             return await Get<CalculateFullHashReply>("calculateFullHash", queryParameters);
         }
 
@@ -38,24 +38,24 @@ namespace NxtLib.Transactions
             bool? nonPhasedOnly = null, bool? includeExpiredPrunable = null, bool? includePhasingResult = null,
             bool? executedOnly = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(account), account.AccountId.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
             if (transactionType.HasValue)
             {
                 queryParameters.Add(Parameters.Type, TransactionTypeMapper.GetMainTypeByte(transactionType.Value).ToString());
                 queryParameters.Add(Parameters.SubType, TransactionTypeMapper.GetSubTypeByte(transactionType.Value).ToString());
             }
-            queryParameters.AddIfHasValue(timeStamp);
-            queryParameters.AddIfHasValue(nameof(firstIndex), firstIndex);
-            queryParameters.AddIfHasValue(nameof(lastIndex), lastIndex);
-            queryParameters.AddIfHasValue(nameof(numberOfConfirmations), numberOfConfirmations);
-            queryParameters.AddIfHasValue(nameof(withMessage), withMessage);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timeStamp);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.NumberOfConfirmations, numberOfConfirmations);
+            queryParameters.AddIfHasValue(Parameters.WithMessage, withMessage);
             queryParameters.AddIfHasValue(nameof(phasedOnly), phasedOnly);
             queryParameters.AddIfHasValue(nameof(nonPhasedOnly), nonPhasedOnly);
             queryParameters.AddIfHasValue(nameof(includeExpiredPrunable), includeExpiredPrunable);
             queryParameters.AddIfHasValue(nameof(includePhasingResult), includePhasingResult);
             queryParameters.AddIfHasValue(nameof(executedOnly), executedOnly);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TransactionListReply>("getBlockchainTransactions", queryParameters);
         }
 
@@ -69,8 +69,8 @@ namespace NxtLib.Transactions
             {
                 queryParameters.Add(Parameters.Account, accountsList.Select(a => a.AccountId.ToString()).ToList());
             }
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<ExpectedTransactionsReply>("getExpectedTransactions", queryParameters);
         }
 
@@ -79,8 +79,8 @@ namespace NxtLib.Transactions
         {
             var queryParameters = locator.QueryParameters;
             queryParameters.AddIfHasValue(nameof(includePhasingResult), includePhasingResult);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TransactionReply>("getTransaction", queryParameters);
         }
 
@@ -88,8 +88,8 @@ namespace NxtLib.Transactions
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TransactionBytesReply>("getTransactionBytes", queryParameters);
         }
 
@@ -101,8 +101,8 @@ namespace NxtLib.Transactions
             {
                 queryParameters.Add(Parameters.Account, accounts.Select(a => a.AccountId.ToString()).ToList());
             }
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<UnconfirmedTransactionIdsResply>("getUnconfirmedTransactionIds", queryParameters);
         }
 
@@ -114,8 +114,8 @@ namespace NxtLib.Transactions
             {
                 queryParameters.Add(Parameters.Account, accounts.Select(a => a.AccountId.ToString()).ToList());
             }
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<UnconfirmedTransactionsReply>("getUnconfirmedTransactions", queryParameters);
         }
 
@@ -123,8 +123,8 @@ namespace NxtLib.Transactions
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = CreateQueryParameters(parameter);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<ParseTransactionReply>("parseTransaction", queryParameters);
         }
 
@@ -132,10 +132,10 @@ namespace NxtLib.Transactions
             string secretPhrase, bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = CreateQueryParameters(parameter, true);
-            queryParameters.Add(nameof(secretPhrase), secretPhrase);
-            queryParameters.AddIfHasValue(nameof(validate), validate);
-            queryParameters.AddIfHasValue(nameof(requireBlock), requireBlock);
-            queryParameters.AddIfHasValue(nameof(requireLastBlock), requireLastBlock);
+            queryParameters.Add(Parameters.SecretPhrase, secretPhrase);
+            queryParameters.AddIfHasValue(Parameters.Validate, validate);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<SignTransactionReply>("signTransaction", queryParameters);
         }
 
