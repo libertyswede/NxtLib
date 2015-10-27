@@ -41,7 +41,7 @@ namespace NxtLib.Internal
             transaction.EncryptToSelfMessage = EncryptToSelfMessage.ParseJson(attachmentJobject);
             transaction.Fee = GetValueOrDefault(jObject, "feeNQT", obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
             transaction.FullHash = GetValueOrDefault(jObject, "fullHash", obj => obj.ToString());
-            transaction.Height = GetValueOrDefault(jObject, "height", Convert.ToInt32);
+            transaction.Height = GetValueOrDefault(jObject, Parameters.Height, Convert.ToInt32);
             transaction.Message = Message.ParseJson(attachmentJobject);
             transaction.Recipient = GetValueOrNull(jObject, Parameters.Recipient, Convert.ToUInt64);
             transaction.RecipientRs = GetValueOrDefault(jObject, "recipientRS", obj => obj.ToString());
@@ -54,7 +54,7 @@ namespace NxtLib.Internal
             transaction.Signature = GetValueOrDefault(jObject, "signature", obj => new BinaryHexString(obj.ToString()));
             transaction.SignatureHash = GetValueOrDefault(jObject, "signatureHash", obj => obj.ToString());
             transaction.SubType = subType;
-            transaction.Timestamp = GetDateTimeOrDefault(jObject, "timestamp");
+            transaction.Timestamp = GetDateTimeOrDefault(jObject, Parameters.Timestamp);
             transaction.TransactionId = GetValueOrNull(jObject, Parameters.Transaction, Convert.ToUInt64);
             transaction.TransactionIndex = GetValueOrDefault(jObject, "transactionIndex", Convert.ToInt32);
             transaction.Type = type;

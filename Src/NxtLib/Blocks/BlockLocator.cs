@@ -16,13 +16,13 @@ namespace NxtLib.Blocks
         }
 
         private BlockLocator(int height)
-            : base("height", height.ToString())
+            : base(Parameters.Height, height.ToString())
         {
             Height = height;
         }
 
         private BlockLocator(DateTime timestamp, int nxtTimestamp)
-            : base("timestamp", nxtTimestamp.ToString())
+            : base(Parameters.Timestamp, nxtTimestamp.ToString())
         {
             Timestamp = timestamp;
         }

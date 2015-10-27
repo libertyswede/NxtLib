@@ -1,4 +1,6 @@
-﻿namespace NxtLib.Debug
+﻿using NxtLib.Internal;
+
+namespace NxtLib.Debug
 {
     public class HeightOrNumberOfBlocksLocator : LocatorBase
     {
@@ -8,7 +10,7 @@
         private HeightOrNumberOfBlocksLocator(string key, int value)
             : base(key, value.ToString())
         {
-            if (key.Equals("height"))
+            if (key.Equals(Parameters.Height))
             {
                 Height = value;
             }
@@ -20,7 +22,7 @@
 
         public static HeightOrNumberOfBlocksLocator ByHeight(int height)
         {
-            return new HeightOrNumberOfBlocksLocator("height", height);
+            return new HeightOrNumberOfBlocksLocator(Parameters.Height, height);
         }
 
         public static HeightOrNumberOfBlocksLocator ByNumBlocks(int numBlocks)

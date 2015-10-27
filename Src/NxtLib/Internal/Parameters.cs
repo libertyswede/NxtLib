@@ -32,6 +32,7 @@ namespace NxtLib.Internal
         internal const string ForgedBalanceNqt = "forgedBalanceNQT";
         internal const string Goods = "goods";
         internal const string GuaranteedBalanceNqt = "guaranteedBalanceNQT";
+        internal const string Height = "height";
         internal const string Holding = "holding";
         internal const string IncludePeerInfo = "includePeerInfo";
         internal const string IncludeTransactions = "includeTransactions";
@@ -61,6 +62,7 @@ namespace NxtLib.Internal
         internal const string SecretPhrase = "secretPhrase";
         internal const string Sender = "sender";
         internal const string SubType = "subtype";
+        internal const string Timestamp = "timestamp";
         internal const string Transaction = "transaction";
         internal const string TransactionBytes = "transactionBytes";
         internal const string TransactionJson = "transactionJSON";

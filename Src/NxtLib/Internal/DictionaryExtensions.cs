@@ -40,7 +40,7 @@ namespace NxtLib.Internal
 
         internal static void AddIfHasValue(this Dictionary<string, string> me, DateTime? timeStamp)
         {
-            me.AddIfHasValue("timestamp", timeStamp);
+            me.AddIfHasValue(Parameters.Timestamp, timeStamp);
         }
 
         internal static void AddIfHasValue(this Dictionary<string, string> me, string key, DateTime? timeStamp)
