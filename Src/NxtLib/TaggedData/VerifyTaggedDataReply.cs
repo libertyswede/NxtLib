@@ -23,7 +23,7 @@ namespace NxtLib.TaggedData
         public string Type { get; set; }
         public bool Verify { get; set; }
 
-        [JsonProperty("version.TaggedDataUpload")]
+        [JsonProperty(Parameters.VersionTaggedDataUpload)]
         public int TaggedDataUploadVersion { get; set; }
     }
 }

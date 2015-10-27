@@ -104,7 +104,7 @@ namespace NxtLib.Internal
         internal const string SenderRs = "senderRS";
         internal const string Signature = "signature";
         internal const string SignatureHash = "signatureHash";
-        internal const string State = Parameters.State;
+        internal const string State = "state";
         internal const string SubType = "subtype";
         internal const string Tag = "tag";
         internal const string Timestamp = "timestamp";
@@ -121,6 +121,7 @@ namespace NxtLib.Internal
         internal const string UnsignedTransactionBytes = "unsignedTransactionBytes";
         internal const string UnsignedTransactionJson = "unsignedTransactionJSON";
         internal const string Version = "version";
+        internal const string VersionTaggedDataUpload = "version.TaggedDataUpload";
         internal const string Vote = "vote";
         internal const string VotingModel = "votingModel";
     }
