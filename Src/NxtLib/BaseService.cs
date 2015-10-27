@@ -4,12 +4,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NxtLib.Internal;
 using NxtLib.Local;
 
 namespace NxtLib
 {
     public abstract class BaseService
     {
+        private const string RequestTypeName = "requestType";
         private readonly string _baseUrl;
 
         protected BaseService(string baseUrl = Constants.DefaultNxtUrl)
@@ -82,7 +84,7 @@ namespace NxtLib
 
         protected async Task<T> Post<T>(string requestType, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
-            queryParamsDictionary.Add("requestType", requestType);
+            queryParamsDictionary.Add(RequestTypeName, requestType);
             return await PostUrl<T>(_baseUrl, queryParamsDictionary);
         }
 
@@ -92,13 +94,13 @@ namespace NxtLib
                             from queryParameter in queryParameterList.Value
                             select new KeyValuePair<string, string>(queryParameterList.Key, queryParameter))
                             .ToList();
-            postData.Add(new KeyValuePair<string, string>("requestType", requestType));
+            postData.Add(new KeyValuePair<string, string>(RequestTypeName, requestType));
             return await PostUrl<T>(_baseUrl, postData);
         }
 
         protected async Task<T> PostAsContent<T>(string requestType, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
-            queryParamsDictionary.Add("requestType", requestType);
+            queryParamsDictionary.Add(RequestTypeName, requestType);
             return await PostAsMultipartFormData<T>(_baseUrl, queryParamsDictionary);
         }
 
@@ -133,7 +135,7 @@ namespace NxtLib
 
         private string BuildUrl(string requestType, Dictionary<string, List<string>> queryParamsDictionary)
         {
-            var url = _baseUrl + "?requestType=" + requestType;
+            var url = _baseUrl + $"?{RequestTypeName}=" + requestType;
 
             return queryParamsDictionary.Aggregate(url, (current1, keyValuePair) =>
                 keyValuePair.Value.Aggregate(current1, (current, value) => current + ("&" + keyValuePair.Key + "=" + value)));
@@ -141,7 +143,7 @@ namespace NxtLib
 
         protected string BuildUrl(string requestType, Dictionary<string, string> queryParamsDictionary)
         {
-            var url = _baseUrl + "?requestType=" + requestType;
+            var url = _baseUrl + $"?{RequestTypeName}=" + requestType;
             url = queryParamsDictionary.Aggregate(url, (current, queryParam) => current + ("&" + queryParam.Key + "=" + queryParam.Value));
             return url;
         }
@@ -160,9 +162,9 @@ namespace NxtLib
         private static void CheckForErrorResponse(string json, string url)
         {
             var jObject = JObject.Parse(json);
-            var errorCode = jObject.SelectToken("errorCode");
-            var error = jObject.SelectToken("error");
-            var errorDescription = jObject.SelectToken("errorDescription");
+            var errorCode = jObject.SelectToken(Parameters.ErrorCode);
+            var error = jObject.SelectToken(Parameters.Error);
+            var errorDescription = jObject.SelectToken(Parameters.ErrorDescription);
 
             if (errorCode != null)
             {

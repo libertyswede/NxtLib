@@ -25,10 +25,10 @@ namespace NxtLib
 
         internal virtual void AppendToQueryParameters(Dictionary<string, string> queryParameters)
         {
-            queryParameters.Add("broadcast", Broadcast.ToString());
+            queryParameters.Add(Parameters.Broadcast, Broadcast.ToString());
             queryParameters.Add(Parameters.Deadline, Deadline.ToString());
             queryParameters.Add(Parameters.FeeNqt, Fee.Nqt.ToString());
-            queryParameters.AddIfHasValue("recipientPublicKey", RecipientPublicKey);
+            queryParameters.AddIfHasValue(Parameters.RecipientPublicKey, RecipientPublicKey);
             queryParameters.AddIfHasValue(Parameters.ReferencedTransactionFullHash, ReferencedTransactionFullHash);
             AddUnencryptedMessage(queryParameters);
             AddEncryptedMessage(queryParameters);
@@ -47,8 +47,8 @@ namespace NxtLib
         {
             if (Message != null)
             {
-                queryParameters.Add("message", Message.Message);
-                queryParameters.Add("messageIsText", Message.MessageIsText.ToString());
+                queryParameters.Add(Parameters.Message, Message.Message);
+                queryParameters.Add(Parameters.MessageIsText, Message.MessageIsText.ToString());
             }
         }
 
@@ -59,14 +59,14 @@ namespace NxtLib
 
             if ((messageToBeEncrypted = EncryptedMessage as MessageToBeEncrypted) != null)
             {
-                queryParameters.Add("messageToEncrypt", messageToBeEncrypted.Message);
-                queryParameters.Add("messageToEncryptIsText", messageToBeEncrypted.MessageIsText.ToString());
+                queryParameters.Add(Parameters.MessageToEncrypt, messageToBeEncrypted.Message);
+                queryParameters.Add(Parameters.MessageToEncryptIsText, messageToBeEncrypted.MessageIsText.ToString());
             }
             else if ((alreadyEncryptedMessage = EncryptedMessage as AlreadyEncryptedMessage) != null)
             {
-                queryParameters.Add("encryptedMessageData", alreadyEncryptedMessage.Message);
-                queryParameters.Add("encryptedMessageNonce", ByteToHexStringConverter.ToHexString(alreadyEncryptedMessage.Nonce));
-                queryParameters.Add("messageToEncryptIsText", alreadyEncryptedMessage.MessageIsText.ToString());
+                queryParameters.Add(Parameters.EncryptedMessageData, alreadyEncryptedMessage.Message);
+                queryParameters.Add(Parameters.EncryptedMessageNonce, ByteToHexStringConverter.ToHexString(alreadyEncryptedMessage.Nonce));
+                queryParameters.Add(Parameters.MessageToEncryptIsText, alreadyEncryptedMessage.MessageIsText.ToString());
             }
         }
 
@@ -77,14 +77,14 @@ namespace NxtLib
 
             if ((messageToBeEncrypted = EncryptedMessageToSelf as MessageToBeEncrypted) != null)
             {
-                queryParameters.Add("messageToEncryptToSelf", messageToBeEncrypted.Message);
-                queryParameters.Add("messageToEncryptToSelfIsText", messageToBeEncrypted.MessageIsText.ToString());
+                queryParameters.Add(Parameters.MessageToEncryptToSelf, messageToBeEncrypted.Message);
+                queryParameters.Add(Parameters.MessageToEncryptToSelfIsText, messageToBeEncrypted.MessageIsText.ToString());
             }
             else if ((alreadyEncryptedMessage = EncryptedMessageToSelf as AlreadyEncryptedMessage) != null)
             {
-                queryParameters.Add("encryptToSelfMessageData", alreadyEncryptedMessage.Message);
-                queryParameters.Add("encryptToSelfMessageNonce", ByteToHexStringConverter.ToHexString(alreadyEncryptedMessage.Nonce));
-                queryParameters.Add("messageToEncryptToSelfIsText", alreadyEncryptedMessage.MessageIsText.ToString());
+                queryParameters.Add(Parameters.EncryptToSelfMessageData, alreadyEncryptedMessage.Message);
+                queryParameters.Add(Parameters.EncryptToSelfMessageNonce, ByteToHexStringConverter.ToHexString(alreadyEncryptedMessage.Nonce));
+                queryParameters.Add(Parameters.MessageToEncryptToSelfIsText, alreadyEncryptedMessage.MessageIsText.ToString());
             }
         }
 

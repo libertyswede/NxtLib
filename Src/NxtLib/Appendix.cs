@@ -245,7 +245,7 @@ namespace NxtLib
 
             if (jObject.SelectToken(PhasingWhitelistKey) != null)
             {
-                phasing.WhiteList = ParseWhitelist(jObject.SelectToken(PhasingWhitelistKey)).Select(UInt64.Parse).ToList();
+                phasing.WhiteList = ParseWhitelist(jObject.SelectToken(PhasingWhitelistKey)).Select(ulong.Parse).ToList();
             }
             if (jObject.SelectToken(PhasingHashedSecretKey) != null)
             {

@@ -24,7 +24,9 @@ namespace NxtLib.Internal
         internal const string BalanceNqt = "balanceNQT";
         internal const string BidOrder = "bidOrder";
         internal const string Block = "block";
+        internal const string Blocks = "blocks";
         internal const string BlockTimestamp = "blockTimestamp";
+        internal const string Broadcast = "broadcast";
         internal const string Buyer = "buyer";
         internal const string BuyRateNqt = "buyRateNQT";
         internal const string CanHaveRecipient = "canHaveRecipient";
@@ -42,6 +44,13 @@ namespace NxtLib.Internal
         internal const string EcBlockHeight = "ecBlockHeight";
         internal const string EcBlockId = "ecBlockId";
         internal const string EffectiveBalanceNxt = "effectiveBalanceNXT";
+        internal const string EncryptedMessageData = "encryptedMessageData";
+        internal const string EncryptedMessageNonce = "encryptedMessageNonce";
+        internal const string EncryptToSelfMessageData = "encryptToSelfMessageData";
+        internal const string EncryptToSelfMessageNonce = "encryptToSelfMessageNonce";
+        internal const string Error = "error";
+        internal const string ErrorCode = "errorCode";
+        internal const string ErrorDescription = "errorDescription";
         internal const string Event = "event";
         internal const string ExpirationHeight = "expirationHeight";
         internal const string FeeNqt = "feeNQT";
@@ -65,7 +74,13 @@ namespace NxtLib.Internal
         internal const string MaxNumberOfOptions = "maxNumberOfOptions";
         internal const string MaxRangeValue = "maxRangeValue";
         internal const string MaxSupply = "maxSupply";
+        internal const string Message = "message";
         internal const string MessageIsPrunable = "messageIsPrunable";
+        internal const string MessageIsText = "messageIsText";
+        internal const string MessageToEncrypt = "messageToEncrypt";
+        internal const string MessageToEncryptIsText = "messageToEncryptIsText";
+        internal const string MessageToEncryptToSelf = "messageToEncryptToSelf";
+        internal const string MessageToEncryptToSelfIsText = "messageToEncryptToSelfIsText";
         internal const string MinBalance = "minBalance";
         internal const string MinBalanceModel = "minBalanceModel";
         internal const string MinDifficulty = "minDifficulty";
@@ -88,6 +103,7 @@ namespace NxtLib.Internal
         internal const string QuantityQnt = "quantityQNT";
         internal const string RateNqt = "rateNQT";
         internal const string Recipient = "recipient";
+        internal const string RecipientPublicKey = "recipientPublicKey";
         internal const string RecipientRs = "recipientRS";
         internal const string ReferencedTransactionFullHash = "referencedTransactionFullHash";
         internal const string RefundNqt = "refundNQT";
@@ -105,10 +121,13 @@ namespace NxtLib.Internal
         internal const string Signature = "signature";
         internal const string SignatureHash = "signatureHash";
         internal const string State = "state";
+        internal const string StringId = "stringId";
         internal const string SubType = "subtype";
         internal const string Tag = "tag";
         internal const string Timestamp = "timestamp";
+        internal const string TotalAmountNqt = "totalAmountNqt";
         internal const string TotalBuyLimit = "totalBuyLimit";
+        internal const string TotalFeeNqt = "totalFeeNqt";
         internal const string TotalSellLimit = "totalSellLimit";
         internal const string Transaction = "transaction";
         internal const string TransactionBytes = "transactionBytes";
@@ -123,6 +142,7 @@ namespace NxtLib.Internal
         internal const string Version = "version";
         internal const string VersionTaggedDataUpload = "version.TaggedDataUpload";
         internal const string Vote = "vote";
+        internal const string Voter = "voter";
         internal const string VotingModel = "votingModel";
     }
 }

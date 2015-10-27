@@ -40,11 +40,11 @@ namespace NxtLib
         public List<T> Transactions { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "totalAmountNqt")]
+        [JsonProperty(PropertyName = Parameters.TotalAmountNqt)]
         public Amount TotalAmount { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
-        [JsonProperty(PropertyName = "totalFeeNqt")]
+        [JsonProperty(PropertyName = Parameters.TotalFeeNqt)]
         public Amount TotalFee { get; set; }
         public int Version { get; set; }
     }

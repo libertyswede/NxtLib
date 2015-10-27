@@ -9,7 +9,7 @@ namespace NxtLib.VotingSystem
         [JsonProperty(PropertyName = Parameters.Transaction)]
         public ulong TransactionId { get; set; }
 
-        [JsonProperty(PropertyName = "voter")]
+        [JsonProperty(PropertyName = Parameters.Voter)]
         public ulong VoterId { get; set; }
         public string VoterRs { get; set; }
         public List<int> Votes { get; set; }
