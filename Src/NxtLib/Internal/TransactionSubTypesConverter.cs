@@ -20,9 +20,9 @@ namespace NxtLib.Internal
                     var jtoken = transactionType.Children().First();
                     var subtype = new TransactionType
                     {
-                        CanHaveRecipient = Convert.ToBoolean(((JValue)jtoken.SelectToken("canHaveRecipient")).Value),
-                        IsPhasingSafe = Convert.ToBoolean(((JValue)jtoken.SelectToken("isPhasingSafe")).Value),
-                        MustHaveRecipient = Convert.ToBoolean(((JValue)jtoken.SelectToken("mustHaveRecipient")).Value),
+                        CanHaveRecipient = Convert.ToBoolean(((JValue)jtoken.SelectToken(Parameters.CanHaveRecipient)).Value),
+                        IsPhasingSafe = Convert.ToBoolean(((JValue)jtoken.SelectToken(Parameters.IsPhasingSafe)).Value),
+                        MustHaveRecipient = Convert.ToBoolean(((JValue)jtoken.SelectToken(Parameters.MustHaveRecipient)).Value),
                         Name = ((JValue)jtoken.SelectToken(Parameters.Name)).Value.ToString(),
                         SubType = (int)(long)((JValue)jtoken.SelectToken(Parameters.SubType)).Value,
                         Type = (int)(long)((JValue)jtoken.SelectToken(Parameters.Type)).Value

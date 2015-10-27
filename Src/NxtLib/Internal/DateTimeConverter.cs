@@ -29,11 +29,6 @@ namespace NxtLib.Internal
             return Nov24Th2013.AddSeconds(dateTime);
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
-
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if ((reader.TokenType == JsonToken.String || reader.TokenType == JsonToken.Integer) &&
@@ -52,6 +47,11 @@ namespace NxtLib.Internal
                 }
             }
             throw new NotSupportedException(string.Format("objectType {0} and TokenType {1} is not supported", objectType, reader.TokenType));
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
         }
 
         public override bool CanConvert(Type objectType)

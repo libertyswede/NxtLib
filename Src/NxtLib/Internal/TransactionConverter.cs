@@ -21,7 +21,7 @@ namespace NxtLib.Internal
             }
 
             var jObject = JObject.Load(reader);
-            var attachmentJobject = jObject.SelectToken("attachment") as JObject;
+            var attachmentJobject = jObject.SelectToken(Parameters.Attachment) as JObject;
             var attachmentConverter = new AttachmentConverter(attachmentJobject);
 
             var typeByte = GetValueOrDefault(jObject, Parameters.Type, Convert.ToByte);
@@ -32,33 +32,33 @@ namespace NxtLib.Internal
             transaction.Amount = GetValueOrDefault(jObject, Parameters.AmountNqt, obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
             transaction.Attachment = attachmentConverter.GetAttachment(subType);
             transaction.BlockId = GetValueOrNull(jObject, Parameters.Block, Convert.ToUInt64);
-            transaction.BlockTimestamp = GetDateTimeOrNull(jObject, "blockTimestamp");
-            transaction.Confirmations = GetValueOrNull(jObject, "confirmations", Convert.ToInt32);
-            transaction.Deadline = GetValueOrDefault(jObject, "deadline", Convert.ToInt16);
-            transaction.EcBlockId = GetValueOrDefault(jObject, "ecBlockId", Convert.ToUInt64);
-            transaction.EcBlockHeight = GetValueOrDefault(jObject, "ecBlockHeight", Convert.ToInt32);
+            transaction.BlockTimestamp = GetDateTimeOrNull(jObject, Parameters.BlockTimestamp);
+            transaction.Confirmations = GetValueOrNull(jObject, Parameters.Confirmations, Convert.ToInt32);
+            transaction.Deadline = GetValueOrDefault(jObject, Parameters.Deadline, Convert.ToInt16);
+            transaction.EcBlockId = GetValueOrDefault(jObject, Parameters.EcBlockId, Convert.ToUInt64);
+            transaction.EcBlockHeight = GetValueOrDefault(jObject, Parameters.EcBlockHeight, Convert.ToInt32);
             transaction.EncryptedMessage = EncryptedMessage.ParseJson(attachmentJobject);
             transaction.EncryptToSelfMessage = EncryptToSelfMessage.ParseJson(attachmentJobject);
-            transaction.Fee = GetValueOrDefault(jObject, "feeNQT", obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
-            transaction.FullHash = GetValueOrDefault(jObject, "fullHash", obj => obj.ToString());
+            transaction.Fee = GetValueOrDefault(jObject, Parameters.FeeNqt, obj => Amount.CreateAmountFromNqt(Convert.ToInt64(obj)));
+            transaction.FullHash = GetValueOrDefault(jObject, Parameters.FullHash, obj => obj.ToString());
             transaction.Height = GetValueOrDefault(jObject, Parameters.Height, Convert.ToInt32);
             transaction.Message = Message.ParseJson(attachmentJobject);
             transaction.Recipient = GetValueOrNull(jObject, Parameters.Recipient, Convert.ToUInt64);
-            transaction.RecipientRs = GetValueOrDefault(jObject, "recipientRS", obj => obj.ToString());
-            transaction.ReferencedTransactionFullHash = GetValueOrDefault(jObject, "referencedTransactionFullHash", obj => new BinaryHexString(obj.ToString()));
+            transaction.RecipientRs = GetValueOrDefault(jObject, Parameters.RecipientRs, obj => obj.ToString());
+            transaction.ReferencedTransactionFullHash = GetValueOrDefault(jObject, Parameters.ReferencedTransactionFullHash, obj => new BinaryHexString(obj.ToString()));
             transaction.Phasing = TransactionPhasing.ParseJson(attachmentJobject);
             transaction.PublicKeyAnnouncement = PublicKeyAnnouncement.ParseJson(attachmentJobject);
             transaction.Sender = GetValueOrDefault(jObject, Parameters.Sender, Convert.ToUInt64);
-            transaction.SenderRs = GetValueOrDefault(jObject, "senderRS", obj => obj.ToString());
-            transaction.SenderPublicKey = GetValueOrDefault(jObject, "senderPublicKey", obj => new BinaryHexString(obj.ToString()));
-            transaction.Signature = GetValueOrDefault(jObject, "signature", obj => new BinaryHexString(obj.ToString()));
-            transaction.SignatureHash = GetValueOrDefault(jObject, "signatureHash", obj => obj.ToString());
+            transaction.SenderRs = GetValueOrDefault(jObject, Parameters.SenderRs, obj => obj.ToString());
+            transaction.SenderPublicKey = GetValueOrDefault(jObject, Parameters.SenderPublicKey, obj => new BinaryHexString(obj.ToString()));
+            transaction.Signature = GetValueOrDefault(jObject, Parameters.Signature, obj => new BinaryHexString(obj.ToString()));
+            transaction.SignatureHash = GetValueOrDefault(jObject, Parameters.SignatureHash, obj => obj.ToString());
             transaction.SubType = subType;
             transaction.Timestamp = GetDateTimeOrDefault(jObject, Parameters.Timestamp);
             transaction.TransactionId = GetValueOrNull(jObject, Parameters.Transaction, Convert.ToUInt64);
-            transaction.TransactionIndex = GetValueOrDefault(jObject, "transactionIndex", Convert.ToInt32);
+            transaction.TransactionIndex = GetValueOrDefault(jObject, Parameters.TransactionIndex, Convert.ToInt32);
             transaction.Type = type;
-            transaction.Version = GetValueOrDefault(jObject, "version", Convert.ToInt32);
+            transaction.Version = GetValueOrDefault(jObject, Parameters.Version, Convert.ToInt32);
             return transaction;
         }
 

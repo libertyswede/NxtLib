@@ -24,16 +24,16 @@ namespace NxtLib.Internal
                     {
                         switch (jsonProperty.Name)
                         {
-                            case "allowRequiredBlockParameters":
+                            case Parameters.AllowRequiredBlockParameters:
                                 requestType.AllowRequiredBlockParameters = (bool) jsonProperty.Value;
                                 break;
-                            case "requirePassword":
+                            case Parameters.RequirePassword:
                                 requestType.RequirePassword = (bool) jsonProperty.Value;
                                 break;
-                            case "requireBlockchain":
+                            case Parameters.RequireBlockchain:
                                 requestType.RequireBlockchain = (bool) jsonProperty.Value;
                                 break;
-                            case "requirePost":
+                            case Parameters.RequirePost:
                                 requestType.RequirePost = (bool) jsonProperty.Value;
                                 break;
                         }

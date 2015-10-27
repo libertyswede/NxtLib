@@ -48,22 +48,22 @@ namespace NxtLib.Local
             resultJson.Add(Parameters.Type, (int)TransactionTypeMapper.GetMainTypeByte(transaction.Type));
             resultJson.Add(Parameters.SubType, (int)TransactionTypeMapper.GetSubTypeByte(transaction.SubType));
             resultJson.Add(Parameters.Timestamp, DateTimeConverter.GetNxtTime(transaction.Timestamp));
-            resultJson.Add("deadline", transaction.Deadline);
-            resultJson.Add("senderPublicKey", transaction.SenderPublicKey.ToHexString());
+            resultJson.Add(Parameters.Deadline, transaction.Deadline);
+            resultJson.Add(Parameters.SenderPublicKey, transaction.SenderPublicKey.ToHexString());
             resultJson.Add(Parameters.AmountNqt, transaction.Amount.Nqt.ToString());
-            resultJson.Add("feeNQT", transaction.Fee.Nqt.ToString());
+            resultJson.Add(Parameters.FeeNqt, transaction.Fee.Nqt.ToString());
             if (!string.IsNullOrEmpty(referencedTransactionFullHash))
             {
-                resultJson.Add("referencedTransactionFullHash", referencedTransactionFullHash);
+                resultJson.Add(Parameters.ReferencedTransactionFullHash, referencedTransactionFullHash);
             }
-            resultJson.Add("signature", signature.ToHexString());
-            resultJson.Add("version", transaction.Version);
+            resultJson.Add(Parameters.Signature, signature.ToHexString());
+            resultJson.Add(Parameters.Version, transaction.Version);
             if (attachment != null && attachment.Children().Any())
             {
-                resultJson.Add("attachment", attachment);
+                resultJson.Add(Parameters.Attachment, attachment);
             }
-            resultJson.Add("ecBlockHeight", transaction.EcBlockHeight);
-            resultJson.Add("ecBlockId", transaction.EcBlockId.ToString());
+            resultJson.Add(Parameters.EcBlockHeight, transaction.EcBlockHeight);
+            resultJson.Add(Parameters.EcBlockId, transaction.EcBlockId.ToString());
             if (transaction.Recipient.HasValue)
             {
                 resultJson.Add(Parameters.Recipient, transaction.Recipient.ToString());

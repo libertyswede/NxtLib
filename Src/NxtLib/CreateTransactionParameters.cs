@@ -26,10 +26,10 @@ namespace NxtLib
         internal virtual void AppendToQueryParameters(Dictionary<string, string> queryParameters)
         {
             queryParameters.Add("broadcast", Broadcast.ToString());
-            queryParameters.Add("deadline", Deadline.ToString());
-            queryParameters.Add("feeNQT", Fee.Nqt.ToString());
+            queryParameters.Add(Parameters.Deadline, Deadline.ToString());
+            queryParameters.Add(Parameters.FeeNqt, Fee.Nqt.ToString());
             queryParameters.AddIfHasValue("recipientPublicKey", RecipientPublicKey);
-            queryParameters.AddIfHasValue("referencedTransactionFullHash", ReferencedTransactionFullHash);
+            queryParameters.AddIfHasValue(Parameters.ReferencedTransactionFullHash, ReferencedTransactionFullHash);
             AddUnencryptedMessage(queryParameters);
             AddEncryptedMessage(queryParameters);
             AddToSelfMessage(queryParameters);

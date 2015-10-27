@@ -14,7 +14,7 @@ namespace NxtLib.Transactions
         }
 
         private GetTransactionLocator(BinaryHexString fullHash)
-            : base("fullHash", fullHash.ToHexString())
+            : base(Parameters.FullHash, fullHash.ToHexString())
         {
             FullHash = fullHash;
         }
