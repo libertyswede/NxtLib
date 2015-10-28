@@ -113,12 +113,12 @@ namespace NxtLib
         internal static Message ParseJson(JObject jObject)
         {
             JValue messageToken;
-            if (jObject == null || (messageToken = jObject.SelectToken(MessageKey) as JValue) == null)
+            if (jObject == null || (messageToken = jObject.SelectToken(Parameters.Message) as JValue) == null)
             {
                 return null;
             }
 
-            var messageIsText = Convert.ToBoolean(jObject.SelectToken(MessageIsTextKey).ToString());
+            var messageIsText = Convert.ToBoolean(jObject.SelectToken(Parameters.MessageIsText).ToString());
             return new Message(new UnencryptedMessage(messageToken.Value.ToString(), messageIsText));
         }
     }
@@ -137,9 +137,9 @@ namespace NxtLib
         protected EncryptedMessageBase(JToken messageToken)
         {
             IsCompressed = Convert.ToBoolean(((JValue) messageToken.SelectToken(IsCompressedKey)).Value.ToString());
-            IsText = Convert.ToBoolean(((JValue) messageToken.SelectToken(IsTextKey)).Value.ToString());
-            Nonce = new BinaryHexString(((JValue) messageToken.SelectToken(NonceKey)).Value.ToString());
-            Data = new BinaryHexString(((JValue) messageToken.SelectToken(DataKey)).Value.ToString());
+            IsText = Convert.ToBoolean(((JValue) messageToken.SelectToken(Parameters.IsText)).Value.ToString());
+            Nonce = new BinaryHexString(((JValue) messageToken.SelectToken(Parameters.Nonce)).Value.ToString());
+            Data = new BinaryHexString(((JValue) messageToken.SelectToken(Parameters.Data)).Value.ToString());
         }
 
         protected EncryptedMessageBase()
@@ -199,7 +199,7 @@ namespace NxtLib
         internal static PublicKeyAnnouncement ParseJson(JObject jObject)
         {
             JValue announcement;
-            if (jObject == null || (announcement = jObject.SelectToken(RecipientPublicKeyKey) as JValue) == null)
+            if (jObject == null || (announcement = jObject.SelectToken(Parameters.RecipientPublicKey) as JValue) == null)
             {
                 return null;
             }
@@ -228,29 +228,29 @@ namespace NxtLib
 
         internal static TransactionPhasing ParseJson(JObject jObject)
         {
-            if (jObject?.SelectToken(PhasingFinishHeightKey) == null)
+            if (jObject?.SelectToken(Parameters.PhasingFinishHeight) == null)
             {
                 return null;
             }
 
             var phasing = new TransactionPhasing
             {
-                FinishHeight = GetAttachmentValue<int>(jObject, PhasingFinishHeightKey),
-                HoldingId = ulong.Parse(GetAttachmentValue<string>(jObject, PhasingHoldingKey)),
-                MinBalance = long.Parse(GetAttachmentValue<string>(jObject, PhasingMinBalanceKey)),
-                MinBalanceModel = (MinBalanceModel)GetAttachmentValue<int>(jObject, PhasingMinBalanceModelKey),
-                Quorum = GetAttachmentValue<long>(jObject, PhasingQuorumKey),
-                VotingModel = (VotingModel)GetAttachmentValue<int>(jObject, PhasingVotingModelKey)
+                FinishHeight = GetAttachmentValue<int>(jObject, Parameters.PhasingFinishHeight),
+                HoldingId = ulong.Parse(GetAttachmentValue<string>(jObject, Parameters.PhasingHolding)),
+                MinBalance = long.Parse(GetAttachmentValue<string>(jObject, Parameters.PhasingMinBalance)),
+                MinBalanceModel = (MinBalanceModel)GetAttachmentValue<int>(jObject, Parameters.PhasingMinBalanceModel),
+                Quorum = GetAttachmentValue<long>(jObject, Parameters.PhasingQuorum),
+                VotingModel = (VotingModel)GetAttachmentValue<int>(jObject, Parameters.PhasingVotingModel)
             };
 
             if (jObject.SelectToken(PhasingWhitelistKey) != null)
             {
                 phasing.WhiteList = ParseWhitelist(jObject.SelectToken(PhasingWhitelistKey)).Select(ulong.Parse).ToList();
             }
-            if (jObject.SelectToken(PhasingHashedSecretKey) != null)
+            if (jObject.SelectToken(Parameters.PhasingHashedSecret) != null)
             {
-                phasing.HashedSecret = new BinaryHexString(GetAttachmentValue<string>(jObject, PhasingHashedSecretKey));
-                phasing.HashedSecretAlgorithm = (HashAlgorithm)GetAttachmentValue<int>(jObject, PhasingHashedSecretAlgorithmKey);
+                phasing.HashedSecret = new BinaryHexString(GetAttachmentValue<string>(jObject, Parameters.PhasingHashedSecret));
+                phasing.HashedSecretAlgorithm = (HashAlgorithm)GetAttachmentValue<int>(jObject, Parameters.PhasingHashedSecretAlgorithm);
             }
             if (jObject.SelectToken(PhasingLinkedFullHashesKey) != null)
             {

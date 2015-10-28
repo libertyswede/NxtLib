@@ -18,7 +18,7 @@ namespace NxtLib
 
         internal AccountControlEffectiveBalanceLeasingAttachment(JToken attachments)
         {
-            Period = GetAttachmentValue<short>(attachments, PeriodKey);
+            Period = GetAttachmentValue<short>(attachments, Parameters.Period);
         }
     }
 
@@ -28,7 +28,7 @@ namespace NxtLib
 
         protected ColoredCoinsOrderCancellationAttachment(JToken attachments)
         {
-            OrderId = GetAttachmentValue<ulong>(attachments, OrderIdKey);
+            OrderId = GetAttachmentValue<ulong>(attachments, Parameters.Order);
         }
     }
 
@@ -57,10 +57,10 @@ namespace NxtLib
 
         internal ColoredCoinsAssetIssuanceAttachment(JToken attachments)
         {
-            Decimals = GetAttachmentValue<byte>(attachments, DecimalsKey);
-            Description = GetAttachmentValue<string>(attachments, DescriptionKey);
-            Name = GetAttachmentValue<string>(attachments, NameKey);
-            QuantityQnt = GetAttachmentValue<long>(attachments, QuantityQntKey);
+            Decimals = GetAttachmentValue<byte>(attachments, Parameters.Decimals);
+            Description = GetAttachmentValue<string>(attachments, Parameters.Description);
+            Name = GetAttachmentValue<string>(attachments, Parameters.Name);
+            QuantityQnt = GetAttachmentValue<long>(attachments, Parameters.QuantityQnt);
         }
     }
 
@@ -72,8 +72,8 @@ namespace NxtLib
 
         internal ColoredCoinsAssetTransferAttachment(JToken attachments)
         {
-            AssetId = GetAttachmentValue<ulong>(attachments, AssetIdKey);
-            QuantityQnt = GetAttachmentValue<long>(attachments, QuantityQntKey);
+            AssetId = GetAttachmentValue<ulong>(attachments, Parameters.Asset);
+            QuantityQnt = GetAttachmentValue<long>(attachments, Parameters.QuantityQnt);
             if (attachments.SelectToken(CommentKey) != null)
             {
                 Comment = GetAttachmentValue<string>(attachments, CommentKey);
@@ -98,9 +98,9 @@ namespace NxtLib
 
         protected ColoredCoinsOrderPlacementAttachment(JToken attachments)
         {
-            AssetId = GetAttachmentValue<ulong>(attachments, AssetIdKey);
-            QuantityQnt = GetAttachmentValue<long>(attachments, QuantityQntKey);
-            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
+            AssetId = GetAttachmentValue<ulong>(attachments, Parameters.Asset);
+            QuantityQnt = GetAttachmentValue<long>(attachments, Parameters.QuantityQnt);
+            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.PriceNqt));
         }
     }
 
@@ -118,7 +118,7 @@ namespace NxtLib
 
         internal DigitalGoodsDelistingAttachment(JToken attachments)
         {
-            GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
+            GoodsId = GetAttachmentValue<ulong>(attachments, Parameters.Goods);
         }
     }
 
@@ -133,10 +133,10 @@ namespace NxtLib
         internal DigitalGoodsDeliveryAttachment(JToken attachments)
         {
             Discount = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, DiscountKey));
-            GoodsData = new BinaryHexString(GetAttachmentValue<string>(attachments, GoodsDataKey));
-            GoodsIsText = GetAttachmentValue<bool>(attachments, GoodsIsTextKey);
-            GoodsNonce = new BinaryHexString(GetAttachmentValue<string>(attachments, GoodsNonceKey));
-            Purchase = GetAttachmentValue<ulong>(attachments, PurchaseKey);
+            GoodsData = new BinaryHexString(GetAttachmentValue<string>(attachments, Parameters.GoodsData));
+            GoodsIsText = GetAttachmentValue<bool>(attachments, Parameters.GoodsIsText);
+            GoodsNonce = new BinaryHexString(GetAttachmentValue<string>(attachments, Parameters.GoodsNonce));
+            Purchase = GetAttachmentValue<ulong>(attachments, Parameters.Purchase);
         }
     }
 
@@ -148,9 +148,9 @@ namespace NxtLib
 
         internal ColoredCoinsDividendPaymentAttachment(JToken attachments)
         {
-            AmountPerQnt = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, AmountNqtPerQntKey));
-            AssetId = GetAttachmentValue<ulong>(attachments, AssetIdKey);
-            Height = GetAttachmentValue<int>(attachments, HeightKey);
+            AmountPerQnt = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.AmountNqtPerQnt));
+            AssetId = GetAttachmentValue<ulong>(attachments, Parameters.Asset);
+            Height = GetAttachmentValue<int>(attachments, Parameters.Height);
         }
     }
 
@@ -168,7 +168,7 @@ namespace NxtLib
 
         internal DigitalGoodsFeedbackAttachment(JToken attachments)
         {
-            PurchaseId = GetAttachmentValue<ulong>(attachments, PurchaseKey);
+            PurchaseId = GetAttachmentValue<ulong>(attachments, Parameters.Purchase);
         }
     }
 
@@ -182,11 +182,11 @@ namespace NxtLib
 
         internal DigitalGoodsListingAttachment(JToken attachments)
         {
-            Name = GetAttachmentValue<string>(attachments, NameKey);
-            Description = GetAttachmentValue<string>(attachments, DescriptionKey);
-            Tags = GetAttachmentValue<string>(attachments, TagsKey);
-            Quantity = GetAttachmentValue<int>(attachments, QuantityKey);
-            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
+            Name = GetAttachmentValue<string>(attachments, Parameters.Name);
+            Description = GetAttachmentValue<string>(attachments, Parameters.Description);
+            Tags = GetAttachmentValue<string>(attachments, Parameters.Tags);
+            Quantity = GetAttachmentValue<int>(attachments, Parameters.Quantity);
+            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.PriceNqt));
         }
     }
 
@@ -197,8 +197,8 @@ namespace NxtLib
 
         internal DigitalGoodsPriceChangeAttachment(JToken attachments)
         {
-            GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
-            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
+            GoodsId = GetAttachmentValue<ulong>(attachments, Parameters.Goods);
+            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.PriceNqt));
         }
     }
 
@@ -212,10 +212,10 @@ namespace NxtLib
         internal DigitalGoodsPurchaseAttachment(JToken attachments)
         {
             DeliveryDeadlineTimestamp =
-                DateTimeConverter.GetDateTime(GetAttachmentValue<int>(attachments, DeliveryDeadlineTimestampKey));
-            GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
-            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
-            Quantity = GetAttachmentValue<int>(attachments, QuantityKey);
+                DateTimeConverter.GetDateTime(GetAttachmentValue<int>(attachments, Parameters.DeliveryDeadlineTimestamp));
+            GoodsId = GetAttachmentValue<ulong>(attachments, Parameters.Goods);
+            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.PriceNqt));
+            Quantity = GetAttachmentValue<int>(attachments, Parameters.Quantity);
         }
     }
 
@@ -226,8 +226,8 @@ namespace NxtLib
 
         internal DigitalGoodsQuantityChangeAttachment(JToken attachments)
         {
-            DeltaQuantity = GetAttachmentValue<int>(attachments, DeltaQuantityKey);
-            GoodsId = GetAttachmentValue<ulong>(attachments, GoodsIdKey);
+            DeltaQuantity = GetAttachmentValue<int>(attachments, Parameters.DeltaQuantity);
+            GoodsId = GetAttachmentValue<ulong>(attachments, Parameters.Goods);
         }
     }
 
@@ -238,8 +238,8 @@ namespace NxtLib
 
         internal DigitalGoodsRefundAttachment(JToken attachments)
         {
-            PurchaseId = GetAttachmentValue<ulong>(attachments, PurchaseKey);
-            Refund = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, RefundNqtKey));
+            PurchaseId = GetAttachmentValue<ulong>(attachments, Parameters.Purchase);
+            Refund = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.RefundNqt));
         }
     }
 
@@ -250,8 +250,8 @@ namespace NxtLib
 
         internal MessagingAccountInfoAttachment(JToken attachments)
         {
-            Name = GetAttachmentValue<string>(attachments, NameKey);
-            Description = GetAttachmentValue<string>(attachments, DescriptionKey);
+            Name = GetAttachmentValue<string>(attachments, Parameters.Name);
+            Description = GetAttachmentValue<string>(attachments, Parameters.Description);
         }
     }
 
@@ -262,7 +262,7 @@ namespace NxtLib
 
         internal MessagingAliasAssignmentAttachment(JToken attachments)
         {
-            Alias = GetAttachmentValue<string>(attachments, AliasKey);
+            Alias = GetAttachmentValue<string>(attachments, Parameters.Alias);
             Uri = GetAttachmentValue<string>(attachments, UriKey);
         }
     }
@@ -273,7 +273,7 @@ namespace NxtLib
 
         internal MessagingAliasBuyAttachment(JToken attachments)
         {
-            Alias = GetAttachmentValue<string>(attachments, AliasKey);
+            Alias = GetAttachmentValue<string>(attachments, Parameters.Alias);
         }
     }
 
@@ -283,7 +283,7 @@ namespace NxtLib
 
         internal MessagingAliasDeleteAttachment(JToken attachments)
         {
-            Alias = GetAttachmentValue<string>(attachments, AliasKey);
+            Alias = GetAttachmentValue<string>(attachments, Parameters.Alias);
         }
     }
 
@@ -294,8 +294,8 @@ namespace NxtLib
 
         internal MessagingAliasSellAttachment(JToken attachments)
         {
-            Alias = GetAttachmentValue<string>(attachments, AliasKey);
-            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, PriceNqtKey));
+            Alias = GetAttachmentValue<string>(attachments, Parameters.Alias);
+            Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.PriceNqt));
         }
     }
 
@@ -316,18 +316,18 @@ namespace NxtLib
 
         internal MessagingPollCreationAttachment(JToken attachments)
         {
-            Description = GetAttachmentValue<string>(attachments, DescriptionKey);
-            FinishHeight = GetAttachmentValue<int>(attachments, FinishHeightKey);
-            HoldingId = ulong.Parse(GetAttachmentValue<string>(attachments, HoldingKey));
-            MaxNumberOfOptions = GetAttachmentValue<int>(attachments, MaxNumberOfOptionsKey);
-            MaxRangeValue = GetAttachmentValue<int>(attachments, MaxRangeValueKey);
-            MinBalance = GetAttachmentValue<long>(attachments, MinBalanceKey);
-            MinBalanceModel = (MinBalanceModel) GetAttachmentValue<int>(attachments, MinBalanceModelKey);
-            MinRangeValue = GetAttachmentValue<int>(attachments, MinRangeValueKey);
-            MinNumberOfOptions = GetAttachmentValue<int>(attachments, MinNumberOfOptionsKey);
-            Name = GetAttachmentValue<string>(attachments, NameKey);
+            Description = GetAttachmentValue<string>(attachments, Parameters.Description);
+            FinishHeight = GetAttachmentValue<int>(attachments, Parameters.FinishHeight);
+            HoldingId = ulong.Parse(GetAttachmentValue<string>(attachments, Parameters.Holding));
+            MaxNumberOfOptions = GetAttachmentValue<int>(attachments, Parameters.MaxNumberOfOptions);
+            MaxRangeValue = GetAttachmentValue<int>(attachments, Parameters.MaxRangeValue);
+            MinBalance = GetAttachmentValue<long>(attachments, Parameters.MinBalance);
+            MinBalanceModel = (MinBalanceModel) GetAttachmentValue<int>(attachments, Parameters.MinBalanceModel);
+            MinRangeValue = GetAttachmentValue<int>(attachments, Parameters.MinRangeValue);
+            MinNumberOfOptions = GetAttachmentValue<int>(attachments, Parameters.MinNumberOfOptions);
+            Name = GetAttachmentValue<string>(attachments, Parameters.Name);
             Options = ParseOptions(attachments.SelectToken(OptionsKey)).ToList();
-            VotingModel = (VotingModel)GetAttachmentValue<int>(attachments, VotingModelKey);
+            VotingModel = (VotingModel)GetAttachmentValue<int>(attachments, Parameters.VotingModel);
         }
 
         private static IEnumerable<string> ParseOptions(JToken optionsToken)
@@ -360,8 +360,8 @@ namespace NxtLib
 
         internal MessagingVoteCastingAttachment(JToken attachments)
         {
-            PollId = ulong.Parse(GetAttachmentValue<string>(attachments, PollKey));
-            Votes = ParseVotes(attachments.SelectToken(VoteKey)).ToList();
+            PollId = ulong.Parse(GetAttachmentValue<string>(attachments, Parameters.Poll));
+            Votes = ParseVotes(attachments.SelectToken(Parameters.Vote)).ToList();
         }
 
         private static IEnumerable<int> ParseVotes(JToken votesToken)
@@ -378,9 +378,9 @@ namespace NxtLib
 
         protected MonetarySystemExchange(JToken attachments)
         {
-            CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
-            Rate = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, RateNqtKey));
-            Units = GetAttachmentValue<long>(attachments, UnitsKey);
+            CurrencyId = GetAttachmentValue<ulong>(attachments, Parameters.Currency);
+            Rate = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.RateNqt));
+            Units = GetAttachmentValue<long>(attachments, Parameters.Units);
         }
     }
 
@@ -406,7 +406,7 @@ namespace NxtLib
 
         internal MonetarySystemCurrencyDeletion(JToken attachments)
         {
-            CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
+            CurrencyId = GetAttachmentValue<ulong>(attachments, Parameters.Currency);
         }
     }
 
@@ -429,20 +429,20 @@ namespace NxtLib
 
         internal MonetarySystemCurrencyIssuanceAttachment(JToken attachments)
         {
-            Algorithm = GetAttachmentValue<byte>(attachments, AlgorithmKey);
-            Code = GetAttachmentValue<string>(attachments, CodeKey);
-            Decimals = GetAttachmentValue<byte>(attachments, DecimalsKey);
-            Description = GetAttachmentValue<string>(attachments, DescriptionKey);
-            InitialSupply = GetAttachmentValue<long>(attachments, InitialSupplyKey);
-            IssuanceHeight = GetAttachmentValue<int>(attachments, IssuanceHeightKey);
-            MaxDifficulty = GetAttachmentValue<int>(attachments, MaxDifficultyKey);
-            MaxSupply = GetAttachmentValue<long>(attachments, MaxSupplyKey);
-            MinDifficulty = GetAttachmentValue<int>(attachments, MinDifficultyKey);
-            MinReservePerUnit = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, MinReservePerUnitNqtKey));
-            Name = GetAttachmentValue<string>(attachments, NameKey);
-            ReserveSupply = GetAttachmentValue<long>(attachments, ReserveSupplyKey);
-            Ruleset = GetAttachmentValue<byte>(attachments, RulesetKey);
-            SetTypes(GetAttachmentValue<int>(attachments, TypeKey));
+            Algorithm = GetAttachmentValue<byte>(attachments, Parameters.Algorithm);
+            Code = GetAttachmentValue<string>(attachments, Parameters.Code);
+            Decimals = GetAttachmentValue<byte>(attachments, Parameters.Decimals);
+            Description = GetAttachmentValue<string>(attachments, Parameters.Description);
+            InitialSupply = GetAttachmentValue<long>(attachments, Parameters.InitialSupply);
+            IssuanceHeight = GetAttachmentValue<int>(attachments, Parameters.IssuanceHeight);
+            MaxDifficulty = GetAttachmentValue<int>(attachments, Parameters.MaxDifficulty);
+            MaxSupply = GetAttachmentValue<long>(attachments, Parameters.MaxSupply);
+            MinDifficulty = GetAttachmentValue<int>(attachments, Parameters.MinDifficulty);
+            MinReservePerUnit = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.MinReservePerUnitNqt));
+            Name = GetAttachmentValue<string>(attachments, Parameters.Name);
+            ReserveSupply = GetAttachmentValue<long>(attachments, Parameters.ReserveSupply);
+            Ruleset = GetAttachmentValue<byte>(attachments, Parameters.Ruleset);
+            SetTypes(GetAttachmentValue<int>(attachments, Parameters.Type));
         }
 
         private void SetTypes(int type)
@@ -468,10 +468,10 @@ namespace NxtLib
 
         internal MonetarySystemCurrencyMintingAttachment(JToken attachments)
         {
-            Counter = GetAttachmentValue<long>(attachments, CounterKey);
-            CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
-            Nonce = GetAttachmentValue<long>(attachments, NonceKey);
-            Units = GetAttachmentValue<long>(attachments, UnitsKey);
+            Counter = GetAttachmentValue<long>(attachments, Parameters.Counter);
+            CurrencyId = GetAttachmentValue<ulong>(attachments, Parameters.Currency);
+            Nonce = GetAttachmentValue<long>(attachments, Parameters.Nonce);
+            Units = GetAttachmentValue<long>(attachments, Parameters.Units);
         }
     }
 
@@ -482,8 +482,8 @@ namespace NxtLib
 
         internal MonetarySystemCurrencyTransferAttachment(JToken attachments)
         {
-            CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
-            Units = GetAttachmentValue<long>(attachments, UnitsKey);
+            CurrencyId = GetAttachmentValue<ulong>(attachments, Parameters.Currency);
+            Units = GetAttachmentValue<long>(attachments, Parameters.Units);
         }
     }
 
@@ -500,14 +500,14 @@ namespace NxtLib
 
         internal MonetarySystemPublishExchangeOfferAttachment(JToken attachments)
         {
-            BuyRate = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, BuyRateNqtKey));
-            CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
-            ExpirationHeight = GetAttachmentValue<int>(attachments, ExpirationHeightKey);
-            InitialBuySupply = GetAttachmentValue<long>(attachments, InitialBuySupplyKey);
-            InitialSellSupply = GetAttachmentValue<long>(attachments, InitialSellSupplyKey);
-            SellRate = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, SellRateNqtKey));
-            TotalBuyLimit = GetAttachmentValue<long>(attachments, TotalBuyLimitKey);
-            TotalSellLimit = GetAttachmentValue<long>(attachments, TotalSellLimitKey);
+            BuyRate = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.BuyRateNqt));
+            CurrencyId = GetAttachmentValue<ulong>(attachments, Parameters.Currency);
+            ExpirationHeight = GetAttachmentValue<int>(attachments, Parameters.ExpirationHeight);
+            InitialBuySupply = GetAttachmentValue<long>(attachments, Parameters.InitialBuySupply);
+            InitialSellSupply = GetAttachmentValue<long>(attachments, Parameters.InitialSellSupply);
+            SellRate = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.SellRateNqt));
+            TotalBuyLimit = GetAttachmentValue<long>(attachments, Parameters.TotalBuyLimit);
+            TotalSellLimit = GetAttachmentValue<long>(attachments, Parameters.TotalSellLimit);
         }
     }
 
@@ -518,8 +518,8 @@ namespace NxtLib
 
         internal MonetarySystemReserveClaimAttachment(JToken attachments)
         {
-            CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
-            Units = GetAttachmentValue<long>(attachments, UnitsKey);
+            CurrencyId = GetAttachmentValue<ulong>(attachments, Parameters.Currency);
+            Units = GetAttachmentValue<long>(attachments, Parameters.Units);
         }
     }
 
@@ -530,8 +530,8 @@ namespace NxtLib
 
         internal MonetarySystemReserveIncreaseAttachment(JToken attachments)
         {
-            AmountPerUnit = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, AmountPerUnitNqtKey));
-            CurrencyId = GetAttachmentValue<ulong>(attachments, CurrencyKey);
+            AmountPerUnit = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.AmountPerUnitNqt));
+            CurrencyId = GetAttachmentValue<ulong>(attachments, Parameters.Currency);
         }
     }
 
@@ -555,16 +555,16 @@ namespace NxtLib
 
         protected void ParseTaggedData(JToken jToken)
         {
-            if (jToken.SelectToken(DataKey) != null)
+            if (jToken.SelectToken(Parameters.Data) != null)
             {
-                Channel = GetAttachmentValue<string>(jToken, ChannelKey);
-                Data = GetAttachmentValue<string>(jToken, DataKey);
-                Description = GetAttachmentValue<string>(jToken, DescriptionKey);
-                Filename = GetAttachmentValue<string>(jToken, FilenameKey);
-                IsText = GetAttachmentValue<bool>(jToken, IsTextKey);
-                Name = GetAttachmentValue<string>(jToken, NameKey);
-                Tags = GetAttachmentValue<string>(jToken, TagsKey);
-                Type = GetAttachmentValue<string>(jToken, TypeKey);
+                Channel = GetAttachmentValue<string>(jToken, Parameters.Channel);
+                Data = GetAttachmentValue<string>(jToken, Parameters.Data);
+                Description = GetAttachmentValue<string>(jToken, Parameters.Description);
+                Filename = GetAttachmentValue<string>(jToken, Parameters.Filename);
+                IsText = GetAttachmentValue<bool>(jToken, Parameters.IsText);
+                Name = GetAttachmentValue<string>(jToken, Parameters.Name);
+                Tags = GetAttachmentValue<string>(jToken, Parameters.Tags);
+                Type = GetAttachmentValue<string>(jToken, Parameters.Type);
             }
         }
     }
