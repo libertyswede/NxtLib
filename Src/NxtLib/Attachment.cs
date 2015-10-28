@@ -74,9 +74,9 @@ namespace NxtLib
         {
             AssetId = GetAttachmentValue<ulong>(attachments, Parameters.Asset);
             QuantityQnt = GetAttachmentValue<long>(attachments, Parameters.QuantityQnt);
-            if (attachments.SelectToken(CommentKey) != null)
+            if (attachments.SelectToken(Parameters.Comment) != null)
             {
-                Comment = GetAttachmentValue<string>(attachments, CommentKey);
+                Comment = GetAttachmentValue<string>(attachments, Parameters.Comment);
             }
         }
     }
@@ -132,7 +132,7 @@ namespace NxtLib
 
         internal DigitalGoodsDeliveryAttachment(JToken attachments)
         {
-            Discount = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, DiscountKey));
+            Discount = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.DiscountNqt));
             GoodsData = new BinaryHexString(GetAttachmentValue<string>(attachments, Parameters.GoodsData));
             GoodsIsText = GetAttachmentValue<bool>(attachments, Parameters.GoodsIsText);
             GoodsNonce = new BinaryHexString(GetAttachmentValue<string>(attachments, Parameters.GoodsNonce));
@@ -263,7 +263,7 @@ namespace NxtLib
         internal MessagingAliasAssignmentAttachment(JToken attachments)
         {
             Alias = GetAttachmentValue<string>(attachments, Parameters.Alias);
-            Uri = GetAttachmentValue<string>(attachments, UriKey);
+            Uri = GetAttachmentValue<string>(attachments, Parameters.Uri);
         }
     }
 
@@ -326,7 +326,7 @@ namespace NxtLib
             MinRangeValue = GetAttachmentValue<int>(attachments, Parameters.MinRangeValue);
             MinNumberOfOptions = GetAttachmentValue<int>(attachments, Parameters.MinNumberOfOptions);
             Name = GetAttachmentValue<string>(attachments, Parameters.Name);
-            Options = ParseOptions(attachments.SelectToken(OptionsKey)).ToList();
+            Options = ParseOptions(attachments.SelectToken(Parameters.Options)).ToList();
             VotingModel = (VotingModel)GetAttachmentValue<int>(attachments, Parameters.VotingModel);
         }
 
@@ -344,7 +344,7 @@ namespace NxtLib
 
         internal MessagingPhasingVoteCasting(JToken attachments)
         {
-            TransactionFullHashes = ParseHashes(attachments.SelectToken(TransactionFullHashesKey)).ToList();
+            TransactionFullHashes = ParseHashes(attachments.SelectToken(Parameters.TransactionFullHashes)).ToList();
         }
 
         private static IEnumerable<BinaryHexString> ParseHashes(JToken hashesToken)
@@ -575,7 +575,7 @@ namespace NxtLib
 
         internal TaggedDataExtendAttachment(JToken jToken)
         {
-            TaggedDataId = GetAttachmentValue<ulong>(jToken, TaggedDataKey);
+            TaggedDataId = GetAttachmentValue<ulong>(jToken, Parameters.TaggedData);
             ParseTaggedData(jToken);
         }
     }
@@ -591,7 +591,7 @@ namespace NxtLib
 
         internal TaggedDataUploadAttachment(JToken jToken)
         {
-            Hash = new BinaryHexString(GetAttachmentValue<string>(jToken, HashKey));
+            Hash = new BinaryHexString(GetAttachmentValue<string>(jToken, Parameters.Hash));
             ParseTaggedData(jToken);
         }
     }

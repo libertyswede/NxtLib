@@ -36,6 +36,7 @@ namespace NxtLib.Internal
         internal const string Channel = "channel";
         internal const string CommunicationEvent = "communicationEvent";
         internal const string Code = "code";
+        internal const string Comment = "comment";
         internal const string Completed = "completed";
         internal const string CompressMessageToEncrypt = "compressMessageToEncrypt";
         internal const string Confirmations = "confirmations";
@@ -60,8 +61,10 @@ namespace NxtLib.Internal
         internal const string EcBlockHeight = "ecBlockHeight";
         internal const string EcBlockId = "ecBlockId";
         internal const string EffectiveBalanceNxt = "effectiveBalanceNXT";
+        internal const string EncryptedMessage = "encryptedMessage";
         internal const string EncryptedMessageData = "encryptedMessageData";
         internal const string EncryptedMessageNonce = "encryptedMessageNonce";
+        internal const string EncryptToSelfMessage = "encryptToSelfMessage";
         internal const string EncryptToSelfMessageData = "encryptToSelfMessageData";
         internal const string EncryptToSelfMessageNonce = "encryptToSelfMessageNonce";
         internal const string Error = "error";
@@ -85,6 +88,7 @@ namespace NxtLib.Internal
         internal const string GoodsToEncrypt = "goodsToEncrypt";
         internal const string GuaranteedBalanceNqt = "guaranteedBalanceNQT";
         internal const string Hallmark = "hallmark";
+        internal const string Hash = "hash";
         internal const string HashAlgorithm = "hashAlgorithm";
         internal const string Height = "height";
         internal const string HideDelisted = "hideDelisted";
@@ -112,6 +116,7 @@ namespace NxtLib.Internal
         internal const string InitialSellSupply = "initialSellSupply";
         internal const string InitialSupply = "initialSupply";
         internal const string InStockOnly = "inStockOnly";
+        internal const string IsCompressed = "isCompressed";
         internal const string IsPhasingSafe = "isPhasingSafe";
         internal const string IssuanceHeight = "issuanceHeight";
         internal const string IssuerAccount = "issuerAccount";
@@ -147,6 +152,7 @@ namespace NxtLib.Internal
         internal const string NumBlocks = "numBlocks";
         internal const string Offer = "offer";
         internal const string Option = "option";
+        internal const string Options = "options";
         internal const string Order = "order";
         internal const string OtherAccount = "otherAccount";
         internal const string Peer = "peer";
@@ -159,11 +165,13 @@ namespace NxtLib.Internal
         internal const string PhasingHashedSecretAlgorithm = "phasingHashedSecretAlgorithm";
         internal const string PhasingHolding = "phasingHolding";
         internal const string PhasingLinkedFullHash = "phasingLinkedFullHash";
+        internal const string PhasingLinkedFullHashes = "phasingLinkedFullHashes";
         internal const string PhasingMinBalance = "phasingMinBalance";
         internal const string PhasingMinBalanceModel = "phasingMinBalanceModel";
         internal const string PhasingQuorum = "phasingQuorum";
-        internal const string PhasingWhitelisted = "phasingWhitelisted";
         internal const string PhasingVotingModel = "phasingVotingModel";
+        internal const string PhasingWhitelist = "phasingWhitelist";
+        internal const string PhasingWhitelisted = "phasingWhitelisted";
         internal const string Poll = "poll";
         internal const string Prefix = "prefix";
         internal const string PriceNqt = "priceNQT";
@@ -211,6 +219,7 @@ namespace NxtLib.Internal
         internal const string StringId = "stringId";
         internal const string SubType = "subtype";
         internal const string Tag = "tag";
+        internal const string TaggedData = "taggedData";
         internal const string TagPrefix = "tagPrefix";
         internal const string Tags = "tags";
         internal const string Timestamp = "timestamp";
@@ -225,6 +234,7 @@ namespace NxtLib.Internal
         internal const string TransactionIndex = "transactionIndex";
         internal const string TransactionJson = "transactionJSON";
         internal const string TransactionFullHash = "transactionFullHash";
+        internal const string TransactionFullHashes = "transactionFullHashes";
         internal const string Transfer = "transfer";
         internal const string Type = "type";
         internal const string UncompressDecryptedMessage = "uncompressDecryptedMessage";
@@ -232,6 +242,7 @@ namespace NxtLib.Internal
         internal const string UnsignedTransactionBytes = "unsignedTransactionBytes";
         internal const string UnsignedTransactionJson = "unsignedTransactionJSON";
         internal const string Units = "units";
+        internal const string Uri = "uri";
         internal const string Validate = "validate";
         internal const string Version = "version";
         internal const string VersionTaggedDataUpload = "version.TaggedDataUpload";
