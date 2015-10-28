@@ -22,8 +22,8 @@ namespace NxtLib.ServerInfo
             {
                 queryParameters.Add(Parameters.Event, GetEventList(@event.Value));
             }
-            queryParameters.AddIfHasValue(nameof(add), add);
-            queryParameters.AddIfHasValue(nameof(remove), remove);
+            queryParameters.AddIfHasValue(Parameters.Add, add);
+            queryParameters.AddIfHasValue(Parameters.Remove, remove);
             return await Post<EventRegisterReply>("eventRegister", queryParameters);
         }
 
@@ -44,7 +44,7 @@ namespace NxtLib.ServerInfo
         
         public async Task<EventWaitReply> EventWait(long timeout)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(timeout), timeout.ToString()}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Timeout, timeout.ToString()}};
             return await Post<EventWaitReply>("eventWait", queryParameters);
         }
 

@@ -67,9 +67,9 @@ namespace NxtLib.TaggedData
             int? firstIndex = null, int? lastIndex = null, bool? includeData = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(channel), channel}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Channel, channel}};
             AddToParametersIfHasValue(firstIndex, lastIndex, includeData, queryParameters);
-            queryParameters.AddIfHasValue(nameof(includeData), includeData);
+            queryParameters.AddIfHasValue(Parameters.IncludeData, includeData);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TaggedDataListReply>("getChannelTaggedData", queryParameters);
@@ -109,7 +109,7 @@ namespace NxtLib.TaggedData
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(includeData), includeData);
+            queryParameters.AddIfHasValue(Parameters.IncludeData, includeData);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TaggedDataReply>("getTaggedData", queryParameters);
@@ -132,10 +132,10 @@ namespace NxtLib.TaggedData
             queryParameters.AddIfHasValue(Parameters.Query, query);
             queryParameters.AddIfHasValue(Parameters.Tag, tag);
             queryParameters.AddIfHasValue(Parameters.Account, account);
-            queryParameters.AddIfHasValue(nameof(channel), channel);
+            queryParameters.AddIfHasValue(Parameters.Channel, channel);
             queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
-            queryParameters.AddIfHasValue(nameof(includeData), includeData);
+            queryParameters.AddIfHasValue(Parameters.IncludeData, includeData);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TaggedDataListReply>("searchTaggedData", queryParameters);
@@ -168,21 +168,21 @@ namespace NxtLib.TaggedData
         {
             queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
-            queryParameters.AddIfHasValue(nameof(includeData), includeData);
+            queryParameters.AddIfHasValue(Parameters.IncludeData, includeData);
         }
 
         private static Dictionary<string, string> GetQueryParametersForTaggedData(string name, string data, string file,
             string description, string tags, string channel, string type, bool? isText, string filename)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Name, name}};
-            queryParameters.AddIfHasValue(nameof(data), data);
+            queryParameters.AddIfHasValue(Parameters.Data, data);
             queryParameters.AddIfHasValue(Parameters.File, file);
             queryParameters.AddIfHasValue(Parameters.Description, description);
             queryParameters.AddIfHasValue(Parameters.Tags, tags);
-            queryParameters.AddIfHasValue(nameof(type), type);
-            queryParameters.AddIfHasValue(nameof(channel), channel);
-            queryParameters.AddIfHasValue(nameof(isText), isText);
-            queryParameters.AddIfHasValue(nameof(filename), filename);
+            queryParameters.AddIfHasValue(Parameters.Type, type);
+            queryParameters.AddIfHasValue(Parameters.Channel, channel);
+            queryParameters.AddIfHasValue(Parameters.IsText, isText);
+            queryParameters.AddIfHasValue(Parameters.Filename, filename);
             return queryParameters;
         }
     }

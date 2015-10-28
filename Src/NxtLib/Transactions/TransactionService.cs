@@ -49,11 +49,11 @@ namespace NxtLib.Transactions
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
             queryParameters.AddIfHasValue(Parameters.NumberOfConfirmations, numberOfConfirmations);
             queryParameters.AddIfHasValue(Parameters.WithMessage, withMessage);
-            queryParameters.AddIfHasValue(nameof(phasedOnly), phasedOnly);
-            queryParameters.AddIfHasValue(nameof(nonPhasedOnly), nonPhasedOnly);
-            queryParameters.AddIfHasValue(nameof(includeExpiredPrunable), includeExpiredPrunable);
-            queryParameters.AddIfHasValue(nameof(includePhasingResult), includePhasingResult);
-            queryParameters.AddIfHasValue(nameof(executedOnly), executedOnly);
+            queryParameters.AddIfHasValue(Parameters.PhasedOnly, phasedOnly);
+            queryParameters.AddIfHasValue(Parameters.NonPhasedOnly, nonPhasedOnly);
+            queryParameters.AddIfHasValue(Parameters.IncludeExpiredPrunable, includeExpiredPrunable);
+            queryParameters.AddIfHasValue(Parameters.IncludePhasingResult, includePhasingResult);
+            queryParameters.AddIfHasValue(Parameters.ExecutedOnly, executedOnly);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TransactionListReply>("getBlockchainTransactions", queryParameters);
@@ -78,7 +78,7 @@ namespace NxtLib.Transactions
             bool? includePhasingResult = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = locator.QueryParameters;
-            queryParameters.AddIfHasValue(nameof(includePhasingResult), includePhasingResult);
+            queryParameters.AddIfHasValue(Parameters.IncludePhasingResult, includePhasingResult);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<TransactionReply>("getTransaction", queryParameters);

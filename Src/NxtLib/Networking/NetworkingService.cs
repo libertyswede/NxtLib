@@ -14,13 +14,13 @@ namespace NxtLib.Networking
 
         public async Task<PeerReply> AddPeer(string peer)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(peer), peer}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Peer, peer}};
             return await Get<PeerReply>("addPeer", queryParameters);
         }
 
         public async Task<DoneReply> BlacklistPeer(string peer)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(peer), peer}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Peer, peer}};
             return await Get<DoneReply>("blacklistPeer", queryParameters);
         }
 
@@ -43,14 +43,14 @@ namespace NxtLib.Networking
 
         public async Task<PeerReply> GetPeer(string peer)
         {
-            var queryParameters = new Dictionary<string, string> {{nameof(peer), peer}};
+            var queryParameters = new Dictionary<string, string> {{Parameters.Peer, peer}};
             return await Get<PeerReply>("getPeer", queryParameters);
         }
 
         public async Task<GetPeersReply> GetPeers(PeersLocator locator = null, string service = null)
         {
             var queryParameters = locator != null ? locator.QueryParameters : new Dictionary<string, string>();
-            queryParameters.AddIfHasValue(nameof(service), service);
+            queryParameters.AddIfHasValue(Parameters.Service, service);
             return await Get<GetPeersReply>("getPeers", queryParameters);
         }
 
@@ -59,7 +59,7 @@ namespace NxtLib.Networking
         {
             var queryParameters = locator != null ? locator.QueryParameters : new Dictionary<string, string>();
             queryParameters.Add(Parameters.IncludePeerInfo, true.ToString());
-            queryParameters.AddIfHasValue(nameof(service), service);
+            queryParameters.AddIfHasValue(Parameters.Service, service);
             return await Get<GetPeersIncludeInfoReply>("getPeers", queryParameters);
         }
     }

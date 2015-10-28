@@ -68,7 +68,7 @@ namespace NxtLib.Messages
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
-            queryParameters.AddIfHasValue(nameof(otherAccount), otherAccount);
+            queryParameters.AddIfHasValue(Parameters.OtherAccount, otherAccount);
             queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
             queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
@@ -118,11 +118,11 @@ namespace NxtLib.Messages
             var queryParameters = new Dictionary<string, string>
             {
                 {Parameters.Transaction, transactionId.ToString()},
-                {nameof(encryptedMessageData), encryptedMessageData.ToHexString()},
-                {nameof(encryptedMessageNonce), encryptedMessageNonce.ToHexString()}
+                {Parameters.EncryptedMessageData, encryptedMessageData.ToHexString()},
+                {Parameters.EncryptedMessageNonce, encryptedMessageNonce.ToHexString()}
             };
-            queryParameters.AddIfHasValue(nameof(messageToEncryptIsText), messageToEncryptIsText);
-            queryParameters.AddIfHasValue(nameof(compressMessageToEncrypt), compressMessageToEncrypt);
+            queryParameters.AddIfHasValue(Parameters.MessageToEncryptIsText, messageToEncryptIsText);
+            queryParameters.AddIfHasValue(Parameters.CompressMessageToEncrypt, compressMessageToEncrypt);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<VerifyPrunableEncryptedMessageReply>("verifyPrunableMessage", queryParameters);
@@ -135,11 +135,11 @@ namespace NxtLib.Messages
             var queryParameters = new Dictionary<string, string>
             {
                 {Parameters.Account, account.AccountId.ToString()},
-                {nameof(data), data},
-                {nameof(nonce), nonce},
+                {Parameters.Data, data},
+                {Parameters.Nonce, nonce},
                 {Parameters.SecretPhrase, secretPhrase},
-                {nameof(uncompressDecryptedMessage), uncompressDecryptedMessage.ToString()},
-                {nameof(decryptedMessageIsText), decryptedMessageIsText.ToString()}
+                {Parameters.UncompressDecryptedMessage, uncompressDecryptedMessage.ToString()},
+                {Parameters.DecryptedMessageIsText, decryptedMessageIsText.ToString()}
             };
             return await Get<DecryptedReply>("decryptFrom", queryParameters);
         }
@@ -150,10 +150,10 @@ namespace NxtLib.Messages
             var queryParameters = new Dictionary<string, string>
             {
                 {Parameters.Recipient, recipient.AccountId.ToString()},
-                {nameof(messageToEncrypt), messageToEncrypt},
+                {Parameters.MessageToEncrypt, messageToEncrypt},
                 {Parameters.SecretPhrase, secretPhrase},
-                {nameof(compressMessageToEncrypt), compressMessageToEncrypt.ToString()},
-                {nameof(messageToEncryptIsText), messageToEncryptIsText.ToString()}
+                {Parameters.CompressMessageToEncrypt, compressMessageToEncrypt.ToString()},
+                {Parameters.MessageToEncryptIsText, messageToEncryptIsText.ToString()}
             };
             return await Get<EncryptedDataReply>("encryptTo", queryParameters);
         }
@@ -164,8 +164,8 @@ namespace NxtLib.Messages
             var queryParameters = new Dictionary<string, string>
             {
                 {Parameters.Transaction, transactionId.ToString()},
-                {nameof(message), message},
-                {nameof(messageIsText), messageIsText.ToString()},
+                {Parameters.Message, message},
+                {Parameters.MessageIsText, messageIsText.ToString()},
                 {Parameters.MessageIsPrunable, true.ToString()}
             };
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
