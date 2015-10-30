@@ -19,6 +19,16 @@ namespace NxtLib.Transactions
             FullHash = fullHash;
         }
 
+        public static implicit operator GetTransactionLocator(ulong transactionId)
+        {
+            return new GetTransactionLocator(transactionId);
+        }
+
+        public static implicit operator GetTransactionLocator(BinaryHexString fullHash)
+        {
+            return new GetTransactionLocator(fullHash);
+        }
+
         public static GetTransactionLocator ByTransactionId(ulong transactionId)
         {
             return new GetTransactionLocator(transactionId);

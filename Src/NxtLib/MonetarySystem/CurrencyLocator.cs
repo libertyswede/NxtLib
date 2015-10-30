@@ -19,6 +19,16 @@ namespace NxtLib.MonetarySystem
             Code = code;
         }
 
+        public static implicit operator CurrencyLocator(ulong currencyId)
+        {
+            return ByCurrencyId(currencyId);
+        }
+
+        public static implicit operator CurrencyLocator(string code)
+        {
+            return ByCode(code);
+        }
+
         public static CurrencyLocator ByCurrencyId(ulong currencyId)
         {
             return new CurrencyLocator(currencyId);

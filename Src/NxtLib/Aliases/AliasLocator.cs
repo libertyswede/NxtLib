@@ -19,6 +19,16 @@ namespace NxtLib.Aliases
             Id = id;
         }
 
+        public static implicit operator AliasLocator(string name)
+        {
+            return ByName(name);
+        }
+
+        public static implicit operator AliasLocator(ulong id)
+        {
+            return ById(id);
+        }
+
         public static AliasLocator ByName(string name)
         {
             return new AliasLocator(name);
