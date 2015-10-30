@@ -6,10 +6,11 @@ namespace NxtLib.Messages
 {
     public interface IMessageService
     {
-        Task<DecryptedReply> DecryptFrom(Account account, BinaryHexString data, bool decryptedMessageIsText,
-            BinaryHexString nonce, bool uncompressDecryptedMessage, string secretPhrase);
+        Task<DecryptedTextReply> DecryptTextFrom(Account account, BinaryHexString data, BinaryHexString nonce, 
+            bool uncompressDecryptedMessage, string secretPhrase);
 
-        Task<DecryptedReply> DecryptFrom(Account account, EncryptedMessage encryptedMessage, string secretPhrase);
+        Task<DecryptedDataReply> DecryptDataFrom(Account account, BinaryHexString data, BinaryHexString nonce,
+            bool uncompressDecryptedMessage, string secretPhrase);
 
         Task<EncryptedDataReply> EncryptTo(Account recipient, string messageToEncrypt, bool compressMessageToEncrypt,
             string secretPhrase);

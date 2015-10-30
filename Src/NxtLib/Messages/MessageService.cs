@@ -13,19 +13,35 @@ namespace NxtLib.Messages
         {
         }
 
-        public async Task<DecryptedReply> DecryptFrom(Account account, BinaryHexString data,
-            bool decryptedMessageIsText, BinaryHexString nonce,
+        public async Task<DecryptedTextReply> DecryptTextFrom(Account account, BinaryHexString data, BinaryHexString nonce,
             bool uncompressDecryptedMessage, string secretPhrase)
         {
-            return await DecryptFrom(account, data.ToHexString(), decryptedMessageIsText, nonce.ToHexString(),
-                uncompressDecryptedMessage, secretPhrase);
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.Account, account.AccountId.ToString()},
+                {Parameters.Data, data.ToHexString()},
+                {Parameters.Nonce, nonce.ToHexString()},
+                {Parameters.SecretPhrase, secretPhrase},
+                {Parameters.UncompressDecryptedMessage, uncompressDecryptedMessage.ToString()},
+                {Parameters.DecryptedMessageIsText, true.ToString()}
+            };
+            return await Get<DecryptedTextReply>("decryptFrom", queryParameters);
         }
 
-        public async Task<DecryptedReply> DecryptFrom(Account account, EncryptedMessage encryptedMessage,
-            string secretPhrase)
+        public async Task<DecryptedDataReply> DecryptDataFrom(Account account, BinaryHexString data, BinaryHexString nonce, 
+            bool uncompressDecryptedMessage, string secretPhrase)
         {
-            return await DecryptFrom(account, encryptedMessage.Data.ToHexString(), encryptedMessage.IsText,
-                encryptedMessage.Nonce.ToHexString(), encryptedMessage.IsCompressed, secretPhrase);
+
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.Account, account.AccountId.ToString()},
+                {Parameters.Data, data.ToHexString()},
+                {Parameters.Nonce, nonce.ToHexString()},
+                {Parameters.SecretPhrase, secretPhrase},
+                {Parameters.UncompressDecryptedMessage, uncompressDecryptedMessage.ToString()},
+                {Parameters.DecryptedMessageIsText, false.ToString()}
+            };
+            return await Get<DecryptedDataReply>("decryptFrom", queryParameters);
         }
 
         public async Task<EncryptedDataReply> EncryptTo(Account recipient, string messageToEncrypt,
@@ -126,22 +142,6 @@ namespace NxtLib.Messages
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<VerifyPrunableEncryptedMessageReply>("verifyPrunableMessage", queryParameters);
-        }
-
-        private async Task<DecryptedReply> DecryptFrom(Account account, string data, bool decryptedMessageIsText,
-            string nonce,
-            bool uncompressDecryptedMessage, string secretPhrase)
-        {
-            var queryParameters = new Dictionary<string, string>
-            {
-                {Parameters.Account, account.AccountId.ToString()},
-                {Parameters.Data, data},
-                {Parameters.Nonce, nonce},
-                {Parameters.SecretPhrase, secretPhrase},
-                {Parameters.UncompressDecryptedMessage, uncompressDecryptedMessage.ToString()},
-                {Parameters.DecryptedMessageIsText, decryptedMessageIsText.ToString()}
-            };
-            return await Get<DecryptedReply>("decryptFrom", queryParameters);
         }
 
         private async Task<EncryptedDataReply> EncryptTo(Account recipient, string messageToEncrypt,
