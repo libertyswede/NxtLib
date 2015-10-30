@@ -12,11 +12,10 @@ namespace NxtLib.Messages
         Task<DecryptedDataReply> DecryptDataFrom(Account account, BinaryHexString data, BinaryHexString nonce,
             bool uncompressDecryptedMessage, string secretPhrase);
 
-        Task<EncryptedDataReply> EncryptTo(Account recipient, string messageToEncrypt, bool compressMessageToEncrypt,
+        Task<EncryptedDataReply> EncryptTextTo(Account recipient, string messageToEncrypt, bool compressMessageToEncrypt,
             string secretPhrase);
 
-        Task<EncryptedDataReply> EncryptTo(Account recipient, IEnumerable<byte> messageToEncrypt,
-            bool compressMessageToEncrypt, string secretPhrase);
+        Task<EncryptedDataReply> EncryptDataTo(Account recipient, BinaryHexString messageToEncrypt, bool compressMessageToEncrypt, string secretPhrase);
 
         Task<PrunableMessagesReply> GetAllPrunableMessages(int? firstIndex = null, int? lastIndex = null,
             DateTime? timestamp = null, ulong? requireBlock = null, ulong? requireLastBlock = null);

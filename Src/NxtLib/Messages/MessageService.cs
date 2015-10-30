@@ -44,16 +44,16 @@ namespace NxtLib.Messages
             return await Get<DecryptedDataReply>("decryptFrom", queryParameters);
         }
 
-        public async Task<EncryptedDataReply> EncryptTo(Account recipient, string messageToEncrypt,
+        public async Task<EncryptedDataReply> EncryptTextTo(Account recipient, string messageToEncrypt,
             bool compressMessageToEncrypt, string secretPhrase)
         {
             return await EncryptTo(recipient, messageToEncrypt, true, compressMessageToEncrypt, secretPhrase);
         }
 
-        public async Task<EncryptedDataReply> EncryptTo(Account recipient, IEnumerable<byte> messageToEncrypt,
+        public async Task<EncryptedDataReply> EncryptDataTo(Account recipient, BinaryHexString messageToEncrypt,
             bool compressMessageToEncrypt, string secretPhrase)
         {
-            return await EncryptTo(recipient, ByteToHexStringConverter.ToHexString(messageToEncrypt), false,
+            return await EncryptTo(recipient, messageToEncrypt.ToHexString(), false,
                 compressMessageToEncrypt, secretPhrase);
         }
 
