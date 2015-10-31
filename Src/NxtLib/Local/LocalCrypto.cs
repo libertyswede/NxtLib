@@ -53,6 +53,7 @@ namespace NxtLib.Local
             return nonce;
         }
 
+        // Sample here: http://stackoverflow.com/questions/29701401/encrypt-string-with-bouncy-castle-aes-cbc-pkcs7
         public BinaryHexString EncryptTo(BinaryHexString recipientPublicKey, string message, byte[] nonce, bool compress, string secretPhrase)
         {
             var messageBytes = Encoding.UTF8.GetBytes(message);
@@ -73,6 +74,28 @@ namespace NxtLib.Local
                     gzip.Write(data, 0, data.Length);
                 }
                 return memoryStream.ToArray();
+            }
+        }
+
+        // Untested
+        public static byte[] GzipUncompress(byte[] data)
+        {
+            const int size = 4096;
+            byte[] buffer = new byte[size];
+
+            using (GZipStream gzip = new GZipStream(new MemoryStream(data), CompressionMode.Decompress))
+            using (MemoryStream memory = new MemoryStream())
+            {
+                int count = 0;
+                do
+                {
+                    if ((count = gzip.Read(buffer, 0, size)) > 0)
+                    {
+                        memory.Write(buffer, 0, count);
+                    }
+                } while (count > 0);
+
+                return memory.ToArray();
             }
         }
 
