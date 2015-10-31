@@ -53,43 +53,15 @@ namespace NxtLib.Local
             return nonce;
         }
 
-        public BinaryHexString EncryptTo(string secretPhrase, BinaryHexString recipientPublicKey, string message, byte[] nonce)
+        public BinaryHexString EncryptTo(BinaryHexString recipientPublicKey, string message, byte[] nonce, bool compress, string secretPhrase)
         {
             var messageBytes = Encoding.UTF8.GetBytes(message);
             var recipientPublicKeyBytes = recipientPublicKey.ToBytes().ToArray();
-
-            var sha256 = SHA256.Create();
-            var senderSecretBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase));
-            Curve25519.Clamp(senderSecretBytes);
-
-            var dhSharedSecret = new byte[32];
-            Curve25519.Curve(dhSharedSecret, senderSecretBytes, recipientPublicKeyBytes);
-            for (var i = 0; i < 32; i++)
+            if (compress)
             {
-                dhSharedSecret[i] ^= nonce[i];
+                //TODO: compress
             }
-            var key = sha256.ComputeHash(dhSharedSecret);
-
-            using (var ms = new MemoryStream())
-            using (var cryptor = Aes.Create())
-            {
-                cryptor.Mode = CipherMode.CBC;
-                cryptor.Padding = PaddingMode.PKCS7;
-                cryptor.KeySize = 128;
-                cryptor.BlockSize = 128;
-
-                var iv = cryptor.IV;
-
-                using (var cs = new CryptoStream(ms, cryptor.CreateEncryptor(key, iv), CryptoStreamMode.Write))
-                {
-                    cs.Write(messageBytes, 0, messageBytes.Length);
-                }
-                var encryptedContent = ms.ToArray();
-                var result = new byte[iv.Length + encryptedContent.Length];
-                Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
-                Buffer.BlockCopy(encryptedContent, 0, result, iv.Length, encryptedContent.Length);
-                return result;
-            }
+            return _crypto.AesEncryptTo(recipientPublicKeyBytes, messageBytes, nonce, secretPhrase);
         }
 
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
