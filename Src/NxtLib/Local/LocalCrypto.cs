@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
+using System.IO;
+using System.IO.Compression;
 
 namespace NxtLib.Local
 {
@@ -59,9 +59,21 @@ namespace NxtLib.Local
             var recipientPublicKeyBytes = recipientPublicKey.ToBytes().ToArray();
             if (compress)
             {
-                //TODO: compress
+                messageBytes = GzipCompress(messageBytes);
             }
             return _crypto.AesEncryptTo(recipientPublicKeyBytes, messageBytes, nonce, secretPhrase);
+        }
+
+        private static byte[] GzipCompress(byte[] data)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var gzip = new GZipStream(memoryStream, CompressionMode.Compress, true))
+                {
+                    gzip.Write(data, 0, data.Length);
+                }
+                return memoryStream.ToArray();
+            }
         }
 
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
