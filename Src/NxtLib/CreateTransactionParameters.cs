@@ -122,13 +122,14 @@ namespace NxtLib
         {
             public IEnumerable<byte> Nonce { get; }
 
-            public AlreadyEncryptedMessage(IEnumerable<byte> messageBytes, IEnumerable<byte> encryptedMessageNonce, bool messageIsText)
-                : this(ByteToHexStringConverter.ToHexString(messageBytes), encryptedMessageNonce, messageIsText)
+            public AlreadyEncryptedMessage(IEnumerable<byte> messageBytes, IEnumerable<byte> encryptedMessageNonce)
+                : base(ByteToHexStringConverter.ToHexString(messageBytes), false)
             {
+                Nonce = encryptedMessageNonce;
             }
 
-            public AlreadyEncryptedMessage(string message, IEnumerable<byte> encryptedMessageNonce, bool messageIsText)
-                : base(message, messageIsText)
+            public AlreadyEncryptedMessage(string message, IEnumerable<byte> encryptedMessageNonce)
+                : base(message, true)
             {
                 Nonce = encryptedMessageNonce;
             }
