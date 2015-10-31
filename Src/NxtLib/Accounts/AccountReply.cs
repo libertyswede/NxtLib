@@ -53,7 +53,9 @@ namespace NxtLib.Accounts
         public string NextLesseeRs { get; set; }
         public int NextLeasingHeightFrom { get; set; }
         public int NextLeasingHeightTo { get; set; }
-        public string PublicKey { get; set; }
+
+        [JsonConverter(typeof(ByteToHexStringConverter))]
+        public BinaryHexString PublicKey { get; set; }
         public List<UnconfirmedAccountAssetBalance> UnconfirmedAssetBalances { get; set; }
 
         [JsonConverter(typeof(NqtAmountConverter))]
