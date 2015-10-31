@@ -19,6 +19,23 @@ namespace NxtLib.Internal.LocalSign
             return _sha256.ComputeHash(value);
         }
 
+        internal BinaryHexString GetPublicKey(string secretPhrase)
+        {
+            var publicKey = new byte[32];
+            var encodedSecretPhrase = Encoding.UTF8.GetBytes(secretPhrase);
+            var hashedSecretPhrase = ComputeHash(encodedSecretPhrase);
+            Curve25519.Keygen(publicKey, null, hashedSecretPhrase);
+            var binaryHexString = new BinaryHexString(publicKey);
+            return binaryHexString;
+        }
+
+        internal ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
+        {
+            var publicKeyHash = ComputeHash(publicKey.ToBytes().ToArray());
+            var bigInteger = new BigInteger(publicKeyHash.Take(8).ToArray());
+            return (ulong)(long)bigInteger;
+        }
+
 #if NET45
 
         public byte[] Sign(byte[] message, string secretPhrase)
@@ -82,22 +99,5 @@ namespace NxtLib.Internal.LocalSign
         }
 
 #endif
-
-        internal BinaryHexString GetPublicKey(string secretPhrase)
-        {
-            var publicKey = new byte[32];
-            var encodedSecretPhrase = Encoding.UTF8.GetBytes(secretPhrase);
-            var hashedSecretPhrase = ComputeHash(encodedSecretPhrase);
-            Curve25519.Keygen(publicKey, null, hashedSecretPhrase);
-            var binaryHexString = new BinaryHexString(publicKey);
-            return binaryHexString;
-        }
-
-        internal ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
-        {
-            var publicKeyHash = ComputeHash(publicKey.ToBytes().ToArray());
-            var bigInteger = new BigInteger(publicKeyHash.Take(8).ToArray());
-            return (ulong)(long)bigInteger;
-        }
     }
 }
