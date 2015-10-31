@@ -51,7 +51,7 @@ namespace NxtLib.Internal.LocalSign
 
 #elif DOTNET
 
-        public byte[] Sign(byte[] message, string secretPhrase)
+        internal byte[] Sign(byte[] message, string secretPhrase)
         {
             var p = new byte[32];
             var s = new byte[32];
@@ -83,7 +83,7 @@ namespace NxtLib.Internal.LocalSign
 
 #endif
 
-        public BinaryHexString GetPublicKey(string secretPhrase)
+        internal BinaryHexString GetPublicKey(string secretPhrase)
         {
             var publicKey = new byte[32];
             var encodedSecretPhrase = Encoding.UTF8.GetBytes(secretPhrase);
@@ -93,7 +93,7 @@ namespace NxtLib.Internal.LocalSign
             return binaryHexString;
         }
 
-        public ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
+        internal ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
         {
             var publicKeyHash = ComputeHash(publicKey.ToBytes().ToArray());
             var bigInteger = new BigInteger(publicKeyHash.Take(8).ToArray());
