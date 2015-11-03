@@ -53,22 +53,23 @@ namespace NxtLib.Local
         }
 
         // Sample here: http://stackoverflow.com/questions/29701401/encrypt-string-with-bouncy-castle-aes-cbc-pkcs7
-        public BinaryHexString EncryptTo(BinaryHexString recipientPublicKey, string message, byte[] nonce, bool compress, string secretPhrase)
+        public BinaryHexString EncryptTextTo(BinaryHexString recipientPublicKey, string message, byte[] nonce, bool compress, string secretPhrase)
         {
             var messageBytes = Encoding.UTF8.GetBytes(message);
-            return EncryptTo(recipientPublicKey, messageBytes, nonce, compress, secretPhrase);
+            return EncryptDataTo(recipientPublicKey, messageBytes, nonce, compress, secretPhrase);
         }
         
-        public BinaryHexString EncryptTo(BinaryHexString recipientPublicKey, byte[] data, byte[] nonce, bool compress, string secretPhrase)
+        public BinaryHexString EncryptDataTo(BinaryHexString recipientPublicKey, BinaryHexString data, byte[] nonce, bool compress, string secretPhrase)
         {
             var recipientPublicKeyBytes = recipientPublicKey.ToBytes().ToArray();
+            var dataBytes = data.ToBytes().ToArray();
             if (compress)
             {
-                data = _compressor.GzipCompress(data);
+                dataBytes = _compressor.GzipCompress(dataBytes);
             }
-            return _crypto.AesEncryptTo(recipientPublicKeyBytes, data, nonce, secretPhrase);
+            return _crypto.AesEncryptTo(recipientPublicKeyBytes, dataBytes, nonce, secretPhrase);
         }
-
+        
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
             BinaryHexString signature, JToken attachment)
         {
