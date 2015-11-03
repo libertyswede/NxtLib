@@ -13,5 +13,7 @@ namespace NxtLib.Local
         string GetReedSolomonFromAccountId(ulong accountId);
 
         ulong GetAccountIdFromReedSolomon(string reedSolomonAddress);
+        BinaryHexString EncryptTo(BinaryHexString recipientPublicKey, string message, byte[] nonce, bool compress, string secretPhrase);
+        BinaryHexString EncryptTo(BinaryHexString recipientPublicKey, byte[] data, byte[] nonce, bool compress, string secretPhrase);
     }
 }
