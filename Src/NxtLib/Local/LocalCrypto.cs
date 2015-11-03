@@ -4,6 +4,7 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
+using System;
 
 namespace NxtLib.Local
 {
@@ -68,6 +69,16 @@ namespace NxtLib.Local
                 dataBytes = _compressor.GzipCompress(dataBytes);
             }
             return _crypto.AesEncryptTo(recipientPublicKeyBytes, dataBytes, nonce, secretPhrase);
+        }
+        
+        public string DecryptTextFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompressDecryptedMessage, string secretPhrase)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] DecryptDataFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompressDecryptedMessage, string secretPhrase)
+        {
+            throw new NotImplementedException();
         }
         
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
