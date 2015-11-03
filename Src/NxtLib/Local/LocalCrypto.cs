@@ -12,6 +12,7 @@ namespace NxtLib.Local
     public class LocalCrypto : ILocalCrypto
     {
         private readonly Crypto _crypto = new Crypto();
+        private readonly Compressor _compressor = new Compressor();
 
         public BinaryHexString GetPublicKey(string secretPhrase)
         {
@@ -60,43 +61,9 @@ namespace NxtLib.Local
             var recipientPublicKeyBytes = recipientPublicKey.ToBytes().ToArray();
             if (compress)
             {
-                messageBytes = GzipCompress(messageBytes);
+                messageBytes = _compressor.GzipCompress(messageBytes);
             }
             return _crypto.AesEncryptTo(recipientPublicKeyBytes, messageBytes, nonce, secretPhrase);
-        }
-
-        private static byte[] GzipCompress(byte[] data)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var gzip = new GZipStream(memoryStream, CompressionMode.Compress, true))
-                {
-                    gzip.Write(data, 0, data.Length);
-                }
-                return memoryStream.ToArray();
-            }
-        }
-
-        // Untested
-        public static byte[] GzipUncompress(byte[] data)
-        {
-            const int size = 4096;
-            byte[] buffer = new byte[size];
-
-            using (GZipStream gzip = new GZipStream(new MemoryStream(data), CompressionMode.Decompress))
-            using (MemoryStream memory = new MemoryStream())
-            {
-                int count = 0;
-                do
-                {
-                    if ((count = gzip.Read(buffer, 0, size)) > 0)
-                    {
-                        memory.Write(buffer, 0, count);
-                    }
-                } while (count > 0);
-
-                return memory.ToArray();
-            }
         }
 
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
