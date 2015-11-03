@@ -56,12 +56,17 @@ namespace NxtLib.Local
         public BinaryHexString EncryptTo(BinaryHexString recipientPublicKey, string message, byte[] nonce, bool compress, string secretPhrase)
         {
             var messageBytes = Encoding.UTF8.GetBytes(message);
+            return EncryptTo(recipientPublicKey, messageBytes, nonce, compress, secretPhrase);
+        }
+        
+        public BinaryHexString EncryptTo(BinaryHexString recipientPublicKey, byte[] data, byte[] nonce, bool compress, string secretPhrase)
+        {
             var recipientPublicKeyBytes = recipientPublicKey.ToBytes().ToArray();
             if (compress)
             {
-                messageBytes = _compressor.GzipCompress(messageBytes);
+                data = _compressor.GzipCompress(data);
             }
-            return _crypto.AesEncryptTo(recipientPublicKeyBytes, messageBytes, nonce, secretPhrase);
+            return _crypto.AesEncryptTo(recipientPublicKeyBytes, data, nonce, secretPhrase);
         }
 
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
