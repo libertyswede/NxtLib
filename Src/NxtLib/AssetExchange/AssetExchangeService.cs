@@ -63,10 +63,11 @@ namespace NxtLib.AssetExchange
             return await Get<AccountAssetCountReply>("getAccountAssetCount", queryParameters);
         }
 
-        public async Task<AccountAssetReply> GetAccountAsset(Account account, ulong assetId, int? height = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<AccountAssetReply> GetAccountAsset(Account account, ulong assetId, bool? includeAssetInfo = null, 
+            int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.IncludeAssetInfo, includeAssetInfo);
             queryParameters.AddIfHasValue(Parameters.Height, height);
             queryParameters.AddIfHasValue(Parameters.Asset, assetId);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
@@ -74,10 +75,11 @@ namespace NxtLib.AssetExchange
             return await Get<AccountAssetReply>("getAccountAssets", queryParameters);
         }
 
-        public async Task<AccountAssetsReply> GetAccountAssets(Account account, int? height = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<AccountAssetsReply> GetAccountAssets(Account account, bool? includeAssetInfo = null, 
+            int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.IncludeAssetInfo, includeAssetInfo);
             queryParameters.AddIfHasValue(Parameters.Height, height);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
