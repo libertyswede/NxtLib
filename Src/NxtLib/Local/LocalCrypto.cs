@@ -4,7 +4,6 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
-using System;
 
 namespace NxtLib.Local
 {
