@@ -43,7 +43,7 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | downloadTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/TaggedData/TaggedDataService.cs) |  | 
 | dumpPeers | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Debug/DebugService.cs) |  | 
 | encodeQRCode | [UtilService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Utils/UtilService.cs) |  | 
-| encryptTo | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Messages/MessageService.cs) |  | 
+| encryptTo | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Messages/MessageService.cs) | EncryptTextTo and EncryptDataTo | 
 | eventRegister | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
 | eventWait | [ServerInfoService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/ServerInfo/ServerInfoService.cs) |  | 
 | extendTaggedData | [TaggedDataService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/TaggedData/TaggedDataService.cs) |  | 
