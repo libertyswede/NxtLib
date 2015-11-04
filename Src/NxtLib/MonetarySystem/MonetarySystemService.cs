@@ -312,11 +312,13 @@ namespace NxtLib.MonetarySystem
         }
 
         public async Task<ExpectedCurrencyTransfersReply> GetExpectedCurrencyTransfers(ulong? currencyId = null,
-            Account account = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+            Account account = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null, 
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             queryParameters.AddIfHasValue(Parameters.Currency, currencyId);
             queryParameters.AddIfHasValue(Parameters.Account, account);
+            queryParameters.AddIfHasValue(Parameters.IncludeCurrencyInfo, includeCurrencyInfo);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<ExpectedCurrencyTransfersReply>("getExpectedCurrencyTransfers", queryParameters);

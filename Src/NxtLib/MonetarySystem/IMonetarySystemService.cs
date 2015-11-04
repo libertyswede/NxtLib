@@ -88,7 +88,8 @@ namespace NxtLib.MonetarySystem
             bool? sortByRate = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<ExpectedCurrencyTransfersReply> GetExpectedCurrencyTransfers(ulong? currencyId = null,
-            Account account = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+            Account account = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null, 
+            ulong? requireLastBlock = null);
 
         Task<GetExpectedExchangeRequestsReply> GetExpectedExchangeRequests(Account account = null,
             ulong? currencyId = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null,
