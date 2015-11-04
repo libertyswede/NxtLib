@@ -110,13 +110,15 @@ namespace NxtLib.MonetarySystem
         }
 
         public async Task<GetAccountExchangeRequestsReply> GetAccountExchangeRequests(Account account, ulong currencyId,
-            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+            bool? includeCurrencyInfo = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, 
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>
             {
                 {Parameters.Account, account.AccountId.ToString()},
                 {Parameters.Currency, currencyId.ToString()}
             };
+            queryParameters.AddIfHasValue(Parameters.IncludeCurrencyInfo, includeCurrencyInfo);
             queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
