@@ -27,7 +27,7 @@ namespace NxtLib.MonetarySystem
         Task<TransactionCreatedReply> DeleteCurrency(ulong currencyId, CreateTransactionParameters parameters);
 
         Task<GetAccountCurrenciesReply> GetAccountCurrencies(Account account, ulong? currencyId = null,
-            int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+            int? height = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<GetAccountCurrencyCountReply> GetAccountCurrencyCount(Account account, int? height = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);

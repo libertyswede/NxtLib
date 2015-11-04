@@ -86,11 +86,12 @@ namespace NxtLib.MonetarySystem
         }
 
         public async Task<GetAccountCurrenciesReply> GetAccountCurrencies(Account account, ulong? currencyId = null,
-            int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+            int? height = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(Parameters.Currency, currencyId);
             queryParameters.AddIfHasValue(Parameters.Height, height);
+            queryParameters.AddIfHasValue(Parameters.IncludeCurrencyInfo, includeCurrencyInfo);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             
