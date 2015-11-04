@@ -65,6 +65,40 @@ namespace NxtLib.Internal.LocalSign
             }
         }
 
+        internal byte[] AesDecryptFrom(byte[] sender, byte[] data, byte[] nonce, string secretPhrase)
+        {
+            if (data.Length < 16 || data.Length % 16 != 0)
+            {
+                throw new ArgumentException("Invalid ciphertext", nameof(data));
+            }
+            
+            var iv = new byte[16];
+            var encryptedContent = new byte[data.Length - 16];
+            var secretBytes = GetPrivateKeyBytes(secretPhrase);
+            var key = GenerateAesKey(secretBytes, sender, nonce);
+            
+            System.Buffer.BlockCopy(data, 0, iv, 0, iv.Length);
+            System.Buffer.BlockCopy(data, iv.Length, encryptedContent, 0, encryptedContent.Length);
+    
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (var cryptor = Aes.Create())
+                {
+                    cryptor.Mode = CipherMode.CBC;
+                    cryptor.Padding = PaddingMode.PKCS7;
+                    cryptor.KeySize = 128;
+                    cryptor.BlockSize = 128;
+    
+                    using (CryptoStream cs = new CryptoStream(ms, cryptor.CreateDecryptor(key, iv), CryptoStreamMode.Write))
+                    {
+                        cs.Write(encryptedContent, 0, encryptedContent.Length);
+    
+                    }
+                    return ms.ToArray();
+                }
+            }
+        }
+
         private byte[] GetPrivateKeyBytes(string secretPhrase)
         {
             var privateKeyBytes = _sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase));
@@ -72,10 +106,10 @@ namespace NxtLib.Internal.LocalSign
             return privateKeyBytes;
         }
 
-        private byte[] GenerateAesKey(byte[] senderSecretBytes, byte[] recipientPublicKeyBytes, byte[] nonce)
+        private byte[] GenerateAesKey(byte[] myPrivateKey, byte[] theirPublicKey, byte[] nonce)
         {
             var dhSharedSecret = new byte[32];
-            Curve25519.Curve(dhSharedSecret, senderSecretBytes, recipientPublicKeyBytes);
+            Curve25519.Curve(dhSharedSecret, myPrivateKey, theirPublicKey);
             for (var i = 0; i < 32; i++)
             {
                 dhSharedSecret[i] ^= nonce[i];

@@ -45,7 +45,7 @@ namespace NxtLib.Local
             return BuildSignedTransaction(transaction, referencedTransactionFullHash, signature, attachment);
         }
 
-        public byte[] CreateNonce()
+        public BinaryHexString CreateNonce()
         {
             var nonce = new byte[32];
             var random = RandomNumberGenerator.Create();
@@ -54,31 +54,42 @@ namespace NxtLib.Local
         }
 
         // Sample here: http://stackoverflow.com/questions/29701401/encrypt-string-with-bouncy-castle-aes-cbc-pkcs7
-        public BinaryHexString EncryptTextTo(BinaryHexString recipientPublicKey, string message, byte[] nonce, bool compress, string secretPhrase)
+        public BinaryHexString EncryptTextTo(BinaryHexString recipientPublicKey, string message, BinaryHexString nonce, bool compress, string secretPhrase)
         {
             var messageBytes = Encoding.UTF8.GetBytes(message);
             return EncryptDataTo(recipientPublicKey, messageBytes, nonce, compress, secretPhrase);
         }
         
-        public BinaryHexString EncryptDataTo(BinaryHexString recipientPublicKey, BinaryHexString data, byte[] nonce, bool compress, string secretPhrase)
+        public BinaryHexString EncryptDataTo(BinaryHexString recipientPublicKey, BinaryHexString data, BinaryHexString nonce, bool compress, string secretPhrase)
         {
             var recipientPublicKeyBytes = recipientPublicKey.ToBytes().ToArray();
+            var nonceBytes = nonce.ToBytes().ToArray();
             var dataBytes = data.ToBytes().ToArray();
             if (compress)
             {
                 dataBytes = _compressor.GzipCompress(dataBytes);
             }
-            return _crypto.AesEncryptTo(recipientPublicKeyBytes, dataBytes, nonce, secretPhrase);
+            return _crypto.AesEncryptTo(recipientPublicKeyBytes, dataBytes, nonceBytes, secretPhrase);
         }
         
-        public string DecryptTextFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompressDecryptedMessage, string secretPhrase)
+        public string DecryptTextFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompress, string secretPhrase)
         {
-            throw new NotImplementedException();
+            var decrypted = DecryptDataFrom(senderPublicKey, data, nonce, uncompress, secretPhrase);
+            var message = Encoding.UTF8.GetString(decrypted, 0, decrypted.Length);
+            return message;
         }
 
-        public byte[] DecryptDataFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompressDecryptedMessage, string secretPhrase)
+        public byte[] DecryptDataFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompress, string secretPhrase)
         {
-            throw new NotImplementedException();
+            var senderPublicKeyBytes = senderPublicKey.ToBytes().ToArray();
+            var dataBytes = data.ToBytes().ToArray();
+            var nonceBytes = nonce.ToBytes().ToArray();
+            var decrypted = _crypto.AesDecryptFrom(senderPublicKeyBytes, dataBytes, nonceBytes, secretPhrase);
+            if (uncompress)
+            {
+                decrypted = _compressor.GzipUncompress(decrypted);
+            }
+            return decrypted;
         }
         
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
