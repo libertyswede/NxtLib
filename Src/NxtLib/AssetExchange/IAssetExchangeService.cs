@@ -91,7 +91,7 @@ namespace NxtLib.AssetExchange
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<ExpectedAssetTransfersReply> GetExpectedAssetTransfers(ulong? assetId = null, Account account = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null);
+            bool? includeAssetInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<ExpectedBidOrdersReply> GetExpectedBidOrders(ulong? assetId = null, bool? sortByPrice = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
