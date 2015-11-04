@@ -15,13 +15,13 @@ namespace NxtLib.AssetExchange
         Task<TransactionCreatedReply> DividendPayment(ulong assetId, int height, Amount amountPerQnt,
             CreateTransactionParameters parameters);
 
-        Task<AccountAssetReply> GetAccountAsset(Account account, ulong assetId, int? height = null, 
-            bool? includeAssetInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<AccountAssetReply> GetAccountAsset(Account account, ulong assetId, bool? includeAssetInfo = null,
+            int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<AccountAssetCountReply> GetAccountAssetCount(Account account, int? height = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<AccountAssetsReply> GetAccountAssets(Account account, int? height = null, bool? includeAssetInfo = null, 
+        Task<AccountAssetsReply> GetAccountAssets(Account account, bool? includeAssetInfo = null, int? height = null,  
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<AskOrderIdsReply> GetAccountCurrentAskOrderIds(Account account, ulong? assetId = null,
