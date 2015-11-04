@@ -9,6 +9,8 @@ namespace NxtLib.Accounts
         [JsonProperty(PropertyName = Parameters.Account)]
         public ulong AccountId { get; set; }
         public string AccountRs { get; set; }
-        public string PublicKey { get; set; }
+        
+        [JsonConverter(typeof(ByteToHexStringConverter))]
+        public BinaryHexString PublicKey { get; set; }
     }
 }
