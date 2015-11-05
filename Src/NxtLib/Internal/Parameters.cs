@@ -63,6 +63,7 @@ namespace NxtLib.Internal
         internal const string EffectiveBalanceNxt = "effectiveBalanceNXT";
         internal const string EncryptedMessage = "encryptedMessage";
         internal const string EncryptedMessageData = "encryptedMessageData";
+        internal const string EncryptedMessageIsPrunable = "encryptedMessageIsPrunable";
         internal const string EncryptedMessageNonce = "encryptedMessageNonce";
         internal const string EncryptToSelfMessage = "encryptToSelfMessage";
         internal const string EncryptToSelfMessageData = "encryptToSelfMessageData";
