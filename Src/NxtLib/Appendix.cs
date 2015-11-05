@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
@@ -19,11 +20,20 @@ namespace NxtLib
 
     public class Message : Appendix
     {
-        public UnencryptedMessage UnencryptedMessage { get; set; }
+        public BinaryHexString Data { get; set; }
+        public string MessageText { get; }
+        public bool IsPrunable { get; }
+        public bool IsText { get; }
 
-        private Message(UnencryptedMessage unencryptedMessage)
+        private Message(string message, bool isText, bool isPrunable)
         {
-            UnencryptedMessage = unencryptedMessage;
+            IsText = isText;
+            MessageText = message;
+            IsPrunable = isPrunable;
+
+            Data = IsText
+                ? Encoding.UTF8.GetBytes(message)
+                : ByteToHexStringConverter.ToBytesFromHexString(message).ToArray();
         }
 
         internal static Message ParseJson(JObject jObject)
@@ -35,7 +45,8 @@ namespace NxtLib
             }
 
             var messageIsText = Convert.ToBoolean(jObject.SelectToken(Parameters.MessageIsText).ToString());
-            return new Message(new UnencryptedMessage(messageToken.Value.ToString(), messageIsText));
+            var isPrunable = jObject.Property(Parameters.VersionPrunablePlainMessage) != null;
+            return new Message(messageToken.Value.ToString(), messageIsText, isPrunable);
         }
     }
 
@@ -43,6 +54,7 @@ namespace NxtLib
     {
         public bool IsCompressed { get; set; }
         public bool IsText { get; set; }
+        public string MessageToEncrypt { get; set; }
 
         [JsonConverter(typeof(ByteToHexStringConverter))]
         public BinaryHexString Nonce { get; set; }
@@ -54,8 +66,15 @@ namespace NxtLib
         {
             IsCompressed = Convert.ToBoolean(((JValue) messageToken.SelectToken(Parameters.IsCompressed)).Value.ToString());
             IsText = Convert.ToBoolean(((JValue) messageToken.SelectToken(Parameters.IsText)).Value.ToString());
-            Nonce = new BinaryHexString(((JValue) messageToken.SelectToken(Parameters.Nonce)).Value.ToString());
-            Data = new BinaryHexString(((JValue) messageToken.SelectToken(Parameters.Data)).Value.ToString());
+            if (messageToken.SelectToken(Parameters.MessageToEncrypt) != null)
+            {
+                MessageToEncrypt = ((JValue) messageToken.SelectToken(Parameters.MessageToEncrypt)).Value.ToString();
+            }
+            if (messageToken.SelectToken(Parameters.Nonce) != null)
+            {
+                Nonce = ((JValue) messageToken.SelectToken(Parameters.Nonce)).Value.ToString();
+                Data = ((JValue) messageToken.SelectToken(Parameters.Data)).Value.ToString();
+            }
         }
 
         protected EncryptedMessageBase()
@@ -65,9 +84,14 @@ namespace NxtLib
 
     public class EncryptedMessage : EncryptedMessageBase
     {
-        private EncryptedMessage(JToken messageToken)
+        public bool IsPrunable { get; }
+        public BinaryHexString EncryptedMessageHash { get; set; }
+
+        private EncryptedMessage(JToken messageToken, bool isPrunable, string encryptedMessageHash)
             : base(messageToken)
         {
+            IsPrunable = isPrunable;
+            EncryptedMessageHash = encryptedMessageHash;
         }
 
         public EncryptedMessage()
@@ -81,7 +105,9 @@ namespace NxtLib
             {
                 return null;
             }
-            return new EncryptedMessage(messageToken);
+            var isPrunable = jObject.Property(Parameters.VersionPrunableEncryptedMessage) != null;
+            var hash = jObject.SelectToken(Parameters.VersionPrunableEncryptedMessage)?.ToString();
+            return new EncryptedMessage(messageToken, isPrunable, hash);
         }
     }
 

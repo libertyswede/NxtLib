@@ -39,6 +39,7 @@ namespace NxtLib.Internal
         internal const string Comment = "comment";
         internal const string Completed = "completed";
         internal const string CompressMessageToEncrypt = "compressMessageToEncrypt";
+        internal const string CompressMessageToEncryptToSelf = "compressMessageToEncryptToSelf";
         internal const string Confirmations = "confirmations";
         internal const string Connect = "connect";
         internal const string Count = "count";
@@ -177,6 +178,8 @@ namespace NxtLib.Internal
         internal const string Prefix = "prefix";
         internal const string PriceNqt = "priceNQT";
         internal const string PrunableAttachmentJson = "prunableAttachmentJSON";
+        internal const string VersionPrunableEncryptedMessage = "version.PrunableEncryptedMessage";
+        internal const string VersionPrunablePlainMessage = "version.PrunablePlainMessage";
         internal const string PublicKey = "publicKey";
         internal const string Purchase = "purchase";
         internal const string QrCodeBase64 = "qrCodeBase64";

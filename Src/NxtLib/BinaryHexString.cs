@@ -15,7 +15,7 @@ namespace NxtLib
 
         public static implicit operator BinaryHexString(string stringValue)
         {
-            return new BinaryHexString(stringValue);
+            return stringValue != null ? new BinaryHexString(stringValue) : null;
         }
 
         public static implicit operator BinaryHexString(byte[] data)

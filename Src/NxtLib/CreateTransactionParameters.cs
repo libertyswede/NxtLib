@@ -58,9 +58,12 @@ namespace NxtLib
             MessageToBeEncrypted messageToBeEncrypted;
             AlreadyEncryptedMessage alreadyEncryptedMessage;
 
-            queryParameters.Add(Parameters.EncryptedMessageIsPrunable, EncryptedMessage.IsPrunable.ToString());
-            queryParameters.Add(Parameters.MessageToEncryptIsText, EncryptedMessage.MessageIsText.ToString());
-
+            if (EncryptedMessage != null)
+            {
+                queryParameters.Add(Parameters.EncryptedMessageIsPrunable, EncryptedMessage.IsPrunable.ToString());
+                queryParameters.Add(Parameters.MessageToEncryptIsText, EncryptedMessage.MessageIsText.ToString());
+                queryParameters.Add(Parameters.CompressMessageToEncrypt, EncryptedMessage.CompressMessage.ToString());
+            }
             if ((messageToBeEncrypted = EncryptedMessage as MessageToBeEncrypted) != null)
             {
                 queryParameters.Add(Parameters.MessageToEncrypt, messageToBeEncrypted.Message.ToHexString());
@@ -77,8 +80,11 @@ namespace NxtLib
             MessageToBeEncryptedToSelf messageToBeEncrypted;
             AlreadyEncryptedMessageToSelf alreadyEncryptedMessage;
 
-            queryParameters.Add(Parameters.MessageToEncryptToSelfIsText, EncryptedMessageToSelf.MessageIsText.ToString());
-
+            if (EncryptedMessageToSelf != null)
+            {
+                queryParameters.Add(Parameters.MessageToEncryptToSelfIsText, EncryptedMessageToSelf.MessageIsText.ToString());
+                queryParameters.Add(Parameters.CompressMessageToEncryptToSelf, EncryptedMessageToSelf.CompressMessage.ToString());
+            }
             if ((messageToBeEncrypted = EncryptedMessageToSelf as MessageToBeEncryptedToSelf) != null)
             {
                 queryParameters.Add(Parameters.MessageToEncryptToSelf, messageToBeEncrypted.Message.ToHexString());
@@ -114,12 +120,14 @@ namespace NxtLib
         public abstract class AbstractEncryptedMessage
         {
             public bool MessageIsText { get; }
+            public bool CompressMessage { get; }
             public BinaryHexString Message { get; }
             public bool IsPrunable { get; }
 
-            internal AbstractEncryptedMessage(BinaryHexString message, bool messageIsText, bool isPrunable)
+            internal AbstractEncryptedMessage(BinaryHexString message, bool messageIsText, bool compressMessage, bool isPrunable)
             {
                 MessageIsText = messageIsText;
+                CompressMessage = compressMessage;
                 IsPrunable = isPrunable;
                 Message = message;
             }
@@ -129,8 +137,8 @@ namespace NxtLib
         {
             public BinaryHexString Nonce { get; }
 
-            public AlreadyEncryptedMessage(BinaryHexString message, BinaryHexString encryptedMessageNonce, bool isText, bool isPrunable = false)
-                : base(message, isText, isPrunable)
+            public AlreadyEncryptedMessage(BinaryHexString message, BinaryHexString encryptedMessageNonce, bool isText, bool isCompressed, bool isPrunable = false)
+                : base(message, isText, isCompressed, isPrunable)
             {
                 Nonce = encryptedMessageNonce;
             }
@@ -138,13 +146,13 @@ namespace NxtLib
 
         public sealed class MessageToBeEncrypted : AbstractEncryptedMessage
         {
-            public MessageToBeEncrypted(IEnumerable<byte> messageBytes, bool isPrunable = false)
-                : base(ByteToHexStringConverter.ToHexString(messageBytes), false, isPrunable)
+            public MessageToBeEncrypted(IEnumerable<byte> messageBytes, bool compressMessage, bool isPrunable = false)
+                : base(ByteToHexStringConverter.ToHexString(messageBytes), false, compressMessage, isPrunable)
             {
             }
 
-            public MessageToBeEncrypted(string message, bool isPrunable = false) 
-                : base(message, true, isPrunable)
+            public MessageToBeEncrypted(string message, bool compressMessage, bool isPrunable = false) 
+                : base(message, true, compressMessage, isPrunable)
             {
             }
         }
@@ -153,10 +161,12 @@ namespace NxtLib
         {
             public bool MessageIsText { get; internal set; }
             public BinaryHexString Message { get; }
+            public bool CompressMessage { get; }
 
-            internal AbstractEncryptedMessageToSelf(BinaryHexString message, bool messageIsText)
+            internal AbstractEncryptedMessageToSelf(BinaryHexString message, bool messageIsText, bool compressMessage)
             {
                 MessageIsText = messageIsText;
+                CompressMessage = compressMessage;
                 Message = message;
             }
         }
@@ -165,8 +175,8 @@ namespace NxtLib
         {
             public BinaryHexString Nonce { get; }
 
-            public AlreadyEncryptedMessageToSelf(BinaryHexString message, BinaryHexString messageNonce, bool isText)
-                : base(message, isText)
+            public AlreadyEncryptedMessageToSelf(BinaryHexString message, BinaryHexString messageNonce, bool isText, bool isCompressed)
+                : base(message, isText, isCompressed)
             {
                 Nonce = messageNonce;
             }
@@ -174,13 +184,13 @@ namespace NxtLib
 
         public sealed class MessageToBeEncryptedToSelf : AbstractEncryptedMessageToSelf
         {
-            public MessageToBeEncryptedToSelf(IEnumerable<byte> messageBytes)
-                : base(ByteToHexStringConverter.ToHexString(messageBytes), false)
+            public MessageToBeEncryptedToSelf(IEnumerable<byte> messageBytes, bool compress)
+                : base(ByteToHexStringConverter.ToHexString(messageBytes), false, compress)
             {
             }
 
-            public MessageToBeEncryptedToSelf(string message)
-                : base(message, true)
+            public MessageToBeEncryptedToSelf(string message, bool compress)
+                : base(message, true, compress)
             {
             }
         }
