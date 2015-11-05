@@ -63,12 +63,12 @@ namespace NxtLib
 
             if ((messageToBeEncrypted = EncryptedMessage as MessageToBeEncrypted) != null)
             {
-                queryParameters.Add(Parameters.MessageToEncrypt, messageToBeEncrypted.Message);
+                queryParameters.Add(Parameters.MessageToEncrypt, messageToBeEncrypted.Message.ToHexString());
             }
             else if ((alreadyEncryptedMessage = EncryptedMessage as AlreadyEncryptedMessage) != null)
             {
-                queryParameters.Add(Parameters.EncryptedMessageData, alreadyEncryptedMessage.Message);
-                queryParameters.Add(Parameters.EncryptedMessageNonce, ByteToHexStringConverter.ToHexString(alreadyEncryptedMessage.Nonce));
+                queryParameters.Add(Parameters.EncryptedMessageData, alreadyEncryptedMessage.Message.ToHexString());
+                queryParameters.Add(Parameters.EncryptedMessageNonce, alreadyEncryptedMessage.Nonce.ToHexString());
             }
         }
 
@@ -81,12 +81,12 @@ namespace NxtLib
 
             if ((messageToBeEncrypted = EncryptedMessageToSelf as MessageToBeEncryptedToSelf) != null)
             {
-                queryParameters.Add(Parameters.MessageToEncryptToSelf, messageToBeEncrypted.Message);
+                queryParameters.Add(Parameters.MessageToEncryptToSelf, messageToBeEncrypted.Message.ToHexString());
             }
             else if ((alreadyEncryptedMessage = EncryptedMessageToSelf as AlreadyEncryptedMessageToSelf) != null)
             {
-                queryParameters.Add(Parameters.EncryptToSelfMessageData, alreadyEncryptedMessage.Message);
-                queryParameters.Add(Parameters.EncryptToSelfMessageNonce, ByteToHexStringConverter.ToHexString(alreadyEncryptedMessage.Nonce));
+                queryParameters.Add(Parameters.EncryptToSelfMessageData, alreadyEncryptedMessage.Message.ToHexString());
+                queryParameters.Add(Parameters.EncryptToSelfMessageNonce, alreadyEncryptedMessage.Nonce.ToHexString());
             }
         }
 
@@ -113,11 +113,11 @@ namespace NxtLib
 
         public abstract class AbstractEncryptedMessage
         {
-            public bool MessageIsText { get; internal set; }
-            public string Message { get; }
+            public bool MessageIsText { get; }
+            public BinaryHexString Message { get; }
             public bool IsPrunable { get; }
 
-            internal AbstractEncryptedMessage(string message, bool messageIsText, bool isPrunable)
+            internal AbstractEncryptedMessage(BinaryHexString message, bool messageIsText, bool isPrunable)
             {
                 MessageIsText = messageIsText;
                 IsPrunable = isPrunable;
@@ -127,16 +127,10 @@ namespace NxtLib
 
         public sealed class AlreadyEncryptedMessage : AbstractEncryptedMessage
         {
-            public IEnumerable<byte> Nonce { get; }
+            public BinaryHexString Nonce { get; }
 
-            public AlreadyEncryptedMessage(IEnumerable<byte> messageBytes, IEnumerable<byte> encryptedMessageNonce, bool isPrunable = false)
-                : base(ByteToHexStringConverter.ToHexString(messageBytes), false, isPrunable)
-            {
-                Nonce = encryptedMessageNonce;
-            }
-
-            public AlreadyEncryptedMessage(string message, IEnumerable<byte> encryptedMessageNonce, bool isPrunable = false)
-                : base(message, true, isPrunable)
+            public AlreadyEncryptedMessage(BinaryHexString message, BinaryHexString encryptedMessageNonce, bool isText, bool isPrunable = false)
+                : base(message, isText, isPrunable)
             {
                 Nonce = encryptedMessageNonce;
             }
@@ -158,9 +152,9 @@ namespace NxtLib
         public abstract class AbstractEncryptedMessageToSelf
         {
             public bool MessageIsText { get; internal set; }
-            public string Message { get; }
+            public BinaryHexString Message { get; }
 
-            internal AbstractEncryptedMessageToSelf(string message, bool messageIsText)
+            internal AbstractEncryptedMessageToSelf(BinaryHexString message, bool messageIsText)
             {
                 MessageIsText = messageIsText;
                 Message = message;
@@ -169,18 +163,12 @@ namespace NxtLib
 
         public sealed class AlreadyEncryptedMessageToSelf : AbstractEncryptedMessageToSelf
         {
-            public IEnumerable<byte> Nonce { get; }
+            public BinaryHexString Nonce { get; }
 
-            public AlreadyEncryptedMessageToSelf(IEnumerable<byte> messageBytes, IEnumerable<byte> encryptedMessageNonce)
-                : base(ByteToHexStringConverter.ToHexString(messageBytes), false)
+            public AlreadyEncryptedMessageToSelf(BinaryHexString message, BinaryHexString messageNonce, bool isText)
+                : base(message, isText)
             {
-                Nonce = encryptedMessageNonce;
-            }
-
-            public AlreadyEncryptedMessageToSelf(string message, IEnumerable<byte> encryptedMessageNonce)
-                : base(message, true)
-            {
-                Nonce = encryptedMessageNonce;
+                Nonce = messageNonce;
             }
         }
 
