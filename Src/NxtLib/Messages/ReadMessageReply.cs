@@ -10,6 +10,7 @@ namespace NxtLib.Messages
 
         [JsonConverter(typeof(ByteToHexStringConverter))]
         public UnencryptedMessage DecryptedMessageToSelf { get; set; }
+        public bool EncryptedMessageIsPrunable { get; set; }
 
         [JsonConverter(typeof(ByteToHexStringConverter))]
         public UnencryptedMessage Message { get; set; }
