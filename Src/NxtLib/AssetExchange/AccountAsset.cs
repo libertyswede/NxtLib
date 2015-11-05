@@ -8,7 +8,7 @@ namespace NxtLib.AssetExchange
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = Parameters.Asset)]
         public ulong AssetId { get; set; }
-        public byte? Decimals { get; set; }
+        public byte Decimals { get; set; }
         public string Name { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
