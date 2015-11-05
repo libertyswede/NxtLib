@@ -7,6 +7,7 @@ namespace NxtLib.AssetExchange
     public class AccountAssetsReply : BaseReply
     {
         [JsonProperty(PropertyName = Parameters.AccountAssets)]
-        public List<AccountAsset> AccountAssetList { get; set; }
+        [JsonConverter(typeof(AccountAssetConverter))]
+        public List<AccountAsset> AccountAssetList { get; set; } = new List<AccountAsset>();
     }
 }
