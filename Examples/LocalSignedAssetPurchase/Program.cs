@@ -8,13 +8,13 @@ namespace LocalSignedAssetPurchase
 {
     // A video describing this code in detail can be found here: https://www.youtube.com/watch?v=_H_xbLSSGkY
 
-    class Program
+    public class Program
     {
         private const string SecretPhrase = "secretPhrase"; // Set your secret phrase here!
         private const ulong DeBuNeAssetId = 6926770479287491943;
         private const string NxtUri = "http://178.21.114.156/nxt";
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             // Step 1, Locally generate a public key from the secret phrase
             var localCrypto = new LocalCrypto();

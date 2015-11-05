@@ -6,14 +6,14 @@ using NxtLib.MonetarySystem;
 
 namespace ReservableCurrenciesDemo
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
             Task.WaitAll(PrintReservableCurrencies());
         }
 
-        private async static Task PrintReservableCurrencies()
+        private static async Task PrintReservableCurrencies()
         {
             var service = new MonetarySystemService();
             var allCurrencies = await service.GetAllCurrencies();

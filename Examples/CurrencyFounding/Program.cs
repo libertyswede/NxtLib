@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using NxtLib.MonetarySystem;
 
 namespace CurrencyFounding
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
             var service = new MonetarySystemService();
             var currency = service.GetCurrency(CurrencyLocator.ByCurrencyId(7851677590592900934)).Result;

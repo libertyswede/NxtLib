@@ -15,7 +15,7 @@ namespace FindBigTraders
     /// * Most asset transfers and trades combined
     /// * Recieved most native dividend transactions
     /// </summary>
-    class Program
+    public class Program
     {
         private static readonly IAssetExchangeService AssetExchangeService = new AssetExchangeService();
         private static readonly IDictionary<ulong, int> AssetTradeCount = new Dictionary<ulong, int>();
@@ -25,7 +25,7 @@ namespace FindBigTraders
         private static readonly IDictionary<ulong, List<AssetTransfer>> AssetTransfers = new Dictionary<ulong, List<AssetTransfer>>();
         private static readonly List<Asset> Assets = new List<Asset>();
 
-        static void Main()
+        public static void Main()
         {
             GetAllAssets();
             GetAllTrades();
@@ -94,7 +94,7 @@ namespace FindBigTraders
                 UpdateOwnership(owners, transfer.RecipientId, transfer.SenderId, transfer.QuantityQnt);
             }
             return owners
-                .Where(o => o.Value != 0 && o.Key != asset.AccountId && o.Key != Constants.GenesisAccountId)
+                .Where(o => o.Value != 0 && o.Key != asset.AccountId && o.Key != Constants.GenesisAccount.AccountId)
                 .Select(o => new AssetOwner(o.Key, o.Value));
         }
 

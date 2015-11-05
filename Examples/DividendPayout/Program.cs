@@ -7,14 +7,14 @@ using NxtLib.Transactions;
 
 namespace DividendPayout
 {
-    class Program
+    public class Program
     {
         private const string GenesisAccountRs = "NXT-MRCC-2YLS-8M54-3CMAJ";
         private static readonly IAssetExchangeService AssetService = new AssetExchangeService();
         private static readonly ITransactionService TransactionService = new TransactionService();
         private static Asset _asset;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var transactionId = GetTransactionIdFromArguments(args);
             var attachment = GetTransactionAttachment(transactionId);
@@ -27,7 +27,7 @@ namespace DividendPayout
             Console.WriteLine("Fetching dividend payments for asset: {0} ({1})", _asset.Name, _asset.AssetId);
             Console.WriteLine("Total in dividend: {0} NXT", totalSpent.Nxt);
             Console.WriteLine("Per share: {0} NXT", attachment.AmountPerQnt.Nxt * decimalMultiplier);
-            Console.WriteLine("Number of shareholders at height {0}: {1}", attachment.Height, assetOwners.Count());
+            Console.WriteLine("Number of shareholders at height {0}: {1}", attachment.Height, assetOwners.Count);
             Console.WriteLine("----------------------------------------------------------------");
 
             foreach (var assetOwner in assetOwners)

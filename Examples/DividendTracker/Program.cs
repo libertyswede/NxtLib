@@ -15,9 +15,9 @@ namespace DividendTracker
     /// Start it with command line arguments: -height x to set the blockchein height where it should start scan
     /// Assumes you have an Nxt node running on localhost on default port (7876) open.
     /// </summary>
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var blockService = new BlockService();
             var serverInfoService = new ServerInfoService();

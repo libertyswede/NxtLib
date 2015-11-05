@@ -6,9 +6,9 @@ namespace NxtConsoleDemo
 {
     // A video describing this code in detail can be found here: https://www.youtube.com/watch?v=jc8BqEKIRjg
 
-    class Program
+    public class Program
     {
-        static void Main()
+        public static void Main()
         {
             Start();
         }
