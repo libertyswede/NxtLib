@@ -27,7 +27,7 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | decodeHallmark | [TokenService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Tokens/TokenService.cs) |  | 
 | decodeQRCode | [UtilService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Utils/UtilService.cs) |  | 
 | decodeToken | [TokenService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Tokens/TokenService.cs) |  | 
-| decryptFrom | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Messages/MessageService.cs) |  | 
+| decryptFrom | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Messages/MessageService.cs) | DecryptTextFrom and DecryptTextTo | 
 | deleteAlias | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Aliases/AliasService.cs) |  | 
 | deleteAssetShares | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | deleteCurrency | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
