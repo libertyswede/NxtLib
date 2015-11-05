@@ -53,7 +53,7 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | generateToken | [TokenService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Tokens/TokenService.cs) |  | 
 | getAccount | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Accounts/AccountService.cs) |  | 
 | getAccountAssetCount | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
-| getAccountAssets | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/AssetExchange/AssetExchangeService.cs) | GetAccountAsset and GetAccountAssets | 
+| getAccountAssets | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getAccountBlockCount | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Accounts/AccountService.cs) |  | 
 | getAccountBlockIds | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Accounts/AccountService.cs) |  | 
 | getAccountBlocks | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Accounts/AccountService.cs) | GetAccountBlocks and GetAccountBlocksIncludeTransactions | 
