@@ -18,22 +18,23 @@ namespace LocalEncryptAndSignMessage
             var localCrypto = new LocalCrypto();
             var messageService = new MessageService();
             var transactionService = new TransactionService();
+            const bool useCompression = true;
 
             // Encrypt message to send locally
-            const string message = "Sending a permanent message";
+            const string message = "Sending a prunable message";
             var nonce = localCrypto.CreateNonce();
-            var encrypted = localCrypto.EncryptTextTo(RecipientPublicKey, message, nonce, true, SecretPhrase);
+            var encrypted = localCrypto.EncryptTextTo(RecipientPublicKey, message, nonce, useCompression, SecretPhrase);
 
             // Encrypt message to self locally
-            const string messageToSelf = "Note to self: sending a permanent message";
+            const string messageToSelf = "Note to self: sending a prunable message";
             var nonceToSelf = localCrypto.CreateNonce();
-            var encryptedToSelf = localCrypto.EncryptTextTo(SenderPublicKey, messageToSelf, nonceToSelf, true, SecretPhrase);
+            var encryptedToSelf = localCrypto.EncryptTextTo(SenderPublicKey, messageToSelf, nonceToSelf, useCompression, SecretPhrase);
 
             // Prepare the transaction with your public key
             var parameters = new CreateTransactionByPublicKey(1440, Amount.OneNxt, SenderPublicKey)
             {
-                EncryptedMessage = new CreateTransactionParameters.AlreadyEncryptedMessage(encrypted, nonce, true),
-                EncryptedMessageToSelf = new CreateTransactionParameters.AlreadyEncryptedMessageToSelf(encryptedToSelf, nonceToSelf, true)
+                EncryptedMessage = new CreateTransactionParameters.AlreadyEncryptedMessage(encrypted, nonce, true, useCompression),
+                EncryptedMessageToSelf = new CreateTransactionParameters.AlreadyEncryptedMessageToSelf(encryptedToSelf, nonceToSelf, true, useCompression)
             };
             var unsigned = messageService.SendMessage(parameters, Recipient).Result;
 
