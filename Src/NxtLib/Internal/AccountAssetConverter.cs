@@ -20,14 +20,19 @@ namespace NxtLib.Internal
             var accountAssetsReply = new AccountAssetsReply();
             var jObject = JObject.Load(reader);
             
-            var accountAssets = jObject.SelectToken(Parameters.AccountAssets);
+            var accountAssets = jObject.SelectToken(Parameters.AccountAssets) as JArray;
             if (accountAssets != null)
             {
-                // Multiple
+                foreach (var accountAssetJson in accountAssets)
+                {
+                    var accountAsset = JsonConvert.DeserializeObject<AccountAsset>(accountAssetJson.ToString());
+                    accountAssetsReply.AccountAssets.Add(accountAsset);
+                }
             }
             else
             {
-                // Single
+                var accountAsset = JsonConvert.DeserializeObject<AccountAsset>(jObject.ToString());
+                accountAssetsReply.AccountAssets.Add(accountAsset);
             }
             
             return accountAssetsReply;

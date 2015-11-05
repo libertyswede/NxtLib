@@ -4,10 +4,9 @@ using NxtLib.Internal;
 
 namespace NxtLib.AssetExchange
 {
+    [JsonConverter(typeof(AccountAssetConverter))]
     public class AccountAssetsReply : BaseReply
     {
-        [JsonProperty(PropertyName = Parameters.AccountAssets)]
-        [JsonConverter(typeof(AccountAssetConverter))]
-        public List<AccountAsset> AccountAssetList { get; set; } = new List<AccountAsset>();
+        public List<AccountAsset> AccountAssets { get; set; } = new List<AccountAsset>();
     }
 }
