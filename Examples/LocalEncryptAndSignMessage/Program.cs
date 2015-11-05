@@ -21,12 +21,12 @@ namespace LocalEncryptAndSignMessage
             const bool useCompression = true;
 
             // Encrypt message to send locally
-            const string message = "Sending a prunable message";
+            const string message = "Sending a permanent message";
             var nonce = localCrypto.CreateNonce();
             var encrypted = localCrypto.EncryptTextTo(RecipientPublicKey, message, nonce, useCompression, SecretPhrase);
 
             // Encrypt message to self locally
-            const string messageToSelf = "Note to self: sending a prunable message";
+            const string messageToSelf = "Note to self: sending a permanent message";
             var nonceToSelf = localCrypto.CreateNonce();
             var encryptedToSelf = localCrypto.EncryptTextTo(SenderPublicKey, messageToSelf, nonceToSelf, useCompression, SecretPhrase);
 
@@ -43,6 +43,8 @@ namespace LocalEncryptAndSignMessage
             var result = transactionService.BroadcastTransaction(new TransactionParameter(signed.ToString())).Result;
             var transactionId = result.TransactionId;
             Console.WriteLine($"Sent transaction: {transactionId}");
+
+            Console.ReadLine();
         }
     }
 }
