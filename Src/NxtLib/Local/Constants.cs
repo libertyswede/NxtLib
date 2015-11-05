@@ -2,7 +2,7 @@
 {
     public class Constants
     {
-        public readonly Account GenesisAccount = 1739068987193023818;
+        public static readonly Account GenesisAccount = 1739068987193023818;
         public const ulong GenesisBlockId = 2680262203532249785;
         
         public const string DefaultNxtUrl = "http://localhost:7876/nxt";
