@@ -208,6 +208,14 @@ namespace NxtLib.Internal.LocalSign
             return signature;
         }
 
+        private byte[] HashIncremental(byte[] message, byte[] other)
+        {
+            var m = _sha256.ComputeHash(message);
+            _sha256.TransformBlock(m, 0, m.Length, m, 0);
+            _sha256.TransformFinalBlock(other, 0, other.Length);
+            return _sha256.Hash;
+        }
+
 #elif DOTNET
 
         internal byte[] Sign(byte[] message, string secretPhrase)
@@ -237,6 +245,18 @@ namespace NxtLib.Internal.LocalSign
 
                 var signature = v.Concat(h).ToArray();
                 return signature;
+            }
+        }
+
+        private byte[] HashIncremental(byte[] message, byte[] other)
+        {
+            using (var incrementalHash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))
+            using (var sha256 = SHA256.Create())
+            {
+                var m = sha256.ComputeHash(message);
+                incrementalHash.AppendData(m);
+                incrementalHash.AppendData(other);
+                return incrementalHash.GetHashAndReset();
             }
         }
 
