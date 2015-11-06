@@ -4,12 +4,14 @@ using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
+using NxtLib.Local;
 
 namespace NxtLib.Internal.LocalSign
 {
     internal class Crypto
     {
         private readonly SHA256 _sha256;
+        private readonly StringConverter _stringConverter = new StringConverter();
 
         public Crypto()
         {
@@ -77,26 +79,85 @@ namespace NxtLib.Internal.LocalSign
             var secretBytes = GetPrivateKeyBytes(secretPhrase);
             var key = GenerateAesKey(secretBytes, sender, nonce);
             
-            System.Buffer.BlockCopy(data, 0, iv, 0, iv.Length);
-            System.Buffer.BlockCopy(data, iv.Length, encryptedContent, 0, encryptedContent.Length);
+            Buffer.BlockCopy(data, 0, iv, 0, iv.Length);
+            Buffer.BlockCopy(data, iv.Length, encryptedContent, 0, encryptedContent.Length);
     
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
+            using (var cryptor = Aes.Create())
             {
-                using (var cryptor = Aes.Create())
+                cryptor.Mode = CipherMode.CBC;
+                cryptor.Padding = PaddingMode.PKCS7;
+                cryptor.KeySize = 128;
+                cryptor.BlockSize = 128;
+    
+                using (CryptoStream cs = new CryptoStream(ms, cryptor.CreateDecryptor(key, iv), CryptoStreamMode.Write))
                 {
-                    cryptor.Mode = CipherMode.CBC;
-                    cryptor.Padding = PaddingMode.PKCS7;
-                    cryptor.KeySize = 128;
-                    cryptor.BlockSize = 128;
+                    cs.Write(encryptedContent, 0, encryptedContent.Length);
     
-                    using (CryptoStream cs = new CryptoStream(ms, cryptor.CreateDecryptor(key, iv), CryptoStreamMode.Write))
-                    {
-                        cs.Write(encryptedContent, 0, encryptedContent.Length);
-    
-                    }
-                    return ms.ToArray();
                 }
+                return ms.ToArray();
             }
+        }
+
+        internal GeneratedToken GenerateToken(string secretPhrase, byte[] message)
+        {
+            var data = new byte[message.Length + 32 + 4];
+
+            Buffer.BlockCopy(message, 0, data, 0, message.Length);
+            Buffer.BlockCopy(GetPublicKey(secretPhrase).ToBytes().ToArray(), 0, data, message.Length, 32);
+            var timestamp = DateTimeConverter.GetNxtTime(DateTime.UtcNow);
+            
+            data[message.Length + 32] = (byte)timestamp;
+            data[message.Length + 32 + 1] = (byte)(timestamp >> 8);
+            data[message.Length + 32 + 2] = (byte)(timestamp >> 16);
+            data[message.Length + 32 + 3] = (byte)(timestamp >> 24);
+
+            var token = new byte[100];
+            Buffer.BlockCopy(data, message.Length, token, 0, 32 + 4);
+            Buffer.BlockCopy(Sign(data, secretPhrase), 0, token, 32 + 4, 64);
+
+            var buf = new StringBuilder();
+            for (var ptr = 0; ptr < 100; ptr += 5)
+            {
+
+                var number = ((long)(token[ptr] & 0xFF)) | (((long)(token[ptr + 1] & 0xFF)) << 8) | (((long)(token[ptr + 2] & 0xFF)) << 16)
+                        | (((long)(token[ptr + 3] & 0xFF)) << 24) | (((long)(token[ptr + 4] & 0xFF)) << 32);
+
+                if (number < 32)
+                {
+                    buf.Append("0000000");
+                }
+                else if (number < 1024)
+                {
+                    buf.Append("000000");
+                }
+                else if (number < 32768)
+                {
+                    buf.Append("00000");
+                }
+                else if (number < 1048576)
+                {
+                    buf.Append("0000");
+                }
+                else if (number < 33554432)
+                {
+                    buf.Append("000");
+                }
+                else if (number < 1073741824)
+                {
+                    buf.Append("00");
+                }
+                else if (number < 34359738368L)
+                {
+                    buf.Append("0");
+                }
+
+                buf.Append(_stringConverter.ToBase32String(number));
+            }
+
+            var tokenString = buf.ToString();
+
+            throw new NotImplementedException();
         }
 
         private byte[] GetPrivateKeyBytes(string secretPhrase)
