@@ -99,13 +99,13 @@ namespace NxtLib.Internal.LocalSign
             }
         }
 
-        internal GeneratedToken GenerateToken(string secretPhrase, byte[] message)
+        internal string GenerateToken(string secretPhrase, byte[] message, DateTime dateTime)
         {
             var data = new byte[message.Length + 32 + 4];
 
             Buffer.BlockCopy(message, 0, data, 0, message.Length);
             Buffer.BlockCopy(GetPublicKey(secretPhrase).ToBytes().ToArray(), 0, data, message.Length, 32);
-            var timestamp = DateTimeConverter.GetNxtTime(DateTime.UtcNow);
+            var timestamp = DateTimeConverter.GetNxtTime(dateTime);
             
             data[message.Length + 32] = (byte)timestamp;
             data[message.Length + 32 + 1] = (byte)(timestamp >> 8);
@@ -156,8 +156,7 @@ namespace NxtLib.Internal.LocalSign
             }
 
             var tokenString = buf.ToString();
-
-            throw new NotImplementedException();
+            return tokenString;
         }
 
         private byte[] GetPrivateKeyBytes(string secretPhrase)

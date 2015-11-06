@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json.Linq;
@@ -90,10 +91,24 @@ namespace NxtLib.Local
             return decrypted;
         }
 
-        public GeneratedToken GenerateToken(string secretPhrase, string message)
+        public GeneratedToken GenerateToken(string secretPhrase, string message, DateTime? timestamp = null)
         {
             var messageBytes = Encoding.UTF8.GetBytes(message);
-            return _crypto.GenerateToken(secretPhrase, messageBytes);
+            if (!timestamp.HasValue)
+            {
+                timestamp = DateTime.UtcNow;
+            }
+            var tokenString = _crypto.GenerateToken(secretPhrase, messageBytes, timestamp.Value);
+
+            var generatedToken = new GeneratedToken
+            {
+                Timestamp = timestamp.Value,
+                Token = tokenString,
+                Valid = true,
+                Account = GetAccountIdFromPublicKey(GetPublicKey(secretPhrase))
+            };
+
+            return generatedToken;
         }
 
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
