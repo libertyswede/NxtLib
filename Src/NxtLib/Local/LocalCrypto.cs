@@ -91,7 +91,7 @@ namespace NxtLib.Local
             return decrypted;
         }
 
-        public GeneratedToken GenerateToken(string secretPhrase, string message, DateTime? timestamp = null)
+        public LocalGeneratedToken GenerateToken(string secretPhrase, string message, DateTime? timestamp = null)
         {
             var messageBytes = Encoding.UTF8.GetBytes(message);
             if (!timestamp.HasValue)
@@ -100,7 +100,7 @@ namespace NxtLib.Local
             }
             var tokenString = _crypto.GenerateToken(secretPhrase, messageBytes, timestamp.Value);
 
-            var generatedToken = new GeneratedToken
+            var generatedToken = new LocalGeneratedToken
             {
                 Timestamp = timestamp.Value,
                 Token = tokenString,
@@ -109,6 +109,13 @@ namespace NxtLib.Local
             };
 
             return generatedToken;
+        }
+
+        public LocalDecodedToken DecodeToken(string message, string token)
+        {
+            var messageBytes = Encoding.UTF8.GetBytes(message.Trim());
+            var result = _crypto.DecodeToken(messageBytes, token);
+            return result;
         }
 
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,

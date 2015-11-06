@@ -119,44 +119,71 @@ namespace NxtLib.Internal.LocalSign
             var buf = new StringBuilder();
             for (var ptr = 0; ptr < 100; ptr += 5)
             {
-
                 var number = ((long)(token[ptr] & 0xFF)) | (((long)(token[ptr + 1] & 0xFF)) << 8) | (((long)(token[ptr + 2] & 0xFF)) << 16)
                         | (((long)(token[ptr + 3] & 0xFF)) << 24) | (((long)(token[ptr + 4] & 0xFF)) << 32);
-
-                if (number < 32)
-                {
-                    buf.Append("0000000");
-                }
-                else if (number < 1024)
-                {
-                    buf.Append("000000");
-                }
-                else if (number < 32768)
-                {
-                    buf.Append("00000");
-                }
-                else if (number < 1048576)
-                {
-                    buf.Append("0000");
-                }
-                else if (number < 33554432)
-                {
-                    buf.Append("000");
-                }
-                else if (number < 1073741824)
-                {
-                    buf.Append("00");
-                }
-                else if (number < 34359738368L)
-                {
-                    buf.Append("0");
-                }
-
-                buf.Append(_stringConverter.ToBase32String(number));
+                
+                buf.Append(_stringConverter.ToBase32String(number).PadLeft(8, '0'));
             }
 
             var tokenString = buf.ToString();
             return tokenString;
+        }
+
+        public LocalDecodedToken DecodeToken(byte[] messageBytes, string token)
+        {
+            var tokenBytes = new byte[100];
+            int i = 0, j = 0;
+
+            for (; i < token.Length; i += 8, j += 5)
+            {
+                var number = _stringConverter.FromBase32String(token.Substring(i, i + 8));
+                tokenBytes[j] = (byte) number;
+                tokenBytes[j + 1] = (byte) (number >> 8);
+                tokenBytes[j + 2] = (byte) (number >> 16);
+                tokenBytes[j + 3] = (byte) (number >> 24);
+                tokenBytes[j + 4] = (byte) (number >> 32);
+            }
+
+            if (i != 160)
+            {
+                throw new ArgumentException($"Invalid token string: {token}", nameof(token));
+            }
+            
+            var publicKey = tokenBytes.Take(32).ToArray();
+            var timestamp = (tokenBytes[32] & 0xFF) | ((tokenBytes[33] & 0xFF) << 8) | ((tokenBytes[34] & 0xFF) << 16) | ((tokenBytes[35] & 0xFF) << 24);
+            var signature = tokenBytes.Skip(32 + 4).ToArray();
+
+            var data = new byte[messageBytes.Length + 32 + 4];
+            Buffer.BlockCopy(messageBytes, 0, data, 0, messageBytes.Length);
+            Buffer.BlockCopy(tokenBytes, 0, data, messageBytes.Length, 36);
+
+            var isValid = Verify(signature, data, publicKey, true);
+            return new LocalDecodedToken(publicKey, DateTimeConverter.GetDateTime(timestamp), isValid);
+        }
+
+        private bool Verify(byte[] signature, byte[] message, byte[] publicKey, bool enforceCanonical)
+        {
+            try
+            {
+                if (signature.Length != 64 ||
+                    (enforceCanonical && !Curve25519.IsCanonicalSignature(signature)) ||
+                    (enforceCanonical && !Curve25519.IsCanonicalPublicKey(publicKey)))
+                {
+                    return false;
+                }
+
+                var y = new byte[32];
+                var v = signature.Take(32).ToArray();
+                var h = signature.Skip(32).ToArray();
+
+                Curve25519.Verify(y, v, h, publicKey);
+                var h2 = HashIncremental(message, y);
+                return h.SequenceEqual(h2);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private byte[] GetPrivateKeyBytes(string secretPhrase)
