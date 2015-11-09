@@ -12,7 +12,7 @@ namespace NxtLib.Local
     {
         private readonly Crypto _crypto = new Crypto();
         private readonly Compressor _compressor = new Compressor();
-
+        
         public BinaryHexString GetPublicKey(string secretPhrase)
         {
             return _crypto.GetPublicKey(secretPhrase);
