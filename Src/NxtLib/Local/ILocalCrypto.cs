@@ -7,8 +7,7 @@ namespace NxtLib.Local
     {
         BinaryHexString GetPublicKey(string secretPhrase);
         JObject SignTransaction(TransactionCreatedReply transactionCreatedReply, string secretPhrase);
-        ulong GetAccountIdFromPublicKey(BinaryHexString publicKey);
-        string GetReedSolomonFromAccountId(ulong accountId);
+        Account GetAccountFromPublicKey(BinaryHexString publicKey);
         ulong GetAccountIdFromReedSolomon(string reedSolomonAddress);
         BinaryHexString CreateNonce();
         BinaryHexString EncryptTextTo(BinaryHexString recipientPublicKey, string message, BinaryHexString nonce, bool compress, string secretPhrase);

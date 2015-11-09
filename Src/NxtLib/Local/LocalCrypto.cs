@@ -18,12 +18,17 @@ namespace NxtLib.Local
             return _crypto.GetPublicKey(secretPhrase);
         }
 
-        public ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
+        public Account GetAccountFromPublicKey(BinaryHexString publicKey)
         {
             return _crypto.GetAccountIdFromPublicKey(publicKey);
         }
 
-        public string GetReedSolomonFromAccountId(ulong accountId)
+        internal ulong GetAccountIdFromPublicKey(BinaryHexString publicKey)
+        {
+            return _crypto.GetAccountIdFromPublicKey(publicKey);
+        }
+
+        internal string GetReedSolomonFromAccountId(ulong accountId)
         {
             return ReedSolomon.Encode(accountId);
         }
@@ -107,7 +112,7 @@ namespace NxtLib.Local
                 Timestamp = datetimeConverter.GetFromNxtTime(nxtTimestamp),
                 Token = tokenString,
                 Valid = true,
-                Account = GetAccountIdFromPublicKey(GetPublicKey(secretPhrase))
+                Account = GetAccountFromPublicKey(GetPublicKey(secretPhrase))
             };
 
             return generatedToken;
