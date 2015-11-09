@@ -16,7 +16,7 @@ namespace NxtLib.Internal
 
         internal DateTime GetFromNxtTime(int dateTime)
         {
-            return Nov24Th2013.AddSeconds(dateTime - 1);
+            return Nov24Th2013.AddSeconds(dateTime);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
