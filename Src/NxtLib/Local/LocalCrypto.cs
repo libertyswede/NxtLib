@@ -98,11 +98,13 @@ namespace NxtLib.Local
             {
                 timestamp = DateTime.UtcNow;
             }
-            var tokenString = _crypto.GenerateToken(secretPhrase, messageBytes, timestamp.Value);
+            var datetimeConverter = new DateTimeConverter();
+            var nxtTimestamp = datetimeConverter.GetNxtTimestamp(timestamp.Value);
+            var tokenString = _crypto.GenerateToken(secretPhrase, messageBytes, nxtTimestamp);
 
             var generatedToken = new LocalGeneratedToken
             {
-                Timestamp = timestamp.Value,
+                Timestamp = datetimeConverter.GetFromNxtTime(nxtTimestamp),
                 Token = tokenString,
                 Valid = true,
                 Account = GetAccountIdFromPublicKey(GetPublicKey(secretPhrase))

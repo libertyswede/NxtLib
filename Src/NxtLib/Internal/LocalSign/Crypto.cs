@@ -10,17 +10,14 @@ namespace NxtLib.Internal.LocalSign
 {
     internal class Crypto
     {
-        private readonly SHA256 _sha256;
         private readonly StringConverter _stringConverter = new StringConverter();
 
-        public Crypto()
+        private static byte[] ComputeHash(byte[] value)
         {
-            _sha256 = SHA256.Create();
-        }
-
-        private byte[] ComputeHash(byte[] value)
-        {
-            return _sha256.ComputeHash(value);
+            using (var sha256 = SHA256.Create())
+            {
+                return sha256.ComputeHash(value);
+            }
         }
 
         internal BinaryHexString GetPublicKey(string secretPhrase)
@@ -99,13 +96,12 @@ namespace NxtLib.Internal.LocalSign
             }
         }
 
-        internal string GenerateToken(string secretPhrase, byte[] message, DateTime dateTime)
+        internal string GenerateToken(string secretPhrase, byte[] message, int timestamp)
         {
             var data = new byte[message.Length + 32 + 4];
 
             Buffer.BlockCopy(message, 0, data, 0, message.Length);
             Buffer.BlockCopy(GetPublicKey(secretPhrase).ToBytes().ToArray(), 0, data, message.Length, 32);
-            var timestamp = new DateTimeConverter().GetNxtTimestamp(dateTime);
             
             data[message.Length + 32] = (byte)timestamp;
             data[message.Length + 32 + 1] = (byte)(timestamp >> 8);
@@ -188,21 +184,27 @@ namespace NxtLib.Internal.LocalSign
 
         private byte[] GetPrivateKeyBytes(string secretPhrase)
         {
-            var privateKeyBytes = _sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase));
-            Curve25519.Clamp(privateKeyBytes);
-            return privateKeyBytes;
+            using (var sha256 = SHA256.Create())
+            {
+                var privateKeyBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase));
+                Curve25519.Clamp(privateKeyBytes);
+                return privateKeyBytes;
+            }
         }
 
         private byte[] GenerateAesKey(byte[] myPrivateKey, byte[] theirPublicKey, byte[] nonce)
         {
-            var dhSharedSecret = new byte[32];
-            Curve25519.Curve(dhSharedSecret, myPrivateKey, theirPublicKey);
-            for (var i = 0; i < 32; i++)
+            using (var sha256 = SHA256.Create())
             {
-                dhSharedSecret[i] ^= nonce[i];
+                var dhSharedSecret = new byte[32];
+                Curve25519.Curve(dhSharedSecret, myPrivateKey, theirPublicKey);
+                for (var i = 0; i < 32; i++)
+                {
+                    dhSharedSecret[i] ^= nonce[i];
+                }
+                var key = sha256.ComputeHash(dhSharedSecret);
+                return key;
             }
-            var key = _sha256.ComputeHash(dhSharedSecret);
-            return key;
         }
 
 #if NET45
@@ -237,10 +239,13 @@ namespace NxtLib.Internal.LocalSign
 
         private byte[] HashIncremental(byte[] message, byte[] other)
         {
-            var m = _sha256.ComputeHash(message);
-            _sha256.TransformBlock(m, 0, m.Length, m, 0);
-            _sha256.TransformFinalBlock(other, 0, other.Length);
-            return _sha256.Hash;
+            using (var sha256 = SHA256.Create())
+            {
+                var m = sha256.ComputeHash(message);
+                sha256.TransformBlock(m, 0, m.Length, m, 0);
+                sha256.TransformFinalBlock(other, 0, other.Length);
+                return sha256.Hash;
+            }
         }
 
 #elif DOTNET

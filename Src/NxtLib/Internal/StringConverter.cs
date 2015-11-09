@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NxtLib.Local
+namespace NxtLib.Internal
 {
     internal class StringConverter
     {
