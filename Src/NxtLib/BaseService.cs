@@ -138,13 +138,13 @@ namespace NxtLib
             var url = _baseUrl + $"?{RequestTypeName}=" + requestType;
 
             return queryParamsDictionary.Aggregate(url, (current1, keyValuePair) =>
-                keyValuePair.Value.Aggregate(current1, (current, value) => current + ("&" + keyValuePair.Key + "=" + value)));
+                keyValuePair.Value.Aggregate(current1, (current, value) => current + "&" + keyValuePair.Key + "=" + System.Uri.EscapeDataString(value)));
         }
 
         protected string BuildUrl(string requestType, Dictionary<string, string> queryParamsDictionary)
         {
             var url = _baseUrl + $"?{RequestTypeName}=" + requestType;
-            url = queryParamsDictionary.Aggregate(url, (current, queryParam) => current + ("&" + queryParam.Key + "=" + queryParam.Value));
+            url = queryParamsDictionary.Aggregate(url, (current, queryParam) => current + "&" + queryParam.Key + "=" + System.Uri.EscapeDataString(queryParam.Value));
             return url;
         }
 
