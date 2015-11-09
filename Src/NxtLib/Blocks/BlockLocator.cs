@@ -39,7 +39,7 @@ namespace NxtLib.Blocks
 
         public static BlockLocator ByTimestamp(DateTime timestamp)
         {
-            var nxtTimestamp = new DateTimeConverter().GetEpochTime(timestamp);
+            var nxtTimestamp = new DateTimeConverter().GetNxtTimestamp(timestamp);
             return new BlockLocator(timestamp, nxtTimestamp);
         }
     }

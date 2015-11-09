@@ -124,7 +124,7 @@ namespace NxtLib.Local
             var resultJson = new JObject();
             resultJson.Add(Parameters.Type, (int)TransactionTypeMapper.GetMainTypeByte(transaction.Type));
             resultJson.Add(Parameters.SubType, (int)TransactionTypeMapper.GetSubTypeByte(transaction.SubType));
-            resultJson.Add(Parameters.Timestamp, DateTimeConverter.GetNxtTime(transaction.Timestamp));
+            resultJson.Add(Parameters.Timestamp, new DateTimeConverter().GetNxtTimestamp(transaction.Timestamp));
             resultJson.Add(Parameters.Deadline, transaction.Deadline);
             resultJson.Add(Parameters.SenderPublicKey, transaction.SenderPublicKey.ToHexString());
             resultJson.Add(Parameters.AmountNqt, transaction.Amount.Nqt.ToString());

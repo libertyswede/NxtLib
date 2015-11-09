@@ -43,7 +43,7 @@ namespace NxtLib.Internal
             if (timeStamp.HasValue)
             {
                 var dateTimeConverter = new DateTimeConverter();
-                var convertedTimeStamp = dateTimeConverter.GetEpochTime(timeStamp.Value.ToUniversalTime());
+                var convertedTimeStamp = dateTimeConverter.GetNxtTimestamp(timeStamp.Value.ToUniversalTime());
                 me.Add(key, convertedTimeStamp.ToString());
             }
         }

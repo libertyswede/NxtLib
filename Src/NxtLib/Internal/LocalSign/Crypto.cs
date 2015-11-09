@@ -105,7 +105,7 @@ namespace NxtLib.Internal.LocalSign
 
             Buffer.BlockCopy(message, 0, data, 0, message.Length);
             Buffer.BlockCopy(GetPublicKey(secretPhrase).ToBytes().ToArray(), 0, data, message.Length, 32);
-            var timestamp = DateTimeConverter.GetNxtTime(dateTime);
+            var timestamp = new DateTimeConverter().GetNxtTimestamp(dateTime);
             
             data[message.Length + 32] = (byte)timestamp;
             data[message.Length + 32 + 1] = (byte)(timestamp >> 8);
@@ -136,7 +136,7 @@ namespace NxtLib.Internal.LocalSign
 
             for (; i < token.Length; i += 8, j += 5)
             {
-                var number = _stringConverter.FromBase32String(token.Substring(i, i + 8));
+                var number = _stringConverter.FromBase32String(token.Substring(i, 8));
                 tokenBytes[j] = (byte) number;
                 tokenBytes[j + 1] = (byte) (number >> 8);
                 tokenBytes[j + 2] = (byte) (number >> 16);
@@ -158,7 +158,7 @@ namespace NxtLib.Internal.LocalSign
             Buffer.BlockCopy(tokenBytes, 0, data, messageBytes.Length, 36);
 
             var isValid = Verify(signature, data, publicKey, true);
-            return new LocalDecodedToken(publicKey, DateTimeConverter.GetDateTime(timestamp), isValid);
+            return new LocalDecodedToken(publicKey, new DateTimeConverter().GetFromNxtTime(timestamp), isValid);
         }
 
         private bool Verify(byte[] signature, byte[] message, byte[] publicKey, bool enforceCanonical)

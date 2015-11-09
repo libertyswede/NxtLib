@@ -212,7 +212,7 @@ namespace NxtLib
         internal DigitalGoodsPurchaseAttachment(JToken attachments)
         {
             DeliveryDeadlineTimestamp =
-                DateTimeConverter.GetDateTime(GetAttachmentValue<int>(attachments, Parameters.DeliveryDeadlineTimestamp));
+                new DateTimeConverter().GetFromNxtTime(GetAttachmentValue<int>(attachments, Parameters.DeliveryDeadlineTimestamp));
             GoodsId = GetAttachmentValue<ulong>(attachments, Parameters.Goods);
             Price = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.PriceNqt));
             Quantity = GetAttachmentValue<int>(attachments, Parameters.Quantity);
