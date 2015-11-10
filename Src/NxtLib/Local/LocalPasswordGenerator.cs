@@ -5,12 +5,12 @@ using System.Text;
 
 namespace NxtLib.Local
 {
-    public interface IPasswordGenerator
+    public interface ILocalPasswordGenerator
     {
         string GeneratePassword(int bits = 128);
     }
 
-    public class PasswordGenerator : IPasswordGenerator
+    public class LocalPasswordGenerator : ILocalPasswordGenerator
     {
         private readonly string[] _words = 
         {

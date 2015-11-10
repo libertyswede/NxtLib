@@ -19,9 +19,9 @@ namespace NxtLib.Accounts
             }
         }
 
-        public static AccountIdLocator ByPublicKey(string publicKey)
+        public static AccountIdLocator ByPublicKey(BinaryHexString publicKey)
         {
-            return new AccountIdLocator(Parameters.PublicKey, publicKey);
+            return new AccountIdLocator(Parameters.PublicKey, publicKey.ToHexString());
         }
 
         public static AccountIdLocator BySecretPhrase(string secretPhrase)

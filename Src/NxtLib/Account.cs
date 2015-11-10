@@ -4,22 +4,22 @@ using NxtLib.Local;
 
 namespace NxtLib
 {
-    [DebuggerDisplay("Account RS: {AccountRs}")]
+    [DebuggerDisplay("Account: {AccountRs}, ({AccountId})")]
     public class Account : IEquatable<Account>
     {
-        private static readonly LocalCrypto LocalCrypto = new LocalCrypto();
+        private static readonly LocalAccountService LocalAccountService = new LocalAccountService();
         public ulong AccountId { get; }
         public string AccountRs { get; }
 
         public Account(string accountRs)
         {
-            AccountId = LocalCrypto.GetAccountIdFromReedSolomon(accountRs);
+            AccountId = LocalAccountService.GetAccountIdFromReedSolomon(accountRs);
             AccountRs = accountRs;
         }
 
         public Account(ulong accountId)
         {
-            AccountRs = LocalCrypto.GetReedSolomonFromAccountId(accountId);
+            AccountRs = LocalAccountService.GetReedSolomonFromAccountId(accountId);
             AccountId = accountId;
         }
 
