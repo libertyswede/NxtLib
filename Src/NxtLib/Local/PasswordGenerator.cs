@@ -164,9 +164,9 @@ namespace NxtLib.Local
 
         public string GeneratePassword(int bits = 128)
         {
-            if (bits%32 != 0)
+            if (bits < 0 || bits%32 != 0)
             {
-                throw new ArgumentException($"Unexpected value {bits} expected divisible by 32", nameof(bits));
+                throw new ArgumentException($"Unexpected value {bits} expected it to be divisible by 32 and larger than 0", nameof(bits));
             }
             var randomNumbers = new uint[bits/32];
             GetRandomValues(randomNumbers);
