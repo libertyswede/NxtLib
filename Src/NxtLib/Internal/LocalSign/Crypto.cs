@@ -45,6 +45,11 @@ namespace NxtLib.Internal.LocalSign
             using (var ms = new MemoryStream())
             using (var cryptor = Aes.Create())
             {
+                if (cryptor == null)
+                {
+                    throw new CryptographicException("Unable to create AES managed encryption object.");
+                }
+
                 cryptor.Mode = CipherMode.CBC;
                 cryptor.Padding = PaddingMode.PKCS7;
                 cryptor.KeySize = 128;
@@ -82,6 +87,11 @@ namespace NxtLib.Internal.LocalSign
             using (var ms = new MemoryStream())
             using (var cryptor = Aes.Create())
             {
+                if (cryptor == null)
+                {
+                    throw new CryptographicException("Unable to create AES managed encryption object.");
+                }
+
                 cryptor.Mode = CipherMode.CBC;
                 cryptor.Padding = PaddingMode.PKCS7;
                 cryptor.KeySize = 128;

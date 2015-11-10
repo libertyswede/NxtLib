@@ -156,7 +156,7 @@ namespace NxtLib
 
     public class ColoredCoinsDeleteAttachment : Attachment
     {
-        internal ColoredCoinsDeleteAttachment(JToken attachments)
+        internal ColoredCoinsDeleteAttachment()
         {
             throw new NotImplementedException();
         }
