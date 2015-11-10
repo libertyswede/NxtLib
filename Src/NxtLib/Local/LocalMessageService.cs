@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
 
 namespace NxtLib.Local
@@ -16,7 +17,7 @@ namespace NxtLib.Local
 
     public class LocalMessageService : ILocalMessageService
     {
-        private readonly Compressor _compressor = new Compressor();
+        private readonly GzipCompressor _gzipCompressor = new GzipCompressor();
         private readonly Crypto _crypto = new Crypto();
 
         public BinaryHexString CreateNonce()
@@ -40,7 +41,7 @@ namespace NxtLib.Local
             var dataBytes = data.ToBytes().ToArray();
             if (compress)
             {
-                dataBytes = _compressor.GzipCompress(dataBytes);
+                dataBytes = _gzipCompressor.GzipCompress(dataBytes);
             }
             return _crypto.AesEncryptTo(recipientPublicKeyBytes, dataBytes, nonceBytes, secretPhrase);
         }
@@ -60,7 +61,7 @@ namespace NxtLib.Local
             var decrypted = _crypto.AesDecryptFrom(senderPublicKeyBytes, dataBytes, nonceBytes, secretPhrase);
             if (uncompress)
             {
-                decrypted = _compressor.GzipUncompress(decrypted);
+                decrypted = _gzipCompressor.GzipUncompress(decrypted);
             }
             return decrypted;
         }

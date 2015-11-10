@@ -118,7 +118,7 @@ namespace NxtLib.Internal.LocalSign
                     if (j > 26)
                         pos -= 14;
 
-                    t ^= Gmult(codeword[pos], Gexp[(i * j) % 31]);
+                    t ^= Gmult(codeword[pos], Gexp[i * j % 31]);
                 }
                 sum |= t;
             }
@@ -128,7 +128,7 @@ namespace NxtLib.Internal.LocalSign
         public static string Encode(ulong id)
         {
             var plainString10 = new int[Base10Length];
-            var stringId = (id).ToString(CultureInfo.InvariantCulture);
+            var stringId = id.ToString(CultureInfo.InvariantCulture);
             var length = stringId.Length;
             for (var i = 0; i < length; i++)
             {

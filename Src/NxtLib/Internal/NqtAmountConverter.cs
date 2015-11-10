@@ -12,7 +12,7 @@ namespace NxtLib.Internal
                 var nqtAmount = Convert.ToInt64(reader.Value.ToString());
                 return Amount.CreateAmountFromNqt(nqtAmount);
             }
-            throw new NotSupportedException(string.Format("objectType {0} and TokenType {1} is not supported", objectType, reader.TokenType));
+            throw new NotSupportedException($"objectType {objectType} and TokenType {reader.TokenType} is not supported");
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

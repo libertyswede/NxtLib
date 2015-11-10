@@ -73,7 +73,7 @@ namespace NxtLib
             }
             if (amountNxt % (1m / NqtMultiplier) > 0)
             {
-                throw new ArgumentException("Amount must not have larger precision than " + (1m / NqtMultiplier), nameof(amountNxt));
+                throw new ArgumentException("Amount must not have larger precision than " + 1m / NqtMultiplier, nameof(amountNxt));
             }
         }
         

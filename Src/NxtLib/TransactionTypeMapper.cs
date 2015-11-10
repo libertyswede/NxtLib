@@ -5,11 +5,11 @@ namespace NxtLib
 {
     public static class TransactionTypeMapper
     {
-        private readonly static Dictionary<byte, TransactionMainType> MainTypes;
-        private readonly static Dictionary<byte, Dictionary<byte, TransactionSubType>> SubTypes;
+        private static readonly Dictionary<byte, TransactionMainType> MainTypes;
+        private static readonly Dictionary<byte, Dictionary<byte, TransactionSubType>> SubTypes;
 
-        private readonly static Dictionary<TransactionMainType, byte> MainTypesToByte = new Dictionary<TransactionMainType, byte>();
-        private readonly static Dictionary<TransactionSubType, byte> SubTypesToByte = new Dictionary<TransactionSubType, byte>();
+        private static readonly Dictionary<TransactionMainType, byte> MainTypesToByte = new Dictionary<TransactionMainType, byte>();
+        private static readonly Dictionary<TransactionSubType, byte> SubTypesToByte = new Dictionary<TransactionSubType, byte>();
 
         static TransactionTypeMapper()
         {

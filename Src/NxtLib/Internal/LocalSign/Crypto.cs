@@ -115,8 +115,8 @@ namespace NxtLib.Internal.LocalSign
             var buf = new StringBuilder();
             for (var ptr = 0; ptr < 100; ptr += 5)
             {
-                var number = ((long)(token[ptr] & 0xFF)) | (((long)(token[ptr + 1] & 0xFF)) << 8) | (((long)(token[ptr + 2] & 0xFF)) << 16)
-                        | (((long)(token[ptr + 3] & 0xFF)) << 24) | (((long)(token[ptr + 4] & 0xFF)) << 32);
+                var number = (long)(token[ptr] & 0xFF) | ((long)(token[ptr + 1] & 0xFF) << 8) | ((long)(token[ptr + 2] & 0xFF) << 16)
+                        | ((long)(token[ptr + 3] & 0xFF) << 24) | ((long)(token[ptr + 4] & 0xFF) << 32);
                 
                 buf.Append(_stringConverter.ToBase32String(number).PadLeft(8, '0'));
             }
