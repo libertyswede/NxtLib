@@ -162,19 +162,6 @@ namespace NxtLib.Local
             "throne", "total", "unseen", "weapon", "weary"
         };
 
-        private static void GetRandomValues(IList<uint> randomNumbers)
-        {
-            var byteArray = new byte[randomNumbers.Count*4];
-
-            var random = RandomNumberGenerator.Create();
-            random.GetBytes(byteArray);
-
-            for (var i = 0; i < randomNumbers.Count; i++)
-            {
-                randomNumbers[i] = BitConverter.ToUInt32(byteArray, i * 4);
-            }
-        }
-
         public string GeneratePassword(int bits = 128)
         {
             if (bits%32 != 0)
@@ -203,29 +190,17 @@ namespace NxtLib.Local
             return builder.ToString().Trim();
         }
 
-        public string GeneratePasswordOld(int wordLength = 12)
+        private static void GetRandomValues(IList<uint> randomNumbers)
         {
-            var array = new byte[wordLength * 2];
-            var randomNumbers = new short[wordLength];
+            var byteArray = new byte[randomNumbers.Count * 4];
 
             var random = RandomNumberGenerator.Create();
-            random.GetBytes(array);
+            random.GetBytes(byteArray);
 
-            for (var i = 0; i < wordLength; i++)
+            for (var i = 0; i < randomNumbers.Count; i++)
             {
-                randomNumbers[i] = BitConverter.ToInt16(array, i * 2);
+                randomNumbers[i] = BitConverter.ToUInt32(byteArray, i * 4);
             }
-            
-            var builder = new StringBuilder();
-
-            for (var i = 0; i < wordLength; i++)
-            {
-                var index = randomNumbers[i] % _words.Length;
-                builder.Append(_words[index]);
-                builder.Append(" ");
-            }
-
-            return builder.ToString().Trim();
         }
     }
 }
