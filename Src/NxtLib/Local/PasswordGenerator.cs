@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,7 +7,7 @@ namespace NxtLib.Local
 {
     public interface IPasswordGenerator
     {
-        string GeneratePassword(int wordLength = 12);
+        string GeneratePassword(int bits = 128);
     }
 
     public class PasswordGenerator : IPasswordGenerator
@@ -161,7 +162,48 @@ namespace NxtLib.Local
             "throne", "total", "unseen", "weapon", "weary"
         };
 
-        public string GeneratePassword(int wordLength = 12)
+        private static void GetRandomValues(IList<uint> randomNumbers)
+        {
+            var byteArray = new byte[randomNumbers.Count*4];
+
+            var random = RandomNumberGenerator.Create();
+            random.GetBytes(byteArray);
+
+            for (var i = 0; i < randomNumbers.Count; i++)
+            {
+                randomNumbers[i] = BitConverter.ToUInt32(byteArray, i * 4);
+            }
+        }
+
+        public string GeneratePassword(int bits = 128)
+        {
+            if (bits%32 != 0)
+            {
+                throw new ArgumentException($"Unexpected value {bits} expected divisible by 32", nameof(bits));
+            }
+            var randomNumbers = new uint[bits/32];
+            GetRandomValues(randomNumbers);
+
+            var builder = new StringBuilder();
+            var n = _words.Length;
+            foreach (var x in randomNumbers)
+            {
+                var w1 = x%n;
+                var w2 = (x/n + w1)%n;
+                var w3 = (x/n/n + w2)%n;
+
+                builder.Append(_words[w1]);
+                builder.Append(" ");
+                builder.Append(_words[w2]);
+                builder.Append(" ");
+                builder.Append(_words[w3]);
+                builder.Append(" ");
+            }
+
+            return builder.ToString().Trim();
+        }
+
+        public string GeneratePasswordOld(int wordLength = 12)
         {
             var array = new byte[wordLength * 2];
             var randomNumbers = new short[wordLength];
