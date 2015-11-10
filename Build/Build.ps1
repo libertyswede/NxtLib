@@ -6,6 +6,10 @@ param(
 #Step 1, Update files with new versions
 $ProjectJson = "..\Src\NxtLib\project.json"
 $ReadMe = "..\README.md"
+$Constants = "..\Src\NxtLib\Local\Constants.cs"
+
+(Get-Content $Constants) -replace "NxtVersionSupport = "".*"";", "NxtVersionSupport = ""$NxtVersion"";" | `
+    Out-File $Constants -Encoding utf8
 
 (Get-Content $ProjectJson) -replace """version"": "".*""", """version"": ""$Version""" `
     -replace "It currently supports NXT version .*""", "It currently supports NXT version $NxtVersion""" | `
