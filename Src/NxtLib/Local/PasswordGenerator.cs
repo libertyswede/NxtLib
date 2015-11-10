@@ -168,22 +168,23 @@ namespace NxtLib.Local
             {
                 throw new ArgumentException($"Unexpected value {bits} expected it to be divisible by 32 and larger than 0", nameof(bits));
             }
+            var builder = new StringBuilder();
             var randomNumbers = new uint[bits/32];
+            var wordCount = _words.Length;
+
             GetRandomValues(randomNumbers);
 
-            var builder = new StringBuilder();
-            var n = _words.Length;
-            foreach (var x in randomNumbers)
+            foreach (var randomNumber in randomNumbers)
             {
-                var w1 = x%n;
-                var w2 = (x/n + w1)%n;
-                var w3 = (x/n/n + w2)%n;
+                var index0 = randomNumber%wordCount;
+                var index1 = (randomNumber/wordCount + index0)%wordCount;
+                var index2 = (randomNumber/wordCount/wordCount + index1)%wordCount;
 
-                builder.Append(_words[w1]);
+                builder.Append(_words[index0]);
                 builder.Append(" ");
-                builder.Append(_words[w2]);
+                builder.Append(_words[index1]);
                 builder.Append(" ");
-                builder.Append(_words[w3]);
+                builder.Append(_words[index2]);
                 builder.Append(" ");
             }
 
