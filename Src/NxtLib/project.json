@@ -32,6 +32,16 @@
         "System.Net.Http": "",
         "System.Numerics": ""
       }
+    },
+    "net40": {
+      "dependencies": {
+        "Microsoft.Bcl.Async": "1.0.168"
+      },
+      "frameworkAssemblies": {
+        "System.IO.Compression": "4.0.0.0",
+        "System.Net.Http": "",
+        "System.Numerics": ""
+      }
     }
   }
 }
