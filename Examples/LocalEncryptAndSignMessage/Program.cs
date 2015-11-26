@@ -15,20 +15,21 @@ namespace LocalEncryptAndSignMessage
 
         public static void Main()
         {
-            var localCrypto = new LocalCrypto();
+            var localMessageService = new LocalMessageService();
+            var localTransactionService = new LocalTransactionService();
             var messageService = new MessageService();
             var transactionService = new TransactionService();
             const bool useCompression = true;
 
             // Encrypt message to send locally
             const string message = "Sending a permanent message";
-            var nonce = localCrypto.CreateNonce();
-            var encrypted = localCrypto.EncryptTextTo(RecipientPublicKey, message, nonce, useCompression, SecretPhrase);
+            var nonce = localMessageService.CreateNonce();
+            var encrypted = localMessageService.EncryptTextTo(RecipientPublicKey, message, nonce, useCompression, SecretPhrase);
 
             // Encrypt message to self locally
             const string messageToSelf = "Note to self: sending a permanent message";
-            var nonceToSelf = localCrypto.CreateNonce();
-            var encryptedToSelf = localCrypto.EncryptTextTo(SenderPublicKey, messageToSelf, nonceToSelf, useCompression, SecretPhrase);
+            var nonceToSelf = localMessageService.CreateNonce();
+            var encryptedToSelf = localMessageService.EncryptTextTo(SenderPublicKey, messageToSelf, nonceToSelf, useCompression, SecretPhrase);
 
             // Prepare the transaction with your public key
             var parameters = new CreateTransactionByPublicKey(1440, Amount.OneNxt, SenderPublicKey)
@@ -39,7 +40,7 @@ namespace LocalEncryptAndSignMessage
             var unsigned = messageService.SendMessage(parameters, Recipient).Result;
 
             // Sign and broadcast
-            var signed = localCrypto.SignTransaction(unsigned, SecretPhrase);
+            var signed = localTransactionService.SignTransaction(unsigned, SecretPhrase);
             var result = transactionService.BroadcastTransaction(new TransactionParameter(signed.ToString())).Result;
             var transactionId = result.TransactionId;
             Console.WriteLine($"Sent transaction: {transactionId}");

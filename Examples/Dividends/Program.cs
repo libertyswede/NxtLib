@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NxtLib.Local;
+using NxtLib;
 
 namespace Dividends
 {
@@ -41,10 +42,9 @@ namespace Dividends
                     }
                     if (args[1].StartsWith("NXT-"))
                     {
-                        var localCrypto = new LocalCrypto();
                         return new ProgramOptions
                         {
-                            Id = localCrypto.GetAccountIdFromReedSolomon(args[1]),
+                            Id = new Account(args[1]).AccountId,
                             Mode = Mode.Account
                         };
                     }

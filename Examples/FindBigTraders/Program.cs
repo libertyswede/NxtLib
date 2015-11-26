@@ -32,17 +32,16 @@ namespace FindBigTraders
             GetAllTransfers();
             GetDividendPayments();
 
-            var localCrypto = new LocalCrypto();
 
             foreach (var topTraders in AssetTradeCount.OrderByDescending(t => t.Value).Take(5))
             {
-                var accountRs = localCrypto.GetReedSolomonFromAccountId(topTraders.Key);
-                Console.WriteLine("Account: {0}, Trades: {1}", accountRs, topTraders.Value);
+                var account = new Account(topTraders.Key);
+                Console.WriteLine("Account: {0}, Trades: {1}", account.AccountRs, topTraders.Value);
             }
             foreach (var topTransferers in AssetTransferCount.OrderByDescending(t => t.Value).Take(5))
             {
-                var accountRs = localCrypto.GetReedSolomonFromAccountId(topTransferers.Key);
-                Console.WriteLine("Account: {0}, Transfers: {1}", accountRs, topTransferers.Value);
+                var account = new Account(topTransferers.Key);
+                Console.WriteLine("Account: {0}, Transfers: {1}", account.AccountRs, topTransferers.Value);
             }
             var tradesAndTransfers = new Dictionary<ulong, int>();
             AssetTradeCount.ToList().ForEach(t => tradesAndTransfers[t.Key] = t.Value);
@@ -50,14 +49,14 @@ namespace FindBigTraders
 
             foreach (var combined in tradesAndTransfers.OrderByDescending(t => t.Value).Take(5))
             {
-                var accountRs = localCrypto.GetReedSolomonFromAccountId(combined.Key);
-                Console.WriteLine("Account: {0}, Trades & transfers: {1}", accountRs, combined.Value);
+                var account = new Account(combined.Key);
+                Console.WriteLine("Account: {0}, Trades & transfers: {1}", account.AccountRs, combined.Value);
             }
 
             foreach (var topDividendRecipients in DividendCount.OrderByDescending(t => t.Value).Take(5))
             {
-                var accountRs = localCrypto.GetReedSolomonFromAccountId(topDividendRecipients.Key);
-                Console.WriteLine("Account: {0}, Dividend count: {1}", accountRs, topDividendRecipients.Value);
+                var account = new Account(topDividendRecipients.Key);
+                Console.WriteLine("Account: {0}, Dividend count: {1}", account.AccountRs, topDividendRecipients.Value);
             }
 
             Console.WriteLine("Done and done!");

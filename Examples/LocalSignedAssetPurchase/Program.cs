@@ -1,5 +1,6 @@
 ﻿using System;
 using NxtLib;
+using NxtLib.Accounts;
 using NxtLib.AssetExchange;
 using NxtLib.Local;
 using NxtLib.Transactions;
@@ -16,9 +17,12 @@ namespace LocalSignedAssetPurchase
 
         public static void Main(string[] args)
         {
+            var localAccountService = new LocalAccountService();
+            var localTransactionService = new LocalTransactionService();
+
             // Step 1, Locally generate a public key from the secret phrase
-            var localCrypto = new LocalCrypto();
-            var publicKey = localCrypto.GetPublicKey(SecretPhrase);
+            var account = localAccountService.GetAccount(AccountIdLocator.BySecretPhrase(SecretPhrase));
+            var publicKey = account.PublicKey;
 
             // Step 2, Place unsigned bid order
             var assetService = new AssetExchangeService(NxtUri);
@@ -27,7 +31,7 @@ namespace LocalSignedAssetPurchase
             var unsignedBidOrder = assetService.PlaceBidOrder(DeBuNeAssetId, 1 * qntFactor, Amount.CreateAmountFromNxt(26.9M / qntFactor), createTransaction).Result;
 
             // Step 3, Sign the bid order locally
-            var signedBidOrder = localCrypto.SignTransaction(unsignedBidOrder, SecretPhrase);
+            var signedBidOrder = localTransactionService.SignTransaction(unsignedBidOrder, SecretPhrase);
 
             // Step 4, Broadcast the signed bid order
             var transactionService = new TransactionService(NxtUri);
