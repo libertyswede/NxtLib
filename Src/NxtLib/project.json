@@ -28,7 +28,6 @@
     },
     "net45": {
       "frameworkAssemblies": {
-        "System.IO.Compression": "4.0.0.0",
         "System.Net.Http": "",
         "System.Numerics": ""
       }
@@ -38,7 +37,6 @@
         "Microsoft.Bcl.Async": "1.0.168"
       },
       "frameworkAssemblies": {
-        "System.IO.Compression": "4.0.0.0",
         "System.Net.Http": "",
         "System.Numerics": ""
       }
