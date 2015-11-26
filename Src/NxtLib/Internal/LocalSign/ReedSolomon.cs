@@ -101,7 +101,7 @@ namespace NxtLib.Internal.LocalSign
             return new string(chars);
         }
 
-        private static bool IsCodewordValid(IReadOnlyList<int> codeword)
+        private static bool IsCodewordValid(int[] codeword)
         {
             var sum = 0;
 

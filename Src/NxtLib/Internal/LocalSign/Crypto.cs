@@ -217,7 +217,7 @@ namespace NxtLib.Internal.LocalSign
             }
         }
 
-#if NET45
+#if (NET40 || NET45)
 
         public byte[] Sign(byte[] message, string secretPhrase)
         {

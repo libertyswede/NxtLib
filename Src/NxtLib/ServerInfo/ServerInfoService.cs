@@ -33,12 +33,12 @@ namespace NxtLib.ServerInfo
                 where nxtEvent.HasFlag(flag)
                 select
                     flag.GetType()
-                        .GetTypeInfo()
-                        .GetDeclaredField(flag.ToString())
-                        .GetCustomAttribute<NxtApiAttribute>()
+                    .GetField(Enum.GetName(typeof(NxtEvent), flag))
+                    .GetCustomAttributes(false)
+                    .OfType<NxtApiAttribute>().SingleOrDefault()
                 into apiAttribute
                 select apiAttribute.Name;
-            
+
             return events.ToList();
         }
         

@@ -58,11 +58,12 @@ namespace NxtLib.Internal
         {
             foreach (CurrencyType currencyType in Enum.GetValues(typeof(CurrencyType)))
             {
-                var displayAttribute = currencyType
-                    .GetType()
-                    .GetTypeInfo()
-                    .GetDeclaredField(currencyType.ToString())
-                    .GetCustomAttribute<NxtApiAttribute>();
+                var type = currencyType.GetType();
+                var name = Enum.GetName(type, currencyType);
+                var displayAttribute = type.GetField(name)
+                    .GetCustomAttributes(false)
+                    .OfType<NxtApiAttribute>()
+                    .SingleOrDefault();
 
                 if (displayAttribute != null && string.Equals(displayAttribute.Name, description))
                 {

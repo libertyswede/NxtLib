@@ -6,7 +6,7 @@ using System.Diagnostics;
 #if NET40
 namespace NxtLib.Internal
 {
-    public interface IReadOnlyCollection<out T> : IEnumerable<T>
+    public interface IReadOnlyCollection<out T> : IEnumerable<T>, IEnumerable
     {
         int Count { get; }
     }

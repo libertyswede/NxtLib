@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Linq;
+using System.Reflection;
 using NxtLib.Internal;
 
 namespace NxtLib.Networking
@@ -27,11 +29,12 @@ namespace NxtLib.Networking
 
         public static PeersLocator ByState(PeerInfo.PeerState state)
         {
-            var value = state
-                .GetType()
-                .GetTypeInfo()
-                .GetDeclaredField(state.ToString())
-                .GetCustomAttribute<NxtApiAttribute>().Name;
+            var type = typeof(PeerInfo.PeerState);
+            var name = Enum.GetName(type, state);
+            var value = type.GetField(name)
+                .GetCustomAttributes(false)
+                .OfType<NxtApiAttribute>()
+                .SingleOrDefault().Name;
 
             return new PeersLocator(state, value);
         }
