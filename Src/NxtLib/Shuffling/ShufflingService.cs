@@ -41,16 +41,32 @@ namespace NxtLib.Shuffling
             return await Get<GetShufflingsReply>("getAllShufflings", queryParameters);
         }
 
-        public Task<object> GetAssignedShufflings(Account account, bool includeHoldingInfo, int? firstIndex = null,
-            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<GetShufflingsReply> GetAssignedShufflings(Account account, bool? includeHoldingInfo = null,
+            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountRs}};
+            queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<GetShufflingsReply>("getAssignedShufflings", queryParameters);
         }
 
-        public Task<object> GetHoldingShufflings(long holding, int stage, bool includeFinished, int? firstIndex = null,
-            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<GetShufflingsReply> GetHoldingShufflings(long? holding = null, ShufflingStage? stage = null,
+            bool? includeFinished = null, bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string>();
+            queryParameters.AddIfHasValue(Parameters.Holding, holding);
+            queryParameters.AddIfHasValue(Parameters.Stage, stage.HasValue ? (int?) stage : null);
+            queryParameters.AddIfHasValue(Parameters.IncludeFinished, includeFinished);
+            queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<GetShufflingsReply>("getHoldingShufflings", queryParameters);
         }
 
         public Task<object> GetShufflers(Account account, BinaryHexString shufflingFullHash,

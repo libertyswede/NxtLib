@@ -221,6 +221,7 @@ namespace NxtLib.Internal
         internal const string SignatureHash = "signatureHash";
         internal const string SortByPrice = "sortByPrice";
         internal const string SortByRate = "sortByRate";
+        internal const string Stage = "stage";
         internal const string State = "state";
         internal const string String = "string";
         internal const string StringId = "stringId";
