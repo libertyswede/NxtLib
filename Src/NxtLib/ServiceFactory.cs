@@ -12,6 +12,7 @@ using NxtLib.MonetarySystem;
 using NxtLib.Networking;
 using NxtLib.Phasing;
 using NxtLib.ServerInfo;
+using NxtLib.Shuffling;
 using NxtLib.TaggedData;
 using NxtLib.Tokens;
 using NxtLib.Transactions;
@@ -35,6 +36,7 @@ namespace NxtLib
         INetworkingService CreateNetworkingService();
         IPhasingService CreatePhasingService();
         IServerInfoService CreateServerInfoService();
+        IShufflingService CreateShufflingService();
         ITaggedDataService CreateTaggedDataService();
         ITokenService CreateTokenService();
         ITransactionService CreateTransactionService();
@@ -114,6 +116,11 @@ namespace NxtLib
         public IServerInfoService CreateServerInfoService()
         {
             return new ServerInfoService(_baseAddress);
+        }
+
+        public IShufflingService CreateShufflingService()
+        {
+            return new ShufflingService(_baseAddress);
         }
 
         public ITaggedDataService CreateTaggedDataService()
