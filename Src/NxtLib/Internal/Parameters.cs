@@ -22,6 +22,7 @@ namespace NxtLib.Internal
         internal const string AssetIds = "assetIds";
         internal const string Assets = "assets";
         internal const string AssetTransfer = "assetTransfer";
+        internal const string Assignee = "assignee";
         internal const string Attachment = "attachment";
         internal const string AvailableOnly = "availableOnly";
         internal const string BalanceNqt = "balanceNQT";
@@ -108,6 +109,7 @@ namespace NxtLib.Internal
         internal const string IncludeExecutedPhased = "includeExecutedPhased";
         internal const string IncludeExpiredPrunable = "includeExpiredPrunable";
         internal const string IncludeFinished = "includeFinished";
+        internal const string IncludeHoldingInfo = "includeHoldingInfo";
         internal const string IncludeLessors = "includeLessors";
         internal const string IncludePeerInfo = "includePeerInfo";
         internal const string IncludePhasingResult = "includePhasingResult";
@@ -121,6 +123,7 @@ namespace NxtLib.Internal
         internal const string IsCompressed = "isCompressed";
         internal const string IsPhasingSafe = "isPhasingSafe";
         internal const string IssuanceHeight = "issuanceHeight";
+        internal const string Issuer = "issuer";
         internal const string IssuerAccount = "issuerAccount";
         internal const string IsText = "isText";
         internal const string LastBlock = "lastBlock";

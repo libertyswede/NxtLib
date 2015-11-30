@@ -1,6 +1,6 @@
 ﻿using NxtLib.Internal;
 
-namespace NxtLib.Forging
+namespace NxtLib
 {
     public class SecretPhraseOrAdminPassword : LocatorBase
     {

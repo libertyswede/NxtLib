@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using NxtLib.Forging;
+using NxtLib.Internal;
 using NxtLib.Local;
 
 namespace NxtLib.Shuffling
@@ -18,10 +19,17 @@ namespace NxtLib.Shuffling
             throw new NotImplementedException();
         }
 
-        public Task<object> GetAllShufflings(bool includeFinished, bool includeHoldingInfo, int? firstIndex = null,
+        public async Task<GetShufflingsReply> GetAllShufflings(bool? includeFinished = null, bool? includeHoldingInfo = null, int? firstIndex = null,
             int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string>();
+            queryParameters.AddIfHasValue(Parameters.IncludeFinished, includeFinished);
+            queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<GetShufflingsReply>("getAllShufflings", queryParameters);
         }
 
         public Task<object> GetAssignedShufflings(Account account, bool includeHoldingInfo, int? firstIndex = null,
