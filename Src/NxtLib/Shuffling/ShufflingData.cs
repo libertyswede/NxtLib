@@ -10,18 +10,18 @@ namespace NxtLib.Shuffling
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = Parameters.Assignee)]
-        public long AssigneeId { get; set; }
+        public ulong AssigneeId { get; set; }
         public string AssigneeRs { get; set; }
         public int BlocksRemaining { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = Parameters.Holding)]
-        public long HoldingId { get; set; }
+        public ulong HoldingId { get; set; }
         public HoldingType HoldingType { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = Parameters.Issuer)]
-        public long IssuerId { get; set; }
+        public ulong IssuerId { get; set; }
         public string IssuerRs { get; set; }
         public int ParticipantCount { get; set; }
 
