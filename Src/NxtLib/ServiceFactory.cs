@@ -1,4 +1,5 @@
-﻿using NxtLib.Accounts;
+﻿using NxtLib.AccountControl;
+using NxtLib.Accounts;
 using NxtLib.Aliases;
 using NxtLib.AssetExchange;
 using NxtLib.Blocks;
@@ -21,6 +22,7 @@ namespace NxtLib
 {
     public interface IServiceFactory
     {
+        IAccountControlService CreateAccountControlService();
         IAccountService CreateAccountService();
         IAliasService CreateAliasService();
         IAssetExchangeService CreateAssetExchangeService();
@@ -47,6 +49,11 @@ namespace NxtLib
         public ServiceFactory(string baseAddress = Constants.DefaultNxtUrl)
         {
             _baseAddress = baseAddress;
+        }
+
+        public IAccountControlService CreateAccountControlService()
+        {
+            return new AccountControlService(_baseAddress);
         }
 
         public IAccountService CreateAccountService()
