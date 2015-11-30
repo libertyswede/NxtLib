@@ -8,6 +8,7 @@ namespace NxtLib.ServerInfo
     public class BlockchainStatus
     {
         public string Application { get; set; }
+        public bool CorrectInvalidFees { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong CumulativeDifficulty { get; set; }
