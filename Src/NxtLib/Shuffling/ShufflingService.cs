@@ -13,14 +13,23 @@ namespace NxtLib.Shuffling
         {
         }
 
-        public Task<object> GetAccountShufflings(Account account, bool includeFinished, bool includeHoldingInfo,
-            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<GetShufflingsReply> GetAccountShufflings(Account account, bool? includeFinished = null,
+            bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountRs}};
+            queryParameters.AddIfHasValue(Parameters.IncludeFinished, includeFinished);
+            queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<GetShufflingsReply>("getAccountShufflings", queryParameters);
         }
 
-        public async Task<GetShufflingsReply> GetAllShufflings(bool? includeFinished = null, bool? includeHoldingInfo = null, int? firstIndex = null,
-            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<GetShufflingsReply> GetAllShufflings(bool? includeFinished = null,
+            bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             queryParameters.AddIfHasValue(Parameters.IncludeFinished, includeFinished);
