@@ -53,7 +53,7 @@ namespace NxtLib.Shuffling
             return await Get<GetShufflingsReply>("getAssignedShufflings", queryParameters);
         }
 
-        public async Task<GetShufflingsReply> GetHoldingShufflings(long? holding = null, ShufflingStage? stage = null,
+        public async Task<GetShufflingsReply> GetHoldingShufflings(ulong? holding = null, ShufflingStage? stage = null,
             bool? includeFinished = null, bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
