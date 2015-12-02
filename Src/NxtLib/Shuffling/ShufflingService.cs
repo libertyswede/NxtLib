@@ -13,7 +13,7 @@ namespace NxtLib.Shuffling
         {
         }
 
-        public async Task<GetShufflingsReply> GetAccountShufflings(Account account, bool? includeFinished = null,
+        public async Task<ShufflingsReply> GetAccountShufflings(Account account, bool? includeFinished = null,
             bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
@@ -24,10 +24,10 @@ namespace NxtLib.Shuffling
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
-            return await Get<GetShufflingsReply>("getAccountShufflings", queryParameters);
+            return await Get<ShufflingsReply>("getAccountShufflings", queryParameters);
         }
 
-        public async Task<GetShufflingsReply> GetAllShufflings(bool? includeFinished = null,
+        public async Task<ShufflingsReply> GetAllShufflings(bool? includeFinished = null,
             bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
@@ -38,10 +38,10 @@ namespace NxtLib.Shuffling
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
-            return await Get<GetShufflingsReply>("getAllShufflings", queryParameters);
+            return await Get<ShufflingsReply>("getAllShufflings", queryParameters);
         }
 
-        public async Task<GetShufflingsReply> GetAssignedShufflings(Account account, bool? includeHoldingInfo = null,
+        public async Task<ShufflingsReply> GetAssignedShufflings(Account account, bool? includeHoldingInfo = null,
             int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountRs}};
@@ -50,23 +50,22 @@ namespace NxtLib.Shuffling
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
-            return await Get<GetShufflingsReply>("getAssignedShufflings", queryParameters);
+            return await Get<ShufflingsReply>("getAssignedShufflings", queryParameters);
         }
 
-        public async Task<GetShufflingsReply> GetHoldingShufflings(ulong? holding = null, ShufflingStage? stage = null,
-            bool? includeFinished = null, bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null,
+        public async Task<ShufflingsReply> GetHoldingShufflings(ulong? holding = null, ShufflingStage? stage = null,
+            bool? includeFinished = null, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             queryParameters.AddIfHasValue(Parameters.Holding, holding);
             queryParameters.AddIfHasValue(Parameters.Stage, stage.HasValue ? (int?) stage : null);
             queryParameters.AddIfHasValue(Parameters.IncludeFinished, includeFinished);
-            queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
             queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
-            return await Get<GetShufflingsReply>("getHoldingShufflings", queryParameters);
+            return await Get<ShufflingsReply>("getHoldingShufflings", queryParameters);
         }
 
         public Task<object> GetShufflers(Account account, BinaryHexString shufflingFullHash,
@@ -75,36 +74,34 @@ namespace NxtLib.Shuffling
             throw new NotImplementedException();
         }
 
-        public async Task<GetShufflingReply> GetShuffling(long shuffling, bool? includeHoldingInfo = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null)
+        public async Task<ShufflingReply> GetShuffling(ulong shuffling, bool? includeHoldingInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Shuffling, shuffling.ToString()}};
             queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
-            return await Get<GetShufflingReply>("getShuffling", queryParameters);
+            return await Get<ShufflingReply>("getShuffling", queryParameters);
         }
 
-        public Task<object> GetShufflingParticipants(long shuffling, ulong? requireBlock = null,
-            ulong? requireLastBlock = null)
+        public async Task<ShufflingParticipantsReply> GetShufflingParticipants(ulong shuffling, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Shuffling, shuffling.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<ShufflingParticipantsReply>("getShufflingParticipants", queryParameters);
+        }
+
+        public Task<object> ShufflingCancel(ulong shuffling, Account cancellingAccount, BinaryHexString shufflingStateHash, CreateTransactionParameters parameters)
         {
             throw new NotImplementedException();
         }
 
-        public Task<object> ShufflingCancel(long shuffling, Account cancellingAccount,
-            BinaryHexString shufflingStateHash, CreateTransactionParameters parameters)
+        public Task<object> ShufflingCreate(ulong holding, object holdingType, long amount, int participantCount, int registrationPeriod, CreateTransactionParameters parameters)
         {
             throw new NotImplementedException();
         }
 
-        public Task<object> ShufflingCreate(long holding, object holdingType, long amount, int participantCount,
-            int registrationPeriod, CreateTransactionParameters parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> ShufflingProcess(long shuffling, string recipientSecretPhrase,
-            BinaryHexString recipientPublicKey, CreateTransactionParameters parameters)
+        public Task<object> ShufflingProcess(ulong shuffling, string recipientSecretPhrase, BinaryHexString recipientPublicKey, CreateTransactionParameters parameters)
         {
             throw new NotImplementedException();
         }
@@ -114,8 +111,7 @@ namespace NxtLib.Shuffling
             throw new NotImplementedException();
         }
 
-        public Task<object> ShufflingVerify(long shuffling, BinaryHexString shufflingStateHash,
-            CreateTransactionParameters parameters)
+        public Task<object> ShufflingVerify(ulong shuffling, BinaryHexString shufflingStateHash, CreateTransactionParameters parameters)
         {
             throw new NotImplementedException();
         }

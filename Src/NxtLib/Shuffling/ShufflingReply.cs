@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace NxtLib.Shuffling
 {
-    public class GetShufflingReply : ShufflingData, IBaseReply
+    public class ShufflingReply : ShufflingData, IBaseReply
     {
         public IEnumerable<KeyValuePair<string, string>> PostData { get; set; }
         public string RawJsonReply { get; set; }
