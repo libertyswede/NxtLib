@@ -75,10 +75,14 @@ namespace NxtLib.Shuffling
             throw new NotImplementedException();
         }
 
-        public Task<object> GetShuffling(long shuffling, bool includeHoldingInfo, ulong? requireBlock = null,
+        public async Task<GetShufflingReply> GetShuffling(long shuffling, bool? includeHoldingInfo = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string> {{Parameters.Shuffling, shuffling.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<GetShufflingReply>("getShuffling", queryParameters);
         }
 
         public Task<object> GetShufflingParticipants(long shuffling, ulong? requireBlock = null,
