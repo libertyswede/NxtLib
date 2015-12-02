@@ -150,6 +150,7 @@ namespace NxtLib.Internal
         internal const string MinReservePerUnitNqt = "minReservePerUnitNQT";
         internal const string MustHaveRecipient = "mustHaveRecipient";
         internal const string Name = "name";
+        internal const string NextAccount = "nextAccount";
         internal const string NextLessee = "nextLessee";
         internal const string Nonce = "nonce";
         internal const string NonPhasedOnly = "nonPhasedOnly";
