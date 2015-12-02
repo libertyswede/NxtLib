@@ -19,6 +19,7 @@ namespace NxtLib.Shuffling
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = Parameters.Holding)]
         public ulong HoldingId { get; set; }
+        public HoldingInfo HoldingInfo { get; set; }
         public HoldingType HoldingType { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
