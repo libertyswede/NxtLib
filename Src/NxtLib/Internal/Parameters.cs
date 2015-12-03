@@ -219,6 +219,7 @@ namespace NxtLib.Internal
         internal const string Service = "service";
         internal const string ShowExpectedCancellations = "showExpectedCancellations";
         internal const string Shuffling = "shuffling";
+        internal const string ShufflingFullHash = "shufflingFullHash";
         internal const string Signature = "signature";
         internal const string SignatureHash = "signatureHash";
         internal const string SortByPrice = "sortByPrice";

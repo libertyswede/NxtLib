@@ -19,8 +19,8 @@ namespace NxtLib.Shuffling
             bool? includeFinished = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, 
             ulong? requireLastBlock = null);
 
-        Task<object> GetShufflers(Account account, BinaryHexString shufflingFullHash,
-            SecretPhraseOrAdminPassword sercretPhraseOrAdminPassword);
+        Task<ShufflersReply> GetShufflers(Account account = null, BinaryHexString shufflingFullHash = null,
+            SecretPhraseOrAdminPassword sercretPhraseOrAdminPassword = null);
 
         Task<ShufflingReply> GetShuffling(ulong shuffling, bool? includeHoldingInfo = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);

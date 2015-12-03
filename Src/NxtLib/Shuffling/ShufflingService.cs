@@ -68,10 +68,13 @@ namespace NxtLib.Shuffling
             return await Get<ShufflingsReply>("getHoldingShufflings", queryParameters);
         }
 
-        public Task<object> GetShufflers(Account account, BinaryHexString shufflingFullHash,
-            SecretPhraseOrAdminPassword sercretPhraseOrAdminPassword)
+        public async Task<ShufflersReply> GetShufflers(Account account = null, BinaryHexString shufflingFullHash = null,
+            SecretPhraseOrAdminPassword sercretPhraseOrAdminPassword = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = sercretPhraseOrAdminPassword != null ? sercretPhraseOrAdminPassword.QueryParameters : new Dictionary<string, string>();
+            queryParameters.AddIfHasValue(Parameters.Account, account);
+            queryParameters.AddIfHasValue(Parameters.ShufflingFullHash, shufflingFullHash);
+            return await Get<ShufflersReply>("getShufflers", queryParameters);
         }
 
         public async Task<ShufflingReply> GetShuffling(ulong shuffling, bool? includeHoldingInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
