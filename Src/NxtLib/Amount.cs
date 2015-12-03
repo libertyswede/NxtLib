@@ -15,6 +15,7 @@ namespace NxtLib
 
         public static readonly Amount OneNxt = CreateAmountFromNxt(1);
         public static readonly Amount OneNqt = CreateAmountFromNqt(1);
+        public static readonly Amount Zero = CreateAmountFromNqt(0);
 
         private Amount()
         {
