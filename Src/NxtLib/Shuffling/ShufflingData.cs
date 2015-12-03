@@ -28,6 +28,7 @@ namespace NxtLib.Shuffling
         public string IssuerRs { get; set; }
         public int ParticipantCount { get; set; }
         public IList<BinaryHexString> RecipientPublicKeys { get; set; }
+        public int RegistrantCount { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         [JsonProperty(PropertyName = Parameters.Shuffling)]
