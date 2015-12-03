@@ -31,8 +31,8 @@ namespace NxtLib.Shuffling
         Task<object> ShufflingCancel(ulong shuffling, Account cancellingAccount,
             BinaryHexString shufflingStateHash, CreateTransactionParameters parameters);
 
-        Task<object> ShufflingCreate(ulong holding, object holdingType, long amount, int participantCount,
-            int registrationPeriod, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> ShufflingCreate(Amount amount, int participantCount, int registrationPeriod,
+            CreateTransactionParameters parameters, ulong? holding = null, HoldingType? holdingType = null);
 
         Task<object> ShufflingProcess(ulong shuffling, string recipientSecretPhrase,
             BinaryHexString recipientPublicKey, CreateTransactionParameters parameters);

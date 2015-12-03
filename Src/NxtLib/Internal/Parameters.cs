@@ -14,6 +14,7 @@ namespace NxtLib.Internal
         internal const string AliasName = "aliasName";
         internal const string AliasUri = "aliasURI";
         internal const string AllowRequiredBlockParameters = "allowRequiredBlockParameters";
+        internal const string Amount = "amount";
         internal const string AmountNqt = "amountNQT";
         internal const string AmountNqtPerQnt = "amountNQTPerQNT";
         internal const string AmountPerUnitNqt = "amountPerUnitNQT";
@@ -161,6 +162,7 @@ namespace NxtLib.Internal
         internal const string Options = "options";
         internal const string Order = "order";
         internal const string OtherAccount = "otherAccount";
+        internal const string ParticipantCount = "participantCount";
         internal const string Peer = "peer";
         internal const string Peers = "peers";
         internal const string Period = "period";
@@ -197,6 +199,7 @@ namespace NxtLib.Internal
         internal const string RecipientRs = "recipientRS";
         internal const string ReferencedTransactionFullHash = "referencedTransactionFullHash";
         internal const string RefundNqt = "refundNQT";
+        internal const string RegistrationPeriod = "registrationPeriod";
         internal const string Remove = "remove";
         internal const string RequireBlock = "requireBlock";
         internal const string RequireBlockchain = "requireBlockchain";

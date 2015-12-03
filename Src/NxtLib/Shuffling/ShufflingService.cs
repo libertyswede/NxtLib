@@ -99,9 +99,19 @@ namespace NxtLib.Shuffling
             throw new NotImplementedException();
         }
 
-        public Task<object> ShufflingCreate(ulong holding, object holdingType, long amount, int participantCount, int registrationPeriod, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> ShufflingCreate(Amount amount, int participantCount, int registrationPeriod,
+            CreateTransactionParameters parameters, ulong? holding = null, HoldingType? holdingType = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.Amount, amount.Nqt.ToString()},
+                {Parameters.ParticipantCount, participantCount.ToString()},
+                {Parameters.RegistrationPeriod, registrationPeriod.ToString()}
+            };
+            parameters.AppendToQueryParameters(queryParameters);
+            queryParameters.AddIfHasValue(Parameters.Holding, holding);
+            queryParameters.AddIfHasValue(Parameters.HoldingType, holdingType != null ? (int?) holdingType : null);
+            return await Post<TransactionCreatedReply>("shufflingCreate", queryParameters);
         }
 
         public Task<object> ShufflingProcess(ulong shuffling, string recipientSecretPhrase, BinaryHexString recipientPublicKey, CreateTransactionParameters parameters)
