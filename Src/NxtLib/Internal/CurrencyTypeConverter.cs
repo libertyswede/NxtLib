@@ -35,6 +35,10 @@ namespace NxtLib.Internal
                 {
                     return GetTypesBasedOnValue(Convert.ToInt32(reader.Value));
                 }
+                if (objectType == typeof(CurrencyType) || objectType == typeof (CurrencyType?))
+                {
+                    return (CurrencyType) (long) reader.Value;
+                }
             }
             return reader.Value;
         }
