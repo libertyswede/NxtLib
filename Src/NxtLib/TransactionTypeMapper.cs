@@ -21,7 +21,8 @@ namespace NxtLib
                 {3, TransactionMainType.DigitalGoods},
                 {4, TransactionMainType.AccountControl},
                 {5, TransactionMainType.MonetarySystem},
-                {6, TransactionMainType.TaggedData}
+                {6, TransactionMainType.TaggedData},
+                {7, TransactionMainType.Shuffling}
             };
 
             SubTypes = new Dictionary<byte, Dictionary<byte, TransactionSubType>>
@@ -98,6 +99,12 @@ namespace NxtLib
                     {
                         {0, TransactionSubType.TaggedDataUpload},
                         {1, TransactionSubType.TaggedDataExtend}
+                    }
+                },
+                {
+                    7, new Dictionary<byte, TransactionSubType>
+                    {
+                        {0, TransactionSubType.ShufflingCreation}
                     }
                 }
 

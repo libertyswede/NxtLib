@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
+using NxtLib.Shuffling;
 using NxtLib.VotingSystem;
 
 namespace NxtLib
@@ -594,5 +595,24 @@ namespace NxtLib
             Hash = new BinaryHexString(GetAttachmentValue<string>(jToken, Parameters.Hash));
             ParseTaggedData(jToken);
         }
+    }
+
+    public class ShufflingCreationAttachment : Attachment
+    {
+        public Amount Amount { get; }
+        public ulong HoldingId { get; }
+        public HoldingType HoldingType { get; }
+        public int ParticipantCount { get; }
+        public int RegistrationPeriod { get; }
+        
+        internal ShufflingCreationAttachment(JToken jToken)
+        {
+            Amount = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(jToken, Parameters.Amount));
+            HoldingId = GetAttachmentValue<ulong>(jToken, Parameters.Holding);
+            HoldingType = (HoldingType) GetAttachmentValue<int>(jToken, Parameters.HoldingType);
+            ParticipantCount = GetAttachmentValue<int>(jToken, Parameters.ParticipantCount);
+            RegistrationPeriod = GetAttachmentValue<int>(jToken, Parameters.RegistrationPeriod);
+        }
+
     }
 }

@@ -47,7 +47,8 @@ namespace NxtLib
         DigitalGoods,
         AccountControl,
         MonetarySystem,
-        TaggedData
+        TaggedData,
+        Shuffling
     }
 
     public enum TransactionSubType
@@ -142,6 +143,10 @@ namespace NxtLib
         [NxtApi("TaggedDataUpload")]
         TaggedDataUpload,
         [NxtApi("TaggedDataExtend")]
-        TaggedDataExtend
+        TaggedDataExtend,
+
+        // Shuffling
+        [NxtApi("ShufflingCreation")]
+        ShufflingCreation
     }
 }
