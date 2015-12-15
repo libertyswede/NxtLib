@@ -27,7 +27,7 @@ namespace NxtLib.AccountControl
         }
 
         // TODO: Check that parameters are of correct type and what is required and what is optional
-        public Task<object> SetPhasingOnlyControl(VotingModel controlVotingModel, long controlQuorum,
+        public Task<TransactionCreatedReply> SetPhasingOnlyControl(VotingModel controlVotingModel, long controlQuorum,
             long controlMinBalance, VotingModel controlMinBalanceModel, IEnumerable<string> controlWhitelisted,
             Amount controlMaxFees, int controlMinDuration, int controlMaxDuration,
             CreateTransactionParameters parameters)

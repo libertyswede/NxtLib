@@ -118,6 +118,8 @@ namespace NxtLib
         // AccountControl
         [NxtApi("EffectiveBalanceLeasing")]
         AccountControlEffectiveBalanceLeasing,
+        [NxtApi("SetPhasingOnly")]
+        AccountControlSetPhasingOnly,
 
         // MonetarySystem
         [NxtApi("CurrencyIssuance")]

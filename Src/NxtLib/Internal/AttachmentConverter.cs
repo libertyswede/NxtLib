@@ -15,6 +15,7 @@ namespace NxtLib.Internal
             var attachmentFuncs = new Dictionary<TransactionSubType, Func<JObject, Attachment>>();
 
             attachmentFuncs.Add(TransactionSubType.AccountControlEffectiveBalanceLeasing, value => new AccountControlEffectiveBalanceLeasingAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.AccountControlSetPhasingOnly, value => new AccountControlSetPhasingOnlyAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsAskOrderCancellation, value => new ColoredCoinsAskOrderCancellationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsAskOrderPlacement, value => new ColoredCoinsAskOrderPlacementAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsAssetIssuance, value => new ColoredCoinsAssetIssuanceAttachment(value));

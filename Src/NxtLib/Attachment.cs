@@ -23,6 +23,14 @@ namespace NxtLib
         }
     }
 
+    public class AccountControlSetPhasingOnlyAttachment : Attachment
+    {
+        internal AccountControlSetPhasingOnlyAttachment(JToken attachments)
+        {
+            
+        }
+    }
+
     public abstract class ColoredCoinsOrderCancellationAttachment : Attachment
     {
         public ulong OrderId { get; private set; }

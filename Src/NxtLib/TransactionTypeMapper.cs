@@ -77,7 +77,8 @@ namespace NxtLib
                 {
                     4, new Dictionary<byte, TransactionSubType>
                     {
-                        {0, TransactionSubType.AccountControlEffectiveBalanceLeasing}
+                        {0, TransactionSubType.AccountControlEffectiveBalanceLeasing},
+                        {1, TransactionSubType.AccountControlSetPhasingOnly}
                     }
                 },
                 {
