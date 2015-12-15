@@ -613,6 +613,15 @@ namespace NxtLib
             ParticipantCount = GetAttachmentValue<int>(jToken, Parameters.ParticipantCount);
             RegistrationPeriod = GetAttachmentValue<int>(jToken, Parameters.RegistrationPeriod);
         }
+    }
 
+    public class ShufflingRegistrationAttachment : Attachment
+    {
+        public BinaryHexString ShufflingFullHash { get; }
+
+        internal ShufflingRegistrationAttachment(JToken jToken)
+        {
+            ShufflingFullHash = GetAttachmentValue<string>(jToken, Parameters.ShufflingFullHash);
+        }
     }
 }

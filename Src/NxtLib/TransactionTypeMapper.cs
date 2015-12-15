@@ -104,7 +104,8 @@ namespace NxtLib
                 {
                     7, new Dictionary<byte, TransactionSubType>
                     {
-                        {0, TransactionSubType.ShufflingCreation}
+                        {0, TransactionSubType.ShufflingCreation},
+                        {1, TransactionSubType.ShufflingRegistration}
                     }
                 }
 

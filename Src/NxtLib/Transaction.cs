@@ -147,6 +147,8 @@ namespace NxtLib
 
         // Shuffling
         [NxtApi("ShufflingCreation")]
-        ShufflingCreation
+        ShufflingCreation,
+        [NxtApi("ShufflingRegistration")]
+        ShufflingRegistration
     }
 }
