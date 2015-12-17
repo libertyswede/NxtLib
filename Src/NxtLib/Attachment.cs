@@ -25,9 +25,35 @@ namespace NxtLib
 
     public class AccountControlSetPhasingOnlyAttachment : Attachment
     {
+        public Amount ControlMaxFees { get; set; }
+        public int ControlMinDuration { get; set; }
+        public int ControlMaxDuration { get; set; }
+
+        public ulong PhasingHoldingId { get; set; }
+        public long PhasingQuorum { get; set; }
+        public long PhasingMinBalance { get; set; }
+        public MinBalanceModel PhasingMinBalanceModel { get; set; }
+        public IEnumerable<ulong> PhasingWhitelist { get; set; } = Enumerable.Empty<ulong>();
+        public VotingModel PhasingVotingModel { get; set; }
+
         internal AccountControlSetPhasingOnlyAttachment(JToken attachments)
         {
+            ControlMaxFees = Amount.CreateAmountFromNqt(GetAttachmentValue<long>(attachments, Parameters.ControlMaxFees));
+            ControlMinDuration = GetAttachmentValue<int>(attachments, Parameters.ControlMinDuration);
+            ControlMaxDuration = GetAttachmentValue<int>(attachments, Parameters.ControlMaxDuration);
+
+            var phasing = attachments.SelectToken(Parameters.PhasingControlParams);
+            PhasingHoldingId = GetAttachmentValue<ulong>(phasing, Parameters.PhasingHolding);
+            PhasingQuorum = GetAttachmentValue<long>(phasing, Parameters.PhasingQuorum);
+            PhasingMinBalance = GetAttachmentValue<long>(phasing, Parameters.PhasingMinBalance);
+            PhasingMinBalanceModel = (MinBalanceModel)GetAttachmentValue<int>(phasing, Parameters.PhasingMinBalanceModel);
+            PhasingVotingModel = (VotingModel) GetAttachmentValue<int>(phasing, Parameters.PhasingVotingModel);
             
+            if (phasing.SelectToken(Parameters.PhasingWhitelist) != null)
+            {
+                var array = (JArray)phasing.SelectToken(Parameters.PhasingWhitelist);
+                PhasingWhitelist = array.ToObject<ulong[]>();
+            }
         }
     }
 

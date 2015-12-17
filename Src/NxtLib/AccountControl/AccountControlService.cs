@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using NxtLib.Internal;
 using NxtLib.Local;
 using NxtLib.VotingSystem;
 
 namespace NxtLib.AccountControl
 {
-    // TODO: Pull members up to interface
     public class AccountControlService : BaseService, IAccountControlService
     {
         public AccountControlService(string baseAddress = Constants.DefaultNxtUrl)
@@ -26,13 +27,29 @@ namespace NxtLib.AccountControl
             throw new NotImplementedException();
         }
 
-        // TODO: Check that parameters are of correct type and what is required and what is optional
-        public Task<TransactionCreatedReply> SetPhasingOnlyControl(VotingModel controlVotingModel, long controlQuorum,
-            long controlMinBalance, VotingModel controlMinBalanceModel, IEnumerable<string> controlWhitelisted,
-            Amount controlMaxFees, int controlMinDuration, int controlMaxDuration,
-            CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> SetPhasingOnlyControl(VotingModel controlVotingModel, long controlQuorum,
+            CreateTransactionParameters parameters, long? controlMinBalance = null,
+            VotingModel? controlMinBalanceModel = null, ulong? controlHolding = null, IEnumerable<string> controlWhitelisted = null,
+            Amount controlMaxFees = null, int? controlMinDuration = null, int? controlMaxDuration = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, List<string>>
+            {
+                {Parameters.ControlVotingModel, new List<string> {((int) controlVotingModel).ToString()}},
+                {Parameters.ControlQuorum, new List<string> {controlQuorum.ToString()}}
+            };
+            parameters.AppendToQueryParameters(queryParameters);
+            queryParameters.AddIfHasValue(Parameters.ControlMinBalance, controlMinBalance);
+            queryParameters.AddIfHasValue(Parameters.ControlMinBalanceModel,
+                controlMinBalanceModel != null ? (int) controlMinBalanceModel : (int?) null);
+
+            if (controlWhitelisted != null)
+            {
+                queryParameters.Add(Parameters.ControlWhitelisted, controlWhitelisted.ToList());
+            }
+            queryParameters.AddIfHasValue(Parameters.ControlMaxFees, controlMaxFees?.Nqt.ToString());
+            queryParameters.AddIfHasValue(Parameters.ControlMinDuration, controlMinDuration);
+            queryParameters.AddIfHasValue(Parameters.ControlMaxDuration, controlMaxDuration);
+            return await Post<TransactionCreatedReply>("setPhasingOnlyControl", queryParameters);
         }
     }
 }

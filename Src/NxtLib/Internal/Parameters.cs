@@ -44,6 +44,14 @@ namespace NxtLib.Internal
         internal const string CompressMessageToEncryptToSelf = "compressMessageToEncryptToSelf";
         internal const string Confirmations = "confirmations";
         internal const string Connect = "connect";
+        internal const string ControlMaxDuration = "controlMaxDuration";
+        internal const string ControlMaxFees = "controlMaxFees";
+        internal const string ControlMinBalance = "controlMinBalance";
+        internal const string ControlMinBalanceModel = "controlMinBalanceModel";
+        internal const string ControlMinDuration = "controlMinDuration";
+        internal const string ControlQuorum = "controlQuorum";
+        internal const string ControlVotingModel = "controlVotingModel";
+        internal const string ControlWhitelisted = "controlWhitelisted";
         internal const string Count = "count";
         internal const string Counter = "counter";
         internal const string CountVotes = "countVotes";
@@ -168,6 +176,7 @@ namespace NxtLib.Internal
         internal const string Period = "period";
         internal const string Phased = "phased";
         internal const string PhasedOnly = "phasedOnly";
+        internal const string PhasingControlParams = "phasingControlParams";
         internal const string PhasingFinishHeight = "phasingFinishHeight";
         internal const string PhasingHashedSecret = "phasingHashedSecret";
         internal const string PhasingHashedSecretAlgorithm = "phasingHashedSecretAlgorithm";
