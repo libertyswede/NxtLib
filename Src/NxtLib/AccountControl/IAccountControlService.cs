@@ -6,7 +6,7 @@ namespace NxtLib.AccountControl
 {
     public interface IAccountControlService
     {
-        Task<object> GetAllPhasingOnlyControls(int? firstIndex = null, int? lastIndex = null,
+        Task<PhasingOnlyControlsReply> GetAllPhasingOnlyControls(int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<object> GetPhasingOnlyControl(Account account, ulong? requireBlock = null,

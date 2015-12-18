@@ -15,10 +15,15 @@ namespace NxtLib.AccountControl
         {
         }
         
-        public Task<object> GetAllPhasingOnlyControls(int? firstIndex = null, int? lastIndex = null,
+        public async Task<PhasingOnlyControlsReply> GetAllPhasingOnlyControls(int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string>();
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<PhasingOnlyControlsReply>("getAllPhasingOnlyControls", queryParameters);
         }
 
         public Task<object> GetPhasingOnlyControl(Account account, ulong? requireBlock = null,
