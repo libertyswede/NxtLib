@@ -153,9 +153,9 @@ namespace NxtLib
         private static async Task<T> ReadAndDeserializeResponse<T>(HttpContent content, string url, IEnumerable<KeyValuePair<string, string>> queryParameters) where T : IBaseReply
         {
             var json = await content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<T>(json);
             var parameters = queryParameters != null ? queryParameters.ToList() : new List<KeyValuePair<string, string>>();
             CheckForErrorResponse(json, url, parameters);
+            var response = JsonConvert.DeserializeObject<T>(json);
             response.RawJsonReply = json;
             response.RequestUri = url;
             response.PostData = parameters;
