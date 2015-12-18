@@ -40,12 +40,14 @@ namespace NxtLib
 
         protected async Task<JObject> Post(string requestType, IEnumerable<KeyValuePair<string, string>> queryParameters)
         {
+            var parameters = queryParameters != null ? queryParameters.ToList() : new List<KeyValuePair<string, string>>();
+
             using (var client = new HttpClient())
-            using (var response = await client.PostAsync(_baseUrl, new FormUrlEncodedContent(queryParameters)))
+            using (var response = await client.PostAsync(_baseUrl, new FormUrlEncodedContent(parameters)))
             using (var content = response.Content)
             {
                 var json = await content.ReadAsStringAsync();
-                CheckForErrorResponse(json, _baseUrl);
+                CheckForErrorResponse(json, _baseUrl, parameters);
                 return JObject.Parse(json);
             }
         }
@@ -151,15 +153,16 @@ namespace NxtLib
         private static async Task<T> ReadAndDeserializeResponse<T>(HttpContent content, string url, IEnumerable<KeyValuePair<string, string>> queryParameters) where T : IBaseReply
         {
             var json = await content.ReadAsStringAsync();
-            CheckForErrorResponse(json, url);
             var response = JsonConvert.DeserializeObject<T>(json);
+            var parameters = queryParameters != null ? queryParameters.ToList() : new List<KeyValuePair<string, string>>();
+            CheckForErrorResponse(json, url, parameters);
             response.RawJsonReply = json;
             response.RequestUri = url;
-            response.PostData = queryParameters;
+            response.PostData = parameters;
             return response;
         }
 
-        private static void CheckForErrorResponse(string json, string url)
+        private static void CheckForErrorResponse(string json, string url, IEnumerable<KeyValuePair<string, string>> queryParameters = null)
         {
             var jObject = JObject.Parse(json);
             var errorCode = jObject.SelectToken(Parameters.ErrorCode);
@@ -168,11 +171,11 @@ namespace NxtLib
 
             if (errorCode != null)
             {
-                throw new NxtException((int)errorCode, json, url, errorDescription.ToString());
+                throw new NxtException((int)errorCode, json, url, errorDescription.ToString(), queryParameters);
             }
             if (error != null)
             {
-                throw new NxtException(-1, json, url, error.ToString());
+                throw new NxtException(-1, json, url, error.ToString(), queryParameters);
             }
         }
     }
