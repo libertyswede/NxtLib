@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -94,9 +93,17 @@ namespace NxtLib.Shuffling
             return await Get<ShufflingParticipantsReply>("getShufflingParticipants", queryParameters);
         }
 
-        public Task<object> ShufflingCancel(ulong shuffling, Account cancellingAccount, BinaryHexString shufflingStateHash, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> ShufflingCancel(ulong shuffling, Account cancellingAccount,
+            BinaryHexString shufflingStateHash, CreateTransactionParameters parameters)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.Shuffling, shuffling.ToString()},
+                {Parameters.CancellingAccount, cancellingAccount.ToString()},
+                {Parameters.ShufflingStateHash, shufflingStateHash.ToString()}
+            };
+            parameters.AppendToQueryParameters(queryParameters);
+            return await Post<TransactionCreatedReply>("shufflingCancel", queryParameters);
         }
 
         public async Task<TransactionCreatedReply> ShufflingCreate(Amount amount, int participantCount, int registrationPeriod,
@@ -114,31 +121,63 @@ namespace NxtLib.Shuffling
             return await Post<TransactionCreatedReply>("shufflingCreate", queryParameters);
         }
 
-        public Task<object> ShufflingProcess(ulong shuffling, string recipientSecretPhrase, BinaryHexString recipientPublicKey, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> ShufflingProcess(ulong shuffling, string recipientSecretPhrase,
+            BinaryHexString recipientPublicKey, CreateTransactionParameters parameters)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.Shuffling, shuffling.ToString()},
+                {Parameters.RecipientSecretPhrase, recipientSecretPhrase},
+                {Parameters.RecipientPublicKey, recipientPublicKey.ToString()}
+            };
+            parameters.AppendToQueryParameters(queryParameters);
+            return await Post<TransactionCreatedReply>("shufflingProcess", queryParameters);
         }
 
-        public Task<object> ShufflingRegister(BinaryHexString shufflingFullHash, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> ShufflingRegister(BinaryHexString shufflingFullHash, CreateTransactionParameters parameters)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.ShufflingFullHash, shufflingFullHash.ToString()}
+            };
+            parameters.AppendToQueryParameters(queryParameters);
+            return await Post<TransactionCreatedReply>("shufflingRegister", queryParameters);
         }
 
-        public Task<object> ShufflingVerify(ulong shuffling, BinaryHexString shufflingStateHash, CreateTransactionParameters parameters)
+        public async Task<TransactionCreatedReply> ShufflingVerify(ulong shuffling, BinaryHexString shufflingStateHash, CreateTransactionParameters parameters)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.Shuffling, shuffling.ToString()},
+                {Parameters.ShufflingStateHash, shufflingStateHash.ToString()}
+            };
+            parameters.AppendToQueryParameters(queryParameters);
+            return await Post<TransactionCreatedReply>("shufflingVerify", queryParameters);
         }
 
-        public Task<object> StartShuffler(string secretPhrase, BinaryHexString shufflingFullHash,
-            string recipientSecretPhrase, BinaryHexString recipientPublicKey)
+        public async Task<ShufflerReply> StartShuffler(string secretPhrase, BinaryHexString shufflingFullHash,
+            string recipientSecretPhrase, BinaryHexString recipientPublicKey = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.SecretPhrase, secretPhrase},
+                {Parameters.ShufflingFullHash, shufflingFullHash.ToHexString()},
+                {Parameters.RecipientSecretPhrase, recipientSecretPhrase}
+            };
+            queryParameters.AddIfHasValue(Parameters.RecipientPublicKey, recipientPublicKey);
+            return await Post<ShufflerReply>("startShuffler", queryParameters);
         }
 
-        public Task<object> StopShuffler(Account account, BinaryHexString shufflingFullHash,
-            SecretPhraseOrAdminPassword secretPhraseOrAdminPassword)
+        public async Task<StopShufflerReply> StopShuffler(Account account = null, BinaryHexString shufflingFullHash = null,
+            SecretPhraseOrAdminPassword secretPhraseOrAdminPassword = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = secretPhraseOrAdminPassword == null
+                ? new Dictionary<string, string>()
+                : secretPhraseOrAdminPassword.QueryParameters;
+
+            queryParameters.AddIfHasValue(Parameters.Account, account);
+            queryParameters.AddIfHasValue(Parameters.ShufflingFullHash, shufflingFullHash);
+            return await Post<StopShufflerReply>("stopShuffler", queryParameters);
         }
     }
 }

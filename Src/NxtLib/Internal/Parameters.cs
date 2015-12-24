@@ -34,6 +34,7 @@ namespace NxtLib.Internal
         internal const string Broadcast = "broadcast";
         internal const string Buyer = "buyer";
         internal const string BuyRateNqt = "buyRateNQT";
+        internal const string CancellingAccount = "cancellingAccount";
         internal const string CanHaveRecipient = "canHaveRecipient";
         internal const string Channel = "channel";
         internal const string CommunicationEvent = "communicationEvent";
@@ -206,6 +207,7 @@ namespace NxtLib.Internal
         internal const string Recipient = "recipient";
         internal const string RecipientPublicKey = "recipientPublicKey";
         internal const string RecipientRs = "recipientRS";
+        internal const string RecipientSecretPhrase = "recipientSecretPhrase";
         internal const string ReferencedTransactionFullHash = "referencedTransactionFullHash";
         internal const string RefundNqt = "refundNQT";
         internal const string RegistrationPeriod = "registrationPeriod";
@@ -232,6 +234,7 @@ namespace NxtLib.Internal
         internal const string ShowExpectedCancellations = "showExpectedCancellations";
         internal const string Shuffling = "shuffling";
         internal const string ShufflingFullHash = "shufflingFullHash";
+        internal const string ShufflingStateHash = "shufflingStateHash";
         internal const string Signature = "signature";
         internal const string SignatureHash = "signatureHash";
         internal const string SortByPrice = "sortByPrice";

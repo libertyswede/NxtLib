@@ -28,24 +28,24 @@ namespace NxtLib.Shuffling
         Task<ShufflingParticipantsReply> GetShufflingParticipants(ulong shuffling, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
-        Task<object> ShufflingCancel(ulong shuffling, Account cancellingAccount,
+        Task<TransactionCreatedReply> ShufflingCancel(ulong shuffling, Account cancellingAccount,
             BinaryHexString shufflingStateHash, CreateTransactionParameters parameters);
 
         Task<TransactionCreatedReply> ShufflingCreate(Amount amount, int participantCount, int registrationPeriod,
             CreateTransactionParameters parameters, ulong? holding = null, HoldingType? holdingType = null);
 
-        Task<object> ShufflingProcess(ulong shuffling, string recipientSecretPhrase,
+        Task<TransactionCreatedReply> ShufflingProcess(ulong shuffling, string recipientSecretPhrase,
             BinaryHexString recipientPublicKey, CreateTransactionParameters parameters);
 
-        Task<object> ShufflingRegister(BinaryHexString shufflingFullHash, CreateTransactionParameters parameters);
+        Task<TransactionCreatedReply> ShufflingRegister(BinaryHexString shufflingFullHash, CreateTransactionParameters parameters);
 
-        Task<object> ShufflingVerify(ulong shuffling, BinaryHexString shufflingStateHash,
+        Task<TransactionCreatedReply> ShufflingVerify(ulong shuffling, BinaryHexString shufflingStateHash,
             CreateTransactionParameters parameters);
 
-        Task<object> StartShuffler(string secretPhrase, BinaryHexString shufflingFullHash,
-            string recipientSecretPhrase, BinaryHexString recipientPublicKey);
+        Task<ShufflerReply> StartShuffler(string secretPhrase, BinaryHexString shufflingFullHash,
+            string recipientSecretPhrase, BinaryHexString recipientPublicKey = null);
 
-        Task<object> StopShuffler(Account account, BinaryHexString shufflingFullHash,
-            SecretPhraseOrAdminPassword secretPhraseOrAdminPassword);
+        Task<StopShufflerReply> StopShuffler(Account account = null, BinaryHexString shufflingFullHash = null,
+            SecretPhraseOrAdminPassword secretPhraseOrAdminPassword = null);
     }
 }
