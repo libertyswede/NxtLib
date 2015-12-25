@@ -13,6 +13,16 @@ namespace NxtLib.Accounts
         {
         }
 
+        public async Task<TransactionCreatedReply> DeleteAccountProperty(CreateTransactionParameters parameters,
+            string property, Account recipient = null, Account setter = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Property, property}};
+            parameters.AppendToQueryParameters(queryParameters);
+            queryParameters.AddIfHasValue(Parameters.Recipient, recipient);
+            queryParameters.AddIfHasValue(Parameters.Setter, setter);
+            return await Post<TransactionCreatedReply>("deleteAccountProperty", queryParameters);
+        }
+
         public async Task<AccountReply> GetAccount(Account account, bool? includeLessors = null,
             bool? includeAssets = null, bool? includeCurrencies = null, bool? includeEffectiveBalance = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)

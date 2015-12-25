@@ -46,7 +46,8 @@ namespace NxtLib
                         {7, TransactionSubType.MessagingAliasBuy},
                         {8, TransactionSubType.MessagingAliasDelete},
                         {9, TransactionSubType.MessagingPhasingVoteCasting},
-                        {10, TransactionSubType.MessagingAccountProperty}
+                        {10, TransactionSubType.MessagingAccountProperty},
+                        {11, TransactionSubType.MessagingAccountPropertyDelete}
                     }
                 },
                 {

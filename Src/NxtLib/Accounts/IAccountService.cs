@@ -5,6 +5,9 @@ namespace NxtLib.Accounts
 {
     public interface IAccountService
     {
+        Task<TransactionCreatedReply> DeleteAccountProperty(CreateTransactionParameters parameters,
+            string property, Account recipient = null, Account setter = null);
+
         Task<AccountReply> GetAccount(Account account, bool? includeLessors = null, bool? includeAssets = null,
             bool? includeCurrencies = null, bool? includeEffectiveBalance = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);

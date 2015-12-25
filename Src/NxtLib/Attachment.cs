@@ -302,6 +302,16 @@ namespace NxtLib
         }
     }
 
+    public class MessagingAccountPropertyDeleteAttachment : Attachment
+    {
+        public ulong Property { get; set; }
+
+        internal MessagingAccountPropertyDeleteAttachment(JToken attachments)
+        {
+            Property = GetAttachmentValue<ulong>(attachments, Parameters.Property);
+        }
+    }
+
     public class MessagingAliasAssignmentAttachment : Attachment
     {
         public string Alias { get; set; }

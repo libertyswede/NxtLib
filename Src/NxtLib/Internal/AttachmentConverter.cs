@@ -34,6 +34,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.DigitalGoodsRefund, value => new DigitalGoodsRefundAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAccountInfo, value => new MessagingAccountInfoAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAccountProperty, value => new MessagingAccountPropertyAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MessagingAccountPropertyDelete, value => new MessagingAccountPropertyDeleteAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasAssignment, value => new MessagingAliasAssignmentAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasBuy, value => new MessagingAliasBuyAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasDelete, value => new MessagingAliasDeleteAttachment(value));
