@@ -21,9 +21,13 @@ namespace NxtLib.ServerInfo
         public Dictionary<string, sbyte> HashAlgorithms { get; set; }
 
         [JsonConverter(typeof(DictionaryConverter))]
+        public Dictionary<string, sbyte> HoldingTypes { get; set; }
+
+        [JsonConverter(typeof(DictionaryConverter))]
         public Dictionary<string, sbyte> MintingHashAlgorithms { get; set; }
         public int MaxArbitraryMessageLength { get; set; }
         public int MaxBlockPayloadLength { get; set; }
+        public int MaxPhasingDuration { get; set; }
         public int MaxTaggedDataDataLength { get; set; }
 
         [JsonConverter(typeof(DictionaryConverter))]
@@ -37,6 +41,12 @@ namespace NxtLib.ServerInfo
 
         [JsonConverter(typeof(RequestTypesConverter))]
         public IList<RequestType> RequestTypes { get; set; }
+
+        [JsonConverter(typeof(DictionaryConverter))]
+        public Dictionary<string, sbyte> ShufflingParticipantStates { get; set; }
+
+        [JsonConverter(typeof(DictionaryConverter))]
+        public Dictionary<string, sbyte> ShufflingStages { get; set; }
 
         [JsonConverter(typeof(TransactionTypesConverter))]
         public Dictionary<int, Dictionary<int, TransactionType>> TransactionTypes { get; set; }
