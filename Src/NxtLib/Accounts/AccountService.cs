@@ -166,6 +166,16 @@ namespace NxtLib.Accounts
             return await Post<TransactionCreatedReply>("setAccountInfo", queryParameters);
         }
 
+        public async Task<TransactionCreatedReply> SetAccountProperty(string property, CreateTransactionParameters parameters, 
+            Account recipient = null, string value = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Property, property}};
+            parameters.AppendToQueryParameters(queryParameters);
+            queryParameters.AddIfHasValue(Parameters.Recipient, recipient);
+            queryParameters.AddIfHasValue(Parameters.Value, value);
+            return await Post<TransactionCreatedReply>("setAccountProperty", queryParameters);
+        }
+
         private static Dictionary<string, string> BuildQueryParametersForGetAccountBlocks(Account account,
             bool includeTransactions, DateTime? timeStamp, int? firstIndex,
             int? lastIndex, ulong? requireBlock, ulong? requireLastBlock)

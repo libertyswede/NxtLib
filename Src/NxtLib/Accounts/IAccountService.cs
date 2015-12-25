@@ -50,5 +50,8 @@ namespace NxtLib.Accounts
 
         Task<TransactionCreatedReply> SetAccountInfo(CreateTransactionParameters parameters, string name,
             string description);
+
+        Task<TransactionCreatedReply> SetAccountProperty(string property, CreateTransactionParameters parameters, 
+            Account recipient = null, string value = null);
     }
 }

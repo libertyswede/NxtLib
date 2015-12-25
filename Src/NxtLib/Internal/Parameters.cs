@@ -193,6 +193,7 @@ namespace NxtLib.Internal
         internal const string Poll = "poll";
         internal const string Prefix = "prefix";
         internal const string PriceNqt = "priceNQT";
+        internal const string Property = "property";
         internal const string PrunableAttachmentJson = "prunableAttachmentJSON";
         internal const string VersionPrunableEncryptedMessage = "version.PrunableEncryptedMessage";
         internal const string VersionPrunablePlainMessage = "version.PrunablePlainMessage";
@@ -271,6 +272,7 @@ namespace NxtLib.Internal
         internal const string Units = "units";
         internal const string Uri = "uri";
         internal const string Validate = "validate";
+        internal const string Value = "value";
         internal const string Version = "version";
         internal const string VersionTaggedDataUpload = "version.TaggedDataUpload";
         internal const string Vote = "vote";
