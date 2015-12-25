@@ -692,4 +692,16 @@ namespace NxtLib
             RecipientPublicKeys = array.ToObject<string[]>().Select(s => new BinaryHexString(s));
         }
     }
+
+    public class ShufflingVerificationAttachment : Attachment
+    {
+        public ulong ShufflingId { get; set; }
+        public BinaryHexString ShufflingStateHash { get; set; }
+
+        internal ShufflingVerificationAttachment(JToken jToken)
+        {
+            ShufflingId = GetAttachmentValue<ulong>(jToken, Parameters.Shuffling);
+            ShufflingStateHash = GetAttachmentValue<string>(jToken, Parameters.ShufflingStateHash);
+        }
+    }
 }
