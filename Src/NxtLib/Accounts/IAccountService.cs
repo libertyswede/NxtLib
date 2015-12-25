@@ -34,6 +34,9 @@ namespace NxtLib.Accounts
         Task<AccountLessorsReply> GetAccountLessors(Account account, int? height = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
+        Task<AccountPropertiesReply> GetAccountProperties(Account recipient, Account setter, string property = null,
+            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+
         Task<AccountPublicKeyReply> GetAccountPublicKey(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 

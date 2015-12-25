@@ -233,6 +233,7 @@ namespace NxtLib.Internal
         internal const string SenderPublicKey = "senderPublicKey";
         internal const string SenderRs = "senderRS";
         internal const string Service = "service";
+        internal const string Setter = "setter";
         internal const string ShowExpectedCancellations = "showExpectedCancellations";
         internal const string Shuffling = "shuffling";
         internal const string ShufflingFullHash = "shufflingFullHash";

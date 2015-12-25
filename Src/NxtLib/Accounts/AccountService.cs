@@ -106,6 +106,20 @@ namespace NxtLib.Accounts
             return await Get<AccountLessorsReply>("getAccountLessors", queryParameters);
         }
 
+        public async Task<AccountPropertiesReply> GetAccountProperties(Account recipient, Account setter, string property = null,
+            int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            queryParameters.AddIfHasValue(Parameters.Recipient, recipient);
+            queryParameters.AddIfHasValue(Parameters.Setter, setter);
+            queryParameters.AddIfHasValue(Parameters.Property, property);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<AccountPropertiesReply>("getAccountProperties", queryParameters);
+        }
+
         public async Task<AccountPublicKeyReply> GetAccountPublicKey(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
