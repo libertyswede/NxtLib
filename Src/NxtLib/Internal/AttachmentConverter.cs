@@ -33,6 +33,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.DigitalGoodsQuantityChange, value => new DigitalGoodsQuantityChangeAttachment(value));
             attachmentFuncs.Add(TransactionSubType.DigitalGoodsRefund, value => new DigitalGoodsRefundAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAccountInfo, value => new MessagingAccountInfoAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.MessagingAccountProperty, value => new MessagingAccountPropertyAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasAssignment, value => new MessagingAliasAssignmentAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasBuy, value => new MessagingAliasBuyAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasDelete, value => new MessagingAliasDeleteAttachment(value));
@@ -52,13 +53,13 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveClaim, value => new MonetarySystemReserveClaimAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveIncrease, value => new MonetarySystemReserveIncreaseAttachment(value));
             attachmentFuncs.Add(TransactionSubType.PaymentOrdinaryPayment, value => new OrdinaryPaymentAttachment());
-            attachmentFuncs.Add(TransactionSubType.TaggedDataExtend, value => new TaggedDataExtendAttachment(value));
-            attachmentFuncs.Add(TransactionSubType.TaggedDataUpload, value => new TaggedDataUploadAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingCreation, value => new ShufflingCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingRegistration, value => new ShufflingRegistrationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingProcessing, value => new ShufflingProcessingAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingRecipients, value => new ShufflingRecipientsAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingVerification, value => new ShufflingVerificationAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.TaggedDataExtend, value => new TaggedDataExtendAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.TaggedDataUpload, value => new TaggedDataUploadAttachment(value));
 
             AttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<JObject, Attachment>>(attachmentFuncs);
         }

@@ -290,6 +290,18 @@ namespace NxtLib
         }
     }
 
+    public class MessagingAccountPropertyAttachment : Attachment
+    {
+        public string Property { get; set; }
+        public string Value { get; set; }
+
+        internal MessagingAccountPropertyAttachment(JToken attachments)
+        {
+            Property = GetAttachmentValue<string>(attachments, Parameters.Property);
+            Value = GetAttachmentValue<string>(attachments, Parameters.Value);
+        }
+    }
+
     public class MessagingAliasAssignmentAttachment : Attachment
     {
         public string Alias { get; set; }

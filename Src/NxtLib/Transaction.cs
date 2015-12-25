@@ -78,6 +78,8 @@ namespace NxtLib
         MessagingAliasDelete,
         [NxtApi("PhasingVoteCasting")]
         MessagingPhasingVoteCasting,
+        [NxtApi("AccountProperty")]
+        MessagingAccountProperty,
 
         // ColoredCoins
         [NxtApi("AssetIssuance")]
