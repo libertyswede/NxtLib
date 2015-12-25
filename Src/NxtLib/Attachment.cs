@@ -663,17 +663,33 @@ namespace NxtLib
     {
         public IEnumerable<BinaryHexString> Data { get; set; }
         public BinaryHexString Hash { get; set; }
-        public ulong Shuffling { get; set; }
+        public ulong ShufflingId { get; set; }
         public BinaryHexString ShufflingStateHash { get; set; }
 
         internal ShufflingProcessingAttachment(JToken jToken)
         {
             Hash = GetAttachmentValue<string>(jToken, Parameters.Hash);
-            Shuffling = GetAttachmentValue<ulong>(jToken, Parameters.Shuffling);
+            ShufflingId = GetAttachmentValue<ulong>(jToken, Parameters.Shuffling);
             ShufflingStateHash = GetAttachmentValue<string>(jToken, Parameters.ShufflingStateHash);
 
             var array = (JArray)jToken.SelectToken(Parameters.Data);
             Data = array.ToObject<string[]>().Select(s => new BinaryHexString(s));
+        }
+    }
+
+    public class ShufflingRecipientsAttachment : Attachment
+    {
+        public IEnumerable<BinaryHexString> RecipientPublicKeys { get; set; }
+        public ulong ShufflingId { get; set; }
+        public BinaryHexString ShufflingStateHash { get; set; }
+
+        internal ShufflingRecipientsAttachment(JToken jToken)
+        {
+            ShufflingId = GetAttachmentValue<ulong>(jToken, Parameters.Shuffling);
+            ShufflingStateHash = GetAttachmentValue<string>(jToken, Parameters.ShufflingStateHash);
+
+            var array = (JArray)jToken.SelectToken(Parameters.RecipientPublicKeys);
+            RecipientPublicKeys = array.ToObject<string[]>().Select(s => new BinaryHexString(s));
         }
     }
 }

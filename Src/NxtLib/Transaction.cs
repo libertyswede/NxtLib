@@ -153,6 +153,8 @@ namespace NxtLib
         [NxtApi("ShufflingRegistration")]
         ShufflingRegistration,
         [NxtApi("ShufflingProcessing")]
-        ShufflingProcessing
+        ShufflingProcessing,
+        [NxtApi("ShufflingRecipients")]
+        ShufflingRecipients
     }
 }

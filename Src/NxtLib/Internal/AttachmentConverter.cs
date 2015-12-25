@@ -57,6 +57,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.ShufflingCreation, value => new ShufflingCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingRegistration, value => new ShufflingRegistrationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingProcessing, value => new ShufflingProcessingAttachment(value));
+            attachmentFuncs.Add(TransactionSubType.ShufflingRecipients, value => new ShufflingRecipientsAttachment(value));
 
             AttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<JObject, Attachment>>(attachmentFuncs);
         }

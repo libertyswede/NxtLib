@@ -206,6 +206,7 @@ namespace NxtLib.Internal
         internal const string RateNqt = "rateNQT";
         internal const string Recipient = "recipient";
         internal const string RecipientPublicKey = "recipientPublicKey";
+        internal const string RecipientPublicKeys = "recipientPublicKeys";
         internal const string RecipientRs = "recipientRS";
         internal const string RecipientSecretPhrase = "recipientSecretPhrase";
         internal const string ReferencedTransactionFullHash = "referencedTransactionFullHash";
