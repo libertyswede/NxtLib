@@ -166,8 +166,7 @@ namespace NxtLib.Accounts
             return await Post<TransactionCreatedReply>("setAccountInfo", queryParameters);
         }
 
-        public async Task<TransactionCreatedReply> SetAccountProperty(string property, CreateTransactionParameters parameters, 
-            Account recipient = null, string value = null)
+        public async Task<TransactionCreatedReply> SetAccountProperty(CreateTransactionParameters parameters, string property, string value = null, Account recipient = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Property, property}};
             parameters.AppendToQueryParameters(queryParameters);
