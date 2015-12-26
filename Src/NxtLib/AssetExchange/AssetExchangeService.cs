@@ -255,6 +255,22 @@ namespace NxtLib.AssetExchange
             return await Get<AssetsByIssuerReply>("getAssetsByIssuer", queryParameters);
         }
 
+        public async Task<AssetDeletesReply> GetAssetDeletes(AssetIdOrAccountId assetOrAccount, int? firstIndex = null,
+            int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            queryParameters.AddIfHasValue(Parameters.Account, assetOrAccount.AccountId);
+            queryParameters.AddIfHasValue(Parameters.Asset, assetOrAccount.AssetId);
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timestamp);
+            queryParameters.AddIfHasValue(Parameters.IncludeAssetInfo, includeAssetInfo);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<AssetDeletesReply>("getAssetDeletes", queryParameters);
+        }
+
         public async Task<AssetTransfersReply> GetAssetTransfers(AssetIdOrAccountId assetIdOrAccountId,
             int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)

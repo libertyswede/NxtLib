@@ -76,6 +76,10 @@ namespace NxtLib.AssetExchange
             int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
+        Task<AssetDeletesReply> GetAssetDeletes(AssetIdOrAccountId assetOrAccount, int? firstIndex = null,
+            int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null,
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
+
         Task<OrderReply> GetBidOrder(ulong orderId, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<BidOrderIdsReply> GetBidOrderIds(ulong assetId, int? firstIndex = null, int? lastIndex = null,

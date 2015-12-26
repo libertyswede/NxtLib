@@ -20,6 +20,7 @@ namespace NxtLib.Internal
         internal const string AmountPerUnitNqt = "amountPerUnitNQT";
         internal const string AskOrder = "askOrder";
         internal const string Asset = "asset";
+        internal const string AssetDelete = "assetDelete";
         internal const string AssetIds = "assetIds";
         internal const string Assets = "assets";
         internal const string AssetTransfer = "assetTransfer";
