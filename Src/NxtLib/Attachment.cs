@@ -191,9 +191,13 @@ namespace NxtLib
 
     public class ColoredCoinsDeleteAttachment : Attachment
     {
-        internal ColoredCoinsDeleteAttachment()
+        public ulong AssetId { get; set; }
+        public long QuantityQnt { get; set; }
+
+        internal ColoredCoinsDeleteAttachment(JToken attachments)
         {
-            throw new NotImplementedException();
+            AssetId = GetAttachmentValue<ulong>(attachments, Parameters.Asset);
+            QuantityQnt = GetAttachmentValue<long>(attachments, Parameters.QuantityQnt);
         }
     }
 
