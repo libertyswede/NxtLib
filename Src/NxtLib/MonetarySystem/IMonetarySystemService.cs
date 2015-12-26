@@ -43,6 +43,12 @@ namespace NxtLib.MonetarySystem
             int? lastIndex = null, bool? includeCurrencyInfo = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
+        Task<AvailableForExchangeReply> GetAvailableToBuy(ulong currencyId, long units, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
+
+        Task<AvailableForExchangeReply> GetAvailableToSell(ulong currencyId, long units, ulong? requireBlock = null,
+            ulong? requireLastBlock = null);
+
         Task<GetOffersReply> GetBuyOffers(CurrencyOrAccountLocator locator,
             bool? availableOnly = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);

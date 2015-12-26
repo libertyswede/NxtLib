@@ -152,6 +152,32 @@ namespace NxtLib.MonetarySystem
             return await Get<ExchangesReply>("getAllExchanges", queryParameters);
         }
 
+        public async Task<AvailableForExchangeReply> GetAvailableToBuy(ulong currencyId, long units, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.Currency, currencyId.ToString()},
+                {Parameters.Units, units.ToString()}
+            };
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<AvailableForExchangeReply>("getAvailableToBuy", queryParameters);
+        }
+
+        public async Task<AvailableForExchangeReply> GetAvailableToSell(ulong currencyId, long units, ulong? requireBlock = null,
+            ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.Currency, currencyId.ToString()},
+                {Parameters.Units, units.ToString()}
+            };
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<AvailableForExchangeReply>("getAvailableToSell", queryParameters);
+        }
+
         public async Task<GetOffersReply> GetBuyOffers(CurrencyOrAccountLocator locator, bool? availableOnly = null,
             int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
