@@ -74,6 +74,17 @@ namespace NxtLib.Transactions
             return await Get<ExpectedTransactionsReply>("getExpectedTransactions", queryParameters);
         }
 
+        public async Task<TransactionsListReply> GetReferencingTransactions(ulong transactionId, int? firstIndex = null,
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<TransactionsListReply>("getReferencingTransactions", queryParameters);
+        }
+
         public async Task<TransactionReply> GetTransaction(GetTransactionLocator locator,
             bool? includePhasingResult = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {

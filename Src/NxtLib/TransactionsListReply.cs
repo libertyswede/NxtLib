@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace NxtLib.Debug
+namespace NxtLib
 {
     public class TransactionsListReply : BaseReply
     {

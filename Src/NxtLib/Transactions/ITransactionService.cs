@@ -20,6 +20,9 @@ namespace NxtLib.Transactions
         Task<ExpectedTransactionsReply> GetExpectedTransactions(IEnumerable<Account> accounts = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
+        Task<TransactionsListReply> GetReferencingTransactions(ulong transactionId, int? firstIndex = null,
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+
         Task<TransactionReply> GetTransaction(GetTransactionLocator locator, bool? includePhasingResult = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
