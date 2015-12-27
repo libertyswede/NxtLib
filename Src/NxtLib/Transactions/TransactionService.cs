@@ -128,6 +128,12 @@ namespace NxtLib.Transactions
             return await Get<ParseTransactionReply>("parseTransaction", queryParameters);
         }
 
+        public async Task<TransactionReply> RetrievePrunedTransaction(ulong transactionId)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
+            return await Post<TransactionReply>("retrievePrunedTransaction", queryParameters);
+        }
+
         public async Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, 
             string secretPhrase, bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {

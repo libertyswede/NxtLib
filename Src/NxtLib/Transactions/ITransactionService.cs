@@ -35,6 +35,8 @@ namespace NxtLib.Transactions
         Task<ParseTransactionReply> ParseTransaction(TransactionParameter parameter,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
+        Task<TransactionReply> RetrievePrunedTransaction(ulong transactionId);
+
         Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase,
             bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
     }
