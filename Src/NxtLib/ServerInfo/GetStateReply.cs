@@ -14,6 +14,7 @@ namespace NxtLib.ServerInfo
         public int NumberOfAccounts { get; set; }
         public int NumberOfActiveAccountLeases { get; set; }
         public int NumberOfActivePeers { get; set; }
+        public int NumberOfActiveShufflings { get; set; }
         public int NumberOfAliases { get; set; }
         public int NumberOfAskOrders { get; set; }
         public int NumberOfAssets { get; set; }
@@ -28,9 +29,11 @@ namespace NxtLib.ServerInfo
         public int NumberOfOrders { get; set; }
         public int NumberOfPeers { get; set; }
         public int NumberOfPhasedTransactions { get; set; }
+        public int NumberOfPhasingOnlyAccounts { get; set; }
         public int NumberOfPolls { get; set; }
         public int NumberOfPrunableMessages { get; set; }
         public int NumberOfPurchases { get; set; }
+        public int NumberOfShufflings { get; set; }
         public int NumberOfTaggedData { get; set; }
         public int NumberOfTrades { get; set; }
         public int NumberOfTags { get; set; }
