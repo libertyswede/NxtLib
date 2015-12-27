@@ -341,6 +341,18 @@ namespace NxtLib.AssetExchange
             return await Get<ExpectedBidOrdersReply>("getExpectedBidOrders", queryParameters);
         }
 
+        public async Task<ExpectedAssetDeletesReply> GetExpectedAssetDeletes(ulong? assetId = null,
+            Account account = null, bool? includeAssetInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            queryParameters.AddIfHasValue(Parameters.Asset, assetId);
+            queryParameters.AddIfHasValue(Parameters.Account, account);
+            queryParameters.AddIfHasValue(Parameters.IncludeAssetInfo, includeAssetInfo);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<ExpectedAssetDeletesReply>("getExpectedAssetDeletes", queryParameters);
+        }
+
         public async Task<ExpectedAssetTransfersReply> GetExpectedAssetTransfers(ulong? assetId = null,
             Account account = null, bool? includeAssetInfo = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
