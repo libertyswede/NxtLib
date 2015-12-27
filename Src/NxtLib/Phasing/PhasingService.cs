@@ -75,6 +75,18 @@ namespace NxtLib.Phasing
             return await Get<TransactionListReply>("getCurrencyPhasedTransactions", queryParameters);
         }
 
+        public async Task<TransactionListReply> GetLinkedPhasedTransactions(BinaryHexString linkedFullHash,
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.LinkedFullHash, linkedFullHash.ToString()}
+            };
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<TransactionListReply>("getLinkedPhasedTransactions", queryParameters);
+        }
+
         public async Task<PhasingPollReply> GetPhasingPoll(ulong transactionId, bool? countVotes = false,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {

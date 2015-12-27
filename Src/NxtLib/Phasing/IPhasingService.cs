@@ -22,6 +22,9 @@ namespace NxtLib.Phasing
             bool? withoutWhitelist = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
+        Task<TransactionListReply> GetLinkedPhasedTransactions(BinaryHexString linkedFullHash,
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
+
         Task<PhasingPollReply> GetPhasingPoll(ulong transactionId, bool? countVotes = false, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
