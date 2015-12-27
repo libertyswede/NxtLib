@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NxtLib.Internal;
@@ -26,10 +25,13 @@ namespace NxtLib.AccountControl
             return await Get<PhasingOnlyControlsReply>("getAllPhasingOnlyControls", queryParameters);
         }
 
-        public Task<object> GetPhasingOnlyControl(Account account, ulong? requireBlock = null,
+        public async Task<PhasingOnlyControlReply> GetPhasingOnlyControl(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
-            throw new NotImplementedException();
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<PhasingOnlyControlReply>("getPhasingOnlyControl", queryParameters);
         }
 
         public async Task<TransactionCreatedReply> SetPhasingOnlyControl(VotingModel controlVotingModel, long controlQuorum,
