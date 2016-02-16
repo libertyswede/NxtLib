@@ -29,6 +29,7 @@ namespace NxtLib.Internal
         internal const string AvailableOnly = "availableOnly";
         internal const string BalanceNqt = "balanceNQT";
         internal const string BidOrder = "bidOrder";
+        internal const string BlameData = "blameData";
         internal const string Block = "block";
         internal const string Blocks = "blocks";
         internal const string BlockTimestamp = "blockTimestamp";
@@ -138,6 +139,7 @@ namespace NxtLib.Internal
         internal const string Issuer = "issuer";
         internal const string IssuerAccount = "issuerAccount";
         internal const string IsText = "isText";
+        internal const string KeySeeds = "keySeeds";
         internal const string LastBlock = "lastBlock";
         internal const string LastIndex = "lastIndex";
         internal const string LedgerId = "ledgerId";

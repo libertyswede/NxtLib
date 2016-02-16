@@ -54,6 +54,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveClaim, value => new MonetarySystemReserveClaimAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveIncrease, value => new MonetarySystemReserveIncreaseAttachment(value));
             attachmentFuncs.Add(TransactionSubType.PaymentOrdinaryPayment, value => new OrdinaryPaymentAttachment());
+            attachmentFuncs.Add(TransactionSubType.ShufflingCancellation, value => new ShufflingCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingCreation, value => new ShufflingCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingRegistration, value => new ShufflingRegistrationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingProcessing, value => new ShufflingProcessingAttachment(value));

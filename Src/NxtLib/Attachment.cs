@@ -657,6 +657,24 @@ namespace NxtLib
         }
     }
 
+    public class ShuffligCancellationAttachment : Attachment
+    {
+        public BinaryHexString BlameData { get; set; }
+        public ulong CancellingAccountId { get; set; }
+        public BinaryHexString KeySeeds { get; set; }
+        public ulong ShufflingId { get; set; }
+        public BinaryHexString ShufflingStateHash { get; set; }
+        
+        internal ShuffligCancellationAttachment(JToken jToken)
+        {
+            BlameData = GetAttachmentValue<string>(jToken, Parameters.BlameData);
+            CancellingAccountId = GetAttachmentValue<ulong>(jToken, Parameters.CancellingAccount);
+            KeySeeds = GetAttachmentValue<string>(jToken, Parameters.KeySeeds);
+            ShufflingId = GetAttachmentValue<ulong>(jToken, Parameters.Shuffling);
+            ShufflingStateHash = GetAttachmentValue<string>(jToken, Parameters.ShufflingStateHash);
+        }
+    }
+
     public class ShufflingCreationAttachment : Attachment
     {
         public Amount Amount { get; }

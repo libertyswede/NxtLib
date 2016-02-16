@@ -111,7 +111,8 @@ namespace NxtLib
                         {1, TransactionSubType.ShufflingRegistration},
                         {2, TransactionSubType.ShufflingProcessing},
                         {3, TransactionSubType.ShufflingRecipients},
-                        {4, TransactionSubType.ShufflingVerification}
+                        {4, TransactionSubType.ShufflingVerification},
+                        {5, TransactionSubType.ShufflingCancellation}
                     }
                 }
 
