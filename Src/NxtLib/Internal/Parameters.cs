@@ -74,6 +74,7 @@ namespace NxtLib.Internal
         internal const string EcBlockHeight = "ecBlockHeight";
         internal const string EcBlockId = "ecBlockId";
         internal const string EffectiveBalanceNxt = "effectiveBalanceNXT";
+        internal const string Enabled = "enabled";
         internal const string EncryptedMessage = "encryptedMessage";
         internal const string EncryptedMessageData = "encryptedMessageData";
         internal const string EncryptedMessageIsPrunable = "encryptedMessageIsPrunable";

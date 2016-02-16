@@ -6,6 +6,9 @@ namespace NxtLib.ServerInfo
 {
     public class GetConstantsReply : BaseReply
     {
+        [JsonConverter(typeof(ApiTagsConverter))]
+        public Dictionary<string, ApiTag> ApiTags { get; set; }
+
         [JsonConverter(typeof(DictionaryConverter))]
         public Dictionary<string, sbyte> CurrencyTypes { get; set; }
         public IEnumerable<IEnumerable<string>> DisabledApis { get; set; }
