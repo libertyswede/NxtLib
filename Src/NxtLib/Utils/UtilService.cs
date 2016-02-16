@@ -18,6 +18,17 @@ namespace NxtLib.Utils
             return await Post<DecodeQrCodeReply>("decodeQRCode", queryParameters);
         }
 
+        public async Task<MimeTypeReply> DetectMimeType(string name, string data,
+            string file = null, bool? isText = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+            queryParameters.AddIfHasValue(Parameters.Name, name);
+            queryParameters.AddIfHasValue(Parameters.Data, data);
+            queryParameters.AddIfHasValue(Parameters.File, file);
+            queryParameters.AddIfHasValue(Parameters.IsText, isText);
+            return await Post<MimeTypeReply>("detectMimeType", queryParameters);
+        }
+
         public async Task<EncodeQrCodeReply> EncodeQrCode(string qrCodeData, int? width = null, int? height = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.QrCodeData, qrCodeData}};

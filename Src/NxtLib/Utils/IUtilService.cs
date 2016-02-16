@@ -6,6 +6,8 @@ namespace NxtLib.Utils
     {
         Task<DecodeQrCodeReply> DecodeQrCode(string qrCodeBase64);
 
+        Task<MimeTypeReply> DetectMimeType(string name, string data, string file = null, bool? isText = null);
+
         Task<EncodeQrCodeReply> EncodeQrCode(string qrCodeData, int? width = null, int? height = null);
 
         Task<FullHashToIdReply> FullHashToId(string fullHash);
