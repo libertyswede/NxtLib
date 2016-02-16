@@ -8,6 +8,7 @@ namespace NxtLib.ServerInfo
     {
         [JsonConverter(typeof(DictionaryConverter))]
         public Dictionary<string, sbyte> CurrencyTypes { get; set; }
+        public IEnumerable<string> DisabledApiTags { get; set; }
 
         public long EpochBeginning { get; set; }
 
