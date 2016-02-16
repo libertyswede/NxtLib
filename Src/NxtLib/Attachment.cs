@@ -15,11 +15,11 @@ namespace NxtLib
 
     public class AccountControlEffectiveBalanceLeasingAttachment : Attachment
     {
-        public short Period { get; set; }
+        public ushort Period { get; set; }
 
         internal AccountControlEffectiveBalanceLeasingAttachment(JToken attachments)
         {
-            Period = GetAttachmentValue<short>(attachments, Parameters.Period);
+            Period = GetAttachmentValue<ushort>(attachments, Parameters.Period);
         }
     }
 
