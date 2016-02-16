@@ -2,7 +2,7 @@
 {
     public class Constants
     {
-        public const string NxtVersionSupport = "1.7.2e";
+        public const string NxtVersionSupport = "1.7.5";
         public static readonly Account GenesisAccount = 1739068987193023818;
         public const ulong GenesisBlockId = 2680262203532249785;
         
