@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using NxtLib.Accounts;
 
 namespace NxtLib.Local
 {
     public interface ILocalPasswordGenerator
     {
         string GeneratePassword(int bits = 128);
+        string GeneratePasswordWithAccountEnding(string ending);
     }
 
     public class LocalPasswordGenerator : ILocalPasswordGenerator
@@ -162,6 +165,9 @@ namespace NxtLib.Local
             "throne", "total", "unseen", "weapon", "weary"
         };
 
+        private readonly ILocalAccountService _localAccountService = new LocalAccountService();
+        private const string AllowedAccountCharacters = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+
         public string GeneratePassword(int bits = 128)
         {
             if (bits < 0 || bits%32 != 0)
@@ -202,6 +208,35 @@ namespace NxtLib.Local
             {
                 randomNumbers[i] = BitConverter.ToUInt32(byteArray, i * 4);
             }
+        }
+
+        public string GeneratePasswordWithAccountEnding(string ending)
+        {
+            if (string.IsNullOrWhiteSpace(ending))
+            {
+                throw new ArgumentException("Must have a value", nameof(ending));
+            }
+            if (ending.Length > 5)
+            {
+                throw new ArgumentException("Ending is too long, maximum 5 chars is allowed", nameof(ending));
+            }
+            if (ending.ToCharArray().ToList().Any(c => !AllowedAccountCharacters.Contains(c)))
+            {
+                throw new ArgumentException($"Illegal characters: {ending}, only these are allowed: {AllowedAccountCharacters}", nameof(ending));
+            }
+
+            var found = false;
+            var password = string.Empty;
+            while (!found)
+            {
+                password = GeneratePassword();
+                var account = _localAccountService.GetAccount(AccountIdLocator.BySecretPhrase(password));
+                if (account.AccountRs.EndsWith(ending))
+                {
+                    found = true;
+                }
+            }
+            return password;
         }
     }
 }
