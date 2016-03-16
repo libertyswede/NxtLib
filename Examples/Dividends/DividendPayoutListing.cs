@@ -16,13 +16,15 @@ namespace Dividends
 
         public void List(ulong transactionId)
         {
-            var attachment = GetTransactionAttachment(transactionId);
+
+            var transaction = _transactionService.GetTransaction(GetTransactionLocator.ByTransactionId(transactionId)).Result;
+            var attachment = (ColoredCoinsDividendPaymentAttachment)transaction.Attachment;
             _asset = _assetService.GetAsset(attachment.AssetId, true).Result;
             var decimalMultiplier = (decimal)Math.Pow(10, _asset.Decimals);
             var assetOwners = GetOwners(attachment.Height).Where(FilterOwners()).OrderByDescending(d => d.QuantityQnt).ToList();
             var totalSpent = Amount.CreateAmountFromNqt(assetOwners.Sum(o => o.QuantityQnt) * attachment.AmountPerQnt.Nqt);
 
-            Console.WriteLine("Using dividend transaction: {0}", transactionId);
+            Console.WriteLine($"Using dividend transaction: {transactionId} ({transaction.BlockTimestamp?.ToString("yyyy-MM-dd HH:mm")})");
             Console.WriteLine("Fetching dividend payments for asset: {0} ({1})", _asset.Name, _asset.AssetId);
             Console.WriteLine("Total in dividend: {0} NXT", totalSpent.Nxt);
             Console.WriteLine("Per share: {0} NXT", attachment.AmountPerQnt.Nxt * decimalMultiplier);
@@ -38,12 +40,6 @@ namespace Dividends
             }
 
             Console.WriteLine("----------------------------------------------------------------");
-        }
-
-        private ColoredCoinsDividendPaymentAttachment GetTransactionAttachment(ulong transactionId)
-        {
-            var transaction = _transactionService.GetTransaction(GetTransactionLocator.ByTransactionId(transactionId)).Result;
-            return (ColoredCoinsDividendPaymentAttachment)transaction.Attachment;
         }
 
         private Func<AssetOwner, bool> FilterOwners()
