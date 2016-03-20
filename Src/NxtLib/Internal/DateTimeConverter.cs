@@ -1,12 +1,12 @@
 ﻿using System;
 using Newtonsoft.Json;
+using NxtLib.Local;
 
 namespace NxtLib.Internal
 {
     internal class DateTimeConverter : JsonConverter
     {
         private static readonly DateTime Jan1St1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        private static readonly DateTime Nov24Th2013 = new DateTime(2013, 11, 24, 12, 0, 0, DateTimeKind.Utc);
         public const long EpochBeginning = 1385294400000; // milliseconds between 1970-01-01 00:00:00 and 2013-11-24 12:00:00
 
         internal int GetNxtTimestamp(DateTime dateTime)
@@ -16,7 +16,7 @@ namespace NxtLib.Internal
 
         internal DateTime GetFromNxtTime(int dateTime)
         {
-            return Nov24Th2013.AddSeconds(dateTime);
+            return Constants.EpochBeginning.AddSeconds(dateTime);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
