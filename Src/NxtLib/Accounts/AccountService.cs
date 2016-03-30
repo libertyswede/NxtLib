@@ -149,6 +149,21 @@ namespace NxtLib.Accounts
             return await Get<BalanceReply>("getBalance", queryParameters);
         }
 
+        public async Task<FundingMonitorReply> GetFundingMonitor(HoldingType? holdingType = null, ulong? holding = null,
+            string property = null, bool? includeMonitoredAccounts = null, Account account = null, string adminPassword = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+
+            queryParameters.AddIfHasValue(Parameters.Holding, holding);
+            queryParameters.AddIfHasValue(Parameters.HoldingType, holdingType != null ? (int?)holdingType : null);
+            queryParameters.AddIfHasValue(Parameters.Property, property);
+            queryParameters.AddIfHasValue(Parameters.IncludeMonitoredAccounts, includeMonitoredAccounts);
+            queryParameters.AddIfHasValue(Parameters.Account, holding);
+            queryParameters.AddIfHasValue(Parameters.AdminPassword, adminPassword);
+
+            return await Post<FundingMonitorReply>("getFundingMonitor", queryParameters);
+        }
+
         public async Task<GuaranteedBalanceReply> GetGuaranteedBalance(Account account,
             int? numberOfConfirmations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
@@ -226,7 +241,7 @@ namespace NxtLib.Accounts
             queryParameters.AddIfHasValue(Parameters.Property, property);
             queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
             queryParameters.AddIfHasValue(Parameters.Account, holding);
-            queryParameters.AddIfHasValue(Parameters.Holding, holding);
+            queryParameters.AddIfHasValue(Parameters.AdminPassword, adminPassword);
 
             return await Post<StoppedReply>("stopFundingMonitor", queryParameters);
         }

@@ -124,6 +124,7 @@ namespace NxtLib.Internal
         internal const string IncludeFinished = "includeFinished";
         internal const string IncludeHoldingInfo = "includeHoldingInfo";
         internal const string IncludeLessors = "includeLessors";
+        internal const string IncludeMonitoredAccounts = "includeMonitoredAccounts";
         internal const string IncludePeerInfo = "includePeerInfo";
         internal const string IncludePhasingResult = "includePhasingResult";
         internal const string IncludeTransaction = "includeTransaction";
