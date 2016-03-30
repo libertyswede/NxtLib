@@ -1,4 +1,4 @@
-namespace NxtLib.Shuffling
+namespace NxtLib
 {
     public enum HoldingType
     {

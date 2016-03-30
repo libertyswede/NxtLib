@@ -133,6 +133,7 @@ namespace NxtLib.Internal
         internal const string InitialSellSupply = "initialSellSupply";
         internal const string InitialSupply = "initialSupply";
         internal const string InStockOnly = "inStockOnly";
+        internal const string Interval = "interval";
         internal const string IsCompressed = "isCompressed";
         internal const string IsPhasingSafe = "isPhasingSafe";
         internal const string IssuanceHeight = "issuanceHeight";
@@ -256,6 +257,7 @@ namespace NxtLib.Internal
         internal const string TaggedData = "taggedData";
         internal const string TagPrefix = "tagPrefix";
         internal const string Tags = "tags";
+        internal const string Threshold = "threshold";
         internal const string Timestamp = "timestamp";
         internal const string Timeout = "timeout";
         internal const string Token = "token";

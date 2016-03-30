@@ -59,5 +59,8 @@ namespace NxtLib.Accounts
 
         Task<TransactionCreatedReply> SetAccountProperty(CreateTransactionParameters parameters, string property,
             string value = null, Account recipient = null);
+
+        Task<StartedReply> StartFundingMonitor(string property, string secretPhrase, Amount amount = null,
+            Amount threshold = null, int? interval = null, HoldingType? holdingType = null, ulong? holding = null);
     }
 }
