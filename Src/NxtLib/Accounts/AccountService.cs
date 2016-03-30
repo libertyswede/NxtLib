@@ -216,6 +216,21 @@ namespace NxtLib.Accounts
             return await Post<StartedReply>("startFundingMonitor", queryParameters);
         }
 
+        public async Task<StoppedReply> StopFundingMonitor(HoldingType? holdingType = null, ulong? holding = null,
+            string property = null, string secretPhrase = null, Account account = null, string adminPassword = null)
+        {
+            var queryParameters = new Dictionary<string, string>();
+
+            queryParameters.AddIfHasValue(Parameters.Holding, holding);
+            queryParameters.AddIfHasValue(Parameters.HoldingType, holdingType != null ? (int?)holdingType : null);
+            queryParameters.AddIfHasValue(Parameters.Property, property);
+            queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
+            queryParameters.AddIfHasValue(Parameters.Account, holding);
+            queryParameters.AddIfHasValue(Parameters.Holding, holding);
+
+            return await Post<StoppedReply>("stopFundingMonitor", queryParameters);
+        }
+
         private static Dictionary<string, string> BuildQueryParametersForGetAccountBlocks(Account account,
             bool includeTransactions, DateTime? timeStamp, int? firstIndex,
             int? lastIndex, ulong? requireBlock, ulong? requireLastBlock)

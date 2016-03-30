@@ -62,5 +62,8 @@ namespace NxtLib.Accounts
 
         Task<StartedReply> StartFundingMonitor(string property, string secretPhrase, Amount amount = null,
             Amount threshold = null, int? interval = null, HoldingType? holdingType = null, ulong? holding = null);
+
+        Task<StoppedReply> StopFundingMonitor(HoldingType? holdingType = null, ulong? holding = null,
+            string property = null, string secretPhrase = null, Account account = null, string adminPassword = null);
     }
 }
