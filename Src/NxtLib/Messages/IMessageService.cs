@@ -42,5 +42,8 @@ namespace NxtLib.Messages
             BinaryHexString encryptedMessageData, BinaryHexString encryptedMessageNonce,
             bool? messageToEncryptIsText = null, bool? compressMessageToEncrypt = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
+
+        Task<IEnumerable<byte>> DownloadPrunableMessage(ulong transaction, string secretPhrase = null,
+            bool? retrieve = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
     }
 }

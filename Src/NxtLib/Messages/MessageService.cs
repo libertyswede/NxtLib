@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -31,7 +32,6 @@ namespace NxtLib.Messages
         public async Task<DecryptedDataReply> DecryptDataFrom(Account account, BinaryHexString data, BinaryHexString nonce, 
             bool uncompressDecryptedMessage, string secretPhrase)
         {
-
             var queryParameters = new Dictionary<string, string>
             {
                 {Parameters.Account, account.AccountId.ToString()},
@@ -42,6 +42,25 @@ namespace NxtLib.Messages
                 {Parameters.DecryptedMessageIsText, false.ToString()}
             };
             return await Get<DecryptedDataReply>("decryptFrom", queryParameters);
+        }
+
+        public async Task<IEnumerable<byte>> DownloadPrunableMessage(ulong transaction, string secretPhrase = null,
+            bool? retrieve = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transaction.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
+            queryParameters.AddIfHasValue(Parameters.Retrieve, retrieve);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+
+            var url = BuildUrl("downloadPrunableMessage", queryParameters);
+
+            using (var client = new HttpClient())
+            using (var response = await client.GetAsync(url))
+            using (var content = response.Content)
+            {
+                return await content.ReadAsByteArrayAsync();
+            }
         }
 
         public async Task<EncryptedDataReply> EncryptTextTo(Account recipient, string messageToEncrypt,

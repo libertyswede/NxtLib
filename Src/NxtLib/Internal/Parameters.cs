@@ -227,6 +227,7 @@ namespace NxtLib.Internal
         internal const string RequirePassword = "requirePassword";
         internal const string RequirePost = "requirePost";
         internal const string ReserveSupply = "reserveSupply";
+        internal const string Retrieve = "retrieve";
         internal const string RevealedSecret = "revealedSecret";
         internal const string RevealedSecretIsText = "revealedSecretIsText";
         internal const string Ruleset = "ruleset";
