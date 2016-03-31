@@ -4,7 +4,7 @@ namespace NxtLib.Local
 {
     public class Constants
     {
-        public const string NxtVersionSupport = "1.7.5";
+        public const string NxtVersionSupport = "1.8.0e";
         public static readonly Account GenesisAccount = 1739068987193023818;
         public static readonly DateTime EpochBeginning = new DateTime(2013, 11, 24, 12, 0, 0, DateTimeKind.Utc);
         public const ulong GenesisBlockId = 2680262203532249785;
