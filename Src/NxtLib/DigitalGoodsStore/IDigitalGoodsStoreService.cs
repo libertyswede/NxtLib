@@ -36,7 +36,8 @@ namespace NxtLib.DigitalGoodsStore
         Task<PurchasesReply> GetPendingPurchases(Account seller, int? firstIndex = null, int? lastIndex = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
-        Task<PurchaseReply> GetPurchase(ulong purchaseId, ulong? requireBlock = null, ulong? requireLastBlock = null);
+        Task<PurchaseReply> GetPurchase(ulong purchaseId, string secretPhrase = null,
+            BinaryHexString sharedKey = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<PuchaseCountReply> GetPurchaseCount(Account seller = null, Account buyer = null,
             bool? withPublicFeedbacksOnly = null, bool? completed = null, ulong? requireBlock = null,

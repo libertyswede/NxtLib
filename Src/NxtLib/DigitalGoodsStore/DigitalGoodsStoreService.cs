@@ -132,10 +132,12 @@ namespace NxtLib.DigitalGoodsStore
             return await Get<PurchasesReply>("getDGSPendingPurchases", queryParameters);
         }
 
-        public async Task<PurchaseReply> GetPurchase(ulong purchaseId, ulong? requireBlock = null,
-            ulong? requireLastBlock = null)
+        public async Task<PurchaseReply> GetPurchase(ulong purchaseId, string secretPhrase = null,
+            BinaryHexString sharedKey = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Purchase, purchaseId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
+            queryParameters.AddIfHasValue(Parameters.SharedKey, sharedKey);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<PurchaseReply>("getDGSPurchase", queryParameters);
