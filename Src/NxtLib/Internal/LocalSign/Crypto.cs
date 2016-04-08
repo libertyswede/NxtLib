@@ -37,6 +37,17 @@ namespace NxtLib.Internal.LocalSign
             return (ulong)(long)bigInteger;
         }
 
+        internal byte[] GetSharedSecret(byte[] account, byte[] nonce, string secretPhrase)
+        {
+            var sharedSecret = new byte[32];
+            Curve25519.Curve(sharedSecret, GetPrivateKeyBytes(secretPhrase), account);
+            for (var i = 0; i < 32; i++)
+            {
+                sharedSecret[i] ^= nonce[i];
+            }
+            return ComputeHash(sharedSecret);
+        }
+
         internal byte[] AesEncryptTo(byte[] recipient, byte[] message, byte[] nonce, string secretPhrase)
         {
             var senderSecretBytes = GetPrivateKeyBytes(secretPhrase);

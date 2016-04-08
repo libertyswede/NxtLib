@@ -13,6 +13,7 @@ namespace NxtLib.Local
         BinaryHexString EncryptDataTo(BinaryHexString recipientPublicKey, BinaryHexString data, BinaryHexString nonce, bool compress, string secretPhrase);
         string DecryptTextFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompress, string secretPhrase);
         byte[] DecryptDataFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompress, string secretPhrase);
+        BinaryHexString GetSharedKey(BinaryHexString accountPublicKey, BinaryHexString nonce, string secretPhrase);
     }
 
     public class LocalMessageService : ILocalMessageService
@@ -64,6 +65,14 @@ namespace NxtLib.Local
                 decrypted = _gzipCompressor.GzipUncompress(decrypted);
             }
             return decrypted;
+        }
+
+        public BinaryHexString GetSharedKey(BinaryHexString accountPublicKey, BinaryHexString nonce, string secretPhrase)
+        {
+            var accountBytes = accountPublicKey.ToBytes().ToArray();
+            var nonceBytes = nonce.ToBytes().ToArray();
+            var sharedSecret = _crypto.GetSharedSecret(accountBytes, nonceBytes, secretPhrase);
+            return sharedSecret;
         }
     }
 }
