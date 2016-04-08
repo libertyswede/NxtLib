@@ -8,9 +8,7 @@ namespace NxtLib.Shuffling
             bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
-        Task<ShufflingsReply> GetAllShufflings(bool? includeFinished = null,
-            bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null);
+        Task<ShufflingsReply> GetAllShufflings(bool? includeFinished = null, bool? includeHoldingInfo = null, bool? finishedOnly = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<ShufflingsReply> GetAssignedShufflings(Account account, bool? includeHoldingInfo = null,
             int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null);

@@ -27,12 +27,13 @@ namespace NxtLib.Shuffling
         }
 
         public async Task<ShufflingsReply> GetAllShufflings(bool? includeFinished = null,
-            bool? includeHoldingInfo = null, int? firstIndex = null, int? lastIndex = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null)
+            bool? includeHoldingInfo = null, bool? finishedOnly = null, int? firstIndex = null, 
+            int? lastIndex = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
             queryParameters.AddIfHasValue(Parameters.IncludeFinished, includeFinished);
             queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
+            queryParameters.AddIfHasValue(Parameters.FinishedOnly, finishedOnly);
             queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
