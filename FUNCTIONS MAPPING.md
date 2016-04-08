@@ -181,6 +181,7 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | getPrunableMessage | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Messages/MessageService.cs) |  | 
 | getPrunableMessages | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Messages/MessageService.cs) |  | 
 | getSellOffers | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
+| getSharedKey | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Messages/MessageService.cs) |  | 
 | getShufflers | [ShufflingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Shuffling/ShufflingService.cs) |  | 
 | getShuffling | [ShufflingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Shuffling/ShufflingService.cs) |  | 
 | getShufflingParticipants | [ShufflingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Shuffling/ShufflingService.cs) |  | 
