@@ -73,7 +73,7 @@ namespace NxtLib.VotingSystem
         }
 
         public async Task<GetPollsReply> GetPolls(Account account = null, int? firstIndex = null, int? lastIndex = null,
-            DateTime? timestamp = null, bool? includeFinished = null, ulong? requireBlock = null,
+            DateTime? timestamp = null, bool? includeFinished = null, bool? finishedOnly = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string>();
@@ -82,6 +82,7 @@ namespace NxtLib.VotingSystem
             queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
             queryParameters.AddIfHasValue(Parameters.Timestamp, timestamp);
             queryParameters.AddIfHasValue(Parameters.IncludeFinished, includeFinished);
+            queryParameters.AddIfHasValue(Parameters.FinishedOnly, finishedOnly);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GetPollsReply>("getPolls", queryParameters);

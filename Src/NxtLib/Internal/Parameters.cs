@@ -93,6 +93,7 @@ namespace NxtLib.Internal
         internal const string FeeNqt = "feeNQT";
         internal const string File = "file";
         internal const string Filename = "filename";
+        internal const string FinishedOnly = "finishedOnly";
         internal const string FinishHeight = "finishHeight";
         internal const string FirstIndex = "firstIndex";
         internal const string ForgedBalanceNqt = "forgedBalanceNQT";
