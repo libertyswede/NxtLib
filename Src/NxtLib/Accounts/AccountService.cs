@@ -140,10 +140,11 @@ namespace NxtLib.Accounts
         }
 
         public async Task<BalanceReply> GetBalance(Account account, bool? includeEffectiveBalance = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null)
+            int? height = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(Parameters.IncludeEffectiveBalance, includeEffectiveBalance);
+            queryParameters.AddIfHasValue(Parameters.Height, height);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<BalanceReply>("getBalance", queryParameters);

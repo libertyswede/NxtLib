@@ -43,8 +43,8 @@ namespace NxtLib.Accounts
         Task<AccountPublicKeyReply> GetAccountPublicKey(Account account, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
 
-        Task<BalanceReply> GetBalance(Account account, bool? includeEffectiveBalance = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null);
+        Task<BalanceReply> GetBalance(Account account, bool? includeEffectiveBalance = null, int? height = null, 
+            ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<GuaranteedBalanceReply> GetGuaranteedBalance(Account account, int? numberOfConfirmations = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
