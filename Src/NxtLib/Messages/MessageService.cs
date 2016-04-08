@@ -124,11 +124,13 @@ namespace NxtLib.Messages
             return await Get<SharedKeyReply>("getSharedKey", queryParameters);
         }
 
-        public async Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null)
+        public async Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null, string sharedKey = null,
+            bool? retrieve = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
             queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
+            queryParameters.AddIfHasValue(Parameters.SharedKey, sharedKey);
+            queryParameters.AddIfHasValue(Parameters.Retrieve, retrieve);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<ReadMessageReply>("readMessage", queryParameters);

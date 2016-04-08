@@ -29,8 +29,8 @@ namespace NxtLib.Messages
 
         Task<SharedKeyReply> GetSharedKey(Account account, string secretPhrase, BinaryHexString nonce);
 
-        Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null);
+        Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null, string sharedKey = null,
+            bool? retrieve = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<TransactionCreatedReply> SendMessage(CreateTransactionParameters parameters, Account recipient = null);
 
