@@ -113,6 +113,17 @@ namespace NxtLib.Messages
             return await Get<PrunableMessagesReply>("getPrunableMessages", queryParameters);
         }
 
+        public async Task<SharedKeyReply> GetSharedKey(Account account, string secretPhrase, BinaryHexString nonce)
+        {
+            var queryParameters = new Dictionary<string, string>
+            {
+                {Parameters.Account, account.AccountId.ToString()},
+                {Parameters.SecretPhrase, secretPhrase},
+                {Parameters.Nonce, nonce.ToHexString()}
+            };
+            return await Get<SharedKeyReply>("getSharedKey", queryParameters);
+        }
+
         public async Task<ReadMessageReply> ReadMessage(ulong transactionId, string secretPhrase = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
