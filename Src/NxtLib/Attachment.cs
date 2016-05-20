@@ -717,7 +717,10 @@ namespace NxtLib
             ShufflingStateHash = GetAttachmentValue<string>(jToken, Parameters.ShufflingStateHash);
 
             var array = (JArray)jToken.SelectToken(Parameters.Data);
-            Data = array.ToObject<string[]>().Select(s => new BinaryHexString(s));
+            if (array != null)
+            {
+                Data = array.ToObject<string[]>().Select(s => new BinaryHexString(s));
+            }   
         }
     }
 
