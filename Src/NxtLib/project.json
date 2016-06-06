@@ -34,10 +34,10 @@
     },
     "net40": {
       "dependencies": {
-        "Microsoft.Bcl.Async": "1.0.168"
+        "Microsoft.Bcl.Async": "1.0.168",
+        "Microsoft.Net.Http": "2.2.29"
       },
       "frameworkAssemblies": {
-        "System.Net.Http": "",
         "System.Numerics": ""
       }
     }
