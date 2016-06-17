@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using NxtLib.Internal;
 
-namespace NxtLib.Shuffling
+namespace NxtLib
 {
     public class HoldingInfo
     {

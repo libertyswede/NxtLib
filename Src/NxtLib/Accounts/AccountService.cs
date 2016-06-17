@@ -82,8 +82,8 @@ namespace NxtLib.Accounts
 
         public async Task<GetAccountLedgerReply> GetAccountLedger(Account account, int? firstIndex = null,
             int? lastIndex = null, string eventType = null, ulong? @event = null, string holdingType = null,
-            ulong? holding = null, bool? includeTransactions = null, ulong? requireBlock = null,
-            ulong? requireLastBlock = null)
+            ulong? holding = null, bool? includeTransactions = null, bool? includeHoldingInfo = null, 
+            ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
             queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
@@ -93,16 +93,18 @@ namespace NxtLib.Accounts
             queryParameters.AddIfHasValue(Parameters.HoldingType, holdingType);
             queryParameters.AddIfHasValue(Parameters.Holding, holding);
             queryParameters.AddIfHasValue(Parameters.IncludeTransactions, includeTransactions);
+            queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
             return await Get<GetAccountLedgerReply>("getAccountLedger", queryParameters);
         }
 
         public async Task<GetAccountLedgerEntryReply> GetAccountLedgerEntry(int ledgerId,
-            bool? includeTransaction = null)
+            bool? includeTransaction = null, bool? includeHoldingInfo = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.LedgerId, ledgerId.ToString()}};
             queryParameters.AddIfHasValue(Parameters.IncludeTransaction, includeTransaction);
+            queryParameters.AddIfHasValue(Parameters.IncludeHoldingInfo, includeHoldingInfo);
             return await Get<GetAccountLedgerEntryReply>("getAccountLedgerEntry", queryParameters);
         }
 

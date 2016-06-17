@@ -29,10 +29,11 @@ namespace NxtLib.Accounts
 
         Task<GetAccountLedgerReply> GetAccountLedger(Account account, int? firstIndex = null, int? lastIndex = null,
             string eventType = null, ulong? @event = null, string holdingType = null, ulong? holding = null,
-            bool? includeTransactions = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+            bool? includeTransactions = null, bool? includeHoldingInfo = null, ulong? requireBlock = null, 
+            ulong? requireLastBlock = null);
 
         Task<GetAccountLedgerEntryReply> GetAccountLedgerEntry(int ledgerId,
-            bool? includeTransaction = null);
+            bool? includeTransaction = null, bool? includeHoldingInfo = null);
 
         Task<AccountLessorsReply> GetAccountLessors(Account account, int? height = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);

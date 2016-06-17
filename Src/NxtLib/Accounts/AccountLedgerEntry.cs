@@ -28,6 +28,7 @@ namespace NxtLib.Accounts
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public int Height { get; set; }
+        public HoldingInfo HoldingInfo { get; set; }
 
         [JsonProperty(Parameters.Holding)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
