@@ -45,10 +45,11 @@ namespace NxtLib.Messages
         }
 
         public async Task<IEnumerable<byte>> DownloadPrunableMessage(ulong transaction, string secretPhrase = null,
-            bool? retrieve = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+            string sharedKey = null, bool? retrieve = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transaction.ToString()}};
             queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
+            queryParameters.AddIfHasValue(Parameters.SharedKey, sharedKey);
             queryParameters.AddIfHasValue(Parameters.Retrieve, retrieve);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
@@ -89,9 +90,10 @@ namespace NxtLib.Messages
         }
 
         public async Task<PrunableMessageReply> GetPrunableMessage(ulong transactionId, string secretPhrase = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null)
+            string sharedKey = null, ulong ? requireBlock = null, ulong? requireLastBlock = null)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Transaction, transactionId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.SharedKey, sharedKey);
             queryParameters.AddIfHasValue(Parameters.SecretPhrase, secretPhrase);
             queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
             queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);

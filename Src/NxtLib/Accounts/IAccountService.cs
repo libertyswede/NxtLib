@@ -47,6 +47,11 @@ namespace NxtLib.Accounts
         Task<BalanceReply> GetBalance(Account account, bool? includeEffectiveBalance = null, int? height = null, 
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
+        Task<FundingMonitorReply> GetFundingMonitor(HoldingType? holdingType = null, ulong? holding = null,
+            string property = null, bool? includeMonitoredAccounts = null, Account account = null, string adminPassword = null);
+
+        Task<FxtQuantityReply> GetFxtQuantity(Account account, ulong? requireBlock = null, ulong? requireLastBlock = null);
+
         Task<GuaranteedBalanceReply> GetGuaranteedBalance(Account account, int? numberOfConfirmations = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null);
 
@@ -66,8 +71,5 @@ namespace NxtLib.Accounts
 
         Task<StoppedReply> StopFundingMonitor(HoldingType? holdingType = null, ulong? holding = null,
             string property = null, string secretPhrase = null, Account account = null, string adminPassword = null);
-
-        Task<FundingMonitorReply> GetFundingMonitor(HoldingType? holdingType = null, ulong? holding = null,
-            string property = null, bool? includeMonitoredAccounts = null, Account account = null, string adminPassword = null);
     }
 }

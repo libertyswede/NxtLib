@@ -167,6 +167,14 @@ namespace NxtLib.Accounts
             return await Post<FundingMonitorReply>("getFundingMonitor", queryParameters);
         }
 
+        public async Task<FxtQuantityReply> GetFxtQuantity(Account account, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Account, account.AccountId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<FxtQuantityReply>("getFxtQuantity", queryParameters);
+        }
+
         public async Task<GuaranteedBalanceReply> GetGuaranteedBalance(Account account,
             int? numberOfConfirmations = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {

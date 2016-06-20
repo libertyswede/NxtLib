@@ -98,6 +98,7 @@ namespace NxtLib.Internal
         internal const string FirstIndex = "firstIndex";
         internal const string ForgedBalanceNqt = "forgedBalanceNQT";
         internal const string FullHash = "fullHash";
+        internal const string FxtAsset = "fxtAsset";
         internal const string Goods = "goods";
         internal const string GoodsData = "goodsData";
         internal const string GoodsIsText = "goodsIsText";

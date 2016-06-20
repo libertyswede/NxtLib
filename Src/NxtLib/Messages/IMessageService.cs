@@ -12,16 +12,20 @@ namespace NxtLib.Messages
         Task<DecryptedDataReply> DecryptDataFrom(Account account, BinaryHexString data, BinaryHexString nonce,
             bool uncompressDecryptedMessage, string secretPhrase);
 
+        Task<IEnumerable<byte>> DownloadPrunableMessage(ulong transaction, string secretPhrase = null,
+            string sharedKey = null, bool? retrieve = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
+
         Task<EncryptedDataReply> EncryptTextTo(Account recipient, string messageToEncrypt, bool compressMessageToEncrypt,
             string secretPhrase);
 
-        Task<EncryptedDataReply> EncryptDataTo(Account recipient, BinaryHexString messageToEncrypt, bool compressMessageToEncrypt, string secretPhrase);
+        Task<EncryptedDataReply> EncryptDataTo(Account recipient, BinaryHexString messageToEncrypt, bool compressMessageToEncrypt, 
+            string secretPhrase);
 
         Task<PrunableMessagesReply> GetAllPrunableMessages(int? firstIndex = null, int? lastIndex = null,
             DateTime? timestamp = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<PrunableMessageReply> GetPrunableMessage(ulong transactionId, string secretPhrase = null,
-            ulong? requireBlock = null, ulong? requireLastBlock = null);
+            string sharedKey = null, ulong ? requireBlock = null, ulong? requireLastBlock = null);
 
         Task<PrunableMessagesReply> GetPrunableMessages(Account account, Account otherAccount = null,
             string secretPhrase = null, int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null,
@@ -44,8 +48,5 @@ namespace NxtLib.Messages
             BinaryHexString encryptedMessageData, BinaryHexString encryptedMessageNonce,
             bool? messageToEncryptIsText = null, bool? compressMessageToEncrypt = null, ulong? requireBlock = null,
             ulong? requireLastBlock = null);
-
-        Task<IEnumerable<byte>> DownloadPrunableMessage(ulong transaction, string secretPhrase = null,
-            bool? retrieve = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
     }
 }

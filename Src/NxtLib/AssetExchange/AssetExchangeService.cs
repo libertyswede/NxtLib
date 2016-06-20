@@ -271,6 +271,18 @@ namespace NxtLib.AssetExchange
             return await Get<AssetDeletesReply>("getAssetDeletes", queryParameters);
         }
 
+        public async Task<AssetDividendsReply> GetAssetDividends(ulong assetId, int? firstIndex = null, int? lastIndex = null, 
+            DateTime? timestamp = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Asset, assetId.ToString()}};
+            queryParameters.AddIfHasValue(Parameters.FirstIndex, firstIndex);
+            queryParameters.AddIfHasValue(Parameters.LastIndex, lastIndex);
+            queryParameters.AddIfHasValue(Parameters.Timestamp, timestamp);
+            queryParameters.AddIfHasValue(Parameters.RequireBlock, requireBlock);
+            queryParameters.AddIfHasValue(Parameters.RequireLastBlock, requireLastBlock);
+            return await Get<AssetDividendsReply>("getAssetDividends", queryParameters);
+        }
+
         public async Task<AssetTransfersReply> GetAssetTransfers(AssetIdOrAccountId assetIdOrAccountId,
             int? firstIndex = null, int? lastIndex = null, DateTime? timestamp = null, bool? includeAssetInfo = null,
             ulong? requireBlock = null, ulong? requireLastBlock = null)
