@@ -17,6 +17,7 @@ namespace NxtLib
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong CumulativeDifficulty { get; set; }
+        public List<T> ExecutedPhasedTransactions { get; set; }
         public string GenerationSignature { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
