@@ -24,6 +24,7 @@ namespace NxtLib
         public ulong? Recipient { get; set; }
         public string RecipientRs { get; set; }
         public BinaryHexString ReferencedTransactionFullHash { get; set; }
+        public bool Phased { get; set; }
         public TransactionPhasing Phasing { get; set; }
         public PublicKeyAnnouncement PublicKeyAnnouncement { get; set; }
         public ulong Sender { get; set; }
