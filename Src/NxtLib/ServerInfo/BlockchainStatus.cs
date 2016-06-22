@@ -23,6 +23,7 @@ namespace NxtLib.ServerInfo
         [JsonProperty(PropertyName = Parameters.LastBlock)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
         public ulong LastBlockId { get; set; }
+        public int LedgerTrimKeep { get; set; }
         public int MaxPrunableLifetime { get; set; }
         public int MaxRollback { get; set; }
         public int NumberOfBlocks { get; set; }

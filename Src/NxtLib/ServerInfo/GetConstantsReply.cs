@@ -33,6 +33,7 @@ namespace NxtLib.ServerInfo
         public int MaxArbitraryMessageLength { get; set; }
         public int MaxBlockPayloadLength { get; set; }
         public int MaxPhasingDuration { get; set; }
+        public int MaxPrunableMessageLength { get; set; }
         public int MaxTaggedDataDataLength { get; set; }
 
         [JsonConverter(typeof(DictionaryConverter))]
