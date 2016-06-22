@@ -9,7 +9,7 @@
   "releaseNotes": "NxtLib is a typed wrapper for the Json API in the Nxt platform ( http://nxt.org/ ) It currently supports NXT version 1.8.3",
 
   "dependencies": {
-    "Newtonsoft.Json": "7.0.1"
+    "Newtonsoft.Json": "8.0.3"
   },
 
   "frameworks": {
