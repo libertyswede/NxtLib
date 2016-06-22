@@ -7,7 +7,6 @@ namespace NxtLib.ServerInfo
         public int AvailableProcessors { get; set; }
         public ulong FreeMemory { get; set; }
         public bool IsOffline { get; set; }
-        public ulong LastBlock { get; set; }
         public bool NeedsAdminPassword { get; set; }
         public long MaxMemory { get; set; }
         public int NumberOfAccountLeases { get; set; }
