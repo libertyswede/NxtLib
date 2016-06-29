@@ -178,6 +178,17 @@ namespace NxtLib.Local
                     }
                 }
             }
+
+            position <<= 1;
+            if ((flags & position) != 0)
+            {
+                transaction.PublicKeyAnnouncement = new PublicKeyAnnouncement(reader, (byte)transaction.Version);
+                if (parameters.RecipientPublicKey != null && !parameters.RecipientPublicKey.Equals(transaction.PublicKeyAnnouncement.RecipientPublicKey))
+                {
+                    throw new ValidationException(nameof(transaction.PublicKeyAnnouncement.RecipientPublicKey), parameters.RecipientPublicKey, transaction.PublicKeyAnnouncement.RecipientPublicKey);
+                }
+            }
+
             return transaction;
         }
 

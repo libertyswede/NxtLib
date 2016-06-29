@@ -192,6 +192,11 @@ namespace NxtLib
             RecipientPublicKey = recipientPublicKey;
         }
 
+        public PublicKeyAnnouncement(BinaryReader reader, byte transactionVersion) : base (reader, transactionVersion)
+        {
+            RecipientPublicKey = reader.ReadBytes(32);
+        }
+
         internal static PublicKeyAnnouncement ParseJson(JObject jObject)
         {
             JValue announcement;
