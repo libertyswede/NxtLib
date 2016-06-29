@@ -104,7 +104,7 @@ namespace NxtLib.Local
 
             if ((recipient?.AccountId ?? 0) != (transaction?.Recipient ?? 0))
             {
-                throw new ValidationException(nameof(transaction.Recipient), recipient.AccountId, transaction.Recipient);
+                throw new ValidationException(nameof(transaction.Recipient), recipient?.AccountId, transaction.Recipient);
             }
 
             if (!amount.Equals(transaction.Amount))
