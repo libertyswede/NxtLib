@@ -1,7 +1,9 @@
+using System;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
+using System.IO;
 
 namespace NxtLib.Local
 {
@@ -24,6 +26,116 @@ namespace NxtLib.Local
             var attachment = JObject.Parse(transactionCreatedReply.RawJsonReply).SelectToken($"{Parameters.TransactionJson}['{Parameters.Attachment}']");
             var signature = new BinaryHexString(_crypto.Sign(unsignedBytes, secretPhrase));
             return BuildSignedTransaction(transaction, referencedTransactionFullHash, signature, attachment);
+        }
+
+        public void VerifySendMoneyTransactionBytes(TransactionCreatedReply transactionCreatedReply, CreateTransactionByPublicKey parameters, 
+            Account recipient, Amount amount)
+        {
+            var byteArray = transactionCreatedReply.UnsignedTransactionBytes.ToBytes().ToArray();
+            using (var stream = new MemoryStream(byteArray))
+            using (var reader = new BinaryReader(stream))
+            {
+                var transaction = VerifyCommonProperties(reader, parameters, recipient, amount, TransactionSubType.PaymentOrdinaryPayment);
+
+                if (transaction.SubType != TransactionSubType.PaymentOrdinaryPayment)
+                {
+                    throw new ValidationException(nameof(transaction.SubType), TransactionSubType.PaymentOrdinaryPayment, transaction.SubType);
+                }
+            }
+        }
+
+        private static Transaction VerifyCommonProperties(BinaryReader reader, CreateTransactionByPublicKey parameters,
+            Account recipient, Amount amount, TransactionSubType transactionType)
+        {
+            var transaction = new Transaction();
+            var type = reader.ReadByte(); // 1
+            var subtype = reader.ReadByte(); // 2
+            transaction.SubType = TransactionTypeMapper.GetSubType(type, (byte)(subtype & 0x0F));
+            transaction.Version = (subtype & 0xF0) >> 4;
+            transaction.Timestamp = new DateTimeConverter().GetFromNxtTime(reader.ReadInt32()); // 6
+            transaction.Deadline = reader.ReadInt16(); // 8
+            transaction.SenderPublicKey = new BinaryHexString(reader.ReadBytes(32)); // 40
+            transaction.Recipient = reader.ReadUInt64(); // 48
+            transaction.Amount = Amount.CreateAmountFromNqt(reader.ReadInt64()); // 56
+            transaction.Fee = Amount.CreateAmountFromNqt(reader.ReadInt64()); // 64
+            transaction.ReferencedTransactionFullHash = new BinaryHexString(reader.ReadBytes(32)); // 96
+
+            if (transaction.ReferencedTransactionFullHash.ToBytes().All(b => b == 0))
+            {
+                transaction.ReferencedTransactionFullHash = "";
+            }
+
+            reader.ReadBytes(64); // signature, 160
+
+            var flags = 0;
+
+            if (transaction.Version > 0)
+            {
+                flags = reader.ReadInt32(); // 164
+                transaction.EcBlockHeight = reader.ReadInt32(); // 168
+                transaction.EcBlockId = reader.ReadUInt64(); // 176
+            }
+
+            if (!transaction.SenderPublicKey.Equals(parameters.PublicKey))
+            {
+                throw new ValidationException(nameof(transaction.SenderPublicKey), parameters.PublicKey, transaction.SenderPublicKey);
+            }
+
+            if (parameters.Deadline != transaction.Deadline)
+            {
+                throw new ValidationException(nameof(transaction.Deadline), parameters.Deadline, transaction.Deadline);
+            }
+
+            if ((recipient?.AccountId ?? 0) != (transaction?.Recipient ?? 0))
+            {
+                throw new ValidationException(nameof(transaction.Recipient), recipient.AccountId, transaction.Recipient);
+            }
+
+            if (!amount.Equals(transaction.Amount))
+            {
+                throw new ValidationException(nameof(transaction.Amount), amount, transaction.Amount);
+            }
+
+            if (parameters.ReferencedTransactionFullHash != null)
+            {
+                if (!parameters.ReferencedTransactionFullHash.Equals(transaction.ReferencedTransactionFullHash))
+                {
+                    throw new ValidationException(nameof(transaction.ReferencedTransactionFullHash), parameters.ReferencedTransactionFullHash, transaction.ReferencedTransactionFullHash);
+                }
+            }
+            else if (transaction.ReferencedTransactionFullHash.ToHexString() != "")
+            {
+                throw new ValidationException(nameof(transaction.ReferencedTransactionFullHash), parameters.ReferencedTransactionFullHash, transaction.ReferencedTransactionFullHash);
+            }
+
+            var attachmentConverter = new AttachmentConverter(reader, transaction.Version);
+            transaction.Attachment = attachmentConverter.GetAttachment(transactionType);
+
+            var position = 1;
+            ////non-encrypted, non-prunable message
+            if ((flags & position) != 0 || (transaction.Version == 0 && transactionType == TransactionSubType.MessagingArbitraryMessage))
+            {
+                transaction.Message = new Message(reader, (byte)transaction.Version);
+
+                if (parameters.Message.MessageIsText != transaction.Message.IsText)
+                {
+                    throw new ValidationException(nameof(transaction.Message.IsText), parameters.Message.MessageIsText, transaction.Message.IsText);
+                }
+                if (parameters.Message.MessageIsText && parameters.Message.Message != transaction.Message.MessageText)
+                {
+                    throw new ValidationException(nameof(transaction.Message.MessageText), parameters.Message.Message, transaction.Message.MessageText);
+                }
+                if (!parameters.Message.MessageIsText && !transaction.Message.Data.Equals(parameters.Message.Message))
+                {
+                    throw new ValidationException(nameof(transaction.Message.Data), parameters.Message.Message, transaction.Message.Data);
+                }
+            }
+            else if (parameters.Message != null && !parameters.Message.IsPrunable)
+            {
+                throw new ValidationException("Expected a message, but got null");
+            }
+
+            return transaction;
         }
 
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,
