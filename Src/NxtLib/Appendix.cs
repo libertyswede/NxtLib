@@ -6,11 +6,31 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.VotingSystem;
+using System.IO;
+using NxtLib.Local;
 
 namespace NxtLib
 {
     public abstract class Appendix
     {
+        internal readonly byte version;
+
+        protected Appendix()
+        {
+        }
+
+        protected Appendix(BinaryReader reader, byte transactionVersion)
+        {
+            if (transactionVersion == 0)
+            {
+                version = 0;
+            }
+            else
+            {
+                version = reader.ReadByte();
+            }
+        }
+
         protected static T GetAttachmentValue<T>(JToken attachments, string key)
         {
             var obj = ((JValue)attachments.SelectToken(key)).Value;
@@ -34,6 +54,23 @@ namespace NxtLib
             Data = IsText
                 ? Encoding.UTF8.GetBytes(message)
                 : ByteToHexStringConverter.ToBytesFromHexString(message).ToArray();
+        }
+
+        internal Message(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
+        {
+            var messageLength = reader.ReadInt32();
+            IsText = messageLength < 0;
+            if (messageLength < 0)
+            {
+                messageLength &= int.MaxValue;
+            }
+            if (messageLength > 1000)
+            {
+                throw new ValidationException("Invalid arbitrary message length: " + messageLength);
+            }
+            Data = reader.ReadBytes(messageLength);
+            MessageText = Encoding.UTF8.GetString(Data.ToBytes().ToArray(), 0, messageLength);
+            IsPrunable = false;
         }
 
         internal static Message ParseJson(JObject jObject)
