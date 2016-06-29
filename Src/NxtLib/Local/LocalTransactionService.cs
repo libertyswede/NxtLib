@@ -1,9 +1,9 @@
-using System;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
 using System.IO;
+using static NxtLib.CreateTransactionParameters;
 
 namespace NxtLib.Local
 {
@@ -151,6 +151,33 @@ namespace NxtLib.Local
                 throw new ValidationException("Expected a message, but got null");
             }
 
+            position <<= 1;
+            if ((flags & position) != 0)
+            {
+                transaction.EncryptedMessage = new EncryptedMessage(reader, (byte)transaction.Version);
+                var encryptedMessage = parameters.EncryptedMessage;
+
+                if (encryptedMessage.MessageIsText != transaction.EncryptedMessage.IsText)
+                {
+                    throw new ValidationException(nameof(transaction.EncryptedMessage.IsText), encryptedMessage.MessageIsText, transaction.EncryptedMessage.IsText);
+                }
+                if (encryptedMessage.CompressMessage != transaction.EncryptedMessage.IsCompressed)
+                {
+                    throw new ValidationException(nameof(transaction.EncryptedMessage.IsCompressed), encryptedMessage.CompressMessage, transaction.EncryptedMessage.IsCompressed);
+                }
+                if (!encryptedMessage.Message.Equals(transaction.EncryptedMessage.Data))
+                {
+                    throw new ValidationException(nameof(transaction.EncryptedMessage.MessageToEncrypt), encryptedMessage.Message, transaction.EncryptedMessage.MessageToEncrypt);
+                }
+                if (encryptedMessage is AlreadyEncryptedMessage)
+                {
+                    var alreadyEncryptedMessage = (AlreadyEncryptedMessage)parameters.EncryptedMessage;
+                    if (!alreadyEncryptedMessage.Nonce.Equals(transaction.EncryptedMessage.Nonce))
+                    {
+                        throw new ValidationException(nameof(transaction.EncryptedMessage.Nonce), alreadyEncryptedMessage.Nonce, transaction.EncryptedMessage.Nonce);
+                    }
+                }
+            }
             return transaction;
         }
 

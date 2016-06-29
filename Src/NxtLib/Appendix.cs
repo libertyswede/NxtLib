@@ -117,6 +117,19 @@ namespace NxtLib
         protected EncryptedMessageBase()
         {
         }
+
+        public EncryptedMessageBase(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
+        {
+            var length = reader.ReadInt32();
+            IsText = length < 0;
+            if (length < 0)
+            {
+                length &= int.MaxValue;
+            }
+            Data = reader.ReadBytes(length);
+            Nonce = reader.ReadBytes(32);
+            IsCompressed = version != 2;
+        }
     }
 
     public class EncryptedMessage : EncryptedMessageBase
@@ -132,6 +145,10 @@ namespace NxtLib
         }
 
         public EncryptedMessage()
+        {
+        }
+
+        public EncryptedMessage(BinaryReader reader, byte version) : base(reader, version)
         {
         }
 
