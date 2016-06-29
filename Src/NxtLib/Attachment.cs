@@ -360,6 +360,13 @@ namespace NxtLib
         }
     }
 
+    public class MessagingArbitraryMessageAttachment : Attachment
+    {
+        internal MessagingArbitraryMessageAttachment()
+        {
+        }
+    }
+
     public class MessagingPollCreationAttachment : Attachment
     {
         public string Description { get; set; }

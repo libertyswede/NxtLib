@@ -39,7 +39,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.MessagingAliasBuy, value => new MessagingAliasBuyAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasDelete, value => new MessagingAliasDeleteAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasSell, value => new MessagingAliasSellAttachment(value));
-            attachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, value => null); // Messages are stored directly on the transaction object
+            attachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, value => new MessagingArbitraryMessageAttachment());
             //attachmentFuncs.Add(TransactionSubType.MessagingHubTerminalAnnouncement, TODO: .... );
             attachmentFuncs.Add(TransactionSubType.MessagingPollCreation, value => new MessagingPollCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingPhasingVoteCasting, value => new MessagingPhasingVoteCasting(value));
