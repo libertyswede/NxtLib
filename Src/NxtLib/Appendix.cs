@@ -167,6 +167,10 @@ namespace NxtLib
 
     public class EncryptToSelfMessage : EncryptedMessageBase
     {
+        public EncryptToSelfMessage(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
+        {
+        }
+
         private EncryptToSelfMessage(JToken messageToken)
             : base(messageToken)
         {

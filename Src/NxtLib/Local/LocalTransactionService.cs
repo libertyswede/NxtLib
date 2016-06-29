@@ -193,6 +193,38 @@ namespace NxtLib.Local
                 }
             }
 
+            position <<= 1;
+            if ((flags & position) != 0)
+            {
+                transaction.EncryptToSelfMessage = new EncryptToSelfMessage(reader, (byte)transaction.Version);
+                var encryptedMessage = parameters.EncryptedMessageToSelf;
+
+                if (encryptedMessage.MessageIsText != transaction.EncryptToSelfMessage.IsText)
+                {
+                    throw new ValidationException(nameof(transaction.EncryptToSelfMessage.IsText), encryptedMessage.MessageIsText, transaction.EncryptToSelfMessage.IsText);
+                }
+                if (encryptedMessage.CompressMessage != transaction.EncryptToSelfMessage.IsCompressed)
+                {
+                    throw new ValidationException(nameof(transaction.EncryptToSelfMessage.IsCompressed), encryptedMessage.CompressMessage, transaction.EncryptToSelfMessage.IsCompressed);
+                }
+                if (!encryptedMessage.Message.Equals(transaction.EncryptToSelfMessage.Data))
+                {
+                    throw new ValidationException(nameof(transaction.EncryptToSelfMessage.MessageToEncrypt), encryptedMessage.Message, transaction.EncryptToSelfMessage.MessageToEncrypt);
+                }
+                if (encryptedMessage is AlreadyEncryptedMessageToSelf)
+                {
+                    var alreadyEncryptedMessage = (AlreadyEncryptedMessageToSelf)parameters.EncryptedMessageToSelf;
+                    if (!alreadyEncryptedMessage.Nonce.Equals(transaction.EncryptToSelfMessage.Nonce))
+                    {
+                        throw new ValidationException(nameof(transaction.EncryptToSelfMessage.Nonce), alreadyEncryptedMessage.Nonce, transaction.EncryptToSelfMessage.Nonce);
+                    }
+                }
+            }
+            else if (parameters.EncryptedMessageToSelf != null)
+            {
+                throw new ValidationException("Expected an encrypted to self message, but got null");
+            }
+
             return transaction;
         }
 
