@@ -82,5 +82,23 @@ namespace NxtLib
         {
             return Nqt < other.Nqt ? -1 : (Nqt > other.Nqt ? 1 : 0);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            Amount other = obj as Amount;
+
+            if (other == null)
+                return false;
+
+            return other.Nqt == Nqt;
+        }
+
+        public override int GetHashCode()
+        {
+            return Nqt.GetHashCode();
+        }
     }
 }
