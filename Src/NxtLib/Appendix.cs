@@ -148,7 +148,7 @@ namespace NxtLib
         {
         }
 
-        public EncryptedMessage(BinaryReader reader, byte version) : base(reader, version)
+        public EncryptedMessage(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
         {
         }
 
