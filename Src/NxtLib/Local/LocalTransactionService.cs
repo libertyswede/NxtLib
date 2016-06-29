@@ -178,6 +178,10 @@ namespace NxtLib.Local
                     }
                 }
             }
+            else if (parameters.EncryptedMessage != null && !parameters.EncryptedMessage.IsPrunable)
+            {
+                throw new ValidationException("Expected an encrypted message, but got null");
+            }
 
             position <<= 1;
             if ((flags & position) != 0)
