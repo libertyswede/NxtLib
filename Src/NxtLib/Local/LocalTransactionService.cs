@@ -44,6 +44,22 @@ namespace NxtLib.Local
             }
         }
 
+        public void VerifySendMessageTransactionBytes(TransactionCreatedReply transactionCreatedReply, CreateTransactionByPublicKey parameters,
+            Account recipient)
+        {
+            var byteArray = transactionCreatedReply.UnsignedTransactionBytes.ToBytes().ToArray();
+            using (var stream = new MemoryStream(byteArray))
+            using (var reader = new BinaryReader(stream))
+            {
+                var transaction = VerifyCommonProperties(reader, parameters, recipient, Amount.Zero, TransactionSubType.MessagingArbitraryMessage);
+
+                if (transaction.SubType != TransactionSubType.MessagingArbitraryMessage)
+                {
+                    throw new ValidationException(nameof(transaction.SubType), TransactionSubType.MessagingArbitraryMessage, transaction.SubType);
+                }
+            }
+        }
+
         private static Transaction VerifyCommonProperties(BinaryReader reader, CreateTransactionByPublicKey parameters,
             Account recipient, Amount amount, TransactionSubType transactionType)
         {
