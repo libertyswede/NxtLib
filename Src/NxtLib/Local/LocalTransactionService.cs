@@ -4,6 +4,7 @@ using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
 using System.IO;
 using static NxtLib.CreateTransactionParameters;
+using System;
 
 namespace NxtLib.Local
 {
@@ -223,6 +224,61 @@ namespace NxtLib.Local
             else if (parameters.EncryptedMessageToSelf != null)
             {
                 throw new ValidationException("Expected an encrypted to self message, but got null");
+            }
+
+            position <<= 1;
+            if ((flags & position) != 0)
+            {
+                transaction.Phasing = new TransactionPhasing(reader, (byte)transaction.Version);
+
+                if (parameters.Phasing.FinishHeight != transaction.Phasing.FinishHeight)
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.FinishHeight), parameters.Phasing.FinishHeight, transaction.Phasing.FinishHeight);
+                }
+                if (parameters.Phasing.HashedSecret != null && !parameters.Phasing.HashedSecret.Equals(transaction.Phasing.HashedSecret))
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.HashedSecret), parameters.Phasing.HashedSecret, transaction.Phasing.HashedSecret);
+                }
+                if (parameters.Phasing.HashedSecretAlgorithm != transaction.Phasing.HashedSecretAlgorithm)
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.HashedSecretAlgorithm), parameters.Phasing.HashedSecretAlgorithm, transaction.Phasing.HashedSecretAlgorithm);
+                }
+                if (parameters.Phasing.HoldingId != transaction.Phasing.HoldingId)
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.HoldingId), parameters.Phasing.HoldingId, transaction.Phasing.HoldingId);
+                }
+                if (!Enumerable.SequenceEqual(parameters.Phasing.LinkedFullHash, transaction.Phasing.LinkedFullHashes))
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.LinkedFullHashes), parameters.Phasing.LinkedFullHash, transaction.Phasing.LinkedFullHashes);
+                }
+                if (parameters.Phasing.MinBalance != transaction.Phasing.MinBalance)
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.MinBalance), parameters.Phasing.MinBalance, transaction.Phasing.MinBalance);
+                }
+                if (parameters.Phasing.MinBalanceModel != transaction.Phasing.MinBalanceModel)
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.MinBalanceModel), parameters.Phasing.MinBalanceModel, transaction.Phasing.MinBalanceModel);
+                }
+                //if (parameters.Phasing.Phased != transaction.Phased)
+                //{
+                //    throw new ValidationException(nameof(transaction.Phased), parameters.Phasing.Phased, transaction.Phased);
+                //}
+                if (parameters.Phasing.Quorum != transaction.Phasing.Quorum)
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.Quorum), parameters.Phasing.Quorum, transaction.Phasing.Quorum);
+                }
+                if (parameters.Phasing.VotingModel != transaction.Phasing.VotingModel)
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.VotingModel), parameters.Phasing.VotingModel, transaction.Phasing.VotingModel);
+                }
+                if (!Enumerable.SequenceEqual(parameters.Phasing.WhiteListed, transaction.Phasing.WhiteList))
+                {
+                    throw new ValidationException(nameof(transaction.Phasing.WhiteList), parameters.Phasing.WhiteListed, transaction.Phasing.WhiteList);
+                }
+            }
+            else if (parameters.Phasing != null)
+            {
+                throw new ValidationException("Expected phasing, but got null");
             }
 
             return transaction;

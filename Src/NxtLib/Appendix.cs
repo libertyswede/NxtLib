@@ -223,12 +223,48 @@ namespace NxtLib
         public MinBalanceModel MinBalanceModel { get; set; }
         public long Quorum { get; set; }
         public VotingModel VotingModel { get; set; }
-        public List<ulong> WhiteList { get; set; }
+        public List<Account> WhiteList { get; set; }
 
         private TransactionPhasing()
         {
-            WhiteList = new List<ulong>();
+            WhiteList = new List<Account>();
             LinkedFullHashes = new List<BinaryHexString>();
+        }
+
+        public TransactionPhasing(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
+        {
+            WhiteList = new List<Account>();
+            LinkedFullHashes = new List<BinaryHexString>();
+
+            FinishHeight = reader.ReadInt32();
+            var votingModelValue = (int)reader.ReadByte();
+            VotingModel = (VotingModel)votingModelValue;
+            Quorum = reader.ReadInt64();
+            MinBalance = reader.ReadInt64();
+            var whitelistSize = reader.ReadByte();
+            for (int i = 0; i < whitelistSize; i++)
+            {
+                WhiteList.Add(reader.ReadUInt64());
+            }
+
+            HoldingId = (ulong)reader.ReadInt64();
+            MinBalanceModel = (MinBalanceModel)reader.ReadByte();
+            var linkedFullHashesSize = reader.ReadByte();
+            for (int i = 0; i < linkedFullHashesSize; i++)
+            {
+                LinkedFullHashes.Add(reader.ReadBytes(32));
+            }
+
+            var hashedSecredLength = reader.ReadByte();
+            if (hashedSecredLength > 0)
+            {
+                HashedSecret = reader.ReadBytes(hashedSecredLength);
+            }
+            var algorithmValue = (int)reader.ReadByte();
+            if (Enum.IsDefined(typeof(HashAlgorithm), algorithmValue))
+            {
+                HashedSecretAlgorithm = (HashAlgorithm)algorithmValue;
+            }
         }
 
         internal static TransactionPhasing ParseJson(JObject jObject)
@@ -250,7 +286,9 @@ namespace NxtLib
 
             if (jObject.SelectToken(Parameters.PhasingWhitelist) != null)
             {
-                phasing.WhiteList = ParseWhitelist(jObject.SelectToken(Parameters.PhasingWhitelist)).Select(ulong.Parse).ToList();
+                phasing.WhiteList = ParseWhitelist(jObject.SelectToken(Parameters.PhasingWhitelist))
+                    .Select(w => new Account(ulong.Parse(w)))
+                    .ToList();
             }
             if (jObject.SelectToken(Parameters.PhasingHashedSecret) != null)
             {
