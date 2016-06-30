@@ -40,37 +40,48 @@ namespace NxtLib
 
     public class Message : Appendix
     {
-        public BinaryHexString Data { get; set; }
+        public BinaryHexString Data { get; }
+        public BinaryHexString MessageHash { get; private set; }
         public string MessageText { get; }
         public bool IsPrunable { get; }
         public bool IsText { get; }
 
-        private Message(string message, bool isText, bool isPrunable)
+        private Message(string message, bool isText, bool isPrunable, BinaryHexString messageHash)
         {
             IsText = isText;
             MessageText = message;
             IsPrunable = isPrunable;
+            MessageHash = messageHash;
 
             Data = IsText
                 ? Encoding.UTF8.GetBytes(message)
                 : ByteToHexStringConverter.ToBytesFromHexString(message).ToArray();
         }
 
-        internal Message(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
+        internal Message(BinaryReader reader, byte transactionVersion, bool prunable = false) : base(reader, transactionVersion)
         {
-            var messageLength = reader.ReadInt32();
-            IsText = messageLength < 0;
-            if (messageLength < 0)
+            IsPrunable = prunable;
+            if (!IsPrunable)
             {
-                messageLength &= int.MaxValue;
+                var messageLength = reader.ReadInt32();
+                IsText = messageLength < 0;
+                if (messageLength < 0)
+                {
+                    messageLength &= int.MaxValue;
+                }
+                if (messageLength > 1000)
+                {
+                    throw new ValidationException("Invalid arbitrary message length: " + messageLength);
+                }
+                Data = reader.ReadBytes(messageLength);
+                MessageText = Encoding.UTF8.GetString(Data.ToBytes().ToArray(), 0, messageLength);
             }
-            if (messageLength > 1000)
+            else
             {
-                throw new ValidationException("Invalid arbitrary message length: " + messageLength);
+                MessageHash = reader.ReadBytes(32);
+                MessageText = null;
+                IsText = false;
             }
-            Data = reader.ReadBytes(messageLength);
-            MessageText = Encoding.UTF8.GetString(Data.ToBytes().ToArray(), 0, messageLength);
-            IsPrunable = false;
         }
 
         internal static Message ParseJson(JObject jObject)
@@ -83,7 +94,8 @@ namespace NxtLib
 
             var messageIsText = Convert.ToBoolean(jObject.SelectToken(Parameters.MessageIsText).ToString());
             var isPrunable = jObject.Property(Parameters.VersionPrunablePlainMessage) != null;
-            return new Message(messageToken.Value.ToString(), messageIsText, isPrunable);
+            var messageHash = isPrunable ? new BinaryHexString(jObject.Property(Parameters.MessageHash).Value.ToString()) : null;
+            return new Message(messageToken.Value.ToString(), messageIsText, isPrunable, messageHash);
         }
     }
 

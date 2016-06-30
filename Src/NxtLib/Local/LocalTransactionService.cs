@@ -5,6 +5,8 @@ using NxtLib.Internal.LocalSign;
 using System.IO;
 using static NxtLib.CreateTransactionParameters;
 using System;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace NxtLib.Local
 {
@@ -129,7 +131,6 @@ namespace NxtLib.Local
             transaction.Attachment = attachmentConverter.GetAttachment(transactionType);
 
             var position = 1;
-            ////non-encrypted, non-prunable message
             if ((flags & position) != 0 || (transaction.Version == 0 && transactionType == TransactionSubType.MessagingArbitraryMessage))
             {
                 transaction.Message = new Message(reader, (byte)transaction.Version);
@@ -281,7 +282,69 @@ namespace NxtLib.Local
                 throw new ValidationException("Expected phasing, but got null");
             }
 
+            position <<= 1;
+            if ((flags & position) != 0)
+            {
+                transaction.Message = new Message(reader, (byte)transaction.Version, true);
+                var expectedHash = HashPrunableMessage(parameters.Message.MessageIsText, parameters.Message.Message);
+
+                if (!expectedHash.Equals(transaction.Message.MessageHash))
+                {
+                    throw new ValidationException(nameof(transaction.Message.MessageHash), expectedHash, transaction.Message.MessageHash);
+                }
+            }
+            else if (parameters.Message != null && parameters.Message.IsPrunable)
+            {
+                throw new ValidationException("Expected prunable message, but got null");
+            }
+
+            position <<= 1;
+            if ((flags & position) != 0)
+            {
+            }
+
             return transaction;
+        }
+
+        private static BinaryHexString HashPrunableMessage(bool isText, string message)
+        {
+            byte[] isTextByte;
+            byte[] messageBytes;
+            byte[] hash;
+
+            if (isText)
+            {
+                isTextByte = new byte[] { 1 };
+                messageBytes = Encoding.UTF8.GetBytes(message);
+            }
+            else
+            {
+                isTextByte = new byte[] { 0 };
+                messageBytes = new BinaryHexString(message).ToBytes().ToArray();
+            }
+
+#if DOTNET
+
+            using (var incrementalHash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))
+            {
+                incrementalHash.AppendData(isTextByte);
+                incrementalHash.AppendData(messageBytes);
+                hash = incrementalHash.GetHashAndReset();
+            }
+
+#elif (NET40 || NET45)
+
+            using (var sha256 = SHA256.Create())
+            {
+                sha256.TransformBlock(isTextByte, 0, isTextByte.Length, isTextByte, 0);
+                sha256.TransformFinalBlock(messageBytes, 0, messageBytes.Length);
+                hash = sha256.Hash;
+            }
+
+#endif
+
+            var computed = new BinaryHexString(hash);
+            return computed;
         }
 
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,

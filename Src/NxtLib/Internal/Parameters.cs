@@ -154,6 +154,7 @@ namespace NxtLib.Internal
         internal const string MaxRangeValue = "maxRangeValue";
         internal const string MaxSupply = "maxSupply";
         internal const string Message = "message";
+        internal const string MessageHash = "messageHash";
         internal const string MessageIsPrunable = "messageIsPrunable";
         internal const string MessageIsText = "messageIsText";
         internal const string MessageToEncrypt = "messageToEncrypt";
