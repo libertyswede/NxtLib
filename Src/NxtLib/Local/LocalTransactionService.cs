@@ -301,16 +301,65 @@ namespace NxtLib.Local
             position <<= 1;
             if ((flags & position) != 0)
             {
+                var alreadyEncrypted = (AlreadyEncryptedMessage)parameters.EncryptedMessage;
+                transaction.EncryptedMessage = new EncryptedMessage(reader, (byte)transaction.Version, true);
+
+                var isText = new byte[] { (byte)(alreadyEncrypted.MessageIsText ? 1 : 0) };
+                var isCompressed = new byte[] { (byte)(alreadyEncrypted.CompressMessage ? 1 : 0) };
+                var messageBytes = alreadyEncrypted.Message.ToBytes().ToArray();
+                var nonceBytes = alreadyEncrypted.Nonce.ToBytes().ToArray();
+
+                var expectedHash = HashPrunableMessage(isText, isCompressed, messageBytes, nonceBytes);
+
+                if (!expectedHash.Equals(transaction.EncryptedMessage.EncryptedMessageHash))
+                {
+                    throw new ValidationException(nameof(transaction.EncryptedMessage.EncryptedMessageHash), expectedHash, transaction.EncryptedMessage.EncryptedMessageHash);
+                }
+            }
+            else if (parameters.EncryptedMessage != null && parameters.EncryptedMessage.IsPrunable)
+            {
+                throw new ValidationException("Expected encrypted prunable message, but got null");
             }
 
             return transaction;
+        }
+
+        private static BinaryHexString HashPrunableMessage(params byte[][] messages)
+        {
+            byte[] hash;
+
+#if DOTNET
+
+            using (var incrementalHash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))
+            {
+                foreach (var byteArray in messages)
+                {
+                    incrementalHash.AppendData(byteArray);
+                }
+                hash = incrementalHash.GetHashAndReset();
+            }
+
+#elif (NET40 || NET45)
+
+            using (var sha256 = SHA256.Create())
+            {
+                for (int i = 0; i < messages.Length - 1; i++)
+                {
+                    sha256.TransformBlock(messages[i], 0, messages[i].Length, messages[i], 0);
+                }
+                sha256.TransformFinalBlock(messages[messages.Length - 1], 0, messages[messages.Length - 1].Length);
+                hash = sha256.Hash;
+            }
+
+#endif
+            var computed = new BinaryHexString(hash);
+            return computed;
         }
 
         private static BinaryHexString HashPrunableMessage(bool isText, string message)
         {
             byte[] isTextByte;
             byte[] messageBytes;
-            byte[] hash;
 
             if (isText)
             {
@@ -323,28 +372,7 @@ namespace NxtLib.Local
                 messageBytes = new BinaryHexString(message).ToBytes().ToArray();
             }
 
-#if DOTNET
-
-            using (var incrementalHash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))
-            {
-                incrementalHash.AppendData(isTextByte);
-                incrementalHash.AppendData(messageBytes);
-                hash = incrementalHash.GetHashAndReset();
-            }
-
-#elif (NET40 || NET45)
-
-            using (var sha256 = SHA256.Create())
-            {
-                sha256.TransformBlock(isTextByte, 0, isTextByte.Length, isTextByte, 0);
-                sha256.TransformFinalBlock(messageBytes, 0, messageBytes.Length);
-                hash = sha256.Hash;
-            }
-
-#endif
-
-            var computed = new BinaryHexString(hash);
-            return computed;
+            return HashPrunableMessage(isTextByte, messageBytes);
         }
 
         private static JObject BuildSignedTransaction(Transaction transaction, string referencedTransactionFullHash,

@@ -130,17 +130,20 @@ namespace NxtLib
         {
         }
 
-        public EncryptedMessageBase(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
+        public EncryptedMessageBase(BinaryReader reader, byte transactionVersion, bool isPrunable = false) : base(reader, transactionVersion)
         {
-            var length = reader.ReadInt32();
-            IsText = length < 0;
-            if (length < 0)
+            if (!isPrunable)
             {
-                length &= int.MaxValue;
+                var length = reader.ReadInt32();
+                IsText = length < 0;
+                if (length < 0)
+                {
+                    length &= int.MaxValue;
+                }
+                Data = reader.ReadBytes(length);
+                Nonce = reader.ReadBytes(32);
+                IsCompressed = version != 2;
             }
-            Data = reader.ReadBytes(length);
-            Nonce = reader.ReadBytes(32);
-            IsCompressed = version != 2;
         }
     }
 
@@ -162,6 +165,19 @@ namespace NxtLib
 
         public EncryptedMessage(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
         {
+        }
+
+        public EncryptedMessage(BinaryReader reader, byte transactionVersion, bool isPrunable) : base(reader, transactionVersion, true)
+        {
+            if (!isPrunable)
+            {
+                throw new ArgumentException("Value must be true", nameof(isPrunable));
+            }
+            IsPrunable = true;
+            EncryptedMessageHash = reader.ReadBytes(32);
+            Data = null;
+            IsText = false;
+            IsCompressed = false;
         }
 
         internal static EncryptedMessage ParseJson(JObject jObject)
