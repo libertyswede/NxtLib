@@ -4,7 +4,6 @@ using NxtLib.Internal;
 using NxtLib.Internal.LocalSign;
 using System.IO;
 using static NxtLib.CreateTransactionParameters;
-using System;
 using System.Text;
 using System.Security.Cryptography;
 
@@ -13,6 +12,10 @@ namespace NxtLib.Local
     public interface ILocalTransactionService
     {
         JObject SignTransaction(TransactionCreatedReply transactionCreatedReply, string secretPhrase);
+        void VerifySendMoneyTransactionBytes(TransactionCreatedReply transactionCreatedReply, CreateTransactionByPublicKey parameters,
+            Account recipient, Amount amount);
+        void VerifySendMessageTransactionBytes(TransactionCreatedReply transactionCreatedReply, CreateTransactionByPublicKey parameters,
+            Account recipient);
     }
 
     public class LocalTransactionService : ILocalTransactionService
