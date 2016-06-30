@@ -2,17 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace NxtLib.Internal
 {
     internal class AttachmentConverter
     {
         private readonly JObject _attachments;
+        private readonly BinaryReader _reader;
+        private readonly int _transactionVersion;
+
         private static readonly IReadOnlyDictionary<TransactionSubType, Func<JObject, Attachment>> AttachmentFuncs;
+        private static readonly IReadOnlyDictionary<TransactionSubType, Func<BinaryReader, int, Attachment>> BinaryAttachmentFuncs;
 
         static AttachmentConverter()
         {
             var attachmentFuncs = new Dictionary<TransactionSubType, Func<JObject, Attachment>>();
+            var binaryAttachmentFuncs = new Dictionary<TransactionSubType, Func<BinaryReader, int, Attachment>>();
 
             attachmentFuncs.Add(TransactionSubType.AccountControlEffectiveBalanceLeasing, value => new AccountControlEffectiveBalanceLeasingAttachment(value));
             attachmentFuncs.Add(TransactionSubType.AccountControlSetPhasingOnly, value => new AccountControlSetPhasingOnlyAttachment(value));
@@ -39,7 +45,8 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.MessagingAliasBuy, value => new MessagingAliasBuyAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasDelete, value => new MessagingAliasDeleteAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasSell, value => new MessagingAliasSellAttachment(value));
-            attachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, value => null); // Messages are stored directly on the transaction object
+            attachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, value => new MessagingArbitraryMessageAttachment());
+            binaryAttachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, (reader, version) => new MessagingArbitraryMessageAttachment());
             //attachmentFuncs.Add(TransactionSubType.MessagingHubTerminalAnnouncement, TODO: .... );
             attachmentFuncs.Add(TransactionSubType.MessagingPollCreation, value => new MessagingPollCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingPhasingVoteCasting, value => new MessagingPhasingVoteCasting(value));
@@ -54,6 +61,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveClaim, value => new MonetarySystemReserveClaimAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveIncrease, value => new MonetarySystemReserveIncreaseAttachment(value));
             attachmentFuncs.Add(TransactionSubType.PaymentOrdinaryPayment, value => new OrdinaryPaymentAttachment());
+            binaryAttachmentFuncs.Add(TransactionSubType.PaymentOrdinaryPayment, (reader, version) => new OrdinaryPaymentAttachment());
             attachmentFuncs.Add(TransactionSubType.ShufflingCancellation, value => new ShufflingCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingCreation, value => new ShufflingCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingRegistration, value => new ShufflingRegistrationAttachment(value));
@@ -64,6 +72,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.TaggedDataUpload, value => new TaggedDataUploadAttachment(value));
 
             AttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<JObject, Attachment>>(attachmentFuncs);
+            BinaryAttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<BinaryReader, int, Attachment>>(binaryAttachmentFuncs);
         }
 
         internal AttachmentConverter(JObject attachments)
@@ -71,14 +80,25 @@ namespace NxtLib.Internal
             _attachments = attachments;
         }
 
+        internal AttachmentConverter(BinaryReader reader, int transactionVersion)
+        {
+            _reader = reader;
+            _transactionVersion = transactionVersion;
+        }
+
         internal Attachment GetAttachment(TransactionSubType transactionSubType)
         {
-            if (_attachments == null)
+            if (_attachments != null)
             {
-                return null;
+                var attachment = AttachmentFuncs[transactionSubType].Invoke(_attachments);
+                return attachment;
             }
-            var attachment = AttachmentFuncs[transactionSubType].Invoke(_attachments);
-            return attachment;
+            if (_reader != null)
+            {
+                var attachment = BinaryAttachmentFuncs[transactionSubType].Invoke(_reader, _transactionVersion);
+                return attachment;
+            }
+            return null;
         }
     }
 }

@@ -6,11 +6,31 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.VotingSystem;
+using System.IO;
+using NxtLib.Local;
 
 namespace NxtLib
 {
     public abstract class Appendix
     {
+        internal readonly byte version;
+
+        protected Appendix()
+        {
+        }
+
+        protected Appendix(BinaryReader reader, byte transactionVersion)
+        {
+            if (transactionVersion == 0)
+            {
+                version = 0;
+            }
+            else
+            {
+                version = reader.ReadByte();
+            }
+        }
+
         protected static T GetAttachmentValue<T>(JToken attachments, string key)
         {
             var obj = ((JValue)attachments.SelectToken(key)).Value;
@@ -20,20 +40,48 @@ namespace NxtLib
 
     public class Message : Appendix
     {
-        public BinaryHexString Data { get; set; }
+        public BinaryHexString Data { get; }
+        public BinaryHexString MessageHash { get; private set; }
         public string MessageText { get; }
         public bool IsPrunable { get; }
         public bool IsText { get; }
 
-        private Message(string message, bool isText, bool isPrunable)
+        private Message(string message, bool isText, bool isPrunable, BinaryHexString messageHash)
         {
             IsText = isText;
             MessageText = message;
             IsPrunable = isPrunable;
+            MessageHash = messageHash;
 
             Data = IsText
                 ? Encoding.UTF8.GetBytes(message)
                 : ByteToHexStringConverter.ToBytesFromHexString(message).ToArray();
+        }
+
+        internal Message(BinaryReader reader, byte transactionVersion, bool prunable = false) : base(reader, transactionVersion)
+        {
+            IsPrunable = prunable;
+            if (!IsPrunable)
+            {
+                var messageLength = reader.ReadInt32();
+                IsText = messageLength < 0;
+                if (messageLength < 0)
+                {
+                    messageLength &= int.MaxValue;
+                }
+                if (messageLength > 1000)
+                {
+                    throw new ValidationException("Invalid arbitrary message length: " + messageLength);
+                }
+                Data = reader.ReadBytes(messageLength);
+                MessageText = Encoding.UTF8.GetString(Data.ToBytes().ToArray(), 0, messageLength);
+            }
+            else
+            {
+                MessageHash = reader.ReadBytes(32);
+                MessageText = null;
+                IsText = false;
+            }
         }
 
         internal static Message ParseJson(JObject jObject)
@@ -46,7 +94,8 @@ namespace NxtLib
 
             var messageIsText = Convert.ToBoolean(jObject.SelectToken(Parameters.MessageIsText).ToString());
             var isPrunable = jObject.Property(Parameters.VersionPrunablePlainMessage) != null;
-            return new Message(messageToken.Value.ToString(), messageIsText, isPrunable);
+            var messageHash = isPrunable ? new BinaryHexString(jObject.Property(Parameters.MessageHash).Value.ToString()) : null;
+            return new Message(messageToken.Value.ToString(), messageIsText, isPrunable, messageHash);
         }
     }
 
@@ -80,6 +129,22 @@ namespace NxtLib
         protected EncryptedMessageBase()
         {
         }
+
+        public EncryptedMessageBase(BinaryReader reader, byte transactionVersion, bool isPrunable = false) : base(reader, transactionVersion)
+        {
+            if (!isPrunable)
+            {
+                var length = reader.ReadInt32();
+                IsText = length < 0;
+                if (length < 0)
+                {
+                    length &= int.MaxValue;
+                }
+                Data = reader.ReadBytes(length);
+                Nonce = reader.ReadBytes(32);
+                IsCompressed = version != 2;
+            }
+        }
     }
 
     public class EncryptedMessage : EncryptedMessageBase
@@ -98,6 +163,23 @@ namespace NxtLib
         {
         }
 
+        public EncryptedMessage(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
+        {
+        }
+
+        public EncryptedMessage(BinaryReader reader, byte transactionVersion, bool isPrunable) : base(reader, transactionVersion, true)
+        {
+            if (!isPrunable)
+            {
+                throw new ArgumentException("Value must be true", nameof(isPrunable));
+            }
+            IsPrunable = true;
+            EncryptedMessageHash = reader.ReadBytes(32);
+            Data = null;
+            IsText = false;
+            IsCompressed = false;
+        }
+
         internal static EncryptedMessage ParseJson(JObject jObject)
         {
             JToken messageToken;
@@ -113,6 +195,10 @@ namespace NxtLib
 
     public class EncryptToSelfMessage : EncryptedMessageBase
     {
+        public EncryptToSelfMessage(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
+        {
+        }
+
         private EncryptToSelfMessage(JToken messageToken)
             : base(messageToken)
         {
@@ -138,6 +224,11 @@ namespace NxtLib
             RecipientPublicKey = recipientPublicKey;
         }
 
+        public PublicKeyAnnouncement(BinaryReader reader, byte transactionVersion) : base (reader, transactionVersion)
+        {
+            RecipientPublicKey = reader.ReadBytes(32);
+        }
+
         internal static PublicKeyAnnouncement ParseJson(JObject jObject)
         {
             JValue announcement;
@@ -160,12 +251,48 @@ namespace NxtLib
         public MinBalanceModel MinBalanceModel { get; set; }
         public long Quorum { get; set; }
         public VotingModel VotingModel { get; set; }
-        public List<ulong> WhiteList { get; set; }
+        public List<Account> WhiteList { get; set; }
 
         private TransactionPhasing()
         {
-            WhiteList = new List<ulong>();
+            WhiteList = new List<Account>();
             LinkedFullHashes = new List<BinaryHexString>();
+        }
+
+        public TransactionPhasing(BinaryReader reader, byte transactionVersion) : base(reader, transactionVersion)
+        {
+            WhiteList = new List<Account>();
+            LinkedFullHashes = new List<BinaryHexString>();
+
+            FinishHeight = reader.ReadInt32();
+            var votingModelValue = (int)reader.ReadByte();
+            VotingModel = (VotingModel)votingModelValue;
+            Quorum = reader.ReadInt64();
+            MinBalance = reader.ReadInt64();
+            var whitelistSize = reader.ReadByte();
+            for (int i = 0; i < whitelistSize; i++)
+            {
+                WhiteList.Add(reader.ReadUInt64());
+            }
+
+            HoldingId = (ulong)reader.ReadInt64();
+            MinBalanceModel = (MinBalanceModel)reader.ReadByte();
+            var linkedFullHashesSize = reader.ReadByte();
+            for (int i = 0; i < linkedFullHashesSize; i++)
+            {
+                LinkedFullHashes.Add(reader.ReadBytes(32));
+            }
+
+            var hashedSecredLength = reader.ReadByte();
+            if (hashedSecredLength > 0)
+            {
+                HashedSecret = reader.ReadBytes(hashedSecredLength);
+            }
+            var algorithmValue = (int)reader.ReadByte();
+            if (Enum.IsDefined(typeof(HashAlgorithm), algorithmValue))
+            {
+                HashedSecretAlgorithm = (HashAlgorithm)algorithmValue;
+            }
         }
 
         internal static TransactionPhasing ParseJson(JObject jObject)
@@ -187,7 +314,9 @@ namespace NxtLib
 
             if (jObject.SelectToken(Parameters.PhasingWhitelist) != null)
             {
-                phasing.WhiteList = ParseWhitelist(jObject.SelectToken(Parameters.PhasingWhitelist)).Select(ulong.Parse).ToList();
+                phasing.WhiteList = ParseWhitelist(jObject.SelectToken(Parameters.PhasingWhitelist))
+                    .Select(w => new Account(ulong.Parse(w)))
+                    .ToList();
             }
             if (jObject.SelectToken(Parameters.PhasingHashedSecret) != null)
             {
