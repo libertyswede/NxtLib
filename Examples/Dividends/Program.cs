@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NxtLib.Local;
 using NxtLib;
 
 namespace Dividends

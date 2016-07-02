@@ -39,6 +39,9 @@ namespace LocalEncryptAndSignMessage
             };
             var unsigned = messageService.SendMessage(parameters, Recipient).Result;
 
+            // Verify the unsigned transaction bytes from the node (only needed if you cannot trust the node)
+            localTransactionService.VerifySendMessageTransactionBytes(unsigned, parameters, Recipient);
+
             // Sign and broadcast
             var signed = localTransactionService.SignTransaction(unsigned, SecretPhrase);
             var result = transactionService.BroadcastTransaction(new TransactionParameter(signed.ToString())).Result;
