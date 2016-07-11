@@ -51,15 +51,6 @@ namespace NxtLib
             {
                 throw new ArgumentException("Amount must not be larger than " + MaximumNqt, nameof(amountNqt));
             }
-            if (amountNqt < 0 && IsProbablyNotGenesisAccount(amountNqt))
-            {
-                throw new ArgumentException("Amount must be larger than 0", nameof(amountNqt));
-            }
-        }
-
-        private static bool IsProbablyNotGenesisAccount(long amountNqt)
-        {
-            return amountNqt > -99900000000000000;
         }
 
         private static void CheckNxt(decimal amountNxt)
@@ -67,10 +58,6 @@ namespace NxtLib
             if (amountNxt > MaximumNxt)
             {
                 throw new ArgumentException("Amount must not be larger than " + MaximumNxt, nameof(amountNxt));
-            }
-            if (amountNxt < 0)
-            {
-                throw new ArgumentException("Amount must be larger than 0", nameof(amountNxt));
             }
             if (amountNxt % (1m / NqtMultiplier) > 0)
             {
