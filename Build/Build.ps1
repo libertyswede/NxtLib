@@ -19,10 +19,10 @@ $Constants = "..\Src\NxtLib\Local\Constants.cs"
     Out-File $ReadMe -Encoding ascii
 
 #Step 2, restore packages
-&dnu restore "..\Src\NxtLib"
+&dotnet restore "..\Src\NxtLib"
 
 #Step 3, build and package
-&dnu pack "..\Src\NxtLib" --configuration Release --out "..\Src\artifacts\bin\NxtLib"
+&dotnet pack "..\Src\NxtLib" --configuration Release --output "..\Src\NxtLib\bin"
 
 #Step 3, Commit new version
 $Commit = Read-Host 'Commit locally?'
