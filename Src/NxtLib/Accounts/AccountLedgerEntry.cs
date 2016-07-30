@@ -12,7 +12,7 @@ namespace NxtLib.Accounts
         public string AccountRs { get; set; }
 
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
-        public ulong Balance { get; set; }
+        public long Balance { get; set; }
 
         [JsonProperty(Parameters.Block)]
         [JsonConverter(typeof(StringToIntegralTypeConverter))]
