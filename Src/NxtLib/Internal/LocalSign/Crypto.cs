@@ -37,10 +37,15 @@ namespace NxtLib.Internal.LocalSign
             return (ulong)(long)bigInteger;
         }
 
-        internal byte[] GetSharedSecret(byte[] account, byte[] nonce, string secretPhrase)
+        internal byte[] GetSharedSecret(byte[] theirPublicKey, byte[] nonce, string secretPhrase)
+        {
+            return GetSharedSecret(theirPublicKey, nonce, GetPrivateKeyBytes(secretPhrase));
+        }
+
+        private byte[] GetSharedSecret(byte[] theirPublicKey, byte[] nonce, byte[] myPrivateKey)
         {
             var sharedSecret = new byte[32];
-            Curve25519.Curve(sharedSecret, GetPrivateKeyBytes(secretPhrase), account);
+            Curve25519.Curve(sharedSecret, myPrivateKey, theirPublicKey);
             for (var i = 0; i < 32; i++)
             {
                 sharedSecret[i] ^= nonce[i];
@@ -51,7 +56,7 @@ namespace NxtLib.Internal.LocalSign
         internal byte[] AesEncryptTo(byte[] recipient, byte[] message, byte[] nonce, string secretPhrase)
         {
             var senderSecretBytes = GetPrivateKeyBytes(secretPhrase);
-            var key = GenerateAesKey(senderSecretBytes, recipient, nonce);
+            var key = GetSharedSecret(recipient, nonce, senderSecretBytes);
 
             using (var ms = new MemoryStream())
             using (var cryptor = Aes.Create())
@@ -82,19 +87,23 @@ namespace NxtLib.Internal.LocalSign
 
         internal byte[] AesDecryptFrom(byte[] sender, byte[] data, byte[] nonce, string secretPhrase)
         {
+            var sharedSecret = GetSharedSecret(sender, nonce, secretPhrase);
+            return AesDecrypt(data, nonce, sharedSecret);
+        }
+
+        internal byte[] AesDecrypt(byte[] data, byte[] nonce, byte[] key)
+        {
             if (data.Length < 16 || data.Length % 16 != 0)
             {
                 throw new ArgumentException("Invalid ciphertext", nameof(data));
             }
-            
+
             var iv = new byte[16];
             var encryptedContent = new byte[data.Length - 16];
-            var secretBytes = GetPrivateKeyBytes(secretPhrase);
-            var key = GenerateAesKey(secretBytes, sender, nonce);
-            
+
             Buffer.BlockCopy(data, 0, iv, 0, iv.Length);
             Buffer.BlockCopy(data, iv.Length, encryptedContent, 0, encryptedContent.Length);
-    
+
             using (var ms = new MemoryStream())
             using (var cryptor = Aes.Create())
             {
@@ -107,11 +116,11 @@ namespace NxtLib.Internal.LocalSign
                 cryptor.Padding = PaddingMode.PKCS7;
                 cryptor.KeySize = 128;
                 cryptor.BlockSize = 128;
-    
+
                 using (CryptoStream cs = new CryptoStream(ms, cryptor.CreateDecryptor(key, iv), CryptoStreamMode.Write))
                 {
                     cs.Write(encryptedContent, 0, encryptedContent.Length);
-    
+
                 }
                 return ms.ToArray();
             }
@@ -210,21 +219,6 @@ namespace NxtLib.Internal.LocalSign
                 var privateKeyBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(secretPhrase));
                 Curve25519.Clamp(privateKeyBytes);
                 return privateKeyBytes;
-            }
-        }
-
-        private byte[] GenerateAesKey(byte[] myPrivateKey, byte[] theirPublicKey, byte[] nonce)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                var dhSharedSecret = new byte[32];
-                Curve25519.Curve(dhSharedSecret, myPrivateKey, theirPublicKey);
-                for (var i = 0; i < 32; i++)
-                {
-                    dhSharedSecret[i] ^= nonce[i];
-                }
-                var key = sha256.ComputeHash(dhSharedSecret);
-                return key;
             }
         }
 

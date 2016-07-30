@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,6 +14,8 @@ namespace NxtLib.Local
         BinaryHexString EncryptDataTo(BinaryHexString recipientPublicKey, BinaryHexString data, BinaryHexString nonce, bool compress, string secretPhrase);
         string DecryptTextFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompress, string secretPhrase);
         byte[] DecryptDataFrom(BinaryHexString senderPublicKey, BinaryHexString data, BinaryHexString nonce, bool uncompress, string secretPhrase);
+        string DecryptText(BinaryHexString data, BinaryHexString nonce, bool uncompress, BinaryHexString sharedKey);
+        byte[] DecryptData(BinaryHexString data, BinaryHexString nonce, bool uncompress, BinaryHexString sharedKey);
         BinaryHexString GetSharedKey(BinaryHexString accountPublicKey, BinaryHexString nonce, string secretPhrase);
     }
 
@@ -73,6 +76,26 @@ namespace NxtLib.Local
             var nonceBytes = nonce.ToBytes().ToArray();
             var sharedSecret = _crypto.GetSharedSecret(accountBytes, nonceBytes, secretPhrase);
             return sharedSecret;
+        }
+
+        public string DecryptText(BinaryHexString data, BinaryHexString nonce, bool uncompress, BinaryHexString sharedKey)
+        {
+            var decrypted = DecryptData(data, nonce, uncompress, sharedKey);
+            var message = Encoding.UTF8.GetString(decrypted, 0, decrypted.Length);
+            return message;
+        }
+
+        public byte[] DecryptData(BinaryHexString data, BinaryHexString nonce, bool uncompress, BinaryHexString sharedKey)
+        {
+            var sharedKeyBytes = sharedKey.ToBytes().ToArray();
+            var dataBytes = data.ToBytes().ToArray();
+            var nonceBytes = nonce.ToBytes().ToArray();
+            var decrypted = _crypto.AesDecrypt(dataBytes, nonceBytes, sharedKeyBytes);
+            if (uncompress)
+            {
+                decrypted = _gzipCompressor.GzipUncompress(decrypted);
+            }
+            return decrypted;
         }
     }
 }
