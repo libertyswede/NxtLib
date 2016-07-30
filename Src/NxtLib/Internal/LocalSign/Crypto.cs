@@ -263,7 +263,7 @@ namespace NxtLib.Internal.LocalSign
             }
         }
 
-#else
+#elif NETSTANDARD13
 
         internal byte[] Sign(byte[] message, string secretPhrase)
         {

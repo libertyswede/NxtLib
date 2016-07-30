@@ -343,7 +343,7 @@ namespace NxtLib.Local
                 hash = sha256.Hash;
             }
 
-#else
+#elif NETSTANDARD13
 
             using (var incrementalHash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))
             {
