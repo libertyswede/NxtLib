@@ -331,18 +331,7 @@ namespace NxtLib.Local
         {
             byte[] hash;
 
-#if DOTNET
-
-            using (var incrementalHash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))
-            {
-                foreach (var byteArray in messages)
-                {
-                    incrementalHash.AppendData(byteArray);
-                }
-                hash = incrementalHash.GetHashAndReset();
-            }
-
-#elif (NET40 || NET45)
+#if (NET40 || NET45)
 
             using (var sha256 = SHA256.Create())
             {
@@ -352,6 +341,17 @@ namespace NxtLib.Local
                 }
                 sha256.TransformFinalBlock(messages[messages.Length - 1], 0, messages[messages.Length - 1].Length);
                 hash = sha256.Hash;
+            }
+
+#else
+
+            using (var incrementalHash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))
+            {
+                foreach (var byteArray in messages)
+                {
+                    incrementalHash.AppendData(byteArray);
+                }
+                hash = incrementalHash.GetHashAndReset();
             }
 
 #endif

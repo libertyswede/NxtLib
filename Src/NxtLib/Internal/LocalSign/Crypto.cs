@@ -263,7 +263,7 @@ namespace NxtLib.Internal.LocalSign
             }
         }
 
-#elif DOTNET
+#else
 
         internal byte[] Sign(byte[] message, string secretPhrase)
         {
