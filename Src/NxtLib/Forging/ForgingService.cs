@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -16,6 +17,13 @@ namespace NxtLib.Forging
         {
             var queryParameters = secretPhraseOrAdminPassword.QueryParameters;
             return await Post<GetForgingReply>("getForging", queryParameters);
+        }
+
+        public async Task<GetNextBlockGeneratorsReply> GetNextBlockGenerators(int? limit = default(int?))
+        {
+            var queryParameters = new Dictionary<string, string>();
+            queryParameters.AddIfHasValue(Parameters.Limit, limit);
+            return await Get<GetNextBlockGeneratorsReply>("getNextBlockGenerators", queryParameters);
         }
 
         public async Task<TransactionCreatedReply> LeaseBalance(int period, Account recipient,

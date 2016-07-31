@@ -148,6 +148,7 @@ namespace NxtLib.Internal
         internal const string LastIndex = "lastIndex";
         internal const string LedgerId = "ledgerId";
         internal const string Lessor = "lessor";
+        internal const string Limit = "limit";
         internal const string LinkedFullHash = "linkedFullHash";
         internal const string LogLevel = "logLevel";
         internal const string MaxDifficulty = "maxDifficulty";
