@@ -161,6 +161,7 @@ output.txt
 project.lock.json
 *.nuget.targets
 applicationhost.config
+restore.dg
 
 # RIA/Silverlight projects
 Generated_Code/
