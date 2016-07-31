@@ -145,6 +145,12 @@ namespace NxtLib.Transactions
             return await Post<TransactionReply>("retrievePrunedTransaction", queryParameters);
         }
 
+        public async Task<BroadcastTransactionReply> SendTransaction(TransactionParameter parameter)
+        {
+            var queryParameters = CreateQueryParameters(parameter);
+            return await Post<BroadcastTransactionReply>("sendTransaction", queryParameters);
+        }
+
         public async Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, 
             string secretPhrase, bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null)
         {

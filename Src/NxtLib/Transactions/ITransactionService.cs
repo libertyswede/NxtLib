@@ -40,6 +40,8 @@ namespace NxtLib.Transactions
 
         Task<TransactionReply> RetrievePrunedTransaction(ulong transactionId);
 
+        Task<BroadcastTransactionReply> SendTransaction(TransactionParameter parameter);
+
         Task<SignTransactionReply> SignTransaction(TransactionParameter parameter, string secretPhrase,
             bool? validate = null, ulong? requireBlock = null, ulong? requireLastBlock = null);
     }
