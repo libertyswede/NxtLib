@@ -12,5 +12,6 @@ namespace NxtLib.Networking
         Task<PeerReply> GetPeer(string peer);
         Task<GetPeersReply> GetPeers(PeersLocator locator = null, string service = null);
         Task<GetPeersIncludeInfoReply> GetPeersIncludeInfo(PeersLocator locator = null, string service = null);
+        Task<PeerReply> SetAPIProxyPeer(string peer);
     }
 }

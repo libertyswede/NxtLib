@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NxtLib.Internal;
 using NxtLib.Local;
@@ -61,6 +62,12 @@ namespace NxtLib.Networking
             queryParameters.Add(Parameters.IncludePeerInfo, true.ToString());
             queryParameters.AddIfHasValue(Parameters.Service, service);
             return await Get<GetPeersIncludeInfoReply>("getPeers", queryParameters);
+        }
+
+        public async Task<PeerReply> SetAPIProxyPeer(string peer)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Peer, peer}};
+            return await Get<PeerReply>("setAPIProxyPeer", queryParameters);
         }
     }
 }
