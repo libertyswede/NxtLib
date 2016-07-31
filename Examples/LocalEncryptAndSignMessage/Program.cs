@@ -32,7 +32,7 @@ namespace LocalEncryptAndSignMessage
             var encryptedToSelf = localMessageService.EncryptTextTo(SenderPublicKey, messageToSelf, nonceToSelf, useCompression, SecretPhrase);
 
             // Prepare the transaction with your public key
-            var parameters = new CreateTransactionByPublicKey(1440, Amount.OneNxt, SenderPublicKey)
+            var parameters = new CreateTransactionByPublicKey(1440, Amount.Zero, SenderPublicKey)
             {
                 EncryptedMessage = new CreateTransactionParameters.AlreadyEncryptedMessage(encrypted, nonce, true, useCompression),
                 EncryptedMessageToSelf = new CreateTransactionParameters.AlreadyEncryptedMessageToSelf(encryptedToSelf, nonceToSelf, true, useCompression)

@@ -13,7 +13,6 @@ namespace LocalSignedAssetPurchase
     {
         private const string SecretPhrase = "secretPhrase"; // Set your secret phrase here!
         private const ulong DeBuNeAssetId = 6926770479287491943;
-        private const string NxtUri = "http://178.21.114.156/nxt";
 
         public static void Main(string[] args)
         {
@@ -25,7 +24,7 @@ namespace LocalSignedAssetPurchase
             var publicKey = account.PublicKey;
 
             // Step 2, Place unsigned bid order
-            var assetService = new AssetExchangeService(NxtUri);
+            var assetService = new AssetExchangeService();
             var qntFactor = (int)Math.Pow(10, 4); // DeBuNe asset use 4 decimals
             var createTransaction = new CreateTransactionByPublicKey(1440, Amount.OneNxt, publicKey);
             var unsignedBidOrder = assetService.PlaceBidOrder(DeBuNeAssetId, 1 * qntFactor, Amount.CreateAmountFromNxt(26.9M / qntFactor), createTransaction).Result;
@@ -34,7 +33,7 @@ namespace LocalSignedAssetPurchase
             var signedBidOrder = localTransactionService.SignTransaction(unsignedBidOrder, SecretPhrase);
 
             // Step 4, Broadcast the signed bid order
-            var transactionService = new TransactionService(NxtUri);
+            var transactionService = new TransactionService();
             var broadcastResult = transactionService.BroadcastTransaction(new TransactionParameter(signedBidOrder.ToString())).Result;
             Console.WriteLine("Transaction id: " + broadcastResult.TransactionId);
 
