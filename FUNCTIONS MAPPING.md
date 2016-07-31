@@ -8,6 +8,7 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | ---------------- | -------------------- | ---- |
 | addPeer | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Networking/NetworkingService.cs) |  | 
 | approveTransaction | [PhasingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Phasing/PhasingService.cs) |  | 
+| blacklistAPIProxyPeer | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Networking/NetworkingService.cs) |  | 
 | blacklistPeer | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Networking/NetworkingService.cs) |  | 
 | broadcastTransaction | [TransactionService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Transactions/TransactionService.cs) |  | 
 | buyAlias | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Aliases/AliasService.cs) |  | 
@@ -163,6 +164,7 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | getLog | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Debug/DebugService.cs) |  | 
 | getMintingTarget | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getMyInfo | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Networking/NetworkingService.cs) |  | 
+| getNextBlockGenerators | [ForgingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Forging/ForgingService.cs) |  | 
 | getOffer | [MonetarySystemService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/MonetarySystem/MonetarySystemService.cs) |  | 
 | getOrderTrades | [AssetExchangeService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/AssetExchange/AssetExchangeService.cs) |  | 
 | getPeer | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Networking/NetworkingService.cs) |  | 
@@ -224,8 +226,10 @@ NetworkingService class. NetworkingService.AddPeer(...)
 | sellAlias | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Aliases/AliasService.cs) |  | 
 | sendMessage | [MessageService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Messages/MessageService.cs) |  | 
 | sendMoney | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Accounts/AccountService.cs) |  | 
+| sendTransaction | [TransactionService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Transactions/TransactionService.cs) |  | 
 | setAccountInfo | [AccountService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Accounts/AccountService.cs) |  | 
 | setAlias | [AliasService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Aliases/AliasService.cs) |  | 
+| setAPIProxyPeer | [NetworkingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Networking/NetworkingService.cs) |  | 
 | setLogging | [DebugService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Debug/DebugService.cs) |  | 
 | setPhasingOnlyControl | [AccountControlService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/AccountControl/AccountControlService.cs) |  | 
 | shufflingCancel | [ShufflingService](https://github.com/libertyswede/NxtLib/blob/master/Src/NxtLib/Shuffling/ShufflingService.cs) |  | 
