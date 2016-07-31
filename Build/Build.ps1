@@ -40,7 +40,7 @@ if ($Push -ne 'y' -and $Push -ne 'yes')
     Exit
 }
 $Nuget = "nuget"
-&$Nuget push "..\Src\artifacts\bin\NxtLib\Release\NxtLib.$Version.nupkg"
+&$Nuget push "..\Src\NxtLib\bin\NxtLib.$Version.nupkg"
 
 #Script does not work beyond here, fix! Until then, exit.
 Exit
