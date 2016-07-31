@@ -5,6 +5,7 @@ namespace NxtLib.Networking
     public interface INetworkingService
     {
         Task<PeerReply> AddPeer(string peer);
+        Task<DoneReply> BlacklistAPIProxyPeer(string peer);
         Task<DoneReply> BlacklistPeer(string peer);
         Task<GetPeersReply> GetInboundPeers();
         Task<GetPeersIncludeInfoReply> GetInboundPeersIncludeInfo();

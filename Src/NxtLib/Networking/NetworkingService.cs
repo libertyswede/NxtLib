@@ -19,6 +19,12 @@ namespace NxtLib.Networking
             return await Get<PeerReply>("addPeer", queryParameters);
         }
 
+        public async Task<DoneReply> BlacklistAPIProxyPeer(string peer)
+        {
+            var queryParameters = new Dictionary<string, string> {{Parameters.Peer, peer}};
+            return await Get<DoneReply>("blacklistAPIProxyPeer", queryParameters);
+        }
+
         public async Task<DoneReply> BlacklistPeer(string peer)
         {
             var queryParameters = new Dictionary<string, string> {{Parameters.Peer, peer}};
