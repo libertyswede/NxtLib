@@ -9,7 +9,7 @@
       "type": "git",
       "url": "https://github.com/libertyswede/NxtLib.git"
     },
-    "releaseNotes": "NxtLib is a typed wrapper for the Json API in the Nxt platform ( http://nxt.org/ ) It currently supports NXT version 1.9.2",
+    "releaseNotes": "NxtLib is a typed wrapper for the Json API in the Nxt platform ( http://nxt.org/ ) It currently supports NXT version 1.1.10e",
     "requireLicenseAcceptance": false
   },
 
