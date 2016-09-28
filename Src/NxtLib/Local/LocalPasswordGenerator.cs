@@ -9,6 +9,7 @@ namespace NxtLib.Local
 {
     public interface ILocalPasswordGenerator
     {
+        string GenerateDetermenisticPassword(string seed, int n, int bits = 128);
         string GeneratePassword(int bits = 128);
         string GeneratePasswordWithAccountEnding(string ending);
     }
@@ -168,23 +169,47 @@ namespace NxtLib.Local
         private readonly ILocalAccountService _localAccountService = new LocalAccountService();
         private const string AllowedAccountCharacters = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
+        public string GenerateDetermenisticPassword(string seed, int n, int bits = 128)
+        {
+            if (bits < 0 || bits % 32 != 0 || bits > 256)
+            {
+                throw new ArgumentException($"Unexpected value {bits} expected it to be divisible by 32, larger than 0 and no larger than 256", nameof(bits));
+            }
+            using (var sha256 = SHA256.Create())
+            {
+                var fullSeed = seed + n.ToString();
+                var hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(fullSeed));
+                var randomNumbers = new uint[bits / 32];
+                for (var i = 0; i < randomNumbers.Length; i++)
+                {
+                    randomNumbers[i] = BitConverter.ToUInt32(hash, i * 4);
+                }
+                return BuildPassword(randomNumbers);
+            }
+        }
+
         public string GeneratePassword(int bits = 128)
         {
-            if (bits < 0 || bits%32 != 0)
+            if (bits < 0 || bits % 32 != 0)
             {
                 throw new ArgumentException($"Unexpected value {bits} expected it to be divisible by 32 and larger than 0", nameof(bits));
             }
-            var builder = new StringBuilder();
-            var randomNumbers = new uint[bits/32];
-            var wordCount = _words.Length;
+            var randomNumbers = new uint[bits / 32];
 
             GetRandomValues(randomNumbers);
+            return BuildPassword(randomNumbers);
+        }
+
+        private string BuildPassword(uint[] randomNumbers)
+        {
+            var wordCount = _words.Length;
+            var builder = new StringBuilder();
 
             foreach (var randomNumber in randomNumbers)
             {
-                var index0 = randomNumber%wordCount;
-                var index1 = (randomNumber/wordCount + index0)%wordCount;
-                var index2 = (randomNumber/wordCount/wordCount + index1)%wordCount;
+                var index0 = randomNumber % wordCount;
+                var index1 = (randomNumber / wordCount + index0) % wordCount;
+                var index2 = (randomNumber / wordCount / wordCount + index1) % wordCount;
 
                 builder.Append(_words[index0]);
                 builder.Append(" ");
