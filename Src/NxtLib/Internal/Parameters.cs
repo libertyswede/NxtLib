@@ -5,6 +5,7 @@ namespace NxtLib.Internal
         internal const string Account = "account";
         internal const string AccountRs = "accountRS";
         internal const string AccountAssets = "accountAssets";
+        internal const string AccountCurrencies = "accountCurrencies";
         internal const string Active = "active";
         internal const string Add = "add";
         internal const string AdminPassword = "adminPassword";

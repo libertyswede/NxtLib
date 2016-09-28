@@ -8,6 +8,8 @@ namespace NxtLib
     {
         public bool Broadcast { get; }
         public short Deadline { get; }
+        public int? EcBlockHeight { get; set; }
+        public ulong? EcBlockId { get; set; }
         public Amount Fee { get; }
         public BinaryHexString RecipientPublicKey { get; set; }
         public BinaryHexString ReferencedTransactionFullHash { get; set; }
@@ -30,6 +32,8 @@ namespace NxtLib
             queryParameters.Add(Parameters.FeeNqt, Fee.Nqt.ToString());
             queryParameters.AddIfHasValue(Parameters.RecipientPublicKey, RecipientPublicKey);
             queryParameters.AddIfHasValue(Parameters.ReferencedTransactionFullHash, ReferencedTransactionFullHash);
+            queryParameters.AddIfHasValue(Parameters.EcBlockId, EcBlockId);
+            queryParameters.AddIfHasValue(Parameters.EcBlockHeight, EcBlockHeight);
             AddUnencryptedMessage(queryParameters);
             AddEncryptedMessage(queryParameters);
             AddToSelfMessage(queryParameters);
