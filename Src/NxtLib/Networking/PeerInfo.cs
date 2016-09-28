@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using NxtLib.Internal;
+using System.Collections.Generic;
 
 namespace NxtLib.Networking
 {
@@ -20,6 +21,7 @@ namespace NxtLib.Networking
         public DateTime LastUpdated { get; set; }
         public bool OutboundWebSocket { get; set; }
         public string Platform { get; set; }
+        public List<string> Services { get; set; }
 
         [JsonConverter(typeof(PeerStateConverter))]
         public PeerState State { get; set; }
