@@ -7,6 +7,6 @@ namespace NxtLib.MonetarySystem
     [JsonConverter(typeof(AccountCurrencyConverter))]
     public class GetAccountCurrenciesReply : BaseReply
     {
-        public List<AccountCurrency> AccountCurrencies { get; set; }
+        public List<AccountCurrency> AccountCurrencies { get; set; } = new List<AccountCurrency>();
     }
 }

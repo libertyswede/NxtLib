@@ -35,7 +35,7 @@ namespace NxtLib.Internal
                 accountCurrenciesReply.AccountCurrencies.Add(accountCurrency);
             }
 
-            return accountCurrencies;
+            return accountCurrenciesReply;
         }
 
         public override bool CanConvert(Type objectType)
