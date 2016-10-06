@@ -4,8 +4,8 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
-using NxtLib.Shuffling;
 using NxtLib.VotingSystem;
+using System.IO;
 
 namespace NxtLib
 {
@@ -552,6 +552,12 @@ namespace NxtLib
         {
             CurrencyId = GetAttachmentValue<ulong>(attachments, Parameters.Currency);
             Units = GetAttachmentValue<long>(attachments, Parameters.Units);
+        }
+
+        internal MonetarySystemCurrencyTransferAttachment(BinaryReader reader, int version)
+        {
+            CurrencyId = reader.ReadUInt64();
+            Units = reader.ReadInt64();
         }
     }
 
