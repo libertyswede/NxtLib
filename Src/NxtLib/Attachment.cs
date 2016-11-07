@@ -6,11 +6,20 @@ using Newtonsoft.Json.Linq;
 using NxtLib.Internal;
 using NxtLib.VotingSystem;
 using System.IO;
+using System.Text;
 
 namespace NxtLib
 {
     public abstract class Attachment : Appendix
     {
+        protected Attachment()
+        {
+        }
+
+        protected Attachment(BinaryReader reader, byte transactionVersion)
+            : base(reader, transactionVersion)
+        {
+        }
     }
 
     public class AccountControlEffectiveBalanceLeasingAttachment : Attachment
@@ -112,6 +121,22 @@ namespace NxtLib
             if (attachments.SelectToken(Parameters.Comment) != null)
             {
                 Comment = GetAttachmentValue<string>(attachments, Parameters.Comment);
+            }
+        }
+
+        public ColoredCoinsAssetTransferAttachment(BinaryReader reader, byte transactionVersion)
+            : base(reader, transactionVersion)
+        {
+            AssetId = reader.ReadUInt64();
+            QuantityQnt = reader.ReadInt64();
+            if (version == 0)
+            {
+                var length = reader.ReadInt16();
+                if (length > 1000)
+                {
+                    throw new ArgumentException("Max parameter length exceeded");
+                }
+                Comment = Encoding.UTF8.GetString(reader.ReadBytes(length));
             }
         }
     }
@@ -554,7 +579,8 @@ namespace NxtLib
             Units = GetAttachmentValue<long>(attachments, Parameters.Units);
         }
 
-        internal MonetarySystemCurrencyTransferAttachment(BinaryReader reader, int version)
+        internal MonetarySystemCurrencyTransferAttachment(BinaryReader reader, byte transactionVersion)
+            : base(reader, transactionVersion)
         {
             CurrencyId = reader.ReadUInt64();
             Units = reader.ReadInt64();

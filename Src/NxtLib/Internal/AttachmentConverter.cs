@@ -10,15 +10,15 @@ namespace NxtLib.Internal
     {
         private readonly JObject _attachments;
         private readonly BinaryReader _reader;
-        private readonly int _transactionVersion;
+        private readonly byte _transactionVersion;
 
         private static readonly IReadOnlyDictionary<TransactionSubType, Func<JObject, Attachment>> AttachmentFuncs;
-        private static readonly IReadOnlyDictionary<TransactionSubType, Func<BinaryReader, int, Attachment>> BinaryAttachmentFuncs;
+        private static readonly IReadOnlyDictionary<TransactionSubType, Func<BinaryReader, byte, Attachment>> BinaryAttachmentFuncs;
 
         static AttachmentConverter()
         {
             var attachmentFuncs = new Dictionary<TransactionSubType, Func<JObject, Attachment>>();
-            var binaryAttachmentFuncs = new Dictionary<TransactionSubType, Func<BinaryReader, int, Attachment>>();
+            var binaryAttachmentFuncs = new Dictionary<TransactionSubType, Func<BinaryReader, byte, Attachment>>();
 
             attachmentFuncs.Add(TransactionSubType.AccountControlEffectiveBalanceLeasing, value => new AccountControlEffectiveBalanceLeasingAttachment(value));
             attachmentFuncs.Add(TransactionSubType.AccountControlSetPhasingOnly, value => new AccountControlSetPhasingOnlyAttachment(value));
@@ -26,6 +26,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsAskOrderPlacement, value => new ColoredCoinsAskOrderPlacementAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsAssetIssuance, value => new ColoredCoinsAssetIssuanceAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsAssetTransfer, value => new ColoredCoinsAssetTransferAttachment(value));
+            binaryAttachmentFuncs.Add(TransactionSubType.ColoredCoinsAssetTransfer, (reader, transactionVersion) => new ColoredCoinsAssetTransferAttachment(reader, transactionVersion));
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsBidOrderCancellation, value => new ColoredCoinsBidOrderCancellationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsBidOrderPlacement, value => new ColoredCoinsBidOrderPlacementAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ColoredCoinsDividendPayment, value => new ColoredCoinsDividendPaymentAttachment(value));
@@ -46,7 +47,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.MessagingAliasDelete, value => new MessagingAliasDeleteAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingAliasSell, value => new MessagingAliasSellAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, value => new MessagingArbitraryMessageAttachment());
-            binaryAttachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, (reader, version) => new MessagingArbitraryMessageAttachment());
+            binaryAttachmentFuncs.Add(TransactionSubType.MessagingArbitraryMessage, (reader, transactionVersion) => new MessagingArbitraryMessageAttachment());
             //attachmentFuncs.Add(TransactionSubType.MessagingHubTerminalAnnouncement, TODO: .... );
             attachmentFuncs.Add(TransactionSubType.MessagingPollCreation, value => new MessagingPollCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MessagingPhasingVoteCasting, value => new MessagingPhasingVoteCasting(value));
@@ -55,14 +56,14 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyIssuance, value => new MonetarySystemCurrencyIssuanceAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyMinting, value => new MonetarySystemCurrencyMintingAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyTransfer, value => new MonetarySystemCurrencyTransferAttachment(value));
-            binaryAttachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyTransfer, (reader, version) => new MonetarySystemCurrencyTransferAttachment(reader, version));
+            binaryAttachmentFuncs.Add(TransactionSubType.MonetarySystemCurrencyTransfer, (reader, transactionVersion) => new MonetarySystemCurrencyTransferAttachment(reader, transactionVersion));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemExchangeBuy, value => new MonetarySystemExchangeBuyAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemExchangeSell, value => new MonetarySystemExchangeSellAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemPublishExchangeOffer, value => new MonetarySystemPublishExchangeOfferAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveClaim, value => new MonetarySystemReserveClaimAttachment(value));
             attachmentFuncs.Add(TransactionSubType.MonetarySystemReserveIncrease, value => new MonetarySystemReserveIncreaseAttachment(value));
             attachmentFuncs.Add(TransactionSubType.PaymentOrdinaryPayment, value => new OrdinaryPaymentAttachment());
-            binaryAttachmentFuncs.Add(TransactionSubType.PaymentOrdinaryPayment, (reader, version) => new OrdinaryPaymentAttachment());
+            binaryAttachmentFuncs.Add(TransactionSubType.PaymentOrdinaryPayment, (reader, transactionVersion) => new OrdinaryPaymentAttachment());
             attachmentFuncs.Add(TransactionSubType.ShufflingCancellation, value => new ShufflingCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingCreation, value => new ShufflingCreationAttachment(value));
             attachmentFuncs.Add(TransactionSubType.ShufflingRegistration, value => new ShufflingRegistrationAttachment(value));
@@ -73,7 +74,7 @@ namespace NxtLib.Internal
             attachmentFuncs.Add(TransactionSubType.TaggedDataUpload, value => new TaggedDataUploadAttachment(value));
 
             AttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<JObject, Attachment>>(attachmentFuncs);
-            BinaryAttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<BinaryReader, int, Attachment>>(binaryAttachmentFuncs);
+            BinaryAttachmentFuncs = new ReadOnlyDictionary<TransactionSubType, Func<BinaryReader, byte, Attachment>>(binaryAttachmentFuncs);
         }
 
         internal AttachmentConverter(JObject attachments)
@@ -81,7 +82,7 @@ namespace NxtLib.Internal
             _attachments = attachments;
         }
 
-        internal AttachmentConverter(BinaryReader reader, int transactionVersion)
+        internal AttachmentConverter(BinaryReader reader, byte transactionVersion)
         {
             _reader = reader;
             _transactionVersion = transactionVersion;

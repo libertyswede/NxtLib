@@ -6,7 +6,6 @@ using System.IO;
 using static NxtLib.CreateTransactionParameters;
 using System.Text;
 using System.Security.Cryptography;
-using System;
 
 namespace NxtLib.Local
 {
@@ -19,6 +18,8 @@ namespace NxtLib.Local
             Account recipient);
         void VerifyTransferCurrencyTransactionBytes(TransactionCreatedReply transactionCreatedReply, CreateTransactionByPublicKey parameters,
             Account recipient, ulong currencyId, long units);
+        void VerifyTransferAssetTransactionBytes(TransactionCreatedReply transactionCreatedReply, CreateTransactionByPublicKey parameters,
+            Account recipient, ulong assetId, long quantityQnt);
     }
 
     public class LocalTransactionService : ILocalTransactionService
@@ -62,6 +63,22 @@ namespace NxtLib.Local
             if (attachment.Units != units)
             {
                 throw new ValidationException(nameof(attachment.Units), units, attachment.Units);
+            }
+        }
+
+        public void VerifyTransferAssetTransactionBytes(TransactionCreatedReply transactionCreatedReply, CreateTransactionByPublicKey parameters, 
+            Account recipient, ulong assetId, long quantityQnt)
+        {
+            var transaction = VerifyCommonProperties(transactionCreatedReply, parameters, recipient, Amount.Zero, TransactionSubType.ColoredCoinsAssetTransfer);
+            var attachment = (ColoredCoinsAssetTransferAttachment)transaction.Attachment;
+
+            if (attachment.AssetId != assetId)
+            {
+                throw new ValidationException(nameof(attachment.AssetId), assetId, attachment.AssetId);
+            }
+            if (attachment.QuantityQnt != quantityQnt)
+            {
+                throw new ValidationException(nameof(attachment.QuantityQnt), quantityQnt, attachment.QuantityQnt);
             }
         }
 
@@ -133,11 +150,7 @@ namespace NxtLib.Local
                     throw new ValidationException(nameof(transaction.ReferencedTransactionFullHash), parameters.ReferencedTransactionFullHash, transaction.ReferencedTransactionFullHash);
                 }
 
-                if (transaction.SubType != TransactionSubType.PaymentOrdinaryPayment && transaction.SubType != TransactionSubType.MessagingArbitraryMessage)
-                {
-                    reader.ReadByte(); // attachment version byte
-                }
-                var attachmentConverter = new AttachmentConverter(reader, transaction.Version);
+                var attachmentConverter = new AttachmentConverter(reader, (byte)transaction.Version);
                 transaction.Attachment = attachmentConverter.GetAttachment(transactionType);
 
                 var position = 1;
