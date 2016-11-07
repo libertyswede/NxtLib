@@ -14,9 +14,7 @@ namespace NxtLib
     {
         private const string RequestTypeName = "requestType";
         private readonly string _baseUrl;
-#if NETSTANDARD13 || NET40
         public bool AcceptSelfSignedCertificates { get; set; } = false;
-#endif
 
         protected BaseService(string baseUrl = Constants.DefaultNxtUrl)
         {
@@ -30,28 +28,25 @@ namespace NxtLib
 
         private HttpClient GetHttpClient()
         {
-#if NETSTANDARD13
             if (AcceptSelfSignedCertificates)
             {
+#if NETSTANDARD13
                 var handler = new HttpClientHandler()
                 {
                     ServerCertificateCustomValidationCallback = (sender, cert, chain, errors) => true
                 };
                 return new HttpClient(handler, true);
-            }
 #elif NET40
-            if (AcceptSelfSignedCertificates)
-            {
                 var handler = new WebRequestHandler()
                 {
                     ServerCertificateValidationCallback = (sender, cert, chain, errors) => true
                 };
                 return new HttpClient(handler, true);
-            }
 #elif NET45
-            // WTF, how do I do this in NET 4.5 without using global setting?
-            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+                // WTF, how do I do this in NET 4.5 without using global setting?
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 #endif
+            }
             return new HttpClient();
         }
 
@@ -99,7 +94,7 @@ namespace NxtLib
             return await GetUrl<T>(url);
         }
 
-        private static async Task<T> GetUrl<T>(string url) where T : IBaseReply
+        private async Task<T> GetUrl<T>(string url) where T : IBaseReply
         {
             using (var client = GetHttpClient())
             using (var response = await client.GetAsync(url))
@@ -136,7 +131,7 @@ namespace NxtLib
             return await PostAsMultipartFormData<T>(_baseUrl, queryParamsDictionary);
         }
 
-        private static async Task<T> PostAsMultipartFormData<T>(string url, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
+        private async Task<T> PostAsMultipartFormData<T>(string url, Dictionary<string, string> queryParamsDictionary) where T : IBaseReply
         {
             using (var client = GetHttpClient())
             using (var formDataContent = new MultipartFormDataContent("---------------------------7da24f2e50046"))
@@ -154,7 +149,7 @@ namespace NxtLib
             }
         }
 
-        private static async Task<T> PostUrl<T>(string url, IEnumerable<KeyValuePair<string, string>> queryParameters) where T : IBaseReply
+        private async Task<T> PostUrl<T>(string url, IEnumerable<KeyValuePair<string, string>> queryParameters) where T : IBaseReply
         {
             var queryParametersList = queryParameters.ToList();
             using (var client = GetHttpClient())
