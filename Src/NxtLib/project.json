@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.1.26",
+  "version": "1.1.27",
   "description": "NxtLib Class Library",
   "authors": [ "Liberty Swede" ],
   "packOptions": {
@@ -9,7 +9,7 @@
       "type": "git",
       "url": "https://github.com/libertyswede/NxtLib.git"
     },
-    "releaseNotes": "NxtLib is a typed wrapper for the Json API in the Nxt platform ( http://nxt.org/ ) It currently supports NXT version 1.10.3",
+    "releaseNotes": "NxtLib is a typed wrapper for the Json API in the Nxt platform ( http://nxt.org/ ) It currently supports NXT version 1.11.3",
     "requireLicenseAcceptance": false
   },
 
